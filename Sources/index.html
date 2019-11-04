@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  	<head>
+		<title>Online Auction</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+		<link rel="stylesheet" href="css/bootnavbar.css">
+		<link rel="stylesheet" href="css/custom.css">
+  	</head>
+	<body style="height: 1000px;">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top" id="main_navbar">
+			<a class="navbar-brand" href="#">
+				<img src="http://via.placeholder.com/150x50" alt="Logo">
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+	
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav">
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+							aria-haspopup="true" aria-expanded="false"><i class="fas fa-th"></i>
+							Category
+						</a>
+						<ul class="dropdown-menu py-0" aria-labelledby="navbarDropdown">
+							<li><a class="dropdown-item" href="#"><i class="fas fa-tshirt"></i> Thời trang</a></li>
+							<li class="nav-item dropdown">
+								<a class="dropdown-item dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-microchip"></i>
+									Điện tử
+								</a>
+								<ul class="dropdown-menu py-0" aria-labelledby="navbarDropdown1">
+									<li><a class="dropdown-item" href="#"><i class="fas fa-mobile-alt"></i> Smartphone</a></li>
+									<li><a class="dropdown-item" href="#"><i class="fas fa-laptop"></i> Laptop</a></li>         
+								</ul>
+							</li>
+						</ul>
+					</li>
+
+
+					
+				</ul>
+
+				<div class="input-group">
+					<input type="text" class="form-control" placeholder="Search for anything" aria-label="Recipient's username" aria-describedby="button-addon2">
+					<div class="input-group-append">
+						<button class="btn btn-outline-info" type="button" id="button-addon2"><i class="fas fa-search"></i></button>
+					</div>
+				</div>
+
+				<div class="ml-auto">
+					<button type="button" class="btn btn-info"><i class="fas fa-dollar-sign"></i>&nbsp;Sell on Yauction</button>
+					<button type="button" class="btn btn-outline-info">Log in</button>
+					<button type="button" class="btn btn-outline-dark">Sign up</button>
+				</div>
+				
+			</div>
+		</nav>
+
+
+
+
+
+
+		
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+		<script src="https://use.fontawesome.com/releases/v5.11.2/js/all.js" data-auto-replace-svg="nest"></script>
+		<script src="js/bootnavbar.js" ></script>
+		<script>
+			$(function () {
+				$('#main_navbar').bootnavbar();
+			})
+		</script>
+	</body>
+</html>
