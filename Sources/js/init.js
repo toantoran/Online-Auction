@@ -3,8 +3,12 @@ productNameList = productNameList.map((product,index) => product = "Product Name
 
 let productPriceList = new Array(15).fill('');
 productPriceList = productPriceList.map(product => parseInt((Math.random() * 100))*100000);
+
 let expiredTimeList = new Array(15).fill('');
 expiredTimeList = expiredTimeList.map(time => new Date((new Date().getTime() + Math.random() * 100000000)).toString());
+
+let beginTimeList = new Array(15).fill('');
+beginTimeList = beginTimeList.map(time => new Date((new Date().getTime() - Math.random() * 100000000)).toString());
 
 expiredTimeList[1] = new Date('7 Nov 2019 18:40:00')
 $(document).ready(() => {
@@ -17,14 +21,20 @@ $(document).ready(() => {
     $('.card-subtitle').each(function (index) {
         $(this).html('Giá hiện tại: ' + '<strong>' + formatProductPrice(productPriceList[index]) + " ₫" + '</strong>');
     });
-    $('.countdown').each(function (index) {
+
+    $('.countdown-text').each(function (index) {
         $(this).attr('expired-time', expiredTimeList[index]);
-        showCountDown($(this));
+        $(this).attr('begin-time', beginTimeList[index]);
+        showCountDown($(this));   
     });
+    $('.card').hover(function() { $(this).toggleClass('shadow')});
 
-    $('.card').hover(function() { $(this).toggleClass('shadow-lg')});
+});
 
-})
+
+
+    
+    
 
 
 function showCountDown(object) {
@@ -47,10 +57,12 @@ function showCountDown(object) {
 
 
 
+
+
 //card-body == thumbnail
 function initThumbnail() {
     $('.card-body').addClass('p-2');
-    $('.card-body').append('<p class="card-title mb-1"></p>').append('<p class="card-subtitle"></p>').append('<i class="fas fa-hourglass-half mr-2"></i><small class="countdown"> </<small>');
+    $('.card-body').append('<p class="card-title mb-1"></p>').append('<p class="card-subtitle"></p>').append('<i class="fas fa-hourglass-half mr-2"></i><small class="countdown-text"> </small>')
 }
 
 function initDropdownNavbar() {
