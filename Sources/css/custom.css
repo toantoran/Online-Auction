@@ -1,16 +1,35 @@
+nav {
+    background-color: #0e5c69;
+}
+
+
+
 .input-group {
     /* width: 100%;
     min-width: 200px;
     max-width: 400px; */
-    width: 500px;
+    width: 400px;
 }
 
+@media (max-width: 788px) {
+    .more {
+        display: none;
+    }
+
+    .card-group {
+        flex-flow: row wrap;
+        justify-content: space-around !important;
+    }
+}
+
+@media (min-width: 768px) {
+    
+}
 
 .card {
-    max-width: 210px;
-    box-sizing: border-box;
+    max-width: 215px;
+    min-width: 150px;
 }
-
 .card-group {
     justify-content: space-between;
 }
@@ -23,16 +42,27 @@
     color: #138496;
 }
 .section-header, .more {
-    color: #17a2b8;
+    color: #0e5c69;
 
 }
 
 .dropdown-menu > li a:hover, .dropdown-menu > li.show {
-    background: #17a2b8;
+    background: #0e5c69;
     color: white;
 }
 
 
 
+ul.dropdown-menu {
+    margin: -9px 0 !important;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: white;
+}
 
 
+.btn-info {
+    background-color: #0e5c69;
+    border-color: white;
+}
