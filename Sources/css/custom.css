@@ -2,6 +2,37 @@
     /* width: 100%;
     min-width: 200px;
     max-width: 400px; */
-    width: 700px;
+    width: 500px;
 }
+
+
+.card {
+    max-width: 210px;
+    box-sizing: border-box;
+}
+
+.card-group {
+    justify-content: space-between;
+}
+
+.section-header:hover {
+    text-decoration: none;
+    color: #138496;
+}
+.more:hover{
+    color: #138496;
+}
+.section-header, .more {
+    color: #17a2b8;
+
+}
+
+.dropdown-menu > li a:hover, .dropdown-menu > li.show {
+    background: #17a2b8;
+    color: white;
+}
+
+
+
+
 
