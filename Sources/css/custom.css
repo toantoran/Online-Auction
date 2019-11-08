@@ -1,5 +1,6 @@
 nav {
-    background-color: #0e5c69;
+    background-image: linear-gradient(to right, #517fa4 0%, #243949 100%);
+
 }
 
 
@@ -47,7 +48,7 @@ nav {
 }
 
 .dropdown-menu > li a:hover, .dropdown-menu > li.show {
-    background: #0e5c69;
+    background-image: linear-gradient(to right, #517fa4 0%, #243949 100%);
     color: white;
 }
 
@@ -62,7 +63,19 @@ ul.dropdown-menu {
 }
 
 
-.btn-info {
-    background-color: #0e5c69;
-    border-color: white;
+.btn-outline-light:hover {
+    background: #263c4d;
+     /* border-color: #65b6c8; */
+    color: white;
+    border-radius: 50px;
+    transition: 0.5s ease-in-out;
 }
+
+.btn-outline-light {
+    /* border-color: #65b6c8;
+    color: #65b6c8; */
+    border-radius: 10px;
+    transition: 0.5s ease-in-out;
+}
+
+
