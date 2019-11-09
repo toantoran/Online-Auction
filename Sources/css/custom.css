@@ -1,17 +1,5 @@
-nav {
-    background-image: linear-gradient(to right, #517fa4 0%, #243949 100%);
 
-}
-
-
-
-.input-group {
-    /* width: 100%;
-    min-width: 200px;
-    max-width: 400px; */
-    width: 400px;
-}
-
+/* Non-Edit */
 @media (max-width: 788px) {
     .more {
         display: none;
@@ -21,10 +9,6 @@ nav {
         flex-flow: row wrap;
         justify-content: space-around !important;
     }
-}
-
-@media (min-width: 768px) {
-    
 }
 
 .card {
@@ -37,45 +21,17 @@ nav {
 
 .section-header:hover {
     text-decoration: none;
-    color: #138496;
+    color: #243949;
 }
 .more:hover{
-    color: #138496;
+    color: #243949;
 }
 .section-header, .more {
-    color: #0e5c69;
+    color: #497394;
 
 }
 
-.dropdown-menu > li a:hover, .dropdown-menu > li.show {
-    background-image: linear-gradient(to right, #517fa4 0%, #243949 100%);
-    color: white;
-}
 
 
-
-ul.dropdown-menu {
-    margin: -9px 0 !important;
-}
-
-.navbar-dark .navbar-nav .nav-link {
-    color: white;
-}
-
-
-.btn-outline-light:hover {
-    background: #263c4d;
-     /* border-color: #65b6c8; */
-    color: white;
-    border-radius: 50px;
-    transition: 0.5s ease-in-out;
-}
-
-.btn-outline-light {
-    /* border-color: #65b6c8;
-    color: #65b6c8; */
-    border-radius: 10px;
-    transition: 0.5s ease-in-out;
-}
 
 

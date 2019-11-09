@@ -6,110 +6,85 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
-		<link rel="stylesheet" href="css/bootnavbar.css">
 		<link rel="stylesheet" href="css/custom.css">
+		<link rel="stylesheet" href="css/navbar.css">
+		
 	</head>
 		
 	<body>
-		<nav class="navbar navbar-expand-md navbar-dark sticky-top" id="main_navbar">
-			<a class="navbar-brand" href="index.html"><img src="logo.png" alt="Logo"></a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
+		<div id='cssmenu' class="sticky-top">
+			<ul>
+				<li> <a href="index.html"><img src="logo.png" alt="Logo" id="img-logo"></a> </li>
+			   	<li class='active'><a href='#' class="fix"><i class="fas fa-th"></i>&nbsp;Danh mục sản phẩm</a>
+				  	<ul>
+					 	<li><a href='#'><i class="fas fa-tshirt"></i></i>&nbsp;Thời trang</a>
+							<ul>
+								<li><a href='#'>Thời trang nam</a></li>
+								<li><a href='#'>Thời trang nữ</a></li>
+								<li><a href='#'>Giày, dép</a></li>
+								<li><a href='#'>Balo, túi xách</a></li>
+								<li><a href='#'>Phụ kiện khác</a></li>
+							</ul>
+						</li>
+						<li><a href='#'><i class="fas fa-tv"></i>&nbsp;Điện tử</a>
+							<ul>
+								<li><a href='#'>Điện thoại di động</a></li>
+								<li><a href='#'>PC</a></li>
+								<li><a href='#'>Laptop</a></li>
+								<li><a href='#'>Phụ kiện</a></li>
+								<li><a href='#'>Tivi</a></li>
+								<li><a href='#'>Máy giặt</a></li>
+								<li><a href='#'>Máy lạnh</a></li>
+								<li><a href='#'>Tủ lạnh</a></li>
+								<li><a href='#'>Đồ điện tử khác</a></li>
+							</ul>
+						</li>
+						<li><a href='#'><i class="fas fa-utensils"></i>&nbsp;Đồ gia dụng</a>
+							<ul>
+								<li><a href='#'>Đồ dùng nhà bếp</a></li>
+								<li><a href='#'>Đồ dùng phòng ngủ</a></li>
+							</ul>
+						</li>
+						<li><a href='#'><i class="fas fa-motorcycle"></i>&nbsp;Xe</a>
+							<ul>
+								<li><a href='#'>Xe đạp</a></li>
+								<li><a href='#'>Xe máy</a></li>
+								<li><a href='#'>Xe điện</a></li>
+							</ul>
+						</li>
+						<li><a href='#'><i class="fas fa-book"></i>&nbsp;Sách, VPP</a>
+							<ul>
+								<li><a href='#'>Sách tiếng Việt</a></li>
+								<li><a href='#'>Sách ngoại văn</a></li>
+								<li><a href='#'>Sách thiếu nhi</a></li>
+								<li><a href='#'>Văn phòng phẩm</a></li>
+							</ul>
+						</li>
+				 	 </ul>
+				</li>
+				
+				<li></li>
 
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav">
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-th"></i>
-							Danh mục sản phẩm
-						</a>
-						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<li class="nav-item dropdown">
-								<a class="dropdown-item dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-tshirt"></i></i>
-									Thời trang, phụ kiện
-								</a>
-								<ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
-									<li><a class="dropdown-item" href="#">Thời trang nam</a></li>
-									<li><a class="dropdown-item" href="#">Thời trang nữ</a></li>
-									<li><a class="dropdown-item" href="#">Giày, dép</a></li>
-									<li><a class="dropdown-item" href="#">Balo, túi xách</a></li>
-									<li><a class="dropdown-item" href="#">Phụ kiện khác</a></li>
-								</ul>
-							</li>
-							<li class="nav-item dropdown">
-								<a class="dropdown-item dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-laptop"></i>
-									Điện thoại, PC, Laptop
-								</a>
-								<ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
-									<li><a class="dropdown-item" href="#">Điện thoại di động</a></li>
-									<li><a class="dropdown-item" href="#">PC</a></li>
-									<li><a class="dropdown-item" href="#">Laptop</a></li>
-									<li><a class="dropdown-item" href="#">Phụ kiện điện thoại, máy tính</a></li>
-								</ul>
-							</li>
-							<li class="nav-item dropdown">
-								<a class="dropdown-item dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-tv"></i>
-									Điện tử - Điện lạnh
-								</a>
-								<ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
-									<li><a class="dropdown-item" href="#">Tivi</a></li>
-									<li><a class="dropdown-item" href="#">Máy giặt</a></li>
-									<li><a class="dropdown-item" href="#">Máy lạnh</a></li>
-									<li><a class="dropdown-item" href="#">Tủ lạnh</a></li>
-									<li><a class="dropdown-item" href="#">Máy nước nóng</a></li>
-								</ul>
-							</li>
-							<li class="nav-item dropdown">
-								<a class="dropdown-item dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-utensils"></i>
-									Đồ gia dụng
-								</a>
-								<ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
-									<li><a class="dropdown-item" href="#">Đồ dùng nhà bếp</a></li>
-									<li><a class="dropdown-item" href="#">Đồ dùng phòng ngủ</a></li>
-								</ul>
-							</li>
-							<li class="nav-item dropdown">
-								<a class="dropdown-item dropdown-toggle" href="#" id="navbarDropdown4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-motorcycle"></i>
-									Phương tiện đi lại
-								</a>
-								<ul class="dropdown-menu" aria-labelledby="navbarDropdown4">
-									<li><a class="dropdown-item" href="#">Xe đạp</a></li>
-									<li><a class="dropdown-item" href="#">Xe máy</a></li>
-									<li><a class="dropdown-item" href="#">Xe điện</a></li>
-								</ul>
-							</li>
-							<li class="nav-item dropdown">
-								<a class="dropdown-item dropdown-toggle" href="#" id="navbarDropdown5" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-book"></i>
-									Sách, văn phòng phẩm
-								</a>
-								<ul class="dropdown-menu" aria-labelledby="navbarDropdown5">
-									<li><a class="dropdown-item" href="#">Sách tiếng Việt</a></li>
-									<li><a class="dropdown-item" href="#">Sách ngoại văn</a></li>
-									<li><a class="dropdown-item" href="#">Sách thiếu nhi</a></li>
-									<li><a class="dropdown-item" href="#">Văn phòng phẩm</a></li>
-								</ul>
-							</li>
-						</ul>
-					</li>			
-				</ul>
 
-				<div class="input-group mx-auto">
-					<input type="text" class="form-control" placeholder="Tìm sản phẩm bạn muốn...">
-					<div class="input-group-append">
-						<button class="btn btn-outline-light" type="button" id="button-addon2"><i class="fas fa-search"></i></button>
+				<li class="float-right"><a href='#' class="fix"><i class="fas fa-user-plus"></i>&nbsp;Đăng ký</a></li>
+				<li class="float-right"><a href='#' class="fix"><i class="fas fa-sign-in-alt"></i>&nbsp;Đăng nhập</a></li>
+				<li class="float-right"><a href='#' class="fix"><i class="fas fa-dollar-sign"></i>&nbsp;Bán hàng trên Bidhub</a></li>
+
+
+				   <!-- <li>
+					<div class="input-group mx-auto">
+						<input type="text" class="form-control" placeholder="Tìm sản phẩm bạn muốn...">
+						<div class="input-group-append">
+							<button class="btn btn-outline-light" type="button" id="button-addon2"><i class="fas fa-search"></i></button>
+						</div>
 					</div>
-				</div>
+				</li> -->
+			</ul>
+		 </div>
 
-				<div>
-					<button type="button" class="btn btn-outline-light"><i class="fas fa-dollar-sign"></i>&nbsp;Bán hàng trên Bidhub</button>
-					<button type="button" class="btn btn-outline-light"><i class="fas fa-sign-in-alt"></i>&nbsp;Đăng nhập</button>
-					<button type="button" class="btn btn-outline-light abc">&nbsp;Đăng ký</button>	
-				</div>
-			</div>
-		</nav>
 
 		<main class="container-fluid">
-			<div class="row">
+			<!-- <div class="row">
 				<div class="col-lg-12">
 					<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
 						<ol class="carousel-indicators">
@@ -138,7 +113,7 @@
 						</a>
 					</div>
 				</div>
-			</div>
+			</div> -->
 
 			<div class="row my-5">
 				<div class="col-lg-10 mx-auto">
@@ -261,7 +236,7 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 		<script src="https://use.fontawesome.com/releases/v5.11.2/js/all.js" data-auto-replace-svg="nest"></script>
-		<script src="js/bootnavbar.js" ></script>
 		<script src="js/init.js"></script>
+		<script src="js/navbar.js"></script>
 	</body>
 </html>
