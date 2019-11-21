@@ -44,43 +44,13 @@
   });
 
   // PRODUCTS SLICK
-  $('#product-slick-1').slick({
-    slidesToShow: 3,
-    slidesToScroll: 2,
-    autoplay: true,
-    infinite: true,
-    speed: 300,
-    dots: true,
-    arrows: false,
-    appendDots: '.product-slick-dots-1',
-    responsive: [{
-        breakpoint: 991,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        }
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          dots: false,
-          arrows: true,
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        }
-      },
-    ]
-  });
 
-  $('#product-slick-2').slick({
-    slidesToShow: 3,
-    slidesToScroll: 2,
-    autoplay: true,
-    infinite: true,
+  let noSlick = {
+    slidesToShow: 5,
+    slidesToScroll: 1,
     speed: 300,
-    dots: true,
+    dots: false,
     arrows: false,
-    appendDots: '.product-slick-dots-2',
     responsive: [{
         breakpoint: 991,
         settings: {
@@ -98,7 +68,39 @@
         }
       },
     ]
-  });
+  }
+
+  let latestSlick = {
+    slidesToShow: 5,
+    slidesToScroll: 5,
+    autoplay: true,
+    infinite: false,
+    speed: 500,
+    dots: true,
+    arrows: true,
+    appendDots: '.product-slick-dots-latest',
+    responsive: [{
+        breakpoint: 991,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          dots: false,
+          arrows: true,
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        }
+      },
+    ]
+  }
+  $('#product-slick-1').slick(noSlick);
+  $('#product-slick-2').slick(noSlick);
+  $('#product-slick-3').slick(noSlick);
+  $('#product-slick-latest').slick(latestSlick);
 
   // PRODUCT DETAILS SLICK
   $('#product-main-view').slick({
