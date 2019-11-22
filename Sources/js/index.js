@@ -16,7 +16,7 @@ let productSingle =
         </div>\
         <div class="product-body">\
             <h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>\
-            <h6 class="product-text">Giá hiện tại: <span class="product-price">6,300,000₫</span></h6>\
+            <p class="product-text">Giá hiện tại: <span class="product-price">6,300,000₫</span></p>\
             <div class="product-footer">\
                 <small><span>90</span> lượt ra giá</small>\
                 <small>Từ <span>20/11/2019</span></small>\

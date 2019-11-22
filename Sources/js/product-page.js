@@ -1,5 +1,5 @@
 let productSingle = 
-'<div class="col-md-3 col-sm-4 col-xs-6">\
+'<div class="col-md-5ths col-sm-4 col-xs-6">\
     <div class="product product-single">\
         <div class="product-thumb" >\
             <div class="product-label">\
@@ -26,9 +26,28 @@ let productSingle =
     </div>\
 </div>';
 
-let productContainer =  $('#store').find('.product-container');
+let productContainer =  $('.section .container .product-container');
 
-for (let i=0;i<12;i++) {
+for (let i=0;i<5;i++) {
    productContainer.append(productSingle);
 }
+
+var myMenu =  
+'<div>\
+    <a href="#"><i class="fab fa-facebook-square fa-2x"></i></a>\
+    <a href="#"><i class="fab fa-twitter-square fa-2x"></a>\
+    <a href="#"><i class="fab fa-google-plus-square fa-2x"></i></a>\
+    <a href="#"><i class="fab fa-youtube fa-2x"></i></a>\
+</div>';
+$('#myPopUp').popup({	
+    content: myMenu,	
+    position: "bottom",
+    style: "orange",	
+    animation: "standard",	
+    event: "click",		
+    hideOnClick: true,	
+    zIndex: 100 
+});
+    
+
 

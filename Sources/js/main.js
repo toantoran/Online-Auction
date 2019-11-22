@@ -147,4 +147,65 @@
     });
   }
 
+  //Bid Table
+
+  function Bid (time, name, price) {
+    this.time = time;
+    this.name = name;
+    this.price = price;
+    return this;
+  };
+  $('#bid-table').DataTable({
+    searching: false,
+    sort: false,
+    paging: true,
+    data: [
+      new Bid("20/11/2019 19:20", "****Toàn", "6,300,000"),
+      new Bid("20/11/2019 19:20", "****Toàn", "6,300,000"),
+      new Bid("20/11/2019 19:20", "****Toàn", "6,300,000"),
+      new Bid("20/11/2019 19:20", "****Toàn", "6,300,000"),
+      new Bid("20/11/2019 19:20", "****Toàn", "6,300,000"),
+      new Bid("20/11/2019 19:20", "****Toàn", "6,300,000"),
+      new Bid("20/11/2019 19:20", "****Toàn", "6,300,000"),
+      new Bid("20/11/2019 19:20", "****Toàn", "6,300,000"),
+      new Bid("20/11/2019 19:20", "****Toàn", "6,300,000"),
+      new Bid("20/11/2019 19:20", "****Toàn", "6,300,000"),
+      new Bid("20/11/2019 19:20", "****Toàn", "6,300,000"),
+      new Bid("20/11/2019 19:20", "****Toàn", "6,300,000")
+    ],
+    columns: [
+      { data: 'time' },
+      { data: 'name' },
+      { data: 'price' },
+    ],
+    'headers': ["Thời gian", "Người mua", 'Giá'],
+    "language": {
+      "emptyTable": "Chưa có lượt ra giá nào",
+      "info": "",
+      "infoEmpty": "",
+      "lengthMenu": "Hiện _MENU_ lượt ra giá",
+      "paginate": {
+        "first":      "Đầu",
+        "last":       "Cuối",
+        "next":       "Sau",
+        "previous":   "Trước"
+      }
+    }
+  });
+
+  const autoNumericOptionsEuro = {
+    digitGroupSeparator: ' ',
+    currencySymbol: '₫',
+    decimalPlaces: 0,
+    currencySymbolPlacement: AutoNumeric.options.currencySymbolPlacement.suffix,
+    roundingMethod: AutoNumeric.options.roundingMethod.halfUpSymmetric
+  };
+
+  // Initialization
+  new AutoNumeric('.price-input', autoNumericOptionsEuro);
+
+  
 })(jQuery);
+
+
+
