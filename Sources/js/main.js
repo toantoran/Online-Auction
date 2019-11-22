@@ -128,20 +128,21 @@
   var slider = document.getElementById('price-slider');
   if (slider) {
     noUiSlider.create(slider, {
-      start: [1, 999],
+      start: [0, 50],
       connect: true,
       tooltips: [true, true],
       format: {
         to: function(value) {
-          return value.toFixed(2) + '$';
+          return value.toFixed(0) + ' triệu';
         },
         from: function(value) {
           return value
         }
       },
+      step: 0.5,
       range: {
-        'min': 1,
-        'max': 999
+        'min': 0,
+        'max': 50
       }
     });
   }

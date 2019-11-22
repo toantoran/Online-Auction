@@ -60,6 +60,11 @@ Table OF Contents
 	Typography
 \*----------------------------*/
 
+
+@import url('https://fonts.googleapis.com/css?family=Alata&display=swap');
+
+
+
 body {
   font-family: 'Alata', sans-serif;
   color: #4A4E5A;
@@ -196,6 +201,10 @@ textarea.input {
 
 .input-checkbox input[type="checkbox"]:checked+label+.caption, .input-checkbox input[type="radio"]:checked+label+.caption {
   max-height: 800px;
+}
+
+.input#sort-type {
+  width: 115px;
 }
 
 /*----------------------------*\
@@ -991,6 +1000,7 @@ textarea.input {
 .product.product-single .product-price {
   display: inline-block;
   font-weight: bold;
+  font-size: 10px;
   float: right;
 }
 
@@ -1028,8 +1038,8 @@ textarea.input {
 
 .product.product-widget {
   position: relative;
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .product.product-widget .product-thumb {
@@ -1048,14 +1058,16 @@ textarea.input {
   padding-top: 10px;
   min-height: 60px;
 }
-
+.product.product-widget .product-footer {
+  padding-left: 75px;
+}
 .product.product-widget .product-price {
-  font-size: 18px;
-  margin-bottom: 5px;
+  font-size: 10px;
+  margin-bottom: 0;
 }
 
 .product.product-widget .product-price .qty {
-  font-size: 14px;
+  font-size: 10px;
   font-weight: 400;
 }
 
@@ -1246,11 +1258,10 @@ textarea.input {
 
 .sort-filter {
   display: inline-block;
-  margin-left: 15px;
 }
 
 .sort-filter select.input {
-  width: 120px;
+  width: 180px;
 }
 
 .page-filter select.input {

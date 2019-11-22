@@ -16,8 +16,7 @@ let productSingle =
         </div>\
         <div class="product-body">\
             <h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>\
-            <h5 class="product-text">Giá hiện tại: <span class="product-price">6,300,000₫</span></h5>\
-            <h5 class="product-text">Giá mua ngay: <span class="product-price">8,900,000₫</span></h5>\
+            <h6 class="product-text">Giá hiện tại: <span class="product-price">6,300,000₫</span></h6>\
             <div class="product-footer">\
                 <small><span>90</span> lượt ra giá</small>\
                 <small>Từ <span>20/11/2019</span></small>\
@@ -31,25 +30,4 @@ for (let i =0; i < 10; i++) {
 }
 for (let i =0; i < 5; i++) {
     $('.product-slick').append(productSingle);
-}
-
-
-
-$("#cart-container").width($("#cart-total").width() + 60);
-
-$("#account-container").width(200);
-
-
-
-$('.cat-list>li>a').addClass('cat-link').attr('cat-order', index => index);
-
-$('.cat-link').hover((event) => {
-    changeCatImage(event);
-});
-
-
-function changeCatImage(event) {
-    let img = $(event.target).closest('.row').find('.cat-img');
-
-    img.attr('src', 'img/' + $(event.target).attr('cat-order') + '.jpg')
 }
