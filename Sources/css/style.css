@@ -61,7 +61,7 @@ Table OF Contents
 \*----------------------------*/
 
 body {
-  font-family: 'Hind', sans-serif;
+  font-family: 'Alata', sans-serif;
   color: #4A4E5A;
   overflow-x: hidden;
 }
@@ -107,8 +107,8 @@ ul, ol {
 }
 
 hr {
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   border-color: #DADADA;
 }
 
@@ -254,6 +254,7 @@ textarea.input {
 
 .section-grey {
   background: #F6F7F8;
+  padding-bottom: 10px;
 }
 
 .section-title {
@@ -1610,7 +1611,7 @@ textarea.input {
 ===========================================================*/
 
 .footer {
-  margin: 15px 0px;
+  margin: 0px;
 }
 
 .footer .footer-header {
@@ -1620,7 +1621,7 @@ textarea.input {
 }
 
 .footer-logo {
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 
 .footer-logo .logo {
@@ -1643,9 +1644,8 @@ textarea.input {
 }
 
 .footer-copyright {
-  margin-top: 15px;
   text-transform: uppercase;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 /*=========================================================
@@ -1743,5 +1743,6 @@ textarea.input {
 @media only screen and (max-width: 480px) {
   [class*='col-xs'] {
     width: 100%;
+    margin: 10px;
   }
 }

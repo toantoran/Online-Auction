@@ -50,12 +50,12 @@
     slidesToScroll: 1,
     speed: 300,
     dots: false,
-    arrows: false,
+    arrows: true,
     responsive: [{
         breakpoint: 991,
         settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
+          slidesToShow: 2,
+          slidesToScroll: 2,
         }
       },
       {
@@ -82,8 +82,8 @@
     responsive: [{
         breakpoint: 991,
         settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
+          slidesToShow: 2,
+          slidesToScroll: 2,
         }
       },
       {
