@@ -1,7 +1,3 @@
-$("#cart-container").width($("#cart-total").width() + 60);
-
-$("#account-container").width(200);
-
 $('.cat-list>li>a').addClass('cat-link').attr('cat-order', index => index);
 
 $('.cat-link').hover((event) => {

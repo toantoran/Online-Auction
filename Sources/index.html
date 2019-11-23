@@ -9,8 +9,7 @@
 	<title>Bidhub</title>
 
 	<!-- Bootstrap -->
-	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
-
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- Slick -->
 	<link type="text/css" rel="stylesheet" href="css/slick.css" />
 	<link type="text/css" rel="stylesheet" href="css/slick-theme.css" />
@@ -22,8 +21,10 @@
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 
 	<!-- Custom stlylesheet -->
+	<link type="text/css" rel="stylesheet" href="css/header.css" />
 	<link type="text/css" rel="stylesheet" href="css/style.css" />
 	<link type="text/css" rel="stylesheet" href="css/custom.css" />
+	<script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 
 <body>
@@ -69,66 +70,111 @@
 								<strong class="text-uppercase">Tài khoản <i class="fa fa-caret-down"></i></strong>
 							</div>
 							<div id="log">
-								<a href="#" class="text-uppercase small-text">Đăng nhập</a> / <a href="#"
-									class="text-uppercase small-text">Đăng ký</a>
+								<a href="#signin" data-toggle="modal" id="link-signin" class="text-uppercase small-text trigger-btn">Đăng
+									nhập</a> / <a href="#signup" id="link-signup" data-toggle="modal"
+									class="text-uppercase small-text trigger-btn">Đăng ký</a>
 							</div>
 
 							<ul class="custom-menu">
 								<li><a href="#"><i class="fa fa-heart"></i> Danh sách yêu thích</a></li>
-								<!-- <li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>
-								<li><a href="#"><i class="fa fa-exchange"></i> Compare</a></li>
-								<li><a href="#"><i class="fa fa-check"></i> Checkout</a></li>
-								<li><a href="#"><i class="fa fa-unlock-alt"></i> Login</a></li>
-								<li><a href="#"><i class="fa fa-user-plus"></i>Create An Account</a></li> -->
 								<li><a href="#"><i class="fa fa-unlock-alt"></i> Đăng ký làm người bán</a></li>
 							</ul>
 						</li>
 						<!-- /Account -->
-
-						<!-- Cart -->
-						<!-- <li class="header-cart dropdown default-dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" id="cart-container">
-								<div class="header-btns-icon">
-									<i class="fa fa-shopping-cart"></i>
-									<span class="qty" id="cart-qty">3</span>
-								</div>
-								<strong class="text-uppercase">Giỏ hàng: </strong>
-								<br>
-								<span id="cart-total">18,000,000₫</span>
-							</a>
-							<div class="custom-menu">
-								<div id="shopping-cart">
-									<div class="shopping-cart-list">
-										<div class="product product-widget">
-											<div class="product-thumb">
-												<img src="./img/thumb-product01.jpg" alt="">
-											</div>
-											<div class="product-body">
-												<h3 class="product-price">3,200,000 ₫<span class="qty"> x 1 </span></h3>
-												<h2 class="product-name"><a href="#">Giày Sneaker Nam</a></h2>
-											</div>
-											<button class="cancel-btn"><i class="fa fa-trash"></i></button>
-										</div>
-										<div class="product product-widget">
-											<div class="product-thumb">
-												<img src="./img/thumb-product03.jpg" alt="">
-											</div>
-											<div class="product-body">
-												<h3 class="product-price">2,700,000 ₫<span class="qty"> x 2 </span></h3>
-												<h2 class="product-name"><a href="#">Giày Sneaker Nữ</a></h2>
-											</div>
-											<button class="cancel-btn"><i class="fa fa-trash"></i></button>
-										</div>
+						<!-- Modal HTML -->
+						<div id="signin" class="modal fade">
+							<div class="modal-dialog modal-login">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h4 class="modal-title">Đăng nhập</h4>
+										<button type="button" class="close" data-dismiss="modal" id="btn-exit-signin"
+											aria-hidden="true">&times;</button>
 									</div>
-									<div class="shopping-cart-btns">
-										<button class="main-btn">Chi tiết</button>
-										<a href="checkout.html"><button class="primary-btn">Thanh toán <i class="fa fa-arrow-circle-right"></i></button></a>
+									<div class="modal-body">
+										<form action=" method=" post">
+											<div class="form-group">
+												<div class="input-group">
+													<span class="input-group-addon"><i class="fa fa-user"></i></span>
+													<input type="email" class="form-control" name="username"
+														placeholder="Email" required="required">
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="input-group">
+													<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+													<input type="password" class="form-control" name="password"
+														placeholder="Mật khẩu" required="required">
+												</div>
+											</div>
+											<div class="form-group remember-check">
+												<input type="checkbox" id="switch" /><label for="switch">Toggle</label>
+												<span style="font-weight: bold">Ghi nhớ đăng nhập</span>
+											</div>
+											<div class="form-group">
+												<button type="submit" class="btn btn-primary btn-block btn-lg">Đăng
+													nhập</button>
+											</div>
+											<p class="hint-text"><a href="#">Quên mật khẩu?</a></p>
+										</form>
 									</div>
+									<div class="modal-footer">Chưa có tài khoản? <a href="javascript:void(0)" id="btn-call-signup">Tạo tài khoản mới</a></div>
 								</div>
 							</div>
-						</li> -->
-						<!-- /Cart -->
+						</div>
 
+						<!-- Modal HTML -->
+						<div id="signup" class="modal fade">
+							<div class="modal-dialog modal-login" id="signup">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h4 class="modal-title">Đăng ký</h4>
+										<button type="button" class="close" data-dismiss="modal" id="btn-exit-signup"
+										aria-hidden="true" aria-hidden="true">&times;</button>
+									</div>
+									<div class="modal-body">
+										<form action=" method=" post">
+											<div class="form-group">
+												<div class="input-group">
+													<span class="input-group-addon"><i class="fa fa-user"></i></span>
+													<input type="text" class="form-control" name="email"
+														placeholder="Họ tên" required="required">
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="input-group">
+													<span class="input-group-addon"><i class="fa fa-user"></i></span>
+													<input type="text" class="form-control" name="email"
+														placeholder="Email" required="required">
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="input-group">
+													<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+													<input type="password" class="form-control" name="password"
+														placeholder="Mật khẩu" required="required">
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="input-group">
+													<span class="input-group-addon"><i class="fa fa-user"></i></span>
+													<input type="text" class="form-control" name="address"
+														placeholder="Địa chỉ" required="required">
+												</div>
+											</div>
+
+											<div class="form-group">
+												<div class="g-recaptcha" data-sitekey="6LciPMQUAAAAAHP1S7bIdQ5xn6L2Vl6f9ISRm5xt"></div>
+											</div>
+											<div class="form-group">
+												<button type="submit" class="btn btn-primary btn-block btn-lg">Đăng ký</button>
+											</div>
+
+										</form>
+									</div>
+									<div class="modal-footer">Đã có tài khoản? <a href="javascript:void(0)"  id="btn-call-signin">Đăng nhập</a></div>
+								</div>
+							</div>
+						</div>
 						<!-- Mobile nav toggle-->
 						<li class="nav-toggle">
 							<button class="nav-toggle-btn main-btn icon-btn"><i class="fa fa-bars"></i></button>
@@ -219,163 +265,6 @@
 				</div>
 				<!-- /category nav -->
 
-				<!-- menu nav -->
-				<!-- <div class="menu-nav">
-					<span class="menu-header">Menu <i class="fa fa-bars"></i></span>
-					<ul class="menu-list">
-						<li><a href="#">Home</a></li>
-						<li><a href="#">Shop</a></li>
-						<li class="dropdown mega-dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Women <i class="fa fa-caret-down"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr class="hidden-md hidden-lg">
-									</div>
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr class="hidden-md hidden-lg">
-									</div>
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-									</div>
-								</div>
-								<div class="row hidden-sm hidden-xs">
-									<div class="col-md-12">
-										<hr>
-										<a class="banner banner-1" href="#">
-											<img src="./img/banner05.jpg" alt="">
-											<div class="banner-caption text-center">
-												<h2 class="white-color">NEW COLLECTION</h2>
-												<h3 class="white-color font-weak">HOT DEAL</h3>
-											</div>
-										</a>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="dropdown mega-dropdown full-width"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Men <i class="fa fa-caret-down"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-3">
-										<div class="hidden-sm hidden-xs">
-											<a class="banner banner-1" href="#">
-												<img src="./img/banner06.jpg" alt="">
-												<div class="banner-caption text-center">
-													<h3 class="white-color text-uppercase">Women’s</h3>
-												</div>
-											</a>
-											<hr>
-										</div>
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-									</div>
-									<div class="col-md-3">
-										<div class="hidden-sm hidden-xs">
-											<a class="banner banner-1" href="#">
-												<img src="./img/banner07.jpg" alt="">
-												<div class="banner-caption text-center">
-													<h3 class="white-color text-uppercase">Men’s</h3>
-												</div>
-											</a>
-										</div>
-										<hr>
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-									</div>
-									<div class="col-md-3">
-										<div class="hidden-sm hidden-xs">
-											<a class="banner banner-1" href="#">
-												<img src="./img/banner08.jpg" alt="">
-												<div class="banner-caption text-center">
-													<h3 class="white-color text-uppercase">Accessories</h3>
-												</div>
-											</a>
-										</div>
-										<hr>
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-									</div>
-									<div class="col-md-3">
-										<div class="hidden-sm hidden-xs">
-											<a class="banner banner-1" href="#">
-												<img src="./img/banner09.jpg" alt="">
-												<div class="banner-caption text-center">
-													<h3 class="white-color text-uppercase">Bags</h3>
-												</div>
-											</a>
-										</div>
-										<hr>
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li><a href="#">Sales</a></li>
-						<li class="dropdown default-dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Pages <i class="fa fa-caret-down"></i></a>
-							<ul class="custom-menu">
-								<li><a href="index.html">Home</a></li>
-								<li><a href="products.html">Products</a></li>
-								<li><a href="product-page.html">Product Details</a></li>
-								<li><a href="checkout.html">Checkout</a></li>
-							</ul>
-						</li>
-					</ul>
-				</div> -->
-				<!-- menu nav -->
 			</div>
 		</div>
 		<!-- /container -->
@@ -480,7 +369,7 @@
 				<div class="col-md-12 col-sm-12 col-xs-12 mx-auto">
 					<div class="row">
 						<div id="product-slick-2" class="product-slick">
-							
+
 						</div>
 					</div>
 				</div>
@@ -511,7 +400,7 @@
 				<div class="col-md-12 col-sm-12 col-xs-12 mx-auto">
 					<div class="row">
 						<div id="product-slick-3" class="product-slick">
-							
+
 						</div>
 					</div>
 				</div>
@@ -542,7 +431,7 @@
 				<div class="col-md-12 col-sm-12 col-xs-12 mx-auto">
 					<div class="row">
 						<div id="product-slick-latest" class="product-slick">
-											
+
 						</div>
 					</div>
 				</div>
@@ -573,7 +462,7 @@
 
 						<img src="https://frontend.tikicdn.com/_new-next/static/img/footer/bo-cong-thuong.svg" alt="">
 
-						
+
 					</div>
 				</div>
 				<!-- /footer widget -->
@@ -585,9 +474,11 @@
 						<ul class="list-links">
 							<li>
 								<img src="https://frontend.tikicdn.com/_new-next/static/img/footer/visa.svg" alt="">
-								<img src="https://frontend.tikicdn.com/_new-next/static/img/footer/mastercard.svg" alt="">
+								<img src="https://frontend.tikicdn.com/_new-next/static/img/footer/mastercard.svg"
+									alt="">
 								<img src="https://frontend.tikicdn.com/_new-next/static/img/footer/cash.svg" alt="">
-								<img src="https://frontend.tikicdn.com/_new-next/static/img/footer/internet-banking.svg" alt="">
+								<img src="https://frontend.tikicdn.com/_new-next/static/img/footer/internet-banking.svg"
+									alt="">
 							</li>
 						</ul>
 					</div>
@@ -615,12 +506,12 @@
 						<h3 class="footer-header">Kết nối với Bidhub</h3>
 						<!-- footer social -->
 						<ul class="footer-social">
-								<li><a href="#"><i class="fab fa-facebook-square fa-2x"></i></a></li>
-								<li><a href="#"><i class="fab fa-twitter-square fa-2x"></i></li>
-								<li><a href="#"><i class="fab fa-google-plus-square fa-2x"></i></a></li>
-								<li><a href="#"><i class="fab fa-youtube fa-2x"></i></a></li>
+							<li><a href="#"><i class="fab fa-facebook-square fa-2x"></i></a></li>
+							<li><a href="#"><i class="fab fa-twitter-square fa-2x"></i></li>
+							<li><a href="#"><i class="fab fa-google-plus-square fa-2x"></i></a></li>
+							<li><a href="#"><i class="fab fa-youtube fa-2x"></i></a></li>
 						</ul>
-							<!-- /footer social -->
+						<!-- /footer social -->
 					</div>
 				</div>
 				<!-- /footer subscribe -->
@@ -647,15 +538,16 @@
 
 	<!-- jQuery Plugins -->
 	<script src="js/jquery.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="js/index.js"></script>
-	<script src="js/header.js"></script>
+	<script src="js/navbar.js"></script>
 	<script src="js/slick.min.js"></script>
 	<script src="js/nouislider.min.js"></script>
 	<script src="js/jquery.zoom.min.js"></script>
 	<script src="js/main.js"></script>
 	<script src="https://use.fontawesome.com/releases/v5.11.2/js/all.js" data-auto-replace-svg="nest"></script>
-	
+
+
 </body>
 
 </html>

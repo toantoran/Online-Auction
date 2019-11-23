@@ -25,7 +25,7 @@
 	<link type="text/css" rel="stylesheet" href="css/style.css" />
 	<link type="text/css" rel="stylesheet" href="css/custom.css" />
 	<link type="text/css" rel="stylesheet" href="css/col5.css" />
-
+	<link type="text/css" rel="stylesheet" href="css/header.css" />
 </head>
 
 <body>
@@ -37,7 +37,7 @@
 				<div class="pull-left">
 					<!-- Logo -->
 					<div class="header-logo">
-						<a class="logo" href="index.html">
+						<a class="logo" href="#">
 							<img src="./img/logo.png" alt="">
 						</a>
 					</div>
@@ -71,65 +71,57 @@
 								<strong class="text-uppercase">Tài khoản <i class="fa fa-caret-down"></i></strong>
 							</div>
 							<div id="log">
-								<a href="#" class="text-uppercase small-text">Đăng nhập</a> / <a href="#"
+								<a href="#myModal" data-toggle="modal"
+									class="text-uppercase small-text trigger-btn">Đăng nhập</a> / <a href="#"
 									class="text-uppercase small-text">Đăng ký</a>
 							</div>
 
 							<ul class="custom-menu">
 								<li><a href="#"><i class="fa fa-heart"></i> Danh sách yêu thích</a></li>
-								<!-- <li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>
-									<li><a href="#"><i class="fa fa-exchange"></i> Compare</a></li>
-									<li><a href="#"><i class="fa fa-check"></i> Checkout</a></li>
-									<li><a href="#"><i class="fa fa-unlock-alt"></i> Login</a></li>
-									<li><a href="#"><i class="fa fa-user-plus"></i>Create An Account</a></li> -->
 								<li><a href="#"><i class="fa fa-unlock-alt"></i> Đăng ký làm người bán</a></li>
 							</ul>
 						</li>
 						<!-- /Account -->
-
-						<!-- Cart -->
-						<!-- <li class="header-cart dropdown default-dropdown">
-								<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" id="cart-container">
-									<div class="header-btns-icon">
-										<i class="fa fa-shopping-cart"></i>
-										<span class="qty" id="cart-qty">3</span>
+						<!-- Modal HTML -->
+						<div id="myModal" class="modal fade">
+							<div class="modal-dialog modal-login">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h4 class="modal-title">Đăng nhập</h4>
+										<button type="button" class="close" data-dismiss="modal"
+											aria-hidden="true">&times;</button>
 									</div>
-									<strong class="text-uppercase">Giỏ hàng: </strong>
-									<br>
-									<span id="cart-total">18,000,000₫</span>
-								</a>
-								<div class="custom-menu">
-									<div id="shopping-cart">
-										<div class="shopping-cart-list">
-											<div class="product product-widget">
-												<div class="product-thumb">
-													<img src="./img/thumb-product01.jpg" alt="">
+									<div class="modal-body">
+										<form action=" method=" post">
+											<div class="form-group">
+												<div class="input-group">
+													<span class="input-group-addon"><i class="fa fa-user"></i></span>
+													<input type="text" class="form-control" name="username"
+														placeholder="Tên đăng nhập" required="required">
 												</div>
-												<div class="product-body">
-													<h3 class="product-price">3,200,000 ₫<span class="qty"> x 1 </span></h3>
-													<h2 class="product-name"><a href="#">Giày Sneaker Nam</a></h2>
-												</div>
-												<button class="cancel-btn"><i class="fa fa-trash"></i></button>
 											</div>
-											<div class="product product-widget">
-												<div class="product-thumb">
-													<img src="./img/thumb-product03.jpg" alt="">
+											<div class="form-group">
+												<div class="input-group">
+													<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+													<input type="text" class="form-control" name="password"
+														placeholder="Mật khẩu" required="required">
 												</div>
-												<div class="product-body">
-													<h3 class="product-price">2,700,000 ₫<span class="qty"> x 2 </span></h3>
-													<h2 class="product-name"><a href="#">Giày Sneaker Nữ</a></h2>
-												</div>
-												<button class="cancel-btn"><i class="fa fa-trash"></i></button>
 											</div>
-										</div>
-										<div class="shopping-cart-btns">
-											<button class="main-btn">Chi tiết</button>
-											<a href="checkout.html"><button class="primary-btn">Thanh toán <i class="fa fa-arrow-circle-right"></i></button></a>
-										</div>
+											<div class="form-group remember-check">
+												<input type="checkbox" id="switch" /><label for="switch">Toggle</label>
+												<span style="font-weight: bold">Ghi nhớ đăng nhập</s>
+											</div>
+											<div class="form-group mb-3">
+												<button type="submit" class="btn btn-primary btn-block btn-lg">Đăng
+													nhập</button>
+											</div>
+											<p class="hint-text"><a href="#">Quên mật khẩu?</a></p>
+										</form>
 									</div>
+									<div class="modal-footer">Chưa có tài khoản? <a href="#">Tạo tài khoản mới</a></div>
 								</div>
-							</li> -->
-						<!-- /Cart -->
+							</div>
+						</div>
 
 						<!-- Mobile nav toggle-->
 						<li class="nav-toggle">
@@ -640,7 +632,7 @@
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/products.js"></script>
-	<script src="js/header.js"></script>
+	<script src="js/navbar.js"></script>
 	<script src="js/slick.min.js"></script>
 	<script src="js/nouislider.min.js"></script>
 	<script src="js/jquery.zoom.min.js"></script>

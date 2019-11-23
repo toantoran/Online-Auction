@@ -1,6 +1,16 @@
 (function($) {
   "use strict"
 
+  $("#btn-call-signup").on('click', function() {  
+    $('#btn-exit-signin').trigger('click');
+    $('#link-signup').trigger('click');
+  });
+  $("#btn-call-signin").on('click', function() {  
+    $('#btn-exit-signup').trigger('click');
+    $('#link-signin').trigger('click');
+  });
+
+
   // NAVIGATION
   var responsiveNav = $('#responsive-nav'),
     catToggle = $('#responsive-nav .category-nav .category-header'),
@@ -203,6 +213,9 @@
 
   // Initialization
   new AutoNumeric('.price-input', autoNumericOptionsEuro);
+
+
+ 
 
   
 })(jQuery);
