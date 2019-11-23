@@ -10,6 +10,42 @@
     $('#link-signin').trigger('click');
   });
 
+  $('.cat-list>li>a').addClass('cat-link').attr('cat-order', index => index);
+
+  $('.cat-link').hover((event) => {
+      changeCatImage(event);
+  });
+  
+  function changeCatImage(event) {
+      let img = $(event.target).closest('.row').find('.cat-img');
+      img.attr('src', 'img/' + $(event.target).attr('cat-order') + '.jpg')
+  }
+
+
+  $('.quick-view').click((event) => {
+    window.location.href = $(event.target).parent().parent().find('.product-body .product-name a').attr('href');
+  });
+  $('.btn-wish').click((event) => {
+    let target = $(event.target).closest('.watch-list.btn-wish')
+    target.toggleClass('focus');
+    if (target.hasClass('focus')) {
+      new SnackBar({
+        message: "Đã thêm vào danh sách yêu thích",
+        status: "success",
+        fixed: true,
+        timeout: 2000
+      });
+    }
+    else {
+      new SnackBar({
+        message: "Đã xóa khỏi danh sách yêu thích",
+        status: "warning",
+        fixed: true,
+        timeout: 2000
+      });
+    }
+  });
+  
 
   // NAVIGATION
   var responsiveNav = $('#responsive-nav'),
@@ -158,7 +194,7 @@
   }
 
   //Bid Table
-
+  
   function Bid (time, name, price) {
     this.time = time;
     this.name = name;
@@ -204,7 +240,7 @@
   });
 
   const autoNumericOptionsEuro = {
-    digitGroupSeparator: ' ',
+    digitGroupSeparator: ',',
     currencySymbol: '₫',
     decimalPlaces: 0,
     currencySymbolPlacement: AutoNumeric.options.currencySymbolPlacement.suffix,
@@ -212,12 +248,23 @@
   };
 
   // Initialization
+
+
+  function getValidPrice(currentPrice, priceStep) {
+    return currentPrice + priceStep;
+  }
+  
+  function getCurrentPrice() {
+    let a = $('.product-price#current').text();
+    return parseInt(a.slice(0, a.length - 1).replace(/,/g,''));
+  }
+
+  $('.price-input').val(getValidPrice(getCurrentPrice(), 100000));
+
   new AutoNumeric('.price-input', autoNumericOptionsEuro);
 
 
  
-
-  
 })(jQuery);
 
 

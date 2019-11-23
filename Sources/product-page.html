@@ -34,109 +34,174 @@
 <body>
 	<!-- HEADER -->
 	<header>
-			<!-- header -->
-			<div id="header">
-				<div class="container">
-					<div class="pull-left">
-						<!-- Logo -->
-						<div class="header-logo">
-							<a class="logo" href="#">
-								<img src="./img/logo.png" alt="">
-							</a>
-						</div>
-						<!-- /Logo -->
-	
-						<!-- Search -->
-						<div class="header-search">
-							<form>
-								<input class="input search-input" type="text" placeholder="Tìm sản phẩm bạn muốn">
-								<select class="input search-categories">
-									<option value="0">Tất cả danh mục</option>
-									<option value="1">Thời trang</option>
-									<option value="2">Điện tử</option>
-									<option value="3">Đồ gia dụng</option>
-									<option value="4">Thực phẩm</option>
-									<option value="5">Sách, VPP</option>
-								</select>
-								<button class="search-btn"><i class="fa fa-search"></i></button>
-							</form>
-						</div>
-						<!-- /Search -->
+		<!-- header -->
+		<div id="header">
+			<div class="container">
+				<div class="pull-left">
+					<!-- Logo -->
+					<div class="header-logo">
+						<a class="logo" href="#">
+							<img src="./img/logo.png" alt="">
+						</a>
 					</div>
-					<div class="pull-right">
-						<ul class="header-btns">
-							<!-- Account -->
-							<li class="header-account dropdown default-dropdown" id="account-container">
-								<div class="dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="true">
-									<div class="header-btns-icon">
-										<i class="fas fa-user-circle fa-3x"></i>
-									</div>
-									<strong class="text-uppercase">Tài khoản <i class="fa fa-caret-down"></i></strong>
+					<!-- /Logo -->
+
+					<!-- Search -->
+					<div class="header-search">
+						<form>
+							<input class="input search-input" type="text" placeholder="Tìm sản phẩm bạn muốn">
+							<select class="input search-categories">
+								<option value="0">Tất cả danh mục</option>
+								<option value="1">Thời trang</option>
+								<option value="2">Điện tử</option>
+								<option value="3">Đồ gia dụng</option>
+								<option value="4">Thực phẩm</option>
+								<option value="5">Sách, VPP</option>
+							</select>
+							<button class="search-btn"><i class="fa fa-search"></i></button>
+						</form>
+					</div>
+					<!-- /Search -->
+				</div>
+				<div class="pull-right">
+					<ul class="header-btns">
+						<!-- Account -->
+						<li class="header-account dropdown default-dropdown" id="account-container">
+							<div class="dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="true">
+								<div class="header-btns-icon">
+									<i class="fas fa-user-circle fa-3x"></i>
 								</div>
-								<div id="log">
-									<a href="#myModal" data-toggle="modal" class="text-uppercase small-text trigger-btn">Đăng nhập</a> / <a href="#"
-										class="text-uppercase small-text">Đăng ký</a>
-								</div>
-	
-								<ul class="custom-menu">
-									<li><a href="#"><i class="fa fa-heart"></i> Danh sách yêu thích</a></li>
-									<li><a href="#"><i class="fa fa-unlock-alt"></i> Đăng ký làm người bán</a></li>
-								</ul>
-							</li>
-							<!-- /Account -->
-							<!-- Modal HTML -->
-							<div id="myModal" class="modal fade">
-								<div class="modal-dialog modal-login">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h4 class="modal-title">Đăng nhập</h4>
-											<button type="button" class="close" data-dismiss="modal"
-												aria-hidden="true">&times;</button>
-										</div>
-										<div class="modal-body">
-											<form action=" method="post">
-												<div class="form-group">
-													<div class="input-group">
-														<span class="input-group-addon"><i class="fa fa-user"></i></span>
-														<input type="text" class="form-control" name="username"
-															placeholder="Tên đăng nhập" required="required">
-													</div>
-												</div>
-												<div class="form-group">
-													<div class="input-group">
-														<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-														<input type="text" class="form-control" name="password" placeholder="Mật khẩu" required="required">
-													</div>
-												</div>
-												<div class="form-group remember-check">
-													<input type="checkbox" id="switch" /><label for="switch">Toggle</label>
-													<span style="font-weight: bold">Ghi nhớ đăng nhập</s>
-												</div>
-												<div class="form-group mb-3">
-													<button type="submit" class="btn btn-primary btn-block btn-lg">Đăng nhập</button>
-												</div>
-												<p class="hint-text"><a href="#">Quên mật khẩu?</a></p>
-											</form>
-										</div>
-										<div class="modal-footer">Chưa có tài khoản? <a href="#">Tạo tài khoản mới</a></div>
+								<strong class="text-uppercase">Tài khoản <i class="fa fa-caret-down"></i></strong>
+							</div>
+							<div id="log">
+								<a href="#signin" data-toggle="modal" id="link-signin"
+									class="text-uppercase small-text trigger-btn">Đăng
+									nhập</a> / <a href="#signup" id="link-signup" data-toggle="modal"
+									class="text-uppercase small-text trigger-btn">Đăng ký</a>
+							</div>
+
+							<ul class="custom-menu">
+								<li><a href="#"><i class="fa fa-heart"></i> Danh sách yêu thích</a></li>
+								<li><a href="#"><i class="fa fa-unlock-alt"></i> Đăng ký làm người bán</a></li>
+							</ul>
+						</li>
+						<!-- /Account -->
+						<!-- Modal HTML -->
+						<div id="signin" class="modal fade">
+							<div class="modal-dialog modal-login">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h4 class="modal-title">Đăng nhập</h4>
+										<button type="button" class="close" data-dismiss="modal" id="btn-exit-signin"
+											aria-hidden="true">&times;</button>
 									</div>
+									<div class="modal-body">
+										<form action=" method=" post">
+											<div class="form-group">
+												<div class="input-group">
+													<span class="input-group-addon"><i
+															class="fas fa-envelope"></i></span>
+													<input type="email" class="form-control" name="email"
+														placeholder="Email" required="required">
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="input-group">
+													<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+													<input type="password" class="form-control" name="password"
+														placeholder="Mật khẩu" required="required">
+												</div>
+											</div>
+											<div class="form-group remember-check">
+												<input type="checkbox" id="switch" /><label for="switch">Toggle</label>
+												<span style="font-weight: bold">Ghi nhớ đăng nhập</span>
+											</div>
+											<div class="form-group">
+												<button type="submit" class="btn btn-primary btn-block btn-lg">Đăng
+													nhập</button>
+											</div>
+											<p class="hint-text"><a href="#">Quên mật khẩu?</a></p>
+										</form>
+									</div>
+									<div class="modal-footer">Chưa có tài khoản? <a href="javascript:void(0)"
+											id="btn-call-signup">Tạo tài khoản mới</a></div>
 								</div>
 							</div>
-	
-							<!-- Mobile nav toggle-->
-							<li class="nav-toggle">
-								<button class="nav-toggle-btn main-btn icon-btn"><i class="fa fa-bars"></i></button>
-							</li>
-							<!-- / Mobile nav toggle -->
-						</ul>
-					</div>
-				</div>
-				<!-- header -->
-			</div>
-			<!-- container -->
-		</header>
-		<!-- /HEADER -->
+						</div>
 
+						<!-- Modal HTML -->
+						<div id="signup" class="modal fade">
+							<div class="modal-dialog modal-login" id="signup">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h4 class="modal-title">Đăng ký</h4>
+										<button type="button" class="close" data-dismiss="modal" id="btn-exit-signup"
+											aria-hidden="true" aria-hidden="true">&times;</button>
+									</div>
+									<div class="modal-body">
+										<form action="" method="post">
+											<div class="form-group">
+												<div class="input-group">
+													<span class="input-group-addon"><i class="fa fa-user"></i></span>
+													<input type="text" class="form-control" name="name"
+														placeholder="Họ tên" required="required">
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="input-group">
+													<span class="input-group-addon"><i
+															class="fas fa-envelope"></i></span>
+													<input type="text" class="form-control" name="email"
+														placeholder="Email" required="required">
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="input-group">
+													<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+													<input type="password" class="form-control" name="password"
+														placeholder="Mật khẩu" required="required">
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="input-group">
+													<span class="input-group-addon"><i
+															class="fas fa-map-marker-alt"></i></span>
+													<input type="text" class="form-control" name="address"
+														placeholder="Địa chỉ" required="required">
+												</div>
+											</div>
+
+											<div class="form-group">
+												<div class="input-group" style="margin: 0 auto">
+													<div class="g-recaptcha"
+														data-sitekey="6LciPMQUAAAAAHP1S7bIdQ5xn6L2Vl6f9ISRm5xt"></div>
+												</div>
+											</div>
+											<div class="form-group">
+												<button type="submit" class="btn btn-primary btn-block btn-lg">Đăng
+													ký</button>
+											</div>
+
+										</form>
+									</div>
+									<div class="modal-footer">Đã có tài khoản? <a href="javascript:void(0)"
+											id="btn-call-signin">Đăng nhập</a></div>
+								</div>
+							</div>
+						</div>
+						<!-- Mobile nav toggle-->
+						<li class="nav-toggle">
+							<button class="nav-toggle-btn main-btn icon-btn"><i class="fa fa-bars"></i></button>
+						</li>
+						<!-- / Mobile nav toggle -->
+					</ul>
+				</div>
+			</div>
+			<!-- header -->
+		</div>
+		<!-- container -->
+	</header>
+	<!-- /HEADER -->
 
 	<!-- NAVIGATION -->
 	<div id="navigation">
@@ -213,164 +278,6 @@
 					</ul>
 				</div>
 				<!-- /category nav -->
-
-				<!-- menu nav -->
-				<!-- <div class="menu-nav">
-						<span class="menu-header">Menu <i class="fa fa-bars"></i></span>
-						<ul class="menu-list">
-							<li><a href="#">Home</a></li>
-							<li><a href="#">Shop</a></li>
-							<li class="dropdown mega-dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Women <i class="fa fa-caret-down"></i></a>
-								<div class="custom-menu">
-									<div class="row">
-										<div class="col-md-4">
-											<ul class="list-links">
-												<li>
-													<h3 class="list-links-title">Categories</h3></li>
-												<li><a href="#">Women’s Clothing</a></li>
-												<li><a href="#">Men’s Clothing</a></li>
-												<li><a href="#">Phones & Accessories</a></li>
-												<li><a href="#">Jewelry & Watches</a></li>
-												<li><a href="#">Bags & Shoes</a></li>
-											</ul>
-											<hr class="hidden-md hidden-lg">
-										</div>
-										<div class="col-md-4">
-											<ul class="list-links">
-												<li>
-													<h3 class="list-links-title">Categories</h3></li>
-												<li><a href="#">Women’s Clothing</a></li>
-												<li><a href="#">Men’s Clothing</a></li>
-												<li><a href="#">Phones & Accessories</a></li>
-												<li><a href="#">Jewelry & Watches</a></li>
-												<li><a href="#">Bags & Shoes</a></li>
-											</ul>
-											<hr class="hidden-md hidden-lg">
-										</div>
-										<div class="col-md-4">
-											<ul class="list-links">
-												<li>
-													<h3 class="list-links-title">Categories</h3></li>
-												<li><a href="#">Women’s Clothing</a></li>
-												<li><a href="#">Men’s Clothing</a></li>
-												<li><a href="#">Phones & Accessories</a></li>
-												<li><a href="#">Jewelry & Watches</a></li>
-												<li><a href="#">Bags & Shoes</a></li>
-											</ul>
-										</div>
-									</div>
-									<div class="row hidden-sm hidden-xs">
-										<div class="col-md-12">
-											<hr>
-											<a class="banner banner-1" href="#">
-												<img src="./img/banner05.jpg" alt="">
-												<div class="banner-caption text-center">
-													<h2 class="white-color">NEW COLLECTION</h2>
-													<h3 class="white-color font-weak">HOT DEAL</h3>
-												</div>
-											</a>
-										</div>
-									</div>
-								</div>
-							</li>
-							<li class="dropdown mega-dropdown full-width"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Men <i class="fa fa-caret-down"></i></a>
-								<div class="custom-menu">
-									<div class="row">
-										<div class="col-md-3">
-											<div class="hidden-sm hidden-xs">
-												<a class="banner banner-1" href="#">
-													<img src="./img/banner06.jpg" alt="">
-													<div class="banner-caption text-center">
-														<h3 class="white-color text-uppercase">Women’s</h3>
-													</div>
-												</a>
-												<hr>
-											</div>
-											<ul class="list-links">
-												<li>
-													<h3 class="list-links-title">Categories</h3></li>
-												<li><a href="#">Women’s Clothing</a></li>
-												<li><a href="#">Men’s Clothing</a></li>
-												<li><a href="#">Phones & Accessories</a></li>
-												<li><a href="#">Jewelry & Watches</a></li>
-												<li><a href="#">Bags & Shoes</a></li>
-											</ul>
-										</div>
-										<div class="col-md-3">
-											<div class="hidden-sm hidden-xs">
-												<a class="banner banner-1" href="#">
-													<img src="./img/banner07.jpg" alt="">
-													<div class="banner-caption text-center">
-														<h3 class="white-color text-uppercase">Men’s</h3>
-													</div>
-												</a>
-											</div>
-											<hr>
-											<ul class="list-links">
-												<li>
-													<h3 class="list-links-title">Categories</h3></li>
-												<li><a href="#">Women’s Clothing</a></li>
-												<li><a href="#">Men’s Clothing</a></li>
-												<li><a href="#">Phones & Accessories</a></li>
-												<li><a href="#">Jewelry & Watches</a></li>
-												<li><a href="#">Bags & Shoes</a></li>
-											</ul>
-										</div>
-										<div class="col-md-3">
-											<div class="hidden-sm hidden-xs">
-												<a class="banner banner-1" href="#">
-													<img src="./img/banner08.jpg" alt="">
-													<div class="banner-caption text-center">
-														<h3 class="white-color text-uppercase">Accessories</h3>
-													</div>
-												</a>
-											</div>
-											<hr>
-											<ul class="list-links">
-												<li>
-													<h3 class="list-links-title">Categories</h3></li>
-												<li><a href="#">Women’s Clothing</a></li>
-												<li><a href="#">Men’s Clothing</a></li>
-												<li><a href="#">Phones & Accessories</a></li>
-												<li><a href="#">Jewelry & Watches</a></li>
-												<li><a href="#">Bags & Shoes</a></li>
-											</ul>
-										</div>
-										<div class="col-md-3">
-											<div class="hidden-sm hidden-xs">
-												<a class="banner banner-1" href="#">
-													<img src="./img/banner09.jpg" alt="">
-													<div class="banner-caption text-center">
-														<h3 class="white-color text-uppercase">Bags</h3>
-													</div>
-												</a>
-											</div>
-											<hr>
-											<ul class="list-links">
-												<li>
-													<h3 class="list-links-title">Categories</h3></li>
-												<li><a href="#">Women’s Clothing</a></li>
-												<li><a href="#">Men’s Clothing</a></li>
-												<li><a href="#">Phones & Accessories</a></li>
-												<li><a href="#">Jewelry & Watches</a></li>
-												<li><a href="#">Bags & Shoes</a></li>
-											</ul>
-										</div>
-									</div>
-								</div>
-							</li>
-							<li><a href="#">Sales</a></li>
-							<li class="dropdown default-dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Pages <i class="fa fa-caret-down"></i></a>
-								<ul class="custom-menu">
-									<li><a href="index.html">Home</a></li>
-									<li><a href="products.html">Products</a></li>
-									<li><a href="product-page.html">Product Details</a></li>
-									<li><a href="checkout.html">Checkout</a></li>
-								</ul>
-							</li>
-						</ul>
-					</div> -->
-				<!-- menu nav -->
 			</div>
 		</div>
 		<!-- /container -->
@@ -447,13 +354,18 @@
 									<li>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</li>
 								</ul>
 								<p>Mô tả:
-									<span>Lorem, ipsum dolor sit amet consectetur adipisicing elit. At soluta et voluptate ipsam nisi minima sint accusantium doloribus explicabo, ad est assumenda iste libero beatae sunt. Magni tenetur ut aspernatur. Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque quia laborum fugit consectetur iste, reprehenderit veritatis voluptate veniam harum provident aperiam quidem esse? Magnam fugiat quidem omnis ratione vero nemo.</span>
+									<span>Lorem, ipsum dolor sit amet consectetur adipisicing elit. At soluta et
+										voluptate ipsam nisi minima sint accusantium doloribus explicabo, ad est
+										assumenda iste libero beatae sunt. Magni tenetur ut aspernatur. Lorem ipsum
+										dolor sit amet consectetur adipisicing elit. Cumque quia laborum fugit
+										consectetur iste, reprehenderit veritatis voluptate veniam harum provident
+										aperiam quidem esse? Magnam fugiat quidem omnis ratione vero nemo.</span>
 								</p>
-								
+
 								<p>Ngày bắt đầu: <span>18h32 ngày 20/11/2019</span></p>
 								<p>Ngày kết thúc: <span>18h32 ngày 27/11/2019</span></p>
 								<hr>
-								<p>Giá hiện tại: <span class="product-price">6,300,000₫</span></p>
+								<p>Giá hiện tại: <span class="product-price" id="current">6,300,000₫</span></p>
 								<p>Giá mua ngay: <span class="product-price">7,300,000₫</span></p>
 							</div>
 							<div class="product-btns">
@@ -462,8 +374,9 @@
 								</div>
 								<button class="primary-btn add-to-cart">Ra giá <i class="fas fa-gavel"></i></button>
 								<div class="pull-right">
-									<button class="main-btn icon-btn" id="myPopUp"><i class="fa fa-share-alt"></i></button>
-									<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+									<button class="main-btn icon-btn" id="myPopUp"><i
+											class="fa fa-share-alt"></i></button>
+									<button class="btn-wish"><i class="fa fa-heart"></i></button>
 								</div>
 							</div>
 						</div>
@@ -477,7 +390,7 @@
 								<div id="tab1" class="tab-pane fade in active">
 									<div class="row">
 										<div class="col-md-6">
-											<h4>Ghi chú của người bán</h4>
+											<h4 style="margin-bottom: 20px;">Ghi chú của người bán</h4>
 											<div class="note" id="note1">
 												<p><i class="fas fa-edit"></i> <span class="note-date">20/11/2019</span>
 												</p>
@@ -519,7 +432,6 @@
 							</div>
 						</div>
 					</div>
-
 				</div>
 				<!-- /Product Details -->
 			</div>
@@ -546,15 +458,15 @@
 			<!-- /row -->
 			<!-- row -->
 			<div class="row">
-					<!-- section title -->
-					<div class="col-md-12">
-						<div class="product-container">
-							
-						</div>
+				<!-- section title -->
+				<div class="col-md-12">
+					<div class="product-container">
+
 					</div>
-					<!-- section title -->
 				</div>
-				<!-- /row -->
+				<!-- section title -->
+			</div>
+			<!-- /row -->
 		</div>
 		<!-- /container -->
 	</div>
@@ -656,9 +568,10 @@
 
 	<!-- jQuery Plugins -->
 	<script src="js/jquery.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/Popup-plugin.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="js/product-page.js"></script>
+	<script src="js/navbar.js"></script>
+	<script src="js/Popup-plugin.js"></script>
 	<script src="js/navbar.js"></script>
 	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/autonumeric@4.5.4"></script>
@@ -667,7 +580,7 @@
 	<script src="js/jquery.zoom.min.js"></script>
 	<script src="js/main.js"></script>
 	<script src="https://use.fontawesome.com/releases/v5.11.2/js/all.js" data-auto-replace-svg="nest"></script>
-	
+	<script src='https://www.google.com/recaptcha/api.js'></script>
 </body>
 
 </html>

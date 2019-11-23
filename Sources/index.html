@@ -24,7 +24,8 @@
 	<link type="text/css" rel="stylesheet" href="css/header.css" />
 	<link type="text/css" rel="stylesheet" href="css/style.css" />
 	<link type="text/css" rel="stylesheet" href="css/custom.css" />
-	<script src='https://www.google.com/recaptcha/api.js'></script>
+	<link rel="stylesheet" href="css/js-snackbar.min.css">
+
 </head>
 
 <body>
@@ -36,7 +37,7 @@
 				<div class="pull-left">
 					<!-- Logo -->
 					<div class="header-logo">
-						<a class="logo" href="#">
+						<a class="logo" href="index.html">
 							<img src="./img/logo.png" alt="">
 						</a>
 					</div>
@@ -61,6 +62,9 @@
 				</div>
 				<div class="pull-right">
 					<ul class="header-btns">
+						<li class="header-cart dropdown default-dropdown">
+							<a href="#" class="main-btn upload-btn"><i class="fas fa-gavel"></i> Mở phiên đấu giá</a>
+						</li>
 						<!-- Account -->
 						<li class="header-account dropdown default-dropdown" id="account-container">
 							<div class="dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="true">
@@ -70,14 +74,17 @@
 								<strong class="text-uppercase">Tài khoản <i class="fa fa-caret-down"></i></strong>
 							</div>
 							<div id="log">
-								<a href="#signin" data-toggle="modal" id="link-signin" class="text-uppercase small-text trigger-btn">Đăng
+								<a href="#signin" data-toggle="modal" id="link-signin"
+									class="text-uppercase small-text trigger-btn">Đăng
 									nhập</a> / <a href="#signup" id="link-signup" data-toggle="modal"
 									class="text-uppercase small-text trigger-btn">Đăng ký</a>
 							</div>
 
 							<ul class="custom-menu">
 								<li><a href="#"><i class="fa fa-heart"></i> Danh sách yêu thích</a></li>
+								<li><a href="#"><i class="fas fa-poll"></i> Lịch sử đấu giá<small class="bid-result">2</small></a></li>
 								<li><a href="#"><i class="fa fa-unlock-alt"></i> Đăng ký làm người bán</a></li>
+								<li><a href="#"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a></li>
 							</ul>
 						</li>
 						<!-- /Account -->
@@ -91,11 +98,12 @@
 											aria-hidden="true">&times;</button>
 									</div>
 									<div class="modal-body">
-										<form action=" method=" post">
+										<form action="" method="post">
 											<div class="form-group">
 												<div class="input-group">
-													<span class="input-group-addon"><i class="fa fa-user"></i></span>
-													<input type="email" class="form-control" name="username"
+													<span class="input-group-addon"><i
+															class="fas fa-envelope"></i></span>
+													<input type="email" class="form-control" name="email"
 														placeholder="Email" required="required">
 												</div>
 											</div>
@@ -117,7 +125,8 @@
 											<p class="hint-text"><a href="#">Quên mật khẩu?</a></p>
 										</form>
 									</div>
-									<div class="modal-footer">Chưa có tài khoản? <a href="javascript:void(0)" id="btn-call-signup">Tạo tài khoản mới</a></div>
+									<div class="modal-footer">Chưa có tài khoản? <a href="javascript:void(0)"
+											id="btn-call-signup">Tạo tài khoản mới</a></div>
 								</div>
 							</div>
 						</div>
@@ -129,20 +138,21 @@
 									<div class="modal-header">
 										<h4 class="modal-title">Đăng ký</h4>
 										<button type="button" class="close" data-dismiss="modal" id="btn-exit-signup"
-										aria-hidden="true" aria-hidden="true">&times;</button>
+											aria-hidden="true" aria-hidden="true">&times;</button>
 									</div>
 									<div class="modal-body">
-										<form action=" method=" post">
+										<form action="" method="post">
 											<div class="form-group">
 												<div class="input-group">
 													<span class="input-group-addon"><i class="fa fa-user"></i></span>
-													<input type="text" class="form-control" name="email"
+													<input type="text" class="form-control" name="name"
 														placeholder="Họ tên" required="required">
 												</div>
 											</div>
 											<div class="form-group">
 												<div class="input-group">
-													<span class="input-group-addon"><i class="fa fa-user"></i></span>
+													<span class="input-group-addon"><i
+															class="fas fa-envelope"></i></span>
 													<input type="text" class="form-control" name="email"
 														placeholder="Email" required="required">
 												</div>
@@ -156,22 +166,28 @@
 											</div>
 											<div class="form-group">
 												<div class="input-group">
-													<span class="input-group-addon"><i class="fa fa-user"></i></span>
+													<span class="input-group-addon"><i
+															class="fas fa-map-marker-alt"></i></span>
 													<input type="text" class="form-control" name="address"
 														placeholder="Địa chỉ" required="required">
 												</div>
 											</div>
 
 											<div class="form-group">
-												<div class="g-recaptcha" data-sitekey="6LciPMQUAAAAAHP1S7bIdQ5xn6L2Vl6f9ISRm5xt"></div>
+												<div class="input-group" style="margin: 0 auto">
+													<div class="g-recaptcha"
+														data-sitekey="6LciPMQUAAAAAHP1S7bIdQ5xn6L2Vl6f9ISRm5xt"></div>
+												</div>
 											</div>
 											<div class="form-group">
-												<button type="submit" class="btn btn-primary btn-block btn-lg">Đăng ký</button>
+												<button type="submit" class="btn btn-primary btn-block btn-lg">Đăng
+													ký</button>
 											</div>
 
 										</form>
 									</div>
-									<div class="modal-footer">Đã có tài khoản? <a href="javascript:void(0)"  id="btn-call-signin">Đăng nhập</a></div>
+									<div class="modal-footer">Đã có tài khoản? <a href="javascript:void(0)"
+											id="btn-call-signin">Đăng nhập</a></div>
 								</div>
 							</div>
 						</div>
@@ -206,11 +222,11 @@
 								<div class="row">
 									<div class="col-md-6">
 										<ul class="list-links cat-list">
-											<li><a href="#">Thời trang nam</a></li>
-											<li><a href="#">Thời trang nữ</a></li>
-											<li><a href="#">Thời trang cho bé</a></li>
-											<li><a href="#">Giày, dép</a></li>
-											<li><a href="#">Phụ kiện thời trang</a></li>
+											<li><a href="products.html">Thời trang nam</a></li>
+											<li><a href="products.html">Thời trang nữ</a></li>
+											<li><a href="products.html">Thời trang cho bé</a></li>
+											<li><a href="products.html">Giày, dép</a></li>
+											<li><a href="products.html">Phụ kiện thời trang</a></li>
 										</ul>
 									</div>
 									<div class="col-md-6 hidden-sm hidden-xs">
@@ -227,12 +243,12 @@
 								<div class="row">
 									<div class="col-md-6">
 										<ul class="list-links cat-list">
-											<li><a href="#">Điện thoại di dộng</a></li>
-											<li><a href="#">Laptop</a></li>
-											<li><a href="#">PC</a></li>
-											<li><a href="#">Máy tính bảng</a></li>
-											<li><a href="#">Phụ kiện điện thoại</a></li>
-											<li><a href="#">Phụ kiện máy tính</a></li>
+											<li><a href="products.html">Điện thoại di dộng</a></li>
+											<li><a href="products.html">Laptop</a></li>
+											<li><a href="products.html">PC</a></li>
+											<li><a href="products.html">Máy tính bảng</a></li>
+											<li><a href="products.html">Phụ kiện điện thoại</a></li>
+											<li><a href="products.html">Phụ kiện máy tính</a></li>
 										</ul>
 									</div>
 									<div class="col-md-6 hidden-sm hidden-xs">
@@ -250,9 +266,9 @@
 								<div class="row">
 									<div class="col-md-6">
 										<ul class="list-links cat-list">
-											<li><a href="#">Xe máy</a></li>
-											<li><a href="#">Xe đạp</a></li>
-											<li><a href="#">Xe điện</a></li>
+											<li><a href="products.html">Xe máy</a></li>
+											<li><a href="products.html">Xe đạp</a></li>
+											<li><a href="products.html">Xe điện</a></li>
 										</ul>
 									</div>
 									<div class="col-md-6 hidden-sm hidden-xs">
@@ -539,13 +555,18 @@
 	<!-- jQuery Plugins -->
 	<script src="js/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="js/index.js"></script>
+
 	<script src="js/navbar.js"></script>
 	<script src="js/slick.min.js"></script>
 	<script src="js/nouislider.min.js"></script>
 	<script src="js/jquery.zoom.min.js"></script>
+	<script src="js/js-snackbar.min.js"></script>
+	<script src="js/index.js"></script>
 	<script src="js/main.js"></script>
+
 	<script src="https://use.fontawesome.com/releases/v5.11.2/js/all.js" data-auto-replace-svg="nest"></script>
+	<script src='https://www.google.com/recaptcha/api.js'></script>
+
 
 
 </body>

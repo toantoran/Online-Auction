@@ -12,7 +12,7 @@ let productSingle =
                 <li><span>00 S</span></li>\
             </ul>\
             <button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Xem chi tiết</button>\
-            <span class="main-btn watch-list"><i class="fa fa-heart"></i></span>\
+            <span class="main-btn watch-list btn-wish"><i class="fa fa-heart"></i></span>\
             <img src="./img/product01.jpg" alt="">\
         </div>\
         <div class="product-body">\
