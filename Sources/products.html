@@ -26,6 +26,7 @@
 	<link type="text/css" rel="stylesheet" href="css/custom.css" />
 	<link type="text/css" rel="stylesheet" href="css/col5.css" />
 	<link type="text/css" rel="stylesheet" href="css/header.css" />
+	<link rel="stylesheet" href="css/js-snackbar.min.css">
 </head>
 
 <body>
@@ -63,7 +64,7 @@
 				<div class="pull-right">
 					<ul class="header-btns">
 						<li class="header-cart dropdown default-dropdown">
-							<button class="main-btn upload-btn"><i class="fas fa-gavel"></i> Mở phiên đấu giá</button>
+							<a href="#" class="main-btn upload-btn"><i class="fas fa-gavel"></i> Mở phiên đấu giá</a>
 						</li>
 						<!-- Account -->
 						<li class="header-account dropdown default-dropdown" id="account-container">
@@ -82,7 +83,10 @@
 
 							<ul class="custom-menu">
 								<li><a href="#"><i class="fa fa-heart"></i> Danh sách yêu thích</a></li>
+								<li><a href="#"><i class="fas fa-poll"></i> Lịch sử đấu giá<small
+											class="bid-result">2</small></a></li>
 								<li><a href="#"><i class="fa fa-unlock-alt"></i> Đăng ký làm người bán</a></li>
+								<li><a href="#"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a></li>
 							</ul>
 						</li>
 						<!-- /Account -->
@@ -96,7 +100,7 @@
 											aria-hidden="true">&times;</button>
 									</div>
 									<div class="modal-body">
-										<form action=" method=" post">
+										<form action="" method="post">
 											<div class="form-group">
 												<div class="input-group">
 													<span class="input-group-addon"><i
@@ -307,9 +311,9 @@
 					<div class="aside">
 						<h3 class="aside-title">Nơi bán</h3>
 						<ul class="list-links">
-							<li><a href="#">Hà Nội</a></li>
-							<li><a href="#">Hồ Chí Minh</a></li>
-							<li><a href="#">Đà Nẵng</a></li>
+							<li><a href="products.html">Hà Nội</a></li>
+							<li><a href="products.html">Hồ Chí Minh</a></li>
+							<li><a href="products.html">Đà Nẵng</a></li>
 						</ul>
 					</div>
 					<!-- /aside widget -->
@@ -323,7 +327,7 @@
 								<img src="./img/thumb-product01.jpg" alt="">
 							</div>
 							<div class="product-body">
-								<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+								<h2 class="product-name"><a href="product-page.html">Product Name Goes Here</a></h2>
 								<h3 class="product-price">6,500,000₫
 							</div>
 							<div class="product-footer">
@@ -338,7 +342,7 @@
 								<img src="./img/thumb-product01.jpg" alt="">
 							</div>
 							<div class="product-body">
-								<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+								<h2 class="product-name"><a href="product-page.html">Product Name Goes Here</a></h2>
 								<h3 class="product-price">6,500,000₫
 							</div>
 							<div class="product-footer">
@@ -357,7 +361,7 @@
 								<img src="./img/thumb-product01.jpg" alt="">
 							</div>
 							<div class="product-body">
-								<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+								<h2 class="product-name"><a href="product-page.html">Product Name Goes Here</a></h2>
 								<h3 class="product-price">6,500,000₫
 							</div>
 							<div class="product-footer">
@@ -372,7 +376,7 @@
 								<img src="./img/thumb-product01.jpg" alt="">
 							</div>
 							<div class="product-body">
-								<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+								<h2 class="product-name"><a href="product-page.html">Product Name Goes Here</a></h2>
 								<h3 class="product-price">6,500,000₫
 							</div>
 							<div class="product-footer">
@@ -400,7 +404,8 @@
 									<option value="0">Tăng dần</option>
 									<option value="1">Giảm dần</option>
 								</select>
-								<button class="main-btn" style="margin-top:2px"><i class="fas fa-sync-alt"></i></button>
+								<a href="products.html" class="main-btn" style="margin-top:2px"><i
+										class="fas fa-sync-alt"></i></a>
 							</div>
 						</div>
 						<div class="pull-right">
@@ -429,8 +434,8 @@
 							<ul class="store-pages">
 								<li><span class="text-uppercase">Page:</span></li>
 								<li class="active">1</li>
-								<li><a href="#">2</a></li>
-								<li><a href="#"><i class="fa fa-caret-right"></i></a></li>
+								<li><a href="products.html">2</a></li>
+								<li><a href="products.html"><i class="fa fa-caret-right"></i></a></li>
 							</ul>
 						</div>
 					</div>
@@ -455,7 +460,7 @@
 					<div class="footer">
 						<!-- footer logo -->
 						<div class="footer-logo">
-							<a class="logo" href="#">
+							<a class="logo" href="index.html">
 								<img src="./img/logo.png" alt="">
 							</a>
 						</div>
@@ -507,10 +512,10 @@
 						<h3 class="footer-header">Kết nối với Bidhub</h3>
 						<!-- footer social -->
 						<ul class="footer-social">
-							<li><a href="#"><i class="fab fa-facebook-square fa-2x"></i></a></li>
-							<li><a href="#"><i class="fab fa-twitter-square fa-2x"></i></li>
-							<li><a href="#"><i class="fab fa-google-plus-square fa-2x"></i></a></li>
-							<li><a href="#"><i class="fab fa-youtube fa-2x"></i></a></li>
+							<li><a href="https://www.facebook.com/"><i class="fab fa-facebook-square fa-2x"></i></a>
+							</li>
+							<li><a href="https://www.twitter.com/"><i class="fab fa-twitter-square fa-2x"></i></li>
+							<li><a href="https://www.youtube.com/"><i class="fab fa-youtube fa-2x"></i></a></li>
 						</ul>
 						<!-- /footer social -->
 					</div>
@@ -545,6 +550,7 @@
 	<script src="js/slick.min.js"></script>
 	<script src="js/nouislider.min.js"></script>
 	<script src="js/jquery.zoom.min.js"></script>
+	<script src="js/js-snackbar.min.js"></script>
 	<script src="js/main.js"></script>
 	<script src="https://use.fontawesome.com/releases/v5.11.2/js/all.js" data-auto-replace-svg="nest"></script>
 	<script src='https://www.google.com/recaptcha/api.js'></script>
