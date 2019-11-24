@@ -465,6 +465,10 @@ textarea.input {
   cursor: pointer;
 }
 
+.header-account {
+  width: 200px;
+}
+
 .header-account.dropdown .custom-menu>li>a>i {
   margin-right: 15px;
   color: #F8694A;
@@ -503,6 +507,12 @@ textarea.input {
 
 .header-cart .main-btn.upload-btn {
   border-radius: 25px;
+}
+
+.main-btn.btn-new {
+  width: 300px;
+  height: 80px;
+  font-size: 20px;
 }
 
 .header-cart.dropdown .custom-menu {

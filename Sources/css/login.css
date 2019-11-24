@@ -62,7 +62,7 @@
 .modal-login .btn {        
     font-size: 16px;
     font-weight: bold;
-    background: #636363;
+    background: #30323a;
     border-radius: 3px;
     border: none;
     min-width: 140px;
@@ -103,53 +103,4 @@
 }
 .modal-body i {
     color: #F8694A;
-}
-
-.remember-check input[type=checkbox]{
-	height: 0;
-	width: 0;
-	visibility: hidden;
-}
-
-.remember-check label {
-	cursor: pointer;
-	text-indent: -9999px;
-	width: 48px;
-	height: 24px;
-	background: grey;
-	border-radius: 24px;
-	position: relative;
-}
-
-.remember-check label:after {
-	content: '';
-	position: absolute;
-	top: 2px;
-	left: 2px;
-	width: 20px;
-	height: 20px;
-	background: #fff;
-	border-radius: 20px;
-	transition: 0.3s;
-}
-
-.remember-check input:checked + label {
-	background: #F8694A;
-}
-
-.remember-check input:checked + label:after {
-	left: calc(100% - 2px);
-	transform: translateX(-100%);
-}
-
-.remember-check label:active:after {
-	width: 20px;
-}
-
-.remember-check {
-    line-height: 24px;
-}
-
-#account-container {
-    width: 200px;
 }
