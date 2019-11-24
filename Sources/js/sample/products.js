@@ -1,5 +1,5 @@
-let productSingle = 
-'<div class="col-md-3 col-sm-4 col-xs-6">\
+let productSingle =
+    '<div class="col-md-3 col-sm-4 col-xs-6">\
     <div class="product product-single">\
         <div class="product-thumb" >\
             <div class="product-label">\
@@ -26,9 +26,9 @@ let productSingle =
     </div>\
 </div>';
 
-let productContainer =  $('#store').find('.product-container');
+let productContainer = $('#store').find('.product-container');
 
-for (let i=0;i<12;i++) {
-   productContainer.append(productSingle);
+for (let i = 0; i < 12; i++) {
+    productContainer.append(productSingle);
 }
 
