@@ -176,6 +176,9 @@
   $('.quick-view').click((event) => {
     window.location.href = $(event.target).parent().parent().find('.product-body .product-name a').attr('href');
   });
+  $('.check-out').click((event) => {
+    window.location.href = 'checkout.html';
+  });
   $('.btn-wish').click((event) => {
     let target = $(event.target).closest('.btn-wish')
     target.toggleClass('focus');
@@ -216,6 +219,25 @@
     });
   });
 
+  $('.primary-btn.btn-order').click(() => {
+    Swal.fire({
+      title: 'Bạn muốn thanh toán sản phẩm này?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#F8694A',
+      cancelButtonColor: '#000',
+      confirmButtonText: 'Xác nhận',
+      cancelButtonText: 'Hủy'
+    }).then((result) => {
+      if (result.value) {
+        Swal.fire({
+          title: 'Thanh toán thành công',
+          icon: 'success'
+        });
+      }
+    })
+    return false;
+  })
 
   $('#filer_input').filer({
     addMore: true,

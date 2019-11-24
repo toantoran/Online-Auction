@@ -11,7 +11,7 @@ let productSuccess =
         <li><span>00 M</span></li>\
         <li><span>00 S</span></li>\
     </ul>\
-    <button class="main-btn quick-view"><i class="fas fa-money-check-alt"></i> Thanh toán</button>\
+    <button class="main-btn check-out"><i class="fas fa-money-check-alt"></i> Thanh toán</button>\
     <button class="watch-list btn-wish"><i class="fa fa-heart"></i></button>\
     <img src="./img/product01.jpg" alt="">\
 </div>\
