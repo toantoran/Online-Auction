@@ -6,9 +6,9 @@ let productSingle =
                 <span>Mới</span>\
             </div>\
             <ul class="product-countdown">\
-                <li><span>00 H</span></li>\
-                <li><span>00 M</span></li>\
-                <li><span>00 S</span></li>\
+                <li><span class="cd-h">0 H</span></li>\
+                <li><span class="cd-m">0 M</span></li>\
+                <li><span class="cd-s">0 S</span></li>\
             </ul>\
             <button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Xem chi tiết</button>\
             <button class="watch-list btn-wish"><i class="fa fa-heart"></i></button>\
@@ -32,3 +32,34 @@ for (let i =0; i < 5; i++) {
     $('.product-slick').append(productSingle);
 }
 
+Date.prototype.addDays = function(days) {
+    var date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+}
+
+showCountDown($('.product.product-single'))
+function showCountDown(object) { 
+    let demoExpDate = new Date(new Date().setHours(new Date().getHours() + 4 ));
+    
+    let h = (object.find('.product-countdown li:nth-child(1) span'));
+    let m = (object.find('.product-countdown li:nth-child(2) span'));
+    let s = (object.find('.product-countdown li:nth-child(3) span'));
+
+    let x = setInterval(function() {
+      let now = new Date().getTime();
+      let distance = demoExpDate - now;
+      let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      hours += days*24;
+      let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      h.text(hours + ' H');
+      m.text(minutes + ' M');
+      s.text(seconds + ' S');
+      if (distance < 0) {
+        clearInterval(x);
+        object.html("Phiên đấu giá đã kết thúc");
+      }
+    }, 1000);
+}
