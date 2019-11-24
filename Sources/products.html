@@ -9,19 +9,18 @@
 	<title>Bidhub: Danh sách sản phẩm</title>
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link type="text/css" rel="stylesheet" href="css/slick.css" />
-	<link type="text/css" rel="stylesheet" href="css/slick-theme.css" />
-	<link type="text/css" rel="stylesheet" href="css/nouislider.min.css" />
+	<link rel="stylesheet" href="css/col5.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/jquery.filer.css">
 	<link rel="stylesheet" href="css/jquery.filer-dragdropbox-theme.css">
+	<link rel="stylesheet" href="css/jquery.filer.css">
+	<link rel="stylesheet" href="css/js-snackbar.min.css">
+	<link rel="stylesheet" href="css/login.css">
+	<link rel="stylesheet" href="css/nouislider.min.css">
+	<link rel="stylesheet" href="css/Popup-plugin.css">
+	<link rel="stylesheet" href="css/slick-theme.css">
+	<link rel="stylesheet" href="css/slick.css">
+	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/switchery.min.css">
-
-	<!-- Custom stlylesheet -->
-	<link type="text/css" rel="stylesheet" href="css/style.css" />
-	<link type="text/css" rel="stylesheet" href="css/custom.css" />
-	<link type="text/css" rel="stylesheet" href="css/login.css" />
-	<link type="text/css" rel="stylesheet" href="css/js-snackbar.min.css">
 </head>
 
 <body>
@@ -46,10 +45,12 @@
 							<select class="input search-categories">
 								<option value="0">Tất cả danh mục</option>
 								<option value="1">Thời trang</option>
-								<option value="2">Điện tử</option>
-								<option value="3">Đồ gia dụng</option>
-								<option value="4">Thực phẩm</option>
-								<option value="5">Sách, VPP</option>
+								<option value="2">Máy tính, điện thoại</option>
+								<option value="3">Xe</option>
+								<option value="4">Làm đẹp - Sức khỏe</option>
+								<option value="5">Hàng tiêu dùng</option>
+								<option value="6">Đồ gia dụng</option>
+								<option value="7">Sách, VPP</option>
 							</select>
 							<button class="search-btn"><i class="fa fa-search"></i></button>
 						</form>
@@ -78,12 +79,17 @@
 							</div>
 
 							<ul class="custom-menu">
-								<li><a href="#"><i class="fas fa-user-cog"></i> Quản lí tài khoản</a></li>
-								<li><a href="#"><i class="fa fa-heart"></i> Danh sách yêu thích</a></li>
-								<li><a href="#"><i class="fas fa-poll"></i> Lịch sử đấu giá<small
+								<li><a href="account.html"><i class="fas fa-user-cog"></i> Thông tin cá nhân</a></li>
+								<li><a href="account.html#history"><i class="fas fa-poll"></i> Lịch sử đấu giá<small
 											class="bid-result">2</small></a></li>
-								<li><a href="#"><i class="fa fa-unlock-alt"></i> Đăng ký làm người bán</a></li>
-								<li><a href="#"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a></li>
+								<li><a href="account.html#wish-list"><i class="fa fa-heart"></i> Danh sách yêu thích</a>
+								</li>
+								<li><a href="account.html#sold-product"><i class="fas fa-clipboard"></i> Sản phẩm đã
+										đăng</a></li>
+								<li><a href="account.html#seller-regis"><i class="fa fa-unlock-alt"></i> Đăng ký làm
+										người bán</a></li>
+								<li><a href="javascript:void(0)" class="btn-signout"><i class="fas fa-sign-out-alt"></i>
+										Đăng xuất</a></li>
 							</ul>
 						</li>
 						<!-- /Account -->
@@ -114,7 +120,7 @@
 												</div>
 											</div>
 											<div class="form-group remember-check">
-												<input type="checkbox" class="js-switch"/>
+												<input type="checkbox" class="js-switch" />
 												<span style="font-weight: bold">Ghi nhớ đăng nhập</span>
 											</div>
 											<div class="form-group">
@@ -236,7 +242,7 @@
 						</li>
 						<li class="dropdown side-dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
-									class="fas fa-tshirt"></i></i>&nbsp;Máy tính, điện thoại <i
+									class="fas fa-mobile-alt"></i>&nbsp;Máy tính, điện thoại <i
 									class="fa fa-angle-right icon-right"></i></a>
 							<div class="custom-menu">
 								<div class="row">
@@ -256,10 +262,9 @@
 								</div>
 							</div>
 						</li>
-
 						<li class="dropdown side-dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
-									class="fas fa-tshirt"></i></i>&nbsp;Xe <i
+									class="fas fa-motorcycle"></i>&nbsp;Xe <i
 									class="fa fa-angle-right icon-right"></i></a>
 							<div class="custom-menu">
 								<div class="row">
@@ -275,6 +280,89 @@
 									</div>
 								</div>
 							</div>
+						</li>
+						<li class="dropdown side-dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
+									class="fas fa-heartbeat"></i></i>&nbsp;Làm đẹp - Sức khỏe <i
+									class="fa fa-angle-right icon-right"></i></a>
+							<div class="custom-menu">
+								<div class="row">
+									<div class="col-md-6">
+										<ul class="list-links cat-list">
+											<li><a href="products.html">Mỹ phẩm</a></li>
+											<li><a href="products.html">Dụng cụ trang điểm</a></li>
+											<li><a href="products.html">Dụng cụ y tế</a></li>
+											<li><a href="products.html">Thực phẩm chức năng</a></li>
+										</ul>
+									</div>
+									<div class="col-md-6 hidden-sm hidden-xs">
+										<img src="" class="cat-img" order="-1">
+									</div>
+								</div>
+							</div>
+						</li>
+						<li class="dropdown side-dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
+									class="fas fa-pizza-slice"></i></i>&nbsp;Hàng tiêu dùng <i
+									class="fa fa-angle-right icon-right"></i></a>
+							<div class="custom-menu">
+								<div class="row">
+									<div class="col-md-6">
+										<ul class="list-links cat-list">
+											<li><a href="products.html">Bánh kẹo</a></li>
+											<li><a href="products.html">Đồ uống</a></li>
+											<li><a href="products.html">Thực phẩm</a></li>
+											<li><a href="products.html">Đồ hộp</a></li>
+										</ul>
+									</div>
+									<div class="col-md-6 hidden-sm hidden-xs">
+										<img src="" class="cat-img" order="-1">
+									</div>
+								</div>
+							</div>
+						</li>
+						<li class="dropdown side-dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
+									class="fas fa-couch"></i>&nbsp;Đồ gia dụng <i
+									class="fa fa-angle-right icon-right"></i></a>
+							<div class="custom-menu">
+								<div class="row">
+									<div class="col-md-6">
+										<ul class="list-links cat-list">
+											<li><a href="products.html">Đồ dùng nhà bếp</a></li>
+											<li><a href="products.html">Đồ dùng phòng ngủ</a></li>
+											<li><a href="products.html">Nội thất khác</a></li>
+										</ul>
+									</div>
+									<div class="col-md-6 hidden-sm hidden-xs">
+										<img src="" class="cat-img" order="-1">
+									</div>
+								</div>
+							</div>
+						</li>
+						<li class="dropdown side-dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
+									class="fas fa-book"></i>&nbsp;Sách, Văn phòng phẩm <i
+									class="fa fa-angle-right icon-right"></i></a>
+							<div class="custom-menu">
+								<div class="row">
+									<div class="col-md-6">
+										<ul class="list-links cat-list">
+											<li><a href="products.html">Sách ngoại văn</a></li>
+											<li><a href="products.html">Sách tiếng Việt</a></li>
+											<li><a href="products.html">Sách thiếu nhi</a></li>
+											<li><a href="products.html">Truyện tranh</a></li>
+											<li><a href="products.html">Văn phòng phẩm</a></li>
+										</ul>
+									</div>
+									<div class="col-md-6 hidden-sm hidden-xs">
+										<img src="" class="cat-img" order="-1">
+									</div>
+								</div>
+							</div>
+						</li>
+						<li class="dropdown side-dropdown">
+							<a href="products.html"><i class="fas fa-th"></i>&nbsp;Tất cả danh mục </a>
 						</li>
 					</ul>
 				</div>
@@ -457,7 +545,7 @@
 					<div class="footer">
 						<!-- footer logo -->
 						<div class="footer-logo">
-							<a class="logo" href="index.html">
+							<a class="logo" href="#">
 								<img src="./img/logo.png" alt="">
 							</a>
 						</div>
@@ -540,25 +628,27 @@
 	<!-- /FOOTER -->
 
 	<!-- jQuery Plugins -->
-	<script src="js/jquery.min.js"></script>
+	<script src="js/plugin/jquery.min.js"></script>
+
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="js/Popup-plugin.js"></script>
-	<script src="js/jquery.filer.min.js"></script>
-	<script src="js/switchery.min.js"></script>
 	<script type="text/javascript" charset="utf8"
 		src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/autonumeric@4.5.4"></script>
 	<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-	<script src="js/slick.min.js"></script>
-	<script src="js/nouislider.min.js"></script>
-	<script src="js/jquery.zoom.min.js"></script>
-	<script src="js/js-snackbar.min.js"></script>
 	<script src="https://use.fontawesome.com/releases/v5.11.2/js/all.js" data-auto-replace-svg="nest"></script>
 	<script src='https://www.google.com/recaptcha/api.js'></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-	<script src="js/switchery.min.js"></script>
 
-	<script src="js/products.js"></script>
+	<script src="js/plugin/jquery.filer.min.js"></script>
+	<script src="js/plugin/jquery.zoom.min.js"></script>
+	<script src="js/plugin/js-snackbar.min.js"></script>
+	<script src="js/plugin/nouislider.min.js"></script>
+	<script src="js/plugin/Popup-plugin.js"></script>
+	<script src="js/plugin/slick.min.js"></script>
+	<script src="js/plugin/switchery.min.js"></script>
+
+	<script src="js/sample/products.js"></script>
+
 	<script src="js/main.js"></script>
 </body>
 

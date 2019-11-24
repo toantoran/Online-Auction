@@ -315,6 +315,17 @@ textarea.input {
   text-transform: uppercase;
 }
 
+.section-title .title small {
+  display: inline-block;
+  position: absolute;
+  cursor: pointer;
+}
+
+.section-title .title small:hover {
+  color: #F8694A;
+  transition: 0.3s;
+}
+
 .section-title:after {
   content: "";
   position: absolute;
@@ -1594,6 +1605,19 @@ textarea.input {
   color: #F8694A;
 }
 
+
+.form-group .form-label {
+  line-height: 40px;
+  margin: 0;
+}
+
+.fixed-aside {
+  position: sticky !important;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 50px; /* required */
+}
+
 /*-- review form --*/
 
 .review-form textarea.input {
@@ -1850,5 +1874,33 @@ textarea.input {
   [class*='col-xs'] {
     width: 100%;
     margin: 10px;
+  }
+}
+
+
+.cat-img {
+  height: 200px;
+  max-width: 200px;
+  float: right;
+}
+.custom-menu {
+  min-width: 300px;
+  max-width: 400px;
+}
+.small-text {
+  font-size: 12px;
+}
+
+@media only screen and (min-width: 991px) {
+  .header-search>form .search-categories {
+      width: 160px;
+  }
+  
+  .header-search>form .search-input {
+      padding-left: 180px;
+  }
+  .header-search {
+      width: 500px;
+      max-width: 500px;
   }
 }
