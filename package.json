@@ -1,0 +1,27 @@
+{
+  "name": "Online-Auction",
+  "version": "1.0.0",
+  "description": "Project Online Auction - Sàn đấu giá trực tuyến",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yato511/Online-Auction.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yato511/Online-Auction/issues"
+  },
+  "homepage": "https://github.com/yato511/Online-Auction#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
+    "mysql": "^2.17.1",
+    "nodemon": "^2.0.1"
+  }
+}
