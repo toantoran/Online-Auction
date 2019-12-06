@@ -9,11 +9,8 @@
     <title>Bidhub: {{this.title}}</title>
     <link rel="shortcut icon" href="img/icon.png">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link href="css/datepicker.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/col5.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/jquery.filer-dragdropbox-theme.css">
-    <link rel="stylesheet" href="css/jquery.filer.css">
     <link rel="stylesheet" href="css/js-snackbar.min.css">
     <link rel="stylesheet" href="css/login.css">
     <link rel="stylesheet" href="css/nouislider.min.css">
@@ -34,7 +31,7 @@
                 <div class="pull-left">
                     <!-- Logo -->
                     <div class="header-logo">
-                        <a class="logo" href="index.html">
+                        <a class="logo" href="/">
                             <img src="./img/logo.png" alt="">
                         </a>
                     </div>
@@ -46,13 +43,9 @@
                             <input class="input search-input" type="text" placeholder="Tìm sản phẩm bạn muốn">
                             <select class="input search-categories">
                                 <option value="0">Tất cả danh mục</option>
-                                <option value="1">Thời trang</option>
-                                <option value="2">Máy tính, điện thoại</option>
-                                <option value="3">Xe</option>
-                                <option value="4">Làm đẹp - Sức khỏe</option>
-                                <option value="5">Hàng tiêu dùng</option>
-                                <option value="6">Đồ gia dụng</option>
-                                <option value="7">Sách, VPP</option>
+                                {{#each this.category}}
+                                <option value="{{this.cateID}}">{{this.cateName}}</option>
+                                {{/each}}
                             </select>
                             <button class="search-btn"><i class="fa fa-search"></i></button>
                         </form>
@@ -213,7 +206,6 @@
     </header>
     <!-- /HEADER -->
 
-
     <!-- NAVIGATION -->
     <div id="navigation">
         <!-- container -->
@@ -268,7 +260,7 @@
                     <div class="footer">
                         <!-- footer logo -->
                         <div class="footer-logo">
-                            <a class="logo" href="#">
+                            <a class="logo" href="/">
                                 <img src="./img/logo.png" alt="">
                             </a>
                         </div>
@@ -306,9 +298,9 @@
                     <div class="footer">
                         <h3 class="footer-header">Hỗ trợ khách hàng</h3>
                         <ul class="list-links">
-                            <li><a href="#">Giới thiệu về Bidhub</a></li>
-                            <li><a href="#">Chính sách bảo mật</a></li>
-                            <li><a href="#">Tư vấn</a></li>
+                            <li><a href="/">Giới thiệu về Bidhub</a></li>
+                            <li><a href="/">Chính sách bảo mật</a></li>
+                            <li><a href="/">Tư vấn</a></li>
                         </ul>
                     </div>
                 </div>
@@ -372,7 +364,7 @@
     <script src="js/plugin/slick.min.js"></script>
     <script src="js/plugin/switchery.min.js"></script>
 
-    <script src="js/sample/account.js"></script>
+    <script src="js/sample/index.js"></script>
 
     <script src="js/main.js"></script>
 

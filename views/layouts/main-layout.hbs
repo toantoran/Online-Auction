@@ -34,7 +34,7 @@
                 <div class="pull-left">
                     <!-- Logo -->
                     <div class="header-logo">
-                        <a class="logo" href="index.html">
+                        <a class="logo" href="/">
                             <img src="./img/logo.png" alt="">
                         </a>
                     </div>
@@ -46,13 +46,9 @@
                             <input class="input search-input" type="text" placeholder="Tìm sản phẩm bạn muốn">
                             <select class="input search-categories">
                                 <option value="0">Tất cả danh mục</option>
-                                <option value="1">Thời trang</option>
-                                <option value="2">Máy tính, điện thoại</option>
-                                <option value="3">Xe</option>
-                                <option value="4">Làm đẹp - Sức khỏe</option>
-                                <option value="5">Hàng tiêu dùng</option>
-                                <option value="6">Đồ gia dụng</option>
-                                <option value="7">Sách, VPP</option>
+                                {{#each this.category}}
+                                <option value="{{this.cateID}}">{{this.cateName}}</option>
+                                {{/each}}
                             </select>
                             <button class="search-btn"><i class="fa fa-search"></i></button>
                         </form>
@@ -81,14 +77,15 @@
                             </div>
 
                             <ul class="custom-menu">
-                                <li><a href="#profile"><i class="fas fa-user-cog"></i> Thông tin cá nhân</a></li>
-                                <li><a href="#history"><i class="fas fa-poll"></i> Lịch sử đấu giá<small
-                                            class="bid-result">2</small></a></li>
-                                <li><a href="#wish-list"><i class="fa fa-heart"></i> Danh sách yêu thích</a>
+                                <li><a href="/account#profile"><i class="fas fa-user-cog"></i> Thông tin cá nhân</a>
                                 </li>
-                                <li><a href="#sold-product"><i class="fas fa-clipboard"></i> Sản phẩm đã
+                                <li><a href="/account#history"><i class="fas fa-poll"></i> Lịch sử đấu giá<small
+                                            class="bid-result">2</small></a></li>
+                                <li><a href="/account#wish-list"><i class="fa fa-heart"></i> Danh sách yêu thích</a>
+                                </li>
+                                <li><a href="/account#sold-product"><i class="fas fa-clipboard"></i> Sản phẩm đã
                                         đăng</a></li>
-                                <li><a href="#seller-regis"><i class="fa fa-unlock-alt"></i> Đăng ký làm
+                                <li><a href="/account#seller-regis"><i class="fa fa-unlock-alt"></i> Đăng ký làm
                                         người bán</a></li>
                                 <li><a href="javascript:void(0)" class="btn-signout"><i class="fas fa-sign-out-alt"></i>
                                         Đăng xuất</a></li>
@@ -221,41 +218,20 @@
                 <div class="category-nav show-on-click">
                     <span class="category-header">Danh mục sản phẩm <i class="fa fa-list"></i></span>
                     <ul class="category-list">
+                        {{#each this.category}}
                         <li class="dropdown side-dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
-                                    class="fas fa-tshirt"></i></i>&nbsp;Thời trang <i
+                                    class="fas fa-{{this.cateIcon}}"></i></i>&nbsp;{{this.cateName}} <i
                                     class="fa fa-angle-right icon-right"></i></a>
                             <div class="custom-menu">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <ul class="list-links cat-list">
-                                            <li><a href="products.html">Thời trang nam</a></li>
-                                            <li><a href="products.html">Thời trang nữ</a></li>
-                                            <li><a href="products.html">Thời trang cho bé</a></li>
-                                            <li><a href="products.html">Giày, dép</a></li>
-                                            <li><a href="products.html">Phụ kiện thời trang</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-md-6 hidden-sm hidden-xs">
-                                        <img src="img/1.jpg" class="cat-img" order="-1">
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="dropdown side-dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
-                                    class="fas fa-mobile-alt"></i>&nbsp;Máy tính, điện thoại <i
-                                    class="fa fa-angle-right icon-right"></i></a>
-                            <div class="custom-menu">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <ul class="list-links cat-list">
-                                            <li><a href="products.html">Điện thoại di dộng</a></li>
-                                            <li><a href="products.html">Laptop</a></li>
-                                            <li><a href="products.html">PC</a></li>
-                                            <li><a href="products.html">Máy tính bảng</a></li>
-                                            <li><a href="products.html">Phụ kiện điện thoại</a></li>
-                                            <li><a href="products.html">Phụ kiện máy tính</a></li>
+                                            {{#each this.subCate}}
+                                            <li><a
+                                                    href="productList/{{this.cateID}}/{{this.subcateID}}">{{this.subcateName}}</a>
+                                            </li>
+                                            {{/each}}
                                         </ul>
                                     </div>
                                     <div class="col-md-6 hidden-sm hidden-xs">
@@ -264,108 +240,7 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="dropdown side-dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
-                                    class="fas fa-motorcycle"></i>&nbsp;Xe <i
-                                    class="fa fa-angle-right icon-right"></i></a>
-                            <div class="custom-menu">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <ul class="list-links cat-list">
-                                            <li><a href="products.html">Xe máy</a></li>
-                                            <li><a href="products.html">Xe đạp</a></li>
-                                            <li><a href="products.html">Xe điện</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-md-6 hidden-sm hidden-xs">
-                                        <img src="" class="cat-img" order="-1">
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="dropdown side-dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
-                                    class="fas fa-heartbeat"></i></i>&nbsp;Làm đẹp - Sức khỏe <i
-                                    class="fa fa-angle-right icon-right"></i></a>
-                            <div class="custom-menu">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <ul class="list-links cat-list">
-                                            <li><a href="products.html">Mỹ phẩm</a></li>
-                                            <li><a href="products.html">Dụng cụ trang điểm</a></li>
-                                            <li><a href="products.html">Dụng cụ y tế</a></li>
-                                            <li><a href="products.html">Thực phẩm chức năng</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-md-6 hidden-sm hidden-xs">
-                                        <img src="" class="cat-img" order="-1">
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="dropdown side-dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
-                                    class="fas fa-pizza-slice"></i></i>&nbsp;Hàng tiêu dùng <i
-                                    class="fa fa-angle-right icon-right"></i></a>
-                            <div class="custom-menu">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <ul class="list-links cat-list">
-                                            <li><a href="products.html">Bánh kẹo</a></li>
-                                            <li><a href="products.html">Đồ uống</a></li>
-                                            <li><a href="products.html">Thực phẩm</a></li>
-                                            <li><a href="products.html">Đồ hộp</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-md-6 hidden-sm hidden-xs">
-                                        <img src="" class="cat-img" order="-1">
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="dropdown side-dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
-                                    class="fas fa-couch"></i>&nbsp;Đồ gia dụng <i
-                                    class="fa fa-angle-right icon-right"></i></a>
-                            <div class="custom-menu">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <ul class="list-links cat-list">
-                                            <li><a href="products.html">Đồ dùng nhà bếp</a></li>
-                                            <li><a href="products.html">Đồ dùng phòng ngủ</a></li>
-                                            <li><a href="products.html">Nội thất khác</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-md-6 hidden-sm hidden-xs">
-                                        <img src="" class="cat-img" order="-1">
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="dropdown side-dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
-                                    class="fas fa-book"></i>&nbsp;Sách, Văn phòng phẩm <i
-                                    class="fa fa-angle-right icon-right"></i></a>
-                            <div class="custom-menu">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <ul class="list-links cat-list">
-                                            <li><a href="products.html">Sách ngoại văn</a></li>
-                                            <li><a href="products.html">Sách tiếng Việt</a></li>
-                                            <li><a href="products.html">Sách thiếu nhi</a></li>
-                                            <li><a href="products.html">Truyện tranh</a></li>
-                                            <li><a href="products.html">Văn phòng phẩm</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-md-6 hidden-sm hidden-xs">
-                                        <img src="" class="cat-img" order="-1">
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="dropdown side-dropdown">
-                            <a href="products.html"><i class="fas fa-th"></i>&nbsp;Tất cả danh mục </a>
-                        </li>
+                        {{/each}}
                     </ul>
                 </div>
                 <!-- /category nav -->
@@ -375,17 +250,18 @@
     </div>
     <!-- /NAVIGATION -->
 
-
     <!-- BREADCRUMB -->
     <div id="breadcrumb">
         <div class="container">
             <ul class="breadcrumb">
-                <li><a href="index.html">Trang chủ</a></li>
-                <li class="active">Quản lý tài khoản</li>
+                <li><a href="/">Trang chủ</a></li>
+                <li class="active">{{this.title}}</li>
             </ul>
         </div>
     </div>
     <!-- /BREADCRUMB -->
+
+    {{{body}}}
 
     <!-- FOOTER -->
     <footer id="footer" class="section section-grey">
@@ -398,7 +274,7 @@
                     <div class="footer">
                         <!-- footer logo -->
                         <div class="footer-logo">
-                            <a class="logo" href="#">
+                            <a class="logo" href="/">
                                 <img src="./img/logo.png" alt="">
                             </a>
                         </div>
@@ -436,9 +312,9 @@
                     <div class="footer">
                         <h3 class="footer-header">Hỗ trợ khách hàng</h3>
                         <ul class="list-links">
-                            <li><a href="#">Giới thiệu về Bidhub</a></li>
-                            <li><a href="#">Chính sách bảo mật</a></li>
-                            <li><a href="#">Tư vấn</a></li>
+                            <li><a href="/">Giới thiệu về Bidhub</a></li>
+                            <li><a href="/">Chính sách bảo mật</a></li>
+                            <li><a href="/">Tư vấn</a></li>
                         </ul>
                     </div>
                 </div>
@@ -501,8 +377,6 @@
     <script src="js/plugin/Popup-plugin.js"></script>
     <script src="js/plugin/slick.min.js"></script>
     <script src="js/plugin/switchery.min.js"></script>
-
-    <script src="js/sample/account.js"></script>
 
     <script src="js/main.js"></script>
 
