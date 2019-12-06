@@ -4,11 +4,11 @@ const util = require('util');
 
 const pool = mysql.createPool({
     connectionLimit: 50,
-    host: 'localhost',
+    host: 'sql12.freemysqlhosting.net',
     port: 3306,
-    user: 'root',
-    password: '0569',
-    database: 'online_auction'
+    user: 'sql12314720',
+    password: 'qT3Czyatrb',
+    database: 'sql12314720'
 });
 
 const mysql_query = util.promisify(pool.query).bind(pool);

@@ -81,14 +81,15 @@
                             </div>
 
                             <ul class="custom-menu">
-                                <li><a href="#profile"><i class="fas fa-user-cog"></i> Thông tin cá nhân</a></li>
-                                <li><a href="#history"><i class="fas fa-poll"></i> Lịch sử đấu giá<small
-                                            class="bid-result">2</small></a></li>
-                                <li><a href="#wish-list"><i class="fa fa-heart"></i> Danh sách yêu thích</a>
+                                <li><a href="/account#profile"><i class="fas fa-user-cog"></i> Thông tin cá nhân</a>
                                 </li>
-                                <li><a href="#sold-product"><i class="fas fa-clipboard"></i> Sản phẩm đã
+                                <li><a href="/account#history"><i class="fas fa-poll"></i> Lịch sử đấu giá<small
+                                            class="bid-result">2</small></a></li>
+                                <li><a href="/account#wish-list"><i class="fa fa-heart"></i> Danh sách yêu thích</a>
+                                </li>
+                                <li><a href="/account#sold-product"><i class="fas fa-clipboard"></i> Sản phẩm đã
                                         đăng</a></li>
-                                <li><a href="#seller-regis"><i class="fa fa-unlock-alt"></i> Đăng ký làm
+                                <li><a href="/account#seller-regis"><i class="fa fa-unlock-alt"></i> Đăng ký làm
                                         người bán</a></li>
                                 <li><a href="javascript:void(0)" class="btn-signout"><i class="fas fa-sign-out-alt"></i>
                                         Đăng xuất</a></li>
@@ -211,9 +212,8 @@
         <!-- container -->
     </header>
     <!-- /HEADER -->
-    {{#each this.category}}
-    {{this.cateName}}
-    {{/each}}
+
+
     <!-- NAVIGATION -->
     <div id="navigation">
         <!-- container -->
@@ -223,20 +223,20 @@
                 <div class="category-nav">
                     <span class="category-header">Danh mục sản phẩm <i class="fa fa-list"></i></span>
                     <ul class="category-list">
-
+                        {{#each this.category}}
                         <li class="dropdown side-dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
-                                    class="fas fa-tshirt"></i></i>&nbsp;{{ this.cateName }} <i
+                                    class="fas fa-{{this.cateIcon}}"></i></i>&nbsp;{{this.cateName}} <i
                                     class="fa fa-angle-right icon-right"></i></a>
                             <div class="custom-menu">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <ul class="list-links cat-list">
-                                            <li><a href="products.html">Thời trang nam</a></li>
-                                            <li><a href="products.html">Thời trang nữ</a></li>
-                                            <li><a href="products.html">Thời trang cho bé</a></li>
-                                            <li><a href="products.html">Giày, dép</a></li>
-                                            <li><a href="products.html">Phụ kiện thời trang</a></li>
+                                            {{#each this.subCate}}
+                                            <li><a
+                                                    href="productList/{{this.cateID}}/{{this.subcateID}}">{{this.subcateName}}</a>
+                                            </li>
+                                            {{/each}}
                                         </ul>
                                     </div>
                                     <div class="col-md-6 hidden-sm hidden-xs">
@@ -245,6 +245,7 @@
                                 </div>
                             </div>
                         </li>
+                        {{/each}}
                     </ul>
                 </div>
                 <!-- /category nav -->
@@ -254,17 +255,7 @@
     </div>
     <!-- /NAVIGATION -->
 
-
-    <!-- BREADCRUMB -->
-    <div id="breadcrumb">
-        <div class="container">
-            <ul class="breadcrumb">
-                <li><a href="index.html">Trang chủ</a></li>
-                <li class="active">Quản lý tài khoản</li>
-            </ul>
-        </div>
-    </div>
-    <!-- /BREADCRUMB -->
+    {{{body}}}
 
     <!-- FOOTER -->
     <footer id="footer" class="section section-grey">

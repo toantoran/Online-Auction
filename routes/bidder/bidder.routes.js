@@ -1,21 +1,19 @@
-const express = require('express');
-const categoryModel = require('../../models/category.model');
+const express = require("express");
+const categoryModel = require("../../models/category.model");
 
 const router = express.Router();
 
+router.get("/", async (req, res) => {
+  const cateList = await categoryModel.getCate();
+  for (cate of cateList) {
+    cate.subCate = await categoryModel.getSubCate(cate.cateID);
+  }
 
-
-router.get('/', async (req, res) => {
-    const category = await categoryModel.getCate();
-    const subCategory = await categoryModel.getSubCate();
-    res.render('index', {
-        layout: 'home-layout.hbs',
-        category: category,
-        subCategory: subCategory,
-        title: 'Trang chủ'
-    });
-    console.log(category);
-})
-
+  res.render("index", {
+    layout: "home-layout.hbs",
+    title: "Trang chủ",
+    category: cateList
+  });
+});
 
 module.exports = router;
