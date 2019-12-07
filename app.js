@@ -1,5 +1,7 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
+const numeral = require("numeral");
+const dateFormat = require("dateformat");
 const app = express();
 
 
@@ -11,11 +13,25 @@ app.use(
 );
 app.use(express.static('public'));
 
-
 app.engine(
     "hbs",
     exphbs({
-        defaultLayout: "main-layout.hbs"
+        defaultLayout: "main-layout.hbs",
+        helpers: {
+            format_money: val => numeral(val).format('0,0') + ' đ',
+            format_day: val => dateFormat(val, "dd-mm-yyyy"),
+            format_name: val => {
+                if (val.length > 25) {
+                    var temp = "";
+                    for (var i = 0; i < 25; i++) {
+                        temp += val[i];
+                    }
+                    temp += "...";
+                    return temp;
+                }
+                return val;
+            }
+        }
     })
 );
 app.set("view engine", "hbs");

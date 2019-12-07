@@ -33,7 +33,7 @@
 
   function changeCatImage(event) {
     let img = $(event.target).closest('.row').find('.cat-img');
-    img.attr('src', 'img/' + $(event.target).attr('cat-order') + '.jpg')
+    img.attr('src', '/img/' + $(event.target).attr('cat-order') + '.jpg')
   }
 
   // NAVIGATION
