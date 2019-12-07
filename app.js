@@ -1,6 +1,8 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
 const app = express();
+
+//Cái này để yên
 require('./middlewares/routes.mdw')(app);
 
 app.use(express.json());
