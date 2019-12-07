@@ -12,13 +12,13 @@ const express = require("express");
 //Thường thì truyền object trong res.render để nó render trong mấy file view (như index, account, products này kia)
 //Còn cái category này nó render trong layout, chạy được nhưng nó có vẻ không đúng
 const categoryModel = require("../models/category.model");
+const productModel = require("../models/product.model");
 
 const router = express.Router();
 
-
 //Link: /user/
 
-//Lý do router.get('/') chỉ có / thôi mà không có user đằng trước, xem file routes.mdw 
+//Lý do router.get('/') chỉ có / thôi mà không có user đằng trước, xem file routes.mdw
 //vì mình đã định nghĩa là chỉ khi nào link có /user thì mới dùng tới file này, nên ở file này không cần ghi /user đằng trước
 
 router.get("/", async (req, res) => {
@@ -28,25 +28,31 @@ router.get("/", async (req, res) => {
   });
 });
 
-
-
 //Chỉ có trang chủ dùng layout khác biệt (home-layout), từ đây xuống, layout mặc định (main-layout) không cần khai báo
 
 //Link: /user/productList/cateID/subcateID
-router.get("/productList/:cateID/:subcateID", (req, res) => {
+router.get("/productList/:cateID/:subcateID", async (req, res) => {
+  //Xem danh sách các sản phẩm thuộc danh mục con
+  const rows = await productModel.allBySubCate(
+    req.params.cateID,
+    req.params.subcateID
+  );
+
   res.render("vwUser/product-list", {
-    title: "Danh sách sản phẩm"
+    productList: rows,
+    empty: rows.length === 0
   });
 });
-
 
 //Link: /user/product/:productID
 router.get("/product/:productID", async (req, res) => {
   //Xem chi tiết sản phẩm
   //render product-page.hbs
+  const rows = await productModel.single(req.params.productID);
+  res.render("vwUser/product-details", {
+    product: rows[0]
+  });
 });
-
-
 
 //Từ đây phải kiểm tra đăng nhập (đăng nhập dùng passport.js)
 //Link: /user/account
