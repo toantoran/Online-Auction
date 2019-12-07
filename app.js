@@ -19,6 +19,10 @@ app.engine(
         defaultLayout: "main-layout.hbs",
         helpers: {
             format_money: val => numeral(val).format('0,0') + ' đ',
+            format_money_bid: val => {
+                val += val*0.1;
+                return numeral(val).format('0,0')
+            },
             format_day: val => dateFormat(val, "dd-mm-yyyy"),
             format_name: val => {
                 if (val.length > 25) {

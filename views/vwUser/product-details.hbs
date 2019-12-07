@@ -7,19 +7,23 @@
 			<!--  Product Details -->
 			<div class="product product-details clearfix">
 				<div class="col-md-5">
-					{{!-- Cái chỗ này, main-view là cái hình to zoom được, view là cái hình nhỏ --}}
-					{{!-- T ghi tên biến đại loại thế, m hiểu rồi thì sửa lại theo cái object m truyền --}}
 					<div id="product-main-view">
-						{{#each this.imgSrc}}
+						{{#if emptyImg}}
 						<div class="product-view">
-							<img src="{{imgSrc}}" alt="">
+							<p>Không có dữ liệu hình ảnh</p>
+						</div>
+						{{else}}
+						{{#each imgSrc}}
+						<div class="product-view">
+							<img src="/img/{{imgID}}.jpg" alt="">
 						</div>
 						{{/each}}
+						{{/if}}
 					</div>
 					<div id="product-view">
-						{{#each this.imgSrc}}
+						{{#each imgSrc}}
 						<div class="product-view">
-							<img src="{{imgSrc}}" alt="">
+							<img src="/img/{{imgID}}.jpg" alt="">
 						</div>
 						{{/each}}
 					</div>
@@ -35,25 +39,21 @@
 							{{/if}}
 						</div>
 						<div class="product-info">
-							<h2 class="product-name">{{productName}}</h2>
-							<p>Thương hiệu: <span>{{brand}}</span></p>
-							<p>Xuất xứ: <span>{{pFrom}}</span></p>
+							<h2 class="product-name">{{product.productName}}</h2>
+							<p>Thương hiệu: <span>{{product.brand}}</span></p>
+							<p>Xuất xứ: <span>{{product.pFrom}}</span></p>
 							<p>Mô tả sản phẩm:</p>
-							{{{description}}}
-							{{!-- Chỗ này 3 ngoặc ko nhầm đâu, vì description là lưu một chuỗi html dài, 3 ngoặc để render html --}}
-
-							{{!-- <span>Ngày bắt đầu: <span>18h32 ngày 20/11/2019</span></span> --}}
-							<p>Ngày bắt đầu: <span>{{format beginDate}}</span></p>
-							{{!-- format ngày giờ như trên --}}
-
-							<p>Ngày kết thúc: <span>{{format endDate}}</span></p>
+							{{{product.description}}}
+							<p>Ngày bắt đầu: <span>{{format_day product.beginDate}}</span></p>
+							<p>Ngày kết thúc: <span>{{format_day product.endDate}}</span></p>
 							<hr>
-							<p>Giá hiện tại: <span class="product-price" id="current">{{format currentPrice}}</span></p>
-							<p>Giá mua ngay: <span class="product-price">{{format immePrice}}</span></p>
+							<p>Giá hiện tại: <span class="product-price"
+									id="current">{{format_money product.currentPrice}}</span></p>
+							<p>Giá mua ngay: <span class="product-price">{{format_money product.immePrice}}</span></p>
 						</div>
 						<div class="product-btns">
 							<div class="qty-input">
-								<input class="input price-input">
+								<input class="input price-input" value={{format_money_bid product.currentPrice}}>
 								{{!-- format chỗ này nữa --}}
 							</div>
 							<button class="primary-btn btn-bid" type="submit">Ra giá <i
@@ -78,12 +78,14 @@
 										<h4 style="margin-bottom: 20px;">Ghi chú của người bán<span class="pull-right"
 												style="font-size: 14px; margin-top:-5px"><button
 													class="main-btn note-btn"><i class="far fa-edit"></i> Thêm ghi
-													chú</button></span></h4>
+													chú</button></span>
+										</h4>
 										{{#each note}}
 										<div class="note" id="note{{noteID}}">
-											<p><i class="fas fa-edit"></i> <span class="note-date">{{noteDate}}</span>
+											<p><i class="fas fa-edit"></i> 
+											<span>{{format_day noteDate}}</span>
 											</p>
-											<p>{{noteContent}}</p>
+											<p>{{noteContents}}</p>
 										</div>
 										{{/each}}
 									</div>

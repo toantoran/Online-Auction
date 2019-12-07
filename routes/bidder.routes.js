@@ -5,21 +5,10 @@
 
 const express = require("express");
 
-//Cái chỗ này t chưa biết làm sao
-//Tại vì cái category này nó nằm trong navbar, mà navbar trang nào cũng có
-//Nếu mở trang nào lên cũng phải đọc db để render lại category thì không hay
-//Tức là nếu vậy thì tất cả cái router.get dưới kia phải thêm lại cái {category: cateList} như trong cái router.get đầu tiên
-//Thường thì truyền object trong res.render để nó render trong mấy file view (như index, account, products này kia)
-//Còn cái category này nó render trong layout, chạy được nhưng nó có vẻ không đúng
 const categoryModel = require("../models/category.model");
 const productModel = require("../models/product.model");
 
 const router = express.Router();
-
-//Link: /user/
-
-//Lý do router.get('/') chỉ có / thôi mà không có user đằng trước, xem file routes.mdw
-//vì mình đã định nghĩa là chỉ khi nào link có /user thì mới dùng tới file này, nên ở file này không cần ghi /user đằng trước
 
 router.get("/", async (req, res) => {
   res.render("vwUser/index", {
@@ -28,11 +17,9 @@ router.get("/", async (req, res) => {
   });
 });
 
-//Chỉ có trang chủ dùng layout khác biệt (home-layout), từ đây xuống, layout mặc định (main-layout) không cần khai báo
 
 //Link: /user/productList/cateID/subcateID
 router.get("/productList/:cateID/:subcateID", async (req, res) => {
-  //Xem danh sách các sản phẩm thuộc danh mục con
   const rows = await productModel.allBySubCate(
     req.params.cateID,
     req.params.subcateID
@@ -46,11 +33,15 @@ router.get("/productList/:cateID/:subcateID", async (req, res) => {
 
 //Link: /user/product/:productID
 router.get("/product/:productID", async (req, res) => {
-  //Xem chi tiết sản phẩm
-  //render product-page.hbs
   const rows = await productModel.single(req.params.productID);
+  const imgSrc = await productModel.singleImgSrc(req.params.productID);
+  const note = await productModel.singleNote(req.params.productID);
+  console.log(note);
   res.render("vwUser/product-details", {
-    product: rows[0]
+    product: rows[0],
+    imgSrc: imgSrc,
+    note: note,
+    emptyImg: imgSrc.length === 0,
   });
 });
 
