@@ -2,8 +2,6 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 const app = express();
 
-//Cái này để yên
-require('./middlewares/routes.mdw')(app);
 
 app.use(express.json());
 app.use(
@@ -13,6 +11,7 @@ app.use(
 );
 app.use(express.static('public'));
 
+
 app.engine(
     "hbs",
     exphbs({
@@ -21,6 +20,10 @@ app.engine(
 );
 app.set("view engine", "hbs");
 
+
+//Cái này để yên
+require('./middlewares/locals.mdw')(app);
+require('./middlewares/routes.mdw')(app);
 
 
 const PORT = 3000;

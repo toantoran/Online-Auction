@@ -22,15 +22,9 @@ const router = express.Router();
 //vì mình đã định nghĩa là chỉ khi nào link có /user thì mới dùng tới file này, nên ở file này không cần ghi /user đằng trước
 
 router.get("/", async (req, res) => {
-  const cateList = await categoryModel.getCate();
-  for (cate of cateList) {
-    cate.subCate = await categoryModel.getSubCate(cate.cateID);
-  }
-
-  res.render("index", {
+  res.render("vwUser/index", {
     layout: "home-layout.hbs",
-    title: "Trang chủ",
-    category: cateList
+    title: "Trang chủ"
   });
 });
 
