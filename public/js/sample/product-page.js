@@ -84,10 +84,18 @@ $('#bid-table').DataTable({
     new Bid("20/11/2019 19:20", "****Toàn", "6,300,000"),
     new Bid("20/11/2019 19:20", "****Toàn", "6,300,000")
   ],
-  columns: [
-    { data: 'time', sTitle: 'Thời gian' },
-    { data: 'name', sTitle: 'Người đấu giá' },
-    { data: 'price', sTitle: 'Giá' }
+  columns: [{
+      data: 'time',
+      sTitle: 'Thời gian'
+    },
+    {
+      data: 'name',
+      sTitle: 'Người đấu giá'
+    },
+    {
+      data: 'price',
+      sTitle: 'Giá'
+    }
   ],
   "language": {
     "emptyTable": "Chưa có lượt ra giá nào",
@@ -162,8 +170,7 @@ $('.note-btn').click(() => {
         title: 'Hmm......',
         text: 'Nội dung không được để trống'
       })
-    }
-    else {
+    } else {
       Swal.fire({
         title: 'Thêm ghi chú này?',
         text: "Bạn không thể hoàn tác",
@@ -182,8 +189,7 @@ $('.note-btn').click(() => {
           $('.note textarea').replaceWith('<p>' + $('.note textarea').val() + '<p>');
           $('.note-btn').prop('disabled', false);
           $('.deletable').remove();
-        }
-        else {
+        } else {
           $('#cancel-note-btn').trigger('click');
         }
       })
@@ -209,8 +215,7 @@ $('.btn-bid').click(() => {
       title: 'Giá không hợp lệ!',
       text: 'Giá đưa ra phải lớn hơn giá hiện tại'
     })
-  }
-  else {
+  } else {
     Swal.fire({
       title: priceStr,
       text: "Bạn có chắc chắn với mức giá này?",
@@ -226,8 +231,7 @@ $('.btn-bid').click(() => {
           title: 'Ra giá thành công',
           icon: 'success'
         })
-      }
-      else {
+      } else {
         Swal.fire({
           icon: 'error',
           title: 'Đã hủy lượt ra giá'
@@ -236,28 +240,3 @@ $('.btn-bid').click(() => {
     })
   }
 });
-
-
-const autoNumericOptionsEuro = {
-  digitGroupSeparator: ',',
-  currencySymbol: '₫',
-  decimalPlaces: 0,
-  currencySymbolPlacement: AutoNumeric.options.currencySymbolPlacement.suffix,
-  roundingMethod: AutoNumeric.options.roundingMethod.halfUpSymmetric
-};
-
-// Initialization
-
-
-function getValidPrice(currentPrice, priceStep) {
-  return currentPrice + priceStep;
-};
-
-function getCurrentPrice() {
-  let a = $('.product-price#current').text();
-  return parseInt(a.slice(0, a.length - 1).replace(/,/g, ''));
-};
-
-$('.price-input').val(getValidPrice(getCurrentPrice(), 100000));
-
-new AutoNumeric('.price-input', autoNumericOptionsEuro);

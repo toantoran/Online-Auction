@@ -1,12 +1,18 @@
 (function ($) {
-  "use strict"
+  "use strict";
 
   //Super Important
 
   //Swtich button (multiple)
   var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
   elems.forEach(function (html) {
-    var switchery = new Switchery(html, { color: '#F8694A', secondaryColor: '#30323a', jackColor: '#fff', jackSecondaryColor: '#fff', size: 'small' });
+    var switchery = new Switchery(html, {
+      color: '#F8694A',
+      secondaryColor: '#30323a',
+      jackColor: '#fff',
+      jackSecondaryColor: '#fff',
+      size: 'small'
+    });
   });
 
   //SignIn SignUp Form
@@ -24,6 +30,7 @@
   $('.cat-link').hover((event) => {
     changeCatImage(event);
   });
+
   function changeCatImage(event) {
     let img = $(event.target).closest('.row').find('.cat-img');
     img.attr('src', 'img/' + $(event.target).attr('cat-order') + '.jpg')
@@ -80,21 +87,21 @@
     dots: false,
     arrows: true,
     responsive: [{
-      breakpoint: 991,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 2,
-      }
-    },
-    {
-      breakpoint: 480,
-      settings: {
-        dots: false,
-        arrows: true,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-      }
-    },
+        breakpoint: 991,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          dots: false,
+          arrows: true,
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        }
+      },
     ]
   }
 
@@ -108,21 +115,21 @@
     arrows: true,
     appendDots: '.product-slick-dots-latest',
     responsive: [{
-      breakpoint: 991,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 2,
-      }
-    },
-    {
-      breakpoint: 480,
-      settings: {
-        dots: false,
-        arrows: true,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-      }
-    },
+        breakpoint: 991,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          dots: false,
+          arrows: true,
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        }
+      },
     ]
   }
   $('#product-slick-1').slick(noSlick);
@@ -189,8 +196,7 @@
         fixed: true,
         timeout: 2000
       });
-    }
-    else {
+    } else {
       new SnackBar({
         message: "Đã xóa khỏi danh sách yêu thích",
         status: "warning",
@@ -258,7 +264,9 @@
         remove: '.jFiler-item-trash-action'
       }
     },
-    afterShow: () => { $('.jFiler-items-default .jFiler-item-assets a').html('<i class="fas fa-trash-alt"></i>') }
+    afterShow: () => {
+      $('.jFiler-items-default .jFiler-item-assets a').html('<i class="fas fa-trash-alt"></i>')
+    }
   });
 
   $('.main-btn.btn-new').click(() => {
@@ -287,8 +295,7 @@
       title: 'Bán hàng trên Bidhub',
       text: 'Xác nhận các thông tin bên dưới và bạn sẽ được xem xét để trở thành người bán trong vòng 7 ngày',
       icon: 'info',
-      confirmButtonText:
-        '<i class="fa fa-thumbs-up"></i> Tuyệt!',
+      confirmButtonText: '<i class="fa fa-thumbs-up"></i> Tuyệt!',
     })
   });
 
@@ -339,8 +346,7 @@
           title: 'Thông tin đã được cập nhật',
           icon: 'success'
         })
-      }
-      else {
+      } else {
         Swal.fire({
           title: 'Các thay đổi chưa được cập nhật',
           icon: 'error'
@@ -352,12 +358,14 @@
   });
 
   var radio = document.querySelector('.js-switch-radio');
-  var radioInit = new Switchery(radio, { color: '#F8694A', secondaryColor: '#F8694A', jackColor: 'white', jackSecondaryColor: 'white' });
+  var radioInit = new Switchery(radio, {
+    color: '#F8694A',
+    secondaryColor: '#F8694A',
+    jackColor: 'white',
+    jackSecondaryColor: 'white'
+  });
 
 
 
 
 })(jQuery);
-
-
-

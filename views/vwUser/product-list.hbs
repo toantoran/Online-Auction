@@ -1,655 +1,148 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- section -->
+<div class="section">
+	<!-- container -->
+	<div class="container">
+		<!-- row -->
+		<div class="row">
+			<!-- ASIDE -->
+			<div id="aside" class="col-md-2">
+				<!-- aside widget -->
+				<div class="aside">
+					<h3 class="aside-title">Nơi bán</h3>
+					<ul class="list-links">
+						<li><a href="#">Hà Nội</a></li>
+						<li><a href="#">Hồ Chí Minh</a></li>
+						<li><a href="#">Đà Nẵng</a></li>
+					</ul>
+				</div>
+				<!-- /aside widget -->
 
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-
-	<title>Bidhub: Danh sách sản phẩm</title>
-	<link rel="shortcut icon" href="img/icon.png">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/col5.css">
-	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/jquery.filer-dragdropbox-theme.css">
-	<link rel="stylesheet" href="css/jquery.filer.css">
-	<link rel="stylesheet" href="css/js-snackbar.min.css">
-	<link rel="stylesheet" href="css/login.css">
-	<link rel="stylesheet" href="css/nouislider.min.css">
-	<link rel="stylesheet" href="css/Popup-plugin.css">
-	<link rel="stylesheet" href="css/slick-theme.css">
-	<link rel="stylesheet" href="css/slick.css">
-	<link rel="stylesheet" href="css/style.css">
-	<link rel="stylesheet" href="css/switchery.min.css">
-</head>
-
-<body>
-	<!-- HEADER -->
-	<header>
-		<!-- header -->
-		<div id="header">
-			<div class="container">
-				<div class="pull-left">
-					<!-- Logo -->
-					<div class="header-logo">
-						<a class="logo" href="index.html">
-							<img src="./img/logo.png" alt="">
-						</a>
+				{{!-- <!-- aside widget -->
+				<div class="aside">
+					<h3 class="aside-title">Sản phẩm nhiều lượt ra giá nhất</h3>
+					<!-- widget product -->
+					<div class="product product-widget">
+						<div class="product-thumb">
+							<img src="./img/thumb-product01.jpg" alt="">
+						</div>
+						<div class="product-body">
+							<h2 class="product-name"><a href="product-page.html">Product Name Goes Here</a></h2>
+							<h3 class="product-price">6,500,000₫
+						</div>
+						<div class="product-footer">
+							<small><span>90</span> lượt ra giá</small>
+						</div>
 					</div>
-					<!-- /Logo -->
+					<!-- /widget product -->
 
-					<!-- Search -->
-					<div class="header-search">
-						<form>
-							<input class="input search-input" type="text" placeholder="Tìm sản phẩm bạn muốn">
-							<select class="input search-categories">
-								<option value="0">Tất cả danh mục</option>
-								<option value="1">Thời trang</option>
-								<option value="2">Máy tính, điện thoại</option>
-								<option value="3">Xe</option>
-								<option value="4">Làm đẹp - Sức khỏe</option>
-								<option value="5">Hàng tiêu dùng</option>
-								<option value="6">Đồ gia dụng</option>
-								<option value="7">Sách, VPP</option>
+					<!-- widget product -->
+					<div class="product product-widget">
+						<div class="product-thumb">
+							<img src="./img/thumb-product01.jpg" alt="">
+						</div>
+						<div class="product-body">
+							<h2 class="product-name"><a href="product-page.html">Product Name Goes Here</a></h2>
+							<h3 class="product-price">6,500,000₫
+						</div>
+						<div class="product-footer">
+							<small><span>90</span> lượt ra giá</small>
+						</div>
+					</div>
+					<!-- /widget product -->
+				</div>
+				<!-- /aside widget -->
+				<!-- aside widget -->
+				<div class="aside">
+					<h3 class="aside-title">Sản phẩm mới</h3>
+					<!-- widget product -->
+					<div class="product product-widget">
+						<div class="product-thumb">
+							<img src="./img/thumb-product01.jpg" alt="">
+						</div>
+						<div class="product-body">
+							<h2 class="product-name"><a href="product-page.html">Product Name Goes Here</a></h2>
+							<h3 class="product-price">6,500,000₫
+						</div>
+						<div class="product-footer">
+							<small><span>1</span> lượt ra giá</small>
+						</div>
+					</div>
+					<!-- /widget product -->
+
+					<!-- widget product -->
+					<div class="product product-widget">
+						<div class="product-thumb">
+							<img src="./img/thumb-product01.jpg" alt="">
+						</div>
+						<div class="product-body">
+							<h2 class="product-name"><a href="product-page.html">Product Name Goes Here</a></h2>
+							<h3 class="product-price">6,500,000₫
+						</div>
+						<div class="product-footer">
+							<small><span>2</span> lượt ra giá</small>
+						</div>
+					</div>
+					<!-- /widget product -->
+				</div>
+				<!-- /aside widget --> --}}
+			</div>
+			<!-- /ASIDE -->
+			<!-- MAIN -->
+			<div id="main" class="col-md-10">
+				<!-- store top filter -->
+				<div class="store-filter clearfix">
+					<div class="pull-left">
+						<div class="sort-filter">
+							<span class="text-uppercase">Sắp xếp theo:</span>
+							<select class="input">
+								<option value="0">Thời gian kết thúc</option>
+								<option value="1">Giá</option>
+								<option value="2">Số lượt ra giá</option>
 							</select>
-							<button class="search-btn"><i class="fa fa-search"></i></button>
-						</form>
+							<select class="input" id="sort-type">
+								<option value="0">Tăng dần</option>
+								<option value="1">Giảm dần</option>
+							</select>
+							<a href="#" class="main-btn" style="margin-top:2px"><i class="fas fa-sync-alt"></i></a>
+						</div>
 					</div>
-					<!-- /Search -->
+					<div class="pull-right">
+						<ul class="store-pages">
+							<li><span class="text-uppercase">Page:</span></li>
+							<li class="active">1</li>
+							<li><a href="#">2</a></li>
+							<li><a href="#"><i class="fa fa-caret-right"></i></a></li>
+						</ul>
+					</div>
 				</div>
-				<div class="pull-right">
-					<ul class="header-btns">
-						<li class="header-cart dropdown default-dropdown">
-							<a href="new-product.html" class="main-btn upload-btn"><i class="fas fa-gavel"></i> Mở phiên
-								đấu giá</a>
-						</li>
-						<!-- Account -->
-						<li class="header-account dropdown default-dropdown" id="account-container">
-							<div class="dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="true">
-								<div class="header-btns-icon">
-									<i class="fas fa-user-circle fa-3x"></i>
-								</div>
-								<strong class="text-uppercase">Tài khoản <i class="fa fa-caret-down"></i></strong>
-							</div>
-							<div id="log">
-								<a href="#signin" data-toggle="modal" id="link-signin"
-									class="text-uppercase small-text trigger-btn">Đăng
-									nhập</a> / <a href="#signup" id="link-signup" data-toggle="modal"
-									class="text-uppercase small-text trigger-btn">Đăng ký</a>
-							</div>
+				<!-- /store top filter -->
 
-							<ul class="custom-menu">
-								<li><a href="account.html"><i class="fas fa-user-cog"></i> Thông tin cá nhân</a></li>
-								<li><a href="account.html#history"><i class="fas fa-poll"></i> Lịch sử đấu giá<small
-											class="bid-result">2</small></a></li>
-								<li><a href="account.html#wish-list"><i class="fa fa-heart"></i> Danh sách yêu thích</a>
-								</li>
-								<li><a href="account.html#sold-product"><i class="fas fa-clipboard"></i> Sản phẩm đã
-										đăng</a></li>
-								<li><a href="account.html#seller-regis"><i class="fa fa-unlock-alt"></i> Đăng ký làm
-										người bán</a></li>
-								<li><a href="javascript:void(0)" class="btn-signout"><i class="fas fa-sign-out-alt"></i>
-										Đăng xuất</a></li>
-							</ul>
-						</li>
-						<!-- /Account -->
-						<!-- Modal HTML -->
-						<div id="signin" class="modal fade">
-							<div class="modal-dialog modal-login">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h4 class="modal-title">Đăng nhập</h4>
-										<button type="button" class="close" data-dismiss="modal" id="btn-exit-signin"
-											aria-hidden="true">&times;</button>
-									</div>
-									<div class="modal-body">
-										<form action="" method="post">
-											<div class="form-group">
-												<div class="input-group">
-													<span class="input-group-addon"><i
-															class="fas fa-envelope"></i></span>
-													<input type="email" class="form-control" name="email"
-														placeholder="Email" required="required">
-												</div>
-											</div>
-											<div class="form-group">
-												<div class="input-group">
-													<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-													<input type="password" class="form-control" name="password"
-														placeholder="Mật khẩu" required="required">
-												</div>
-											</div>
-											<div class="form-group remember-check">
-												<input type="checkbox" class="js-switch" />
-												<span style="font-weight: bold">Ghi nhớ đăng nhập</span>
-											</div>
-											<div class="form-group">
-												<button type="submit" class="btn btn-primary btn-block btn-lg">Đăng
-													nhập</button>
-											</div>
-											<p class="hint-text"><a href="#">Quên mật khẩu?</a></p>
-										</form>
-									</div>
-									<div class="modal-footer">Chưa có tài khoản? <a href="javascript:void(0)"
-											id="btn-call-signup">Tạo tài khoản mới</a></div>
-								</div>
-							</div>
-						</div>
-
-						<!-- Modal HTML -->
-						<div id="signup" class="modal fade">
-							<div class="modal-dialog modal-login" id="signup">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h4 class="modal-title">Đăng ký</h4>
-										<button type="button" class="close" data-dismiss="modal" id="btn-exit-signup"
-											aria-hidden="true" aria-hidden="true">&times;</button>
-									</div>
-									<div class="modal-body">
-										<form action="" method="post">
-											<div class="form-group">
-												<div class="input-group">
-													<span class="input-group-addon"><i class="fa fa-user"></i></span>
-													<input type="text" class="form-control" name="name"
-														placeholder="Họ tên" required="required">
-												</div>
-											</div>
-											<div class="form-group">
-												<div class="input-group">
-													<span class="input-group-addon"><i
-															class="fas fa-envelope"></i></span>
-													<input type="text" class="form-control" name="email"
-														placeholder="Email" required="required">
-												</div>
-											</div>
-											<div class="form-group">
-												<div class="input-group">
-													<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-													<input type="password" class="form-control" name="password"
-														placeholder="Mật khẩu" required="required">
-												</div>
-											</div>
-											<div class="form-group">
-												<div class="input-group">
-													<span class="input-group-addon"><i
-															class="fas fa-map-marker-alt"></i></span>
-													<input type="text" class="form-control" name="address"
-														placeholder="Địa chỉ" required="required">
-												</div>
-											</div>
-
-											<div class="form-group">
-												<div class="input-group" style="margin: 0 auto">
-													<div class="g-recaptcha"
-														data-sitekey="6LciPMQUAAAAAHP1S7bIdQ5xn6L2Vl6f9ISRm5xt"></div>
-												</div>
-											</div>
-											<div class="form-group">
-												<button type="submit" class="btn btn-primary btn-block btn-lg">Đăng
-													ký</button>
-											</div>
-
-										</form>
-									</div>
-									<div class="modal-footer">Đã có tài khoản? <a href="javascript:void(0)"
-											id="btn-call-signin">Đăng nhập</a></div>
-								</div>
-							</div>
-						</div>
-						<!-- Mobile nav toggle-->
-						<li class="nav-toggle">
-							<button class="nav-toggle-btn main-btn icon-btn"><i class="fa fa-bars"></i></button>
-						</li>
-						<!-- / Mobile nav toggle -->
-					</ul>
+				<!-- STORE -->
+				<div id="store">
+					<!-- row -->
+					<div class="row product-container">
+					</div>
+					<!-- /row -->
 				</div>
+				<!-- /STORE -->
+
+				<!-- store bottom filter -->
+				<div class="store-filter clearfix">
+					<div class="pull-right">
+						<ul class="store-pages">
+							<li><span class="text-uppercase">Page:</span></li>
+							<li class="active">1</li>
+							<li><a href="#">2</a></li>
+							<li><a href="#"><i class="fa fa-caret-right"></i></a></li>
+						</ul>
+					</div>
+				</div>
+				<!-- /store bottom filter -->
 			</div>
-			<!-- header -->
+			<!-- /MAIN -->
 		</div>
-		<!-- container -->
-	</header>
-	<!-- /HEADER -->
-
-	<!-- NAVIGATION -->
-	<div id="navigation">
-		<!-- container -->
-		<div class="container">
-			<div id="responsive-nav">
-				<!-- category nav -->
-				<div class="category-nav show-on-click">
-					<span class="category-header">Danh mục sản phẩm <i class="fa fa-list"></i></span>
-					<ul class="category-list">
-						<li class="dropdown side-dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
-									class="fas fa-tshirt"></i></i>&nbsp;Thời trang <i
-									class="fa fa-angle-right icon-right"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-6">
-										<ul class="list-links cat-list">
-											<li><a href="products.html">Thời trang nam</a></li>
-											<li><a href="products.html">Thời trang nữ</a></li>
-											<li><a href="products.html">Thời trang cho bé</a></li>
-											<li><a href="products.html">Giày, dép</a></li>
-											<li><a href="products.html">Phụ kiện thời trang</a></li>
-										</ul>
-									</div>
-									<div class="col-md-6 hidden-sm hidden-xs">
-										<img src="img/1.jpg" class="cat-img" order="-1">
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="dropdown side-dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
-									class="fas fa-mobile-alt"></i>&nbsp;Máy tính, điện thoại <i
-									class="fa fa-angle-right icon-right"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-6">
-										<ul class="list-links cat-list">
-											<li><a href="products.html">Điện thoại di dộng</a></li>
-											<li><a href="products.html">Laptop</a></li>
-											<li><a href="products.html">PC</a></li>
-											<li><a href="products.html">Máy tính bảng</a></li>
-											<li><a href="products.html">Phụ kiện điện thoại</a></li>
-											<li><a href="products.html">Phụ kiện máy tính</a></li>
-										</ul>
-									</div>
-									<div class="col-md-6 hidden-sm hidden-xs">
-										<img src="" class="cat-img" order="-1">
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="dropdown side-dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
-									class="fas fa-motorcycle"></i>&nbsp;Xe <i
-									class="fa fa-angle-right icon-right"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-6">
-										<ul class="list-links cat-list">
-											<li><a href="products.html">Xe máy</a></li>
-											<li><a href="products.html">Xe đạp</a></li>
-											<li><a href="products.html">Xe điện</a></li>
-										</ul>
-									</div>
-									<div class="col-md-6 hidden-sm hidden-xs">
-										<img src="" class="cat-img" order="-1">
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="dropdown side-dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
-									class="fas fa-heartbeat"></i></i>&nbsp;Làm đẹp - Sức khỏe <i
-									class="fa fa-angle-right icon-right"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-6">
-										<ul class="list-links cat-list">
-											<li><a href="products.html">Mỹ phẩm</a></li>
-											<li><a href="products.html">Dụng cụ trang điểm</a></li>
-											<li><a href="products.html">Dụng cụ y tế</a></li>
-											<li><a href="products.html">Thực phẩm chức năng</a></li>
-										</ul>
-									</div>
-									<div class="col-md-6 hidden-sm hidden-xs">
-										<img src="" class="cat-img" order="-1">
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="dropdown side-dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
-									class="fas fa-pizza-slice"></i></i>&nbsp;Hàng tiêu dùng <i
-									class="fa fa-angle-right icon-right"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-6">
-										<ul class="list-links cat-list">
-											<li><a href="products.html">Bánh kẹo</a></li>
-											<li><a href="products.html">Đồ uống</a></li>
-											<li><a href="products.html">Thực phẩm</a></li>
-											<li><a href="products.html">Đồ hộp</a></li>
-										</ul>
-									</div>
-									<div class="col-md-6 hidden-sm hidden-xs">
-										<img src="" class="cat-img" order="-1">
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="dropdown side-dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
-									class="fas fa-couch"></i>&nbsp;Đồ gia dụng <i
-									class="fa fa-angle-right icon-right"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-6">
-										<ul class="list-links cat-list">
-											<li><a href="products.html">Đồ dùng nhà bếp</a></li>
-											<li><a href="products.html">Đồ dùng phòng ngủ</a></li>
-											<li><a href="products.html">Nội thất khác</a></li>
-										</ul>
-									</div>
-									<div class="col-md-6 hidden-sm hidden-xs">
-										<img src="" class="cat-img" order="-1">
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="dropdown side-dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
-									class="fas fa-book"></i>&nbsp;Sách, Văn phòng phẩm <i
-									class="fa fa-angle-right icon-right"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-6">
-										<ul class="list-links cat-list">
-											<li><a href="products.html">Sách ngoại văn</a></li>
-											<li><a href="products.html">Sách tiếng Việt</a></li>
-											<li><a href="products.html">Sách thiếu nhi</a></li>
-											<li><a href="products.html">Truyện tranh</a></li>
-											<li><a href="products.html">Văn phòng phẩm</a></li>
-										</ul>
-									</div>
-									<div class="col-md-6 hidden-sm hidden-xs">
-										<img src="" class="cat-img" order="-1">
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="dropdown side-dropdown">
-							<a href="products.html"><i class="fas fa-th"></i>&nbsp;Tất cả danh mục </a>
-						</li>
-					</ul>
-				</div>
-				<!-- /category nav -->
-			</div>
-		</div>
-		<!-- /container -->
+		<!-- /row -->
 	</div>
-	<!-- /NAVIGATION -->
-
-	<!-- BREADCRUMB -->
-	<div id="breadcrumb">
-		<div class="container">
-			<ul class="breadcrumb">
-				<li><a href="index.html">Trang chủ</a></li>
-				<li class="active">Tên danh mục</li>
-			</ul>
-		</div>
-	</div>
-	<!-- /BREADCRUMB -->
-
-	<!-- section -->
-	<div class="section">
-		<!-- container -->
-		<div class="container">
-			<!-- row -->
-			<div class="row">
-				<!-- ASIDE -->
-				<div id="aside" class="col-md-2">
-					<!-- aside widget -->
-					<div class="aside">
-						<h3 class="aside-title">Nơi bán</h3>
-						<ul class="list-links">
-							<li><a href="products.html">Hà Nội</a></li>
-							<li><a href="products.html">Hồ Chí Minh</a></li>
-							<li><a href="products.html">Đà Nẵng</a></li>
-						</ul>
-					</div>
-					<!-- /aside widget -->
-
-					<!-- aside widget -->
-					<div class="aside">
-						<h3 class="aside-title">Sản phẩm nhiều lượt ra giá nhất</h3>
-						<!-- widget product -->
-						<div class="product product-widget">
-							<div class="product-thumb">
-								<img src="./img/thumb-product01.jpg" alt="">
-							</div>
-							<div class="product-body">
-								<h2 class="product-name"><a href="product-page.html">Product Name Goes Here</a></h2>
-								<h3 class="product-price">6,500,000₫
-							</div>
-							<div class="product-footer">
-								<small><span>90</span> lượt ra giá</small>
-							</div>
-						</div>
-						<!-- /widget product -->
-
-						<!-- widget product -->
-						<div class="product product-widget">
-							<div class="product-thumb">
-								<img src="./img/thumb-product01.jpg" alt="">
-							</div>
-							<div class="product-body">
-								<h2 class="product-name"><a href="product-page.html">Product Name Goes Here</a></h2>
-								<h3 class="product-price">6,500,000₫
-							</div>
-							<div class="product-footer">
-								<small><span>90</span> lượt ra giá</small>
-							</div>
-						</div>
-						<!-- /widget product -->
-					</div>
-					<!-- /aside widget -->
-					<!-- aside widget -->
-					<div class="aside">
-						<h3 class="aside-title">Sản phẩm mới</h3>
-						<!-- widget product -->
-						<div class="product product-widget">
-							<div class="product-thumb">
-								<img src="./img/thumb-product01.jpg" alt="">
-							</div>
-							<div class="product-body">
-								<h2 class="product-name"><a href="product-page.html">Product Name Goes Here</a></h2>
-								<h3 class="product-price">6,500,000₫
-							</div>
-							<div class="product-footer">
-								<small><span>1</span> lượt ra giá</small>
-							</div>
-						</div>
-						<!-- /widget product -->
-
-						<!-- widget product -->
-						<div class="product product-widget">
-							<div class="product-thumb">
-								<img src="./img/thumb-product01.jpg" alt="">
-							</div>
-							<div class="product-body">
-								<h2 class="product-name"><a href="product-page.html">Product Name Goes Here</a></h2>
-								<h3 class="product-price">6,500,000₫
-							</div>
-							<div class="product-footer">
-								<small><span>2</span> lượt ra giá</small>
-							</div>
-						</div>
-						<!-- /widget product -->
-					</div>
-					<!-- /aside widget -->
-				</div>
-				<!-- /ASIDE -->
-				<!-- MAIN -->
-				<div id="main" class="col-md-10">
-					<!-- store top filter -->
-					<div class="store-filter clearfix">
-						<div class="pull-left">
-							<div class="sort-filter">
-								<span class="text-uppercase">Sắp xếp theo:</span>
-								<select class="input">
-									<option value="0">Thời gian kết thúc</option>
-									<option value="1">Giá</option>
-									<option value="2">Số lượt ra giá</option>
-								</select>
-								<select class="input" id="sort-type">
-									<option value="0">Tăng dần</option>
-									<option value="1">Giảm dần</option>
-								</select>
-								<a href="products.html" class="main-btn" style="margin-top:2px"><i
-										class="fas fa-sync-alt"></i></a>
-							</div>
-						</div>
-						<div class="pull-right">
-							<ul class="store-pages">
-								<li><span class="text-uppercase">Page:</span></li>
-								<li class="active">1</li>
-								<li><a href="products.html">2</a></li>
-								<li><a href="products.html"><i class="fa fa-caret-right"></i></a></li>
-							</ul>
-						</div>
-					</div>
-					<!-- /store top filter -->
-
-					<!-- STORE -->
-					<div id="store">
-						<!-- row -->
-						<div class="row product-container">
-						</div>
-						<!-- /row -->
-					</div>
-					<!-- /STORE -->
-
-					<!-- store bottom filter -->
-					<div class="store-filter clearfix">
-						<div class="pull-right">
-							<ul class="store-pages">
-								<li><span class="text-uppercase">Page:</span></li>
-								<li class="active">1</li>
-								<li><a href="products.html">2</a></li>
-								<li><a href="products.html"><i class="fa fa-caret-right"></i></a></li>
-							</ul>
-						</div>
-					</div>
-					<!-- /store bottom filter -->
-				</div>
-				<!-- /MAIN -->
-			</div>
-			<!-- /row -->
-		</div>
-		<!-- /container -->
-	</div>
-	<!-- /section -->
-
-	<!-- FOOTER -->
-	<footer id="footer" class="section section-grey">
-		<!-- container -->
-		<div class="container">
-			<!-- row -->
-			<div class="row">
-				<!-- footer widget -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
-					<div class="footer">
-						<!-- footer logo -->
-						<div class="footer-logo">
-							<a class="logo" href="#">
-								<img src="./img/logo.png" alt="">
-							</a>
-						</div>
-						<!-- /footer logo -->
-
-						<img src="https://frontend.tikicdn.com/_new-next/static/img/footer/bo-cong-thuong.svg" alt="">
-
-
-					</div>
-				</div>
-				<!-- /footer widget -->
-
-				<!-- footer widget -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
-					<div class="footer">
-						<h3 class="footer-header">Phương thức thanh toán</h3>
-						<ul class="list-links">
-							<li>
-								<img src="https://frontend.tikicdn.com/_new-next/static/img/footer/visa.svg" alt="">
-								<img src="https://frontend.tikicdn.com/_new-next/static/img/footer/mastercard.svg"
-									alt="">
-								<img src="https://frontend.tikicdn.com/_new-next/static/img/footer/cash.svg" alt="">
-								<img src="https://frontend.tikicdn.com/_new-next/static/img/footer/internet-banking.svg"
-									alt="">
-							</li>
-						</ul>
-					</div>
-				</div>
-				<!-- /footer widget -->
-
-				<div class="clearfix visible-sm visible-xs"></div>
-
-				<!-- footer widget -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
-					<div class="footer">
-						<h3 class="footer-header">Hỗ trợ khách hàng</h3>
-						<ul class="list-links">
-							<li><a href="#">Giới thiệu về Bidhub</a></li>
-							<li><a href="#">Chính sách bảo mật</a></li>
-							<li><a href="#">Tư vấn</a></li>
-						</ul>
-					</div>
-				</div>
-				<!-- /footer widget -->
-
-				<!-- footer subscribe -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
-					<div class="footer">
-						<h3 class="footer-header">Kết nối với Bidhub</h3>
-						<!-- footer social -->
-						<ul class="footer-social">
-							<li><a href="https://www.facebook.com/"><i class="fab fa-facebook-square fa-2x"></i></a>
-							</li>
-							<li><a href="https://www.twitter.com/"><i class="fab fa-twitter-square fa-2x"></i></li>
-							<li><a href="https://www.youtube.com/"><i class="fab fa-youtube fa-2x"></i></a></li>
-						</ul>
-						<!-- /footer social -->
-					</div>
-				</div>
-				<!-- /footer subscribe -->
-			</div>
-			<!-- /row -->
-			<hr>
-			<!-- row -->
-			<div class="row">
-				<div class="col-md-8 col-md-offset-2 text-center">
-					<!-- footer copyright -->
-					<div class="footer-copyright">
-						&copy;
-						<script>document.write(new Date().getFullYear());</script> Bidhub.
-						Tất cả các quyền được bảo lưu
-					</div>
-					<!-- /footer copyright -->
-				</div>
-			</div>
-			<!-- /row -->
-		</div>
-		<!-- /container -->
-	</footer>
-	<!-- /FOOTER -->
-
-	<!-- jQuery Plugins -->
-	<script src="js/plugin/jquery.min.js"></script>
-
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script type="text/javascript" charset="utf8"
-		src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/autonumeric@4.5.4"></script>
-	<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-	<script src="https://use.fontawesome.com/releases/v5.11.2/js/all.js" data-auto-replace-svg="nest"></script>
-	<script src='https://www.google.com/recaptcha/api.js'></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-
-	<script src="js/plugin/jquery.filer.min.js"></script>
-	<script src="js/plugin/jquery.zoom.min.js"></script>
-	<script src="js/plugin/js-snackbar.min.js"></script>
-	<script src="js/plugin/nouislider.min.js"></script>
-	<script src="js/plugin/Popup-plugin.js"></script>
-	<script src="js/plugin/slick.min.js"></script>
-	<script src="js/plugin/switchery.min.js"></script>
-
-	<script src="js/sample/products.js"></script>
-
-	<script src="js/main.js"></script>
-</body>
-
-</html>
+	<!-- /container -->
+</div>
+<!-- /section -->

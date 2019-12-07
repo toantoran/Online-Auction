@@ -7,22 +7,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Bidhub: {{this.title}}</title>
-    <link rel="shortcut icon" href="img/icon.png">
+    <link rel="shortcut icon" href="/img/icon.png">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="css/datepicker.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/col5.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/jquery.filer-dragdropbox-theme.css">
-    <link rel="stylesheet" href="css/jquery.filer.css">
-    <link rel="stylesheet" href="css/js-snackbar.min.css">
-    <link rel="stylesheet" href="css/login.css">
-    <link rel="stylesheet" href="css/nouislider.min.css">
-    <link rel="stylesheet" href="css/Popup-plugin.css">
-    <link rel="stylesheet" href="css/slick-theme.css">
-    <link rel="stylesheet" href="css/slick.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/switchery.min.css">
-
+    <link rel="stylesheet" href="/css/col5.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/jquery.filer-dragdropbox-theme.css">
+    <link rel="stylesheet" href="/css/jquery.filer.css">
+    <link rel="stylesheet" href="/css/js-snackbar.min.css">
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/nouislider.min.css">
+    <link rel="stylesheet" href="/css/Popup-plugin.css">
+    <link rel="stylesheet" href="/css/slick-theme.css">
+    <link rel="stylesheet" href="/css/slick.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/switchery.min.css">
 </head>
 
 <body>
@@ -35,7 +34,7 @@
                     <!-- Logo -->
                     <div class="header-logo">
                         <a class="logo" href="/">
-                            <img src="./img/logo.png" alt="">
+                            <img src="/img/logo.png" alt="">
                         </a>
                     </div>
                     <!-- /Logo -->
@@ -46,7 +45,7 @@
                             <input class="input search-input" type="text" placeholder="Tìm sản phẩm bạn muốn">
                             <select class="input search-categories">
                                 <option value="0">Tất cả danh mục</option>
-                                {{#each this.category}}
+                                {{#each lcCateList}}
                                 <option value="{{this.cateID}}">{{this.cateName}}</option>
                                 {{/each}}
                             </select>
@@ -58,7 +57,8 @@
                 <div class="pull-right">
                     <ul class="header-btns">
                         <li class="header-cart dropdown default-dropdown">
-                            <a href="new-product.html" class="main-btn upload-btn"><i class="fas fa-gavel"></i> Mở phiên
+                            <a href="/seller/new-product.html" class="main-btn upload-btn"><i class="fas fa-gavel"></i>
+                                Mở phiên
                                 đấu giá</a>
                         </li>
                         <!-- Account -->
@@ -218,7 +218,7 @@
                 <div class="category-nav show-on-click">
                     <span class="category-header">Danh mục sản phẩm <i class="fa fa-list"></i></span>
                     <ul class="category-list">
-                        {{#each this.category}}
+                        {{#each lcCateList}}
                         <li class="dropdown side-dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
                                     class="fas fa-{{this.cateIcon}}"></i></i>&nbsp;{{this.cateName}} <i
@@ -229,7 +229,7 @@
                                         <ul class="list-links cat-list">
                                             {{#each this.subCate}}
                                             <li><a
-                                                    href="productList/{{this.cateID}}/{{this.subcateID}}">{{this.subcateName}}</a>
+                                                    href="/productList/{{this.cateID}}/{{this.subcateID}}">{{this.subcateName}}</a>
                                             </li>
                                             {{/each}}
                                         </ul>
@@ -275,7 +275,7 @@
                         <!-- footer logo -->
                         <div class="footer-logo">
                             <a class="logo" href="/">
-                                <img src="./img/logo.png" alt="">
+                                <img src="/img/logo.png" alt="">
                             </a>
                         </div>
                         <!-- /footer logo -->
@@ -357,7 +357,7 @@
     <!-- /FOOTER -->
 
     <!-- jQuery Plugins -->
-    <script src="js/plugin/jquery.min.js"></script>
+    <script src="/js/plugin/jquery.min.js"></script>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" charset="utf8"
@@ -368,18 +368,17 @@
     <script src='https://www.google.com/recaptcha/api.js'></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
-    <script src="js/plugin/datepicker.min.js"></script>
-    <script src="js/plugin/datepicker.en.js"></script>
-    <script src="js/plugin/jquery.filer.min.js"></script>
-    <script src="js/plugin/jquery.zoom.min.js"></script>
-    <script src="js/plugin/js-snackbar.min.js"></script>
-    <script src="js/plugin/nouislider.min.js"></script>
-    <script src="js/plugin/Popup-plugin.js"></script>
-    <script src="js/plugin/slick.min.js"></script>
-    <script src="js/plugin/switchery.min.js"></script>
+    <script src="/js/plugin/datepicker.min.js"></script>
+    <script src="/js/plugin/datepicker.en.js"></script>
+    <script src="/js/plugin/jquery.filer.min.js"></script>
+    <script src="/js/plugin/jquery.zoom.min.js"></script>
+    <script src="/js/plugin/js-snackbar.min.js"></script>
+    <script src="/js/plugin/nouislider.min.js"></script>
+    <script src="/js/plugin/Popup-plugin.js"></script>
+    <script src="/js/plugin/slick.min.js"></script>
+    <script src="/js/plugin/switchery.min.js"></script>
 
-    <script src="js/main.js"></script>
-
+    <script src="/js/main.js"></script>
 </body>
 
 </html>

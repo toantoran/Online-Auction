@@ -33,9 +33,10 @@ router.get("/", async (req, res) => {
 //Chỉ có trang chủ dùng layout khác biệt (home-layout), từ đây xuống, layout mặc định (main-layout) không cần khai báo
 
 //Link: /user/productList/cateID/subcateID
-router.get("/productList/:cateID/:subcateID", async (req, res) => {
-  //Xem danh sách các sản phẩm thuộc danh mục con
-  //render Products.hbs (đổi tên lại thành productList cũng được, nhớ sửa link)
+router.get("/productList/:cateID/:subcateID", (req, res) => {
+  res.render("vwUser/product-list", {
+    title: "Danh sách sản phẩm"
+  });
 });
 
 
