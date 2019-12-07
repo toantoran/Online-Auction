@@ -218,15 +218,15 @@
                         {{#each lcCateList}}
                         <li class="dropdown side-dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
-                                    class="fas fa-{{this.cateIcon}}"></i></i>&nbsp;{{this.cateName}} <i
+                                    class="fas fa-{{cateIcon}}"></i></i>&nbsp;{{cateName}} <i
                                     class="fa fa-angle-right icon-right"></i></a>
                             <div class="custom-menu">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <ul class="list-links cat-list">
-                                            {{#each this.subCate}}
+                                            {{#each subCate}}
                                             <li><a
-                                                    href="productList/{{this.cateID}}/{{this.subcateID}}">{{this.subcateName}}</a>
+                                                    href="productList/{{cateID}}/{{subcateID}}">{{subcateName}}</a>
                                             </li>
                                             {{/each}}
                                         </ul>

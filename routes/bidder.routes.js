@@ -12,6 +12,7 @@ const express = require("express");
 //Thường thì truyền object trong res.render để nó render trong mấy file view (như index, account, products này kia)
 //Còn cái category này nó render trong layout, chạy được nhưng nó có vẻ không đúng
 const categoryModel = require("../models/category.model");
+const productModel = require("../models/product.model");
 
 const router = express.Router();
 
@@ -35,7 +36,13 @@ router.get("/", async (req, res) => {
 //Link: /user/productList/cateID/subcateID
 router.get("/productList/:cateID/:subcateID", async (req, res) => {
   //Xem danh sách các sản phẩm thuộc danh mục con
-  //render Products.hbs (đổi tên lại thành productList cũng được, nhớ sửa link)
+  const rows = await productModel.allBySubCate(req.params.cateID, req.params.subcateID);
+
+  res.render("vwUser/product-list", {
+    productList: rows,
+    empty: rows.length === 0
+  });
+
 });
 
 
@@ -43,6 +50,10 @@ router.get("/productList/:cateID/:subcateID", async (req, res) => {
 router.get("/product/:productID", async (req, res) => {
   //Xem chi tiết sản phẩm
   //render product-page.hbs
+  const rows = await productModel.single(req.params.productID);
+  res.render("vwUser/product-details", {
+    product: rows[0]
+  });
 });
 
 
