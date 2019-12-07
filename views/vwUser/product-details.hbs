@@ -1,693 +1,149 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-
-	<title>Bidhub: Chi tiết sản phẩm</title>
-	<link rel="shortcut icon" href="img/icon.png">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-	<link rel="stylesheet" href="css/col5.css">
-	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/jquery.filer-dragdropbox-theme.css">
-	<link rel="stylesheet" href="css/jquery.filer.css">
-	<link rel="stylesheet" href="css/js-snackbar.min.css">
-	<link rel="stylesheet" href="css/login.css">
-	<link rel="stylesheet" href="css/nouislider.min.css">
-	<link rel="stylesheet" href="css/Popup-plugin.css">
-	<link rel="stylesheet" href="css/slick-theme.css">
-	<link rel="stylesheet" href="css/slick.css">
-	<link rel="stylesheet" href="css/style.css">
-	<link rel="stylesheet" href="css/switchery.min.css">
-</head>
-
-<body>
-	<!-- HEADER -->
-	<header>
-		<!-- header -->
-		<div id="header">
-			<div class="container">
-				<div class="pull-left">
-					<!-- Logo -->
-					<div class="header-logo">
-						<a class="logo" href="index.html">
-							<img src="./img/logo.png" alt="">
-						</a>
+<!-- section -->
+<div class="section">
+	<!-- container -->
+	<div class="container">
+		<!-- row -->
+		<div class="row">
+			<!--  Product Details -->
+			<div class="product product-details clearfix">
+				<div class="col-md-5">
+					{{!-- Cái chỗ này, main-view là cái hình to zoom được, view là cái hình nhỏ --}}
+					{{!-- T ghi tên biến đại loại thế, m hiểu rồi thì sửa lại theo cái object m truyền --}}
+					<div id="product-main-view">
+						{{#each this.imgSrc}}
+						<div class="product-view">
+							<img src="{{imgSrc}}" alt="">
+						</div>
+						{{/each}}
 					</div>
-					<!-- /Logo -->
-
-					<!-- Search -->
-					<div class="header-search">
-						<form>
-							<input class="input search-input" type="text" placeholder="Tìm sản phẩm bạn muốn">
-							<select class="input search-categories">
-								<option value="0">Tất cả danh mục</option>
-								<option value="1">Thời trang</option>
-								<option value="2">Máy tính, điện thoại</option>
-								<option value="3">Xe</option>
-								<option value="4">Làm đẹp - Sức khỏe</option>
-								<option value="5">Hàng tiêu dùng</option>
-								<option value="6">Đồ gia dụng</option>
-								<option value="7">Sách, VPP</option>
-							</select>
-							<button class="search-btn"><i class="fa fa-search"></i></button>
-						</form>
+					<div id="product-view">
+						{{#each this.imgSrc}}
+						<div class="product-view">
+							<img src="{{imgSrc}}" alt="">
+						</div>
+						{{/each}}
 					</div>
-					<!-- /Search -->
 				</div>
-				<div class="pull-right">
-					<ul class="header-btns">
-						<li class="header-cart dropdown default-dropdown">
-							<a href="new-product.html" class="main-btn upload-btn"><i class="fas fa-gavel"></i> Mở phiên
-								đấu giá</a>
-						</li>
-						<!-- Account -->
-						<li class="header-account dropdown default-dropdown" id="account-container">
-							<div class="dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="true">
-								<div class="header-btns-icon">
-									<i class="fas fa-user-circle fa-3x"></i>
-								</div>
-								<strong class="text-uppercase">Tài khoản <i class="fa fa-caret-down"></i></strong>
-							</div>
-							<div id="log">
-								<a href="#signin" data-toggle="modal" id="link-signin"
-									class="text-uppercase small-text trigger-btn">Đăng
-									nhập</a> / <a href="#signup" id="link-signup" data-toggle="modal"
-									class="text-uppercase small-text trigger-btn">Đăng ký</a>
-							</div>
-
-							<ul class="custom-menu">
-								<li><a href="account.html"><i class="fas fa-user-cog"></i> Thông tin cá nhân</a></li>
-								<li><a href="account.html#history"><i class="fas fa-poll"></i> Lịch sử đấu giá<small
-											class="bid-result">2</small></a></li>
-								<li><a href="account.html#wish-list"><i class="fa fa-heart"></i> Danh sách yêu thích</a>
-								</li>
-								<li><a href="account.html#sold-product"><i class="fas fa-clipboard"></i> Sản phẩm đã
-										đăng</a></li>
-								<li><a href="account.html#seller-regis"><i class="fa fa-unlock-alt"></i> Đăng ký làm
-										người bán</a></li>
-								<li><a href="javascript:void(0)" class="btn-signout"><i class="fas fa-sign-out-alt"></i>
-										Đăng xuất</a></li>
-							</ul>
-						</li>
-						<!-- /Account -->
-						<!-- Modal HTML -->
-						<div id="signin" class="modal fade">
-							<div class="modal-dialog modal-login">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h4 class="modal-title">Đăng nhập</h4>
-										<button type="button" class="close" data-dismiss="modal" id="btn-exit-signin"
-											aria-hidden="true">&times;</button>
-									</div>
-									<div class="modal-body">
-										<form action="" method="post">
-											<div class="form-group">
-												<div class="input-group">
-													<span class="input-group-addon"><i
-															class="fas fa-envelope"></i></span>
-													<input type="email" class="form-control" name="email"
-														placeholder="Email" required="required">
-												</div>
-											</div>
-											<div class="form-group">
-												<div class="input-group">
-													<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-													<input type="password" class="form-control" name="password"
-														placeholder="Mật khẩu" required="required">
-												</div>
-											</div>
-											<div class="form-group remember-check">
-												<input type="checkbox" class="js-switch" />
-												<span style="font-weight: bold">Ghi nhớ đăng nhập</span>
-											</div>
-											<div class="form-group">
-												<button type="submit" class="btn btn-primary btn-block btn-lg">Đăng
-													nhập</button>
-											</div>
-											<p class="hint-text"><a href="#">Quên mật khẩu?</a></p>
-										</form>
-									</div>
-									<div class="modal-footer">Chưa có tài khoản? <a href="javascript:void(0)"
-											id="btn-call-signup">Tạo tài khoản mới</a></div>
-								</div>
-							</div>
+				<div class="col-md-7">
+					<div class="product-body">
+						<div class="product-label">
+							{{#if isNew}}
+							<span>New</span>
+							{{/if}}
+							{{#if isHot}}
+							<span class="sale">Hot <i class="fab fa-hotjar"></i></span>
+							{{/if}}
 						</div>
+						<div class="product-info">
+							<h2 class="product-name">{{productName}}</h2>
+							<p>Thương hiệu: <span>{{brand}}</span></p>
+							<p>Xuất xứ: <span>{{pFrom}}</span></p>
+							<p>Mô tả sản phẩm:</p>
+							{{{description}}}
+							{{!-- Chỗ này 3 ngoặc ko nhầm đâu, vì description là lưu một chuỗi html dài, 3 ngoặc để render html --}}
 
-						<!-- Modal HTML -->
-						<div id="signup" class="modal fade">
-							<div class="modal-dialog modal-login" id="signup">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h4 class="modal-title">Đăng ký</h4>
-										<button type="button" class="close" data-dismiss="modal" id="btn-exit-signup"
-											aria-hidden="true" aria-hidden="true">&times;</button>
-									</div>
-									<div class="modal-body">
-										<form action="" method="post">
-											<div class="form-group">
-												<div class="input-group">
-													<span class="input-group-addon"><i class="fa fa-user"></i></span>
-													<input type="text" class="form-control" name="name"
-														placeholder="Họ tên" required="required">
-												</div>
-											</div>
-											<div class="form-group">
-												<div class="input-group">
-													<span class="input-group-addon"><i
-															class="fas fa-envelope"></i></span>
-													<input type="text" class="form-control" name="email"
-														placeholder="Email" required="required">
-												</div>
-											</div>
-											<div class="form-group">
-												<div class="input-group">
-													<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-													<input type="password" class="form-control" name="password"
-														placeholder="Mật khẩu" required="required">
-												</div>
-											</div>
-											<div class="form-group">
-												<div class="input-group">
-													<span class="input-group-addon"><i
-															class="fas fa-map-marker-alt"></i></span>
-													<input type="text" class="form-control" name="address"
-														placeholder="Địa chỉ" required="required">
-												</div>
-											</div>
+							{{!-- <span>Ngày bắt đầu: <span>18h32 ngày 20/11/2019</span></span> --}}
+							<p>Ngày bắt đầu: <span>{{format beginDate}}</span></p>
+							{{!-- format ngày giờ như trên --}}
 
-											<div class="form-group">
-												<div class="input-group" style="margin: 0 auto">
-													<div class="g-recaptcha"
-														data-sitekey="6LciPMQUAAAAAHP1S7bIdQ5xn6L2Vl6f9ISRm5xt"></div>
-												</div>
-											</div>
-											<div class="form-group">
-												<button type="submit" class="btn btn-primary btn-block btn-lg">Đăng
-													ký</button>
-											</div>
-
-										</form>
-									</div>
-									<div class="modal-footer">Đã có tài khoản? <a href="javascript:void(0)"
-											id="btn-call-signin">Đăng nhập</a></div>
-								</div>
-							</div>
+							<p>Ngày kết thúc: <span>{{format endDate}}</span></p>
+							<hr>
+							<p>Giá hiện tại: <span class="product-price" id="current">{{format currentPrice}}</span></p>
+							<p>Giá mua ngay: <span class="product-price">{{format immePrice}}</span></p>
 						</div>
-						<!-- Mobile nav toggle-->
-						<li class="nav-toggle">
-							<button class="nav-toggle-btn main-btn icon-btn"><i class="fa fa-bars"></i></button>
-						</li>
-						<!-- / Mobile nav toggle -->
-					</ul>
-				</div>
-			</div>
-			<!-- header -->
-		</div>
-		<!-- container -->
-	</header>
-	<!-- /HEADER -->
-
-	<!-- NAVIGATION -->
-	<div id="navigation">
-		<!-- container -->
-		<div class="container">
-			<div id="responsive-nav">
-				<!-- category nav -->
-				<div class="category-nav show-on-click">
-					<span class="category-header">Danh mục sản phẩm <i class="fa fa-list"></i></span>
-					<ul class="category-list">
-						<li class="dropdown side-dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
-									class="fas fa-tshirt"></i></i>&nbsp;Thời trang <i
-									class="fa fa-angle-right icon-right"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-6">
-										<ul class="list-links cat-list">
-											<li><a href="products.html">Thời trang nam</a></li>
-											<li><a href="products.html">Thời trang nữ</a></li>
-											<li><a href="products.html">Thời trang cho bé</a></li>
-											<li><a href="products.html">Giày, dép</a></li>
-											<li><a href="products.html">Phụ kiện thời trang</a></li>
-										</ul>
-									</div>
-									<div class="col-md-6 hidden-sm hidden-xs">
-										<img src="img/1.jpg" class="cat-img" order="-1">
-									</div>
-								</div>
+						<div class="product-btns">
+							<div class="qty-input">
+								<input class="input price-input">
+								{{!-- format chỗ này nữa --}}
 							</div>
-						</li>
-						<li class="dropdown side-dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
-									class="fas fa-mobile-alt"></i>&nbsp;Máy tính, điện thoại <i
-									class="fa fa-angle-right icon-right"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-6">
-										<ul class="list-links cat-list">
-											<li><a href="products.html">Điện thoại di dộng</a></li>
-											<li><a href="products.html">Laptop</a></li>
-											<li><a href="products.html">PC</a></li>
-											<li><a href="products.html">Máy tính bảng</a></li>
-											<li><a href="products.html">Phụ kiện điện thoại</a></li>
-											<li><a href="products.html">Phụ kiện máy tính</a></li>
-										</ul>
-									</div>
-									<div class="col-md-6 hidden-sm hidden-xs">
-										<img src="" class="cat-img" order="-1">
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="dropdown side-dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
-									class="fas fa-motorcycle"></i>&nbsp;Xe <i
-									class="fa fa-angle-right icon-right"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-6">
-										<ul class="list-links cat-list">
-											<li><a href="products.html">Xe máy</a></li>
-											<li><a href="products.html">Xe đạp</a></li>
-											<li><a href="products.html">Xe điện</a></li>
-										</ul>
-									</div>
-									<div class="col-md-6 hidden-sm hidden-xs">
-										<img src="" class="cat-img" order="-1">
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="dropdown side-dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
-									class="fas fa-heartbeat"></i></i>&nbsp;Làm đẹp - Sức khỏe <i
-									class="fa fa-angle-right icon-right"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-6">
-										<ul class="list-links cat-list">
-											<li><a href="products.html">Mỹ phẩm</a></li>
-											<li><a href="products.html">Dụng cụ trang điểm</a></li>
-											<li><a href="products.html">Dụng cụ y tế</a></li>
-											<li><a href="products.html">Thực phẩm chức năng</a></li>
-										</ul>
-									</div>
-									<div class="col-md-6 hidden-sm hidden-xs">
-										<img src="" class="cat-img" order="-1">
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="dropdown side-dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
-									class="fas fa-pizza-slice"></i></i>&nbsp;Hàng tiêu dùng <i
-									class="fa fa-angle-right icon-right"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-6">
-										<ul class="list-links cat-list">
-											<li><a href="products.html">Bánh kẹo</a></li>
-											<li><a href="products.html">Đồ uống</a></li>
-											<li><a href="products.html">Thực phẩm</a></li>
-											<li><a href="products.html">Đồ hộp</a></li>
-										</ul>
-									</div>
-									<div class="col-md-6 hidden-sm hidden-xs">
-										<img src="" class="cat-img" order="-1">
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="dropdown side-dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
-									class="fas fa-couch"></i>&nbsp;Đồ gia dụng <i
-									class="fa fa-angle-right icon-right"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-6">
-										<ul class="list-links cat-list">
-											<li><a href="products.html">Đồ dùng nhà bếp</a></li>
-											<li><a href="products.html">Đồ dùng phòng ngủ</a></li>
-											<li><a href="products.html">Nội thất khác</a></li>
-										</ul>
-									</div>
-									<div class="col-md-6 hidden-sm hidden-xs">
-										<img src="" class="cat-img" order="-1">
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="dropdown side-dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
-									class="fas fa-book"></i>&nbsp;Sách, Văn phòng phẩm <i
-									class="fa fa-angle-right icon-right"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-6">
-										<ul class="list-links cat-list">
-											<li><a href="products.html">Sách ngoại văn</a></li>
-											<li><a href="products.html">Sách tiếng Việt</a></li>
-											<li><a href="products.html">Sách thiếu nhi</a></li>
-											<li><a href="products.html">Truyện tranh</a></li>
-											<li><a href="products.html">Văn phòng phẩm</a></li>
-										</ul>
-									</div>
-									<div class="col-md-6 hidden-sm hidden-xs">
-										<img src="" class="cat-img" order="-1">
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="dropdown side-dropdown">
-							<a href="products.html"><i class="fas fa-th"></i>&nbsp;Tất cả danh mục </a>
-						</li>
-					</ul>
-				</div>
-				<!-- /category nav -->
-			</div>
-		</div>
-		<!-- /container -->
-	</div>
-	<!-- /NAVIGATION -->
-
-
-
-	<!-- BREADCRUMB -->
-	<div id="breadcrumb">
-		<div class="container">
-			<ul class="breadcrumb">
-				<li><a href="index.html">Trang chủ</a></li>
-				<li><a href="products.html">Tên danh mục</a></li>
-				<li class="active">Product Name Goes Here</li>
-			</ul>
-		</div>
-	</div>
-	<!-- /BREADCRUMB -->
-
-	<!-- section -->
-	<div class="section">
-		<!-- container -->
-		<div class="container">
-			<!-- row -->
-			<div class="row">
-				<!--  Product Details -->
-				<div class="product product-details clearfix">
-					<div class="col-md-5">
-						<div id="product-main-view">
-							<div class="product-view">
-								<img src="./img/main-product01.jpg" alt="">
-							</div>
-							<div class="product-view">
-								<img src="./img/main-product02.jpg" alt="">
-							</div>
-							<div class="product-view">
-								<img src="./img/main-product03.jpg" alt="">
-							</div>
-							<div class="product-view">
-								<img src="./img/main-product04.jpg" alt="">
-							</div>
-						</div>
-						<div id="product-view">
-							<div class="product-view">
-								<img src="./img/main-product01.jpg" alt="">
-							</div>
-							<div class="product-view">
-								<img src="./img/main-product02.jpg" alt="">
-							</div>
-							<div class="product-view">
-								<img src="./img/main-product03.jpg" alt="">
-							</div>
-							<div class="product-view">
-								<img src="./img/main-product04.jpg" alt="">
+							<button class="primary-btn btn-bid" type="submit">Ra giá <i
+									class="fas fa-gavel"></i></button>
+							<div class="pull-right">
+								<button class="main-btn icon-btn btn-delete"><i class="fas fa-trash"></i></button>
+								<button class="main-btn icon-btn" id="myPopUp"><i class="fa fa-share-alt"></i></button>
+								<button class="btn-wish"><i class="fa fa-heart"></i></button>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-7">
-						<div class="product-body">
-							<div class="product-label">
-								<span>New</span>
-								<span class="sale">Hot <i class="fab fa-hotjar"></i></span>
-							</div>
-							<div class="product-info">
-								<h2 class="product-name">Product Name Goes Here</h2>
-								<p>Thương hiệu: <span>Nike</span></p>
-								<p>Xuất xứ: <span>Mỹ</span></p>
-								<p>Thông tin sản phẩm:</p>
-								<ul>
-									<li>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</li>
-									<li>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</li>
-									<li>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</li>
-									<li>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</li>
-								</ul>
-								<p>Mô tả:
-									<span>Lorem, ipsum dolor sit amet consectetur adipisicing elit. At soluta et
-										voluptate ipsam nisi minima sint accusantium doloribus explicabo, ad est
-										assumenda iste libero beatae sunt. Magni tenetur ut aspernatur. Lorem ipsum
-										dolor sit amet consectetur adipisicing elit. Cumque quia laborum fugit
-										consectetur iste, reprehenderit veritatis voluptate veniam harum provident
-										aperiam quidem esse? Magnam fugiat quidem omnis ratione vero nemo.</span>
-								</p>
-
-								<p>Ngày bắt đầu: <span>18h32 ngày 20/11/2019</span></p>
-								<p>Ngày kết thúc: <span>18h32 ngày 27/11/2019</span></p>
-								<hr>
-								<p>Giá hiện tại: <span class="product-price" id="current">6,300,000₫</span></p>
-								<p>Giá mua ngay: <span class="product-price">7,300,000₫</span></p>
-							</div>
-							<div class="product-btns">
-								<div class="qty-input">
-									<input class="input price-input">
-								</div>
-								<button class="primary-btn btn-bid" type="submit">Ra giá <i
-										class="fas fa-gavel"></i></button>
-								<div class="pull-right">
-									<button class="main-btn icon-btn btn-delete"><i class="fas fa-trash"></i></button>
-									<button class="main-btn icon-btn" id="myPopUp"><i
-											class="fa fa-share-alt"></i></button>
-									<button class="btn-wish"><i class="fa fa-heart"></i></button>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-12">
-						<div class="product-tab">
-							<ul class="tab-nav">
-								<li class="active"><a data-toggle="tab" href="#tab1">Thông tin chi tiết</a></li>
-							</ul>
-							<div class="tab-content">
-								<div id="tab1" class="tab-pane fade in active">
-									<div class="row">
-										<div class="col-md-6">
-											<h4 style="margin-bottom: 20px;">Ghi chú của người bán<span
-													class="pull-right" style="font-size: 14px; margin-top:-5px"><button
-														class="main-btn note-btn"><i class="far fa-edit"></i> Thêm ghi
-														chú</button></span></h4>
-
-											<div class="note" id="note1">
-												<p><i class="fas fa-edit"></i> <span class="note-date">20/11/2019</span>
-												</p>
-												<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-													eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-													ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-													aliquip ex ea commodo consequat. Duis aute irure dolor in
-													reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-													pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-													culpa qui officia deserunt mollit anim id est laborum.</p>
-											</div>
-											<div class="note" id="note2">
-												<p><i class="fas fa-edit"></i> <span class="note-date">22/11/2019</span>
-												</p>
-												<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-													eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-													ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-													aliquip ex ea commodo consequat. </p>
-											</div>
-											<div class="note" id="note3">
-												<p><i class="fas fa-edit"></i> <span class="note-date">25/11/2019</span>
-												</p>
-												<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-													eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-											</div>
+				</div>
+				<div class="col-md-12">
+					<div class="product-tab">
+						<ul class="tab-nav">
+							<li class="active"><a data-toggle="tab" href="#tab1">Thông tin chi tiết</a></li>
+						</ul>
+						<div class="tab-content">
+							<div id="tab1" class="tab-pane fade in active">
+								<div class="row">
+									<div class="col-md-6">
+										<h4 style="margin-bottom: 20px;">Ghi chú của người bán<span class="pull-right"
+												style="font-size: 14px; margin-top:-5px"><button
+													class="main-btn note-btn"><i class="far fa-edit"></i> Thêm ghi
+													chú</button></span></h4>
+										{{#each note}}
+										<div class="note" id="note{{noteID}}">
+											<p><i class="fas fa-edit"></i> <span class="note-date">{{noteDate}}</span>
+											</p>
+											<p>{{noteContent}}</p>
 										</div>
-										<div class="col-md-6">
-											<h4 style="margin-bottom: 20px;">Lịch sử đấu giá</h4>
-											<div class="row">
-												<div class="col-md-12">
-													<table id="bid-table">
-
-													</table>
-												</div>
-
+										{{/each}}
+									</div>
+									<div class="col-md-6">
+										<h4 style="margin-bottom: 20px;">Lịch sử đấu giá</h4>
+										<div class="row">
+											<div class="col-md-12">
+												<table id="bid-table">
+													{{!-- Cái này t xử lý ở client, trong file public/js/main.js dòng 388 --}}
+													{{!-- m Tham khảo rồi làm theo --}}
+													{{!-- nó phân trang sẵn rồi, thầy bảo ko nên dùng cái này, nhưng mà cái này ít, dùng được --}}
+												</table>
 											</div>
+
 										</div>
 									</div>
-
-
 								</div>
+
+
 							</div>
 						</div>
 					</div>
 				</div>
-				<!-- /Product Details -->
 			</div>
-			<!-- /row -->
+			<!-- /Product Details -->
 		</div>
-		<!-- /container -->
+		<!-- /row -->
 	</div>
-	<!-- /section -->
+	<!-- /container -->
+</div>
+<!-- /section -->
 
-	<!-- section -->
-	<div class="section">
-		<!-- container -->
-		<div class="container">
-			<!-- row -->
-			<div class="row">
-				<!-- section title -->
-				<div class="col-md-12">
-					<div class="section-title">
-						<h2 class="title">Sản Phẩm Tương Tự</h2>
-					</div>
+<!-- section -->
+<div class="section">
+	<!-- container -->
+	<div class="container">
+		<!-- row -->
+		<div class="row">
+			<!-- section title -->
+			<div class="col-md-12">
+				<div class="section-title">
+					<h2 class="title">Sản Phẩm Tương Tự</h2>
 				</div>
-				<!-- section title -->
 			</div>
-			<!-- /row -->
-			<!-- row -->
-			<div class="row">
-				<!-- section title -->
-				<div class="col-md-12">
-					<div class="product-container">
-
-					</div>
-				</div>
-				<!-- section title -->
-			</div>
-			<!-- /row -->
+			<!-- section title -->
 		</div>
-		<!-- /container -->
+		<!-- /row -->
+		<!-- row -->
+		<div class="row">
+			<!-- section title -->
+			<div class="col-md-12">
+				<div class="product-container">
+					{{!-- render sản phẩm tương tự --}}
+					{{!-- Từ từ tính --}}
+				</div>
+			</div>
+			<!-- section title -->
+		</div>
+		<!-- /row -->
 	</div>
-	<!-- /section -->
-
-
-	<!-- FOOTER -->
-	<footer id="footer" class="section section-grey">
-		<!-- container -->
-		<div class="container">
-			<!-- row -->
-			<div class="row">
-				<!-- footer widget -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
-					<div class="footer">
-						<!-- footer logo -->
-						<div class="footer-logo">
-							<a class="logo" href="#">
-								<img src="./img/logo.png" alt="">
-							</a>
-						</div>
-						<!-- /footer logo -->
-
-						<img src="https://frontend.tikicdn.com/_new-next/static/img/footer/bo-cong-thuong.svg" alt="">
-
-
-					</div>
-				</div>
-				<!-- /footer widget -->
-
-				<!-- footer widget -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
-					<div class="footer">
-						<h3 class="footer-header">Phương thức thanh toán</h3>
-						<ul class="list-links">
-							<li>
-								<img src="https://frontend.tikicdn.com/_new-next/static/img/footer/visa.svg" alt="">
-								<img src="https://frontend.tikicdn.com/_new-next/static/img/footer/mastercard.svg"
-									alt="">
-								<img src="https://frontend.tikicdn.com/_new-next/static/img/footer/cash.svg" alt="">
-								<img src="https://frontend.tikicdn.com/_new-next/static/img/footer/internet-banking.svg"
-									alt="">
-							</li>
-						</ul>
-					</div>
-				</div>
-				<!-- /footer widget -->
-
-				<div class="clearfix visible-sm visible-xs"></div>
-
-				<!-- footer widget -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
-					<div class="footer">
-						<h3 class="footer-header">Hỗ trợ khách hàng</h3>
-						<ul class="list-links">
-							<li><a href="#">Giới thiệu về Bidhub</a></li>
-							<li><a href="#">Chính sách bảo mật</a></li>
-							<li><a href="#">Tư vấn</a></li>
-						</ul>
-					</div>
-				</div>
-				<!-- /footer widget -->
-
-				<!-- footer subscribe -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
-					<div class="footer">
-						<h3 class="footer-header">Kết nối với Bidhub</h3>
-						<!-- footer social -->
-						<ul class="footer-social">
-							<li><a href="https://www.facebook.com/"><i class="fab fa-facebook-square fa-2x"></i></a>
-							</li>
-							<li><a href="https://www.twitter.com/"><i class="fab fa-twitter-square fa-2x"></i></li>
-							<li><a href="https://www.youtube.com/"><i class="fab fa-youtube fa-2x"></i></a></li>
-						</ul>
-						<!-- /footer social -->
-					</div>
-				</div>
-				<!-- /footer subscribe -->
-			</div>
-			<!-- /row -->
-			<hr>
-			<!-- row -->
-			<div class="row">
-				<div class="col-md-8 col-md-offset-2 text-center">
-					<!-- footer copyright -->
-					<div class="footer-copyright">
-						&copy;
-						<script>document.write(new Date().getFullYear());</script> Bidhub.
-						Tất cả các quyền được bảo lưu
-					</div>
-					<!-- /footer copyright -->
-				</div>
-			</div>
-			<!-- /row -->
-		</div>
-		<!-- /container -->
-	</footer>
-	<!-- /FOOTER -->
-
-	<!-- jQuery Plugins -->
-	<script src="js/plugin/jquery.min.js"></script>
-
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script type="text/javascript" charset="utf8"
-		src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/autonumeric@4.5.4"></script>
-	<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-	<script src="https://use.fontawesome.com/releases/v5.11.2/js/all.js" data-auto-replace-svg="nest"></script>
-	<script src='https://www.google.com/recaptcha/api.js'></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-
-	<script src="js/plugin/jquery.filer.min.js"></script>
-	<script src="js/plugin/jquery.zoom.min.js"></script>
-	<script src="js/plugin/js-snackbar.min.js"></script>
-	<script src="js/plugin/nouislider.min.js"></script>
-	<script src="js/plugin/Popup-plugin.js"></script>
-	<script src="js/plugin/slick.min.js"></script>
-	<script src="js/plugin/switchery.min.js"></script>
-
-	<script src="js/sample/product-page.js"></script>
-
-	<script src="js/main.js"></script>
-</body>
-
-</html>
+	<!-- /container -->
+</div>
+<!-- /section -->
