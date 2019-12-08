@@ -15,7 +15,7 @@
 						{{else}}
 						{{#each imgSrc}}
 						<div class="product-view">
-							<img src="/img/{{imgID}}.jpg" alt="">
+							<img src="/img/product/{{productID}}/details/{{imgID}}.jpg" alt="">
 						</div>
 						{{/each}}
 						{{/if}}
@@ -23,10 +23,10 @@
 					<div id="product-view">
 						{{#each imgSrc}}
 						<div class="product-view">
-							<img src="/img/{{imgID}}.jpg" alt="">
+							<img src="/img/product/{{productID}}/details/{{imgID}}.jpg" alt="">
 						</div>
 						{{/each}}
-					</div>
+					</div>		
 				</div>
 				<div class="col-md-7">
 					<div class="product-body">
@@ -44,8 +44,8 @@
 							<p>Xuất xứ: <span>{{product.pFrom}}</span></p>
 							<p>Mô tả sản phẩm:</p>
 							{{{product.description}}}
-							<p>Ngày bắt đầu: <span>{{format_day product.beginDate}}</span></p>
-							<p>Ngày kết thúc: <span>{{format_day product.endDate}}</span></p>
+							<p>Ngày bắt đầu: <span class="time">{{format_day_time product.beginDate}}</span></p>
+							<p>Ngày kết thúc: <span>{{format_day_time product.endDate}}</span></p>
 							<hr>
 							<p>Giá hiện tại: <span class="product-price"
 									id="current">{{format_money product.currentPrice}}</span></p>

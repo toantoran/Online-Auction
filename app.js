@@ -24,6 +24,7 @@ app.engine(
                 return numeral(val).format('0,0')
             },
             format_day: val => dateFormat(val, "dd-mm-yyyy"),
+            format_day_time: val => dateFormat(val, "dd/mm/yyyy [h:MM:ss TT]"),
             format_name: val => {
                 if (val.length > 25) {
                     var temp = "";

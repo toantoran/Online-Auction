@@ -129,7 +129,7 @@
 						</div>
 						{{else}}
 						<div class="card-body">
-							<div class="row">
+							<div class="row product-container">
 								{{#each this.productList}}
 								<div class="col-md-3 col-sm-4 col-xs-6">
 									<div class="product product-single">
@@ -139,17 +139,18 @@
 												<span>Mới</span>
 											</div>
 											<ul class="product-countdown">
-												<li><span>00 H</span></li>
-												<li><span>00 M</span></li>
-												<li><span>00 S</span></li>
+												<li><span class="cd-h">0 H</span></li>
+												<li><span class="cd-m">0 M</span></li>
+												<li><span class="cd-s">0 S</span></li>
 											</ul>
 											<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Xem
 												chi tiết</button>
 											<button class="watch-list btn-wish"><i class="fa fa-heart"></i></button>
-											<img src= "/img/main-product01.jpg" alt="">
+											<img src="/img/product/{{productID}}/main.jpg" alt="">
 										</div>
 										<div class="product-body">
-											<h2 class="product-name"><a href="/product/{{productID}}">{{format_name productName}}</a></h2>
+											<h2 class="product-name"><a
+													href="/product/{{productID}}">{{format_name productName}}</a></h2>
 											<p class="product-text">Giá hiện tại: <span
 													class="product-price">{{format_money currentPrice}}</span></p>
 											<div class="product-footer">

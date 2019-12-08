@@ -27,7 +27,8 @@ router.get("/productList/:cateID/:subcateID", async (req, res) => {
 
   res.render("vwUser/product-list", {
     productList: rows,
-    empty: rows.length === 0
+    empty: rows.length === 0,
+    title: "Danh sách",
   });
 });
 
@@ -36,12 +37,12 @@ router.get("/product/:productID", async (req, res) => {
   const rows = await productModel.single(req.params.productID);
   const imgSrc = await productModel.singleImgSrc(req.params.productID);
   const note = await productModel.singleNote(req.params.productID);
-  console.log(note);
   res.render("vwUser/product-details", {
     product: rows[0],
     imgSrc: imgSrc,
     note: note,
     emptyImg: imgSrc.length === 0,
+    title: "Chi tiết sản phảm",
   });
 });
 

@@ -31,4 +31,3 @@ let productContainer = $('#store').find('.product-container');
 for (let i = 0; i < 12; i++) {
     productContainer.append(productSingle);
 }
-
