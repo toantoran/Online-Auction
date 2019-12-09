@@ -20,14 +20,21 @@ router.get("/", async (req, res) => {
 
 //Link: /user/productList/cateID/subcateID
 router.get("/productList/:cateID/:subcateID", async (req, res) => {
-  const rows = await productModel.allBySubCate(
+  const productList = await productModel.allBySubCate(
     req.params.cateID,
     req.params.subcateID
   );
-
+  
+  for (const product of productList) {
+    const rows = await productModel.singleImgSrcByProduct(product.productID);
+    if (rows.length >= 1) {
+      product.mainImgSrc = rows[0].imgSrc;
+    }
+  }
+  
   res.render("vwUser/product-list", {
-    productList: rows,
-    empty: rows.length === 0,
+    productList,
+    empty: productList.length === 0,
     title: "Danh sách",
   });
 });
@@ -35,14 +42,14 @@ router.get("/productList/:cateID/:subcateID", async (req, res) => {
 //Link: /user/product/:productID
 router.get("/product/:productID", async (req, res) => {
   const rows = await productModel.single(req.params.productID);
-  const imgSrc = await productModel.singleImgSrc(req.params.productID);
-  const note = await productModel.singleNote(req.params.productID);
+  const listImgSrc = await productModel.singleImgSrcByProduct(req.params.productID);
+  const note = await productModel.singleNoteByProduct(req.params.productID);
   res.render("vwUser/product-details", {
     product: rows[0],
-    imgSrc: imgSrc,
-    note: note,
-    emptyImg: imgSrc.length === 0,
-    title: "Chi tiết sản phảm",
+    listImgSrc,
+    note,
+    emptyImg: listImgSrc.length === 0,
+    title: "Chi tiết sản phẩm",
   });
 });
 

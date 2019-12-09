@@ -13,17 +13,17 @@
 							<p>Không có dữ liệu hình ảnh</p>
 						</div>
 						{{else}}
-						{{#each imgSrc}}
+						{{#each listImgSrc}}
 						<div class="product-view">
-							<img src="/img/product/{{productID}}/details/{{imgID}}.jpg" alt="">
+							<img src="/img/product/{{imgSrc}}" alt="">
 						</div>
 						{{/each}}
 						{{/if}}
 					</div>
 					<div id="product-view">
-						{{#each imgSrc}}
+						{{#each listImgSrc}}
 						<div class="product-view">
-							<img src="/img/product/{{productID}}/details/{{imgID}}.jpg" alt="">
+							<img src="/img/product/{{imgSrc}}" alt="">
 						</div>
 						{{/each}}
 					</div>		
@@ -40,7 +40,7 @@
 						</div>
 						<div class="product-info">
 							<h2 class="product-name">{{product.productName}}</h2>
-							<p>Thương hiệu: <span>{{product.brand}}</span></p>
+							<p>Thương hiệu: <span>{{product.brand}}</span></p>
 							<p>Xuất xứ: <span>{{product.pFrom}}</span></p>
 							<p>Mô tả sản phẩm:</p>
 							{{{product.description}}}

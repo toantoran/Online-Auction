@@ -3,6 +3,7 @@ module.exports = function (app) {
 
     //Đường dẫn bắt đầu bằng /user/... sẽ do cái file này xử lí
     app.use('/', require('../routes/bidder.routes'));
+    app.use('/seller', require('../routes/seller.routes'));
 
     //Đường dẫn bắt đầu bằng /seller/... sẽ do cái file này xử lí
     //app.use('/seller', require('../routes/seller.routes'));

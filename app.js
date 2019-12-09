@@ -2,6 +2,7 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 const numeral = require("numeral");
 const dateFormat = require("dateformat");
+
 const app = express();
 
 
@@ -20,7 +21,7 @@ app.engine(
         helpers: {
             format_money: val => numeral(val).format('0,0') + ' đ',
             format_money_bid: val => {
-                val += val*0.1;
+                val += val * 0.1;
                 return numeral(val).format('0,0')
             },
             format_day: val => dateFormat(val, "dd-mm-yyyy"),
@@ -45,7 +46,6 @@ app.set("view engine", "hbs");
 //Cái này để yên
 require('./middlewares/locals.mdw')(app);
 require('./middlewares/routes.mdw')(app);
-
 
 const PORT = 3000;
 app.listen(PORT, () => {
