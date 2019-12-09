@@ -8,7 +8,7 @@ const uuid = require('uuid/v1');
 router.get("/new-product", async (req, res) => {
     res.render("vwSeller/new-product", {
         title: "Mở phiên đấu giá",
-        id: uuid()
+        id: uuid(),
     });
 });
 
@@ -26,7 +26,8 @@ router.post("/new-product/",upload.array('files[]'), async (req, res) => {
         beginDate: new Date(),
         endDate: new Date(new Date().setDate(new Date().getDate() + 7)),
     }
-    let row = await productModel.addProductSingle(entityProductSingle);
+
+    await productModel.addProductSingle(entityProductSingle);
 
     for (const file of req.files) {
         const entityProductImg = {
@@ -35,8 +36,7 @@ router.post("/new-product/",upload.array('files[]'), async (req, res) => {
         }
         await productModel.addProductImg(entityProductImg);
     }
-
-    res.redirect(`/product/${row.insertId}`);
+    res.redirect(`/product/${req.body.id}`);
 });
 
 module.exports = router;
