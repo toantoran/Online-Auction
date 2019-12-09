@@ -46,6 +46,7 @@ router.get("/product/:productID", async (req, res) => {
   const note = await productModel.singleNoteByProduct(req.params.productID);
   res.render("vwUser/product-details", {
     product: rows[0],
+    bidPrice: rows[0].stepPrice + rows[0].currentPrice,
     listImgSrc,
     note,
     emptyImg: listImgSrc.length === 0,
