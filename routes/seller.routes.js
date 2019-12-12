@@ -39,4 +39,9 @@ router.post("/new-product/",upload.array('files[]'), async (req, res) => {
     res.redirect(`/product/${req.body.id}`);
 });
 
+router.post("/product/:productID/delete", async (req, res) => {
+    await productModel.deleteProduct(req.params.productID);
+    res.send(req.params.productID);
+});
+
 module.exports = router;
