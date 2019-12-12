@@ -65,7 +65,35 @@
 			<div class="col-md-12 col-sm-12 col-xs-12 mx-auto">
 				<div class="row">
 					<div id="product-slick-1" class="product-slick">
-
+						{{#each this.productsToEnd}}
+						<div class="product product-single">
+							<div class="product-thumb">
+								<div class="product-label">
+									<span class="sale">Hot <i class="fab fa-hotjar"></i></span>
+									<span>Mới</span>
+								</div>
+								<ul class="product-countdown">
+									<li><span class="cd-h">0 H</span></li>
+									<li><span class="cd-m">0 M</span></li>
+									<li><span class="cd-s">0 S</span></li>
+								</ul>
+								<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Xem chi
+									tiết</button>
+								<button class="watch-list btn-wish"><i class="fa fa-heart"></i></button>
+								<img src="/img/product/{{productID}}/{{mainImgSrc}}" alt="">
+							</div>
+							<div class="product-body">
+								<h2 class="product-name"><a
+										href="/product/{{productID}}">{{format_name productName}}</a></h2>
+								<p class="product-text">Giá hiện tại: <span
+										class="product-price">{{format_money currentPrice}}</span></p>
+								<div class="product-footer">
+									<small><span>{{countBid}}</span> lượt ra giá</small>
+									<small>Từ <span>{{format_day beginDate}}</span></small>
+								</div>
+							</div>
+						</div>
+						{{/each}}
 					</div>
 				</div>
 			</div>
@@ -96,7 +124,35 @@
 			<div class="col-md-12 col-sm-12 col-xs-12 mx-auto">
 				<div class="row">
 					<div id="product-slick-2" class="product-slick">
-
+						{{#each this.productsMostBid}}
+						<div class="product product-single">
+							<div class="product-thumb">
+								<div class="product-label">
+									<span class="sale">Hot <i class="fab fa-hotjar"></i></span>
+									<span>Mới</span>
+								</div>
+								<ul class="product-countdown">
+									<li><span class="cd-h">0 H</span></li>
+									<li><span class="cd-m">0 M</span></li>
+									<li><span class="cd-s">0 S</span></li>
+								</ul>
+								<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Xem chi
+									tiết</button>
+								<button class="watch-list btn-wish"><i class="fa fa-heart"></i></button>
+								<img src="/img/product/{{productID}}/{{mainImgSrc}}" alt="">
+							</div>
+							<div class="product-body">
+								<h2 class="product-name"><a
+										href="/product/{{productID}}">{{format_name productName}}</a></h2>
+								<p class="product-text">Giá hiện tại: <span
+										class="product-price">{{format_money currentPrice}}</span></p>
+								<div class="product-footer">
+									<small><span>{{countBid}}</span> lượt ra giá</small>
+									<small>Từ <span>{{format_day beginDate}}</span></small>
+								</div>
+							</div>
+						</div>
+						{{/each}}
 					</div>
 				</div>
 			</div>
@@ -122,12 +178,39 @@
 					</div>
 				</div>
 			</div>
-
 			<!-- Product Slick -->
 			<div class="col-md-12 col-sm-12 col-xs-12 mx-auto">
 				<div class="row">
 					<div id="product-slick-3" class="product-slick">
-
+						{{#each this.productsHighestPrice}}
+						<div class="product product-single">
+							<div class="product-thumb">
+								<div class="product-label">
+									<span class="sale">Hot <i class="fab fa-hotjar"></i></span>
+									<span>Mới</span>
+								</div>
+								<ul class="product-countdown">
+									<li><span class="cd-h">0 H</span></li>
+									<li><span class="cd-m">0 M</span></li>
+									<li><span class="cd-s">0 S</span></li>
+								</ul>
+								<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Xem chi
+									tiết</button>
+								<button class="watch-list btn-wish"><i class="fa fa-heart"></i></button>
+								<img src="/img/product/{{productID}}/{{mainImgSrc}}" alt="">
+							</div>
+							<div class="product-body">
+								<h2 class="product-name"><a
+										href="/product/{{productID}}">{{format_name productName}}</a></h2>
+								<p class="product-text">Giá hiện tại: <span
+										class="product-price">{{format_money currentPrice}}</span></p>
+								<div class="product-footer">
+									<small><span>{{countBid}}</span> lượt ra giá</small>
+									<small>Từ <span>{{format_day beginDate}}</span></small>
+								</div>
+							</div>
+						</div>
+						{{/each}}
 					</div>
 				</div>
 			</div>
@@ -158,7 +241,35 @@
 			<div class="col-md-12 col-sm-12 col-xs-12 mx-auto">
 				<div class="row">
 					<div id="product-slick-latest" class="product-slick">
-
+						{{#each this.productsNew}}
+						<div class="product product-single">
+							<div class="product-thumb">
+								<div class="product-label">
+									<span class="sale">Hot <i class="fab fa-hotjar"></i></span>
+									<span>Mới</span>
+								</div>
+								<ul class="product-countdown">
+									<li><span class="cd-h">0 H</span></li>
+									<li><span class="cd-m">0 M</span></li>
+									<li><span class="cd-s">0 S</span></li>
+								</ul>
+								<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Xem chi
+									tiết</button>
+								<button class="watch-list btn-wish"><i class="fa fa-heart"></i></button>
+								<img src="/img/product/{{productID}}/{{mainImgSrc}}" alt="">
+							</div>
+							<div class="product-body">
+								<h2 class="product-name"><a
+										href="/product/{{productID}}">{{format_name productName}}</a></h2>
+								<p class="product-text">Giá hiện tại: <span
+										class="product-price">{{format_money currentPrice}}</span></p>
+								<div class="product-footer">
+									<small><span>{{countBid}}</span> lượt ra giá</small>
+									<small>Từ <span>{{format_day beginDate}}</span></small>
+								</div>
+							</div>
+						</div>
+						{{/each}}
 					</div>
 				</div>
 			</div>

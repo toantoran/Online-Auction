@@ -10,5 +10,11 @@
   },
   "paginate": {
     "limit": 12
+  },
+  "indexPage": {
+    "limitProductsToEnd": 5,
+    "limitProductsMostBid": 5,
+    "limitProductsHighestPrice": 5,
+    "limitProductsNew": 10
   }
 }

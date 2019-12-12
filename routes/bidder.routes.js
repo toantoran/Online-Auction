@@ -7,14 +7,54 @@ const config = require('../config/default.json');
 const router = express.Router();
 
 router.get("/", async (req, res) => {
+
+  const [productsToEnd, productsMostBid, productsHighestPrice, productsNew] = await Promise.all([
+    productModel.productsToEnd(),
+    productModel.productsMostBid(),
+    productModel.productsHighestPrice(),
+    productModel.productsNew(),
+  ]);
+
+  for (const product of productsToEnd) {
+    [product.mainImgSrc, product.countBid] = await Promise.all([
+      productModel.singleMainImgSrcByProduct(product.productID),
+      productModel.countBidProduct(product.productID)
+    ])
+  }
+
+  for (const product of productsMostBid) {
+      product.mainImgSrc = await productModel.singleMainImgSrcByProduct(product.productID);
+  }
+
+  for (const product of productsHighestPrice) {
+    [product.mainImgSrc, product.countBid] = await Promise.all([
+      productModel.singleMainImgSrcByProduct(product.productID),
+      productModel.countBidProduct(product.productID)
+    ])
+  }
+
+  for (const product of productsNew) {
+    [product.mainImgSrc, product.countBid] = await Promise.all([
+      productModel.singleMainImgSrcByProduct(product.productID),
+      productModel.countBidProduct(product.productID)
+    ])
+  }
+
   res.render("vwUser/index", {
     layout: "home-layout.hbs",
-    title: "Trang chủ"
+    title: "Trang chủ",
+    productsToEnd,
+    productsMostBid,
+    productsHighestPrice,
+    productsNew,
   });
 });
 
 router.get("/productList/:cateID/:subcateID", async (req, res) => {
-  const {cateID, subcateID} = req.params;
+  const {
+    cateID,
+    subcateID
+  } = req.params;
   const limit = config.paginate.limit;
   let page = req.query.page || 1;
   if (page < 1) page = 1;
@@ -63,10 +103,10 @@ router.get("/product/:productID", async (req, res) => {
   ]);
 
   const product = productSingle[0];
-  
+
   let maxPrice = product.currentPrice;
   for (const p of productBid) {
-    if (p.isHolder===1) maxPrice = p.price > maxPrice ? p.price : maxPrice;
+    if (p.isHolder === 1) maxPrice = p.price > maxPrice ? p.price : maxPrice;
   }
 
   product.currentPrice = maxPrice;

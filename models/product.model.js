@@ -11,7 +11,7 @@ module.exports = {
         return rows[0].total;
     },
     pageBySubCat: (cateID, subcateID, offset) => db.load(`select * from product_single where cateID = ${cateID} and subcateID = ${subcateID} limit ${config.paginate.limit} offset ${offset}`),
-    
+
     countBidProduct: async (productID) => {
         const rows = await db.load(`select count(*) as total from product_bid where productID = "${productID}"`)
         return rows[0].total;
@@ -33,7 +33,7 @@ module.exports = {
     deleteProduct: id => {
         db.del('product_img', {
             productID: id
-        }); 
+        });
         db.del('product_bid', {
             productID: id
         });
@@ -44,4 +44,15 @@ module.exports = {
             productID: id
         });
     },
+
+    productsToEnd: () => db.load(`select * from product_single order by (endDate - beginDate) limit ${config.indexPage.limitProductsToEnd}`),
+    productsMostBid: () => db.load(`
+        select *, count(ps.productID) as countBid
+        from product_single ps join product_bid pb
+        on ps.productID = pb.productID
+        group by ps.productID
+        order by countBid desc
+        limit ${config.indexPage.limitProductsMostBid}`),
+    productsHighestPrice: () => db.load(`select * from product_single order by currentPrice desc limit ${config.indexPage.limitProductsHighestPrice}`),
+    productsNew: () => db.load(`select * from product_single order by beginDate limit ${config.indexPage.limitProductsNew}`),
 };

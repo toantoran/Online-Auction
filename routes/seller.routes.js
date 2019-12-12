@@ -25,6 +25,7 @@ router.post("/new-product/",upload.array('files[]'), async (req, res) => {
         description : req.body.description,
         beginDate: new Date(),
         endDate: new Date(new Date().setDate(new Date().getDate() + 7)),
+        autoExtend: req.body.autoExtend === "on",
     }
 
     await productModel.addProductSingle(entityProductSingle);
