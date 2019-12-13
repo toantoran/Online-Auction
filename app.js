@@ -1,13 +1,10 @@
 const express = require("express");
-const app = express();
-
 const exphbs = require("express-handlebars");
 const numeral = require("numeral");
 const hbs_sections = require('express-handlebars-sections');
 const moment = require('moment');
 
 const app = express();
-
 
 const passport = require("passport");
 const flash = require("express-flash");
