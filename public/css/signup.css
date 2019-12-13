@@ -3,12 +3,16 @@ body {
 }
 
 .modal-login {
-    width: 350px;
+    width: 90vw;
+    min-width: 976px;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
+    background-color: white;
+    border-bottom: none;
+    overflow: auto;
 }
 
 .modal-login .modal-content {
@@ -128,6 +132,24 @@ body {
     font-size: 21px;
 }
 
+.modal-body {
+    border-bottom: none;
+}
+
+
 .modal-body i {
     color: #F8694A;
+}
+
+#header {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+#body {
+    border-left: 1px solid orange;
+    left: 50%
 }

@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="/css/jquery.filer-dragdropbox-theme.css">
     <link rel="stylesheet" href="/css/jquery.filer.css">
     <link rel="stylesheet" href="/css/js-snackbar.min.css">
-    <link rel="stylesheet" href="/css/login.css">
     <link rel="stylesheet" href="/css/nouislider.min.css">
     <link rel="stylesheet" href="/css/Popup-plugin.css">
     <link rel="stylesheet" href="/css/slick-theme.css">
@@ -67,134 +66,37 @@
                                 <div class="header-btns-icon">
                                     <i class="fas fa-user-circle fa-3x"></i>
                                 </div>
-                                <strong class="text-uppercase">Tài khoản <i class="fa fa-caret-down"></i></strong>
+                                <strong class="text-uppercase" style="line-height: 40px;">{{#if user}}
+                                    {{user.name}}
+                                    {{/if}}
+                                    {{#unless user}} Tài khoản {{/unless}}
+                                    <i class="fa fa-caret-down"></i></strong>
                             </div>
-                            <div id="log">
-                                <a href="#signin" data-toggle="modal" id="link-signin"
-                                    class="text-uppercase small-text trigger-btn">Đăng
-                                    nhập</a> / <a href="#signup" id="link-signup" data-toggle="modal"
-                                    class="text-uppercase small-text trigger-btn">Đăng ký</a>
-                            </div>
-
                             <ul class="custom-menu">
-                                <li><a href="/account#profile"><i class="fas fa-user-cog"></i> Thông tin cá nhân</a>
-                                </li>
-                                <li><a href="/account#history"><i class="fas fa-poll"></i> Lịch sử đấu giá<small
-                                            class="bid-result">2</small></a></li>
-                                <li><a href="/account#wish-list"><i class="fa fa-heart"></i> Danh sách yêu thích</a>
-                                </li>
-                                <li><a href="/account#sold-product"><i class="fas fa-clipboard"></i> Sản phẩm đã
+                                {{#if user}}
+                                <li><a href="/account"><i class="fas fa-user-cog"></i> Thông tin cá nhân</a></li>
+                                <li><a href="/account"><i class="fas fa-poll"></i> Lịch sử đấu giá</a></li>
+                                <li><a href="/account"><i class="fa fa-heart"></i> Danh sách yêu thích</a></li>
+                                {{#if user.isSeller}}
+                                <li><a href="/account"><i class="fas fa-clipboard"></i> Sản phẩm đã
                                         đăng</a></li>
-                                <li><a href="/account#seller-regis"><i class="fa fa-unlock-alt"></i> Đăng ký làm
+                                {{/if}}
+                                {{#unless user.isSeller}}
+                                <li><a href="/account"><i class="fa fa-unlock-alt"></i> Đăng ký làm
                                         người bán</a></li>
+                                {{/unless}}
                                 <li><a href="javascript:void(0)" class="btn-signout"><i class="fas fa-sign-out-alt"></i>
                                         Đăng xuất</a></li>
+                                {{/if}}
+                                {{#unless user}}
+                                <li><a href="/login"><i class="fas fa-sign-in-alt"></i> Đăng nhập</a>
+                                </li>
+                                <li><a href="/signup"><i class="fas fa-user-plus"></i> Đăng ký</a></li>
+                                {{/unless}}
                             </ul>
                         </li>
                         <!-- /Account -->
-                        <!-- Modal HTML -->
-                        <div id="signin" class="modal fade">
-                            <div class="modal-dialog modal-login">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Đăng nhập</h4>
-                                        <button type="button" class="close" data-dismiss="modal" id="btn-exit-signin"
-                                            aria-hidden="true">&times;</button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form action="" method="post">
-                                            <div class="form-group">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><i
-                                                            class="fas fa-envelope"></i></span>
-                                                    <input type="email" class="form-control" name="email"
-                                                        placeholder="Email" required="required">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                                    <input type="password" class="form-control" name="password"
-                                                        placeholder="Mật khẩu" required="required">
-                                                </div>
-                                            </div>
-                                            <div class="form-group remember-check">
-                                                <input type="checkbox" class="js-switch" />
-                                                <span style="font-weight: bold">Ghi nhớ đăng nhập</span>
-                                            </div>
-                                            <div class="form-group">
-                                                <button type="submit" class="btn btn-primary btn-block btn-lg">Đăng
-                                                    nhập</button>
-                                            </div>
-                                            <p class="hint-text"><a href="#">Quên mật khẩu?</a></p>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">Chưa có tài khoản? <a href="javascript:void(0)"
-                                            id="btn-call-signup">Tạo tài khoản mới</a></div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <!-- Modal HTML -->
-                        <div id="signup" class="modal fade">
-                            <div class="modal-dialog modal-login" id="signup">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Đăng ký</h4>
-                                        <button type="button" class="close" data-dismiss="modal" id="btn-exit-signup"
-                                            aria-hidden="true" aria-hidden="true">&times;</button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form action="" method="post">
-                                            <div class="form-group">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                                    <input type="text" class="form-control" name="name"
-                                                        placeholder="Họ tên" required="required">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><i
-                                                            class="fas fa-envelope"></i></span>
-                                                    <input type="text" class="form-control" name="email"
-                                                        placeholder="Email" required="required">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                                    <input type="password" class="form-control" name="password"
-                                                        placeholder="Mật khẩu" required="required">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><i
-                                                            class="fas fa-map-marker-alt"></i></span>
-                                                    <input type="text" class="form-control" name="address"
-                                                        placeholder="Địa chỉ" required="required">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <div class="input-group" style="margin: 0 auto">
-                                                    <div class="g-recaptcha"
-                                                        data-sitekey="6LciPMQUAAAAAHP1S7bIdQ5xn6L2Vl6f9ISRm5xt"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <button type="submit" class="btn btn-primary btn-block btn-lg">Đăng
-                                                    ký</button>
-                                            </div>
-
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">Đã có tài khoản? <a href="javascript:void(0)"
-                                            id="btn-call-signin">Đăng nhập</a></div>
-                                </div>
-                            </div>
-                        </div>
                         <!-- Mobile nav toggle-->
                         <li class="nav-toggle">
                             <button class="nav-toggle-btn main-btn icon-btn"><i class="fa fa-bars"></i></button>
@@ -215,21 +117,20 @@
         <div class="container">
             <div id="responsive-nav">
                 <!-- category nav -->
-                <div class="category-nav show-on-click">
+                <div class="category-nav {{#unless showNavbar}}show-on-click{{/unless}}">
                     <span class="category-header">Danh mục sản phẩm <i class="fa fa-list"></i></span>
                     <ul class="category-list">
                         {{#each lcCateList}}
                         <li class="dropdown side-dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
-                                    class="fas fa-{{this.cateIcon}}"></i></i>&nbsp;{{this.cateName}} <i
+                                    class="fas fa-{{cateIcon}}"></i></i>&nbsp;{{cateName}} <i
                                     class="fa fa-angle-right icon-right"></i></a>
                             <div class="custom-menu">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <ul class="list-links cat-list">
-                                            {{#each this.subCate}}
-                                            <li><a
-                                                    href="/productList/{{this.cateID}}/{{this.subcateID}}">{{this.subcateName}}</a>
+                                            {{#each subCate}}
+                                            <li><a href="productList/{{cateID}}/{{subcateID}}">{{subcateName}}</a>
                                             </li>
                                             {{/each}}
                                         </ul>
@@ -241,6 +142,9 @@
                             </div>
                         </li>
                         {{/each}}
+                        {{!-- <li class="dropdown side-dropdown">
+							<a href="productList"><i class="" data-fa-i2svg=""><svg class="svg-inline--fa fa-th fa-w-16" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="th" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M149.333 56v80c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24V56c0-13.255 10.745-24 24-24h101.333c13.255 0 24 10.745 24 24zm181.334 240v-80c0-13.255-10.745-24-24-24H205.333c-13.255 0-24 10.745-24 24v80c0 13.255 10.745 24 24 24h101.333c13.256 0 24.001-10.745 24.001-24zm32-240v80c0 13.255 10.745 24 24 24H488c13.255 0 24-10.745 24-24V56c0-13.255-10.745-24-24-24H386.667c-13.255 0-24 10.745-24 24zm-32 80V56c0-13.255-10.745-24-24-24H205.333c-13.255 0-24 10.745-24 24v80c0 13.255 10.745 24 24 24h101.333c13.256 0 24.001-10.745 24.001-24zm-205.334 56H24c-13.255 0-24 10.745-24 24v80c0 13.255 10.745 24 24 24h101.333c13.255 0 24-10.745 24-24v-80c0-13.255-10.745-24-24-24zM0 376v80c0 13.255 10.745 24 24 24h101.333c13.255 0 24-10.745 24-24v-80c0-13.255-10.745-24-24-24H24c-13.255 0-24 10.745-24 24zm386.667-56H488c13.255 0 24-10.745 24-24v-80c0-13.255-10.745-24-24-24H386.667c-13.255 0-24 10.745-24 24v80c0 13.255 10.745 24 24 24zm0 160H488c13.255 0 24-10.745 24-24v-80c0-13.255-10.745-24-24-24H386.667c-13.255 0-24 10.745-24 24v80c0 13.255 10.745 24 24 24zM181.333 376v80c0 13.255 10.745 24 24 24h101.333c13.255 0 24-10.745 24-24v-80c0-13.255-10.745-24-24-24H205.333c-13.255 0-24 10.745-24 24z"></path></svg></i>&nbsp;Tất cả danh mục </a>
+						</li> --}}
                     </ul>
                 </div>
                 <!-- /category nav -->
@@ -250,6 +154,7 @@
     </div>
     <!-- /NAVIGATION -->
 
+    {{#unless notShowBreadcumb}}
     <!-- BREADCRUMB -->
     <div id="breadcrumb">
         <div class="container">
@@ -260,6 +165,7 @@
         </div>
     </div>
     <!-- /BREADCRUMB -->
+    {{/unless}}
 
     {{{body}}}
 
@@ -377,7 +283,7 @@
     <script src="/js/plugin/Popup-plugin.js"></script>
     <script src="/js/plugin/slick.min.js"></script>
     <script src="/js/plugin/switchery.min.js"></script>
-    
+
     <script src="/js/main.js"></script>
 </body>
 

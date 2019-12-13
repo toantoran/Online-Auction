@@ -15,15 +15,6 @@
     });
   });
 
-  //SignIn SignUp Form
-  $("#btn-call-signup").on('click', function () {
-    $('#btn-exit-signin').trigger('click');
-    $('#link-signup').trigger('click');
-  });
-  $("#btn-call-signin").on('click', function () {
-    $('#btn-exit-signup').trigger('click');
-    $('#link-signin').trigger('click');
-  });
 
   //Navbar link list
   $('.cat-list>li>a').addClass('cat-link').attr('cat-order', index => index);
@@ -167,15 +158,8 @@
       showCancelButton: true,
       confirmButtonColor: '#F8694A',
       cancelButtonColor: '#000',
-      confirmButtonText: 'Đăng xuất',
+      confirmButtonText: '<a href="/logout">Đăng xuất</a>',
       cancelButtonText: 'Hủy'
-    }).then((result) => {
-      if (result.value) {
-        Swal.fire({
-          title: 'Đăng xuất thành công',
-          icon: 'success'
-        });
-      }
     })
   });
 
