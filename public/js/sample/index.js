@@ -38,28 +38,29 @@
 //     return date;
 // }
 
-// showCountDown($('.product.product-single'))
-// function showCountDown(object) {
-//     let demoExpDate = new Date(new Date().setHours(new Date().getHours() + 4));
+showCountDown($('.product.product-single'));
+function showCountDown (object) {
+    for (let i = 1; i < object.length; i++) {
+        let demoExpDate = object.find('#endDate')[i].value;
+        let h = object.find('.product-countdown li:nth-child(1) span');
+        let m = object.find('.product-countdown li:nth-child(2) span');
+        let s = object.find('.product-countdown li:nth-child(3) span');
 
-//     let h = (object.find('.product-countdown li:nth-child(1) span'));
-//     let m = (object.find('.product-countdown li:nth-child(2) span'));
-//     let s = (object.find('.product-countdown li:nth-child(3) span'));
-
-//     let x = setInterval(function () {
-//         let now = new Date().getTime();
-//         let distance = demoExpDate - now;
-//         let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-//         let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-//         hours += days * 24;
-//         let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-//         let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-//         h.text(hours + ' H');
-//         m.text(minutes + ' M');
-//         s.text(seconds + ' S');
-//         if (distance < 0) {
-//             clearInterval(x);
-//             object.html("Phiên đấu giá đã kết thúc");
-//         }
-//     }, 1000);
-// }
+        let x = setInterval(function () {
+            let now = new Date().getTime();
+            let distance = demoExpDate - now;
+            let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            hours += days * 24;
+            let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            h.text(hours + ' H');
+            m.text(minutes + ' M');
+            s.text(seconds + ' S');
+            if (distance < 0) {
+                clearInterval(x);
+                object[i].html("Phiên đấu giá đã kết thúc");
+            }
+        }, 1000);
+    }
+}

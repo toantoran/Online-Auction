@@ -2,6 +2,8 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 const numeral = require("numeral");
 const dateFormat = require("dateformat");
+const hbs_sections = require('express-handlebars-sections');
+const moment = require('moment');
 
 const app = express();
 
@@ -19,9 +21,11 @@ app.engine(
     exphbs({
         defaultLayout: "main-layout.hbs",
         helpers: {
+            section: hbs_sections(),
             format_money: val => numeral(val).format('0,0') + ' đ',
-            format_day: val => dateFormat(val, "dd-mm-yyyy"),
-            format_day_time: val => dateFormat(val, "dd/mm/yyyy [h:MM:ss TT]"),
+            format_day: val => moment(val).format("DD-MM-YYYY"),
+            format_day_time: val => moment(val).format("DD-MM-YYYY")+"  [" + moment(val).format("HH:mm:ss")+"]",
+            format_day_value: val=> moment(val).valueOf(),
             format_name: val => {
                 if (val.length > 25) {
                     var temp = "";

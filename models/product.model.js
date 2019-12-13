@@ -46,6 +46,7 @@ module.exports = {
     },
 
     productsToEnd: () => db.load(`select * from product_single order by (endDate - beginDate) limit ${config.indexPage.limitProductsToEnd}`),
+    productsMostBid: () => db.load(`select * from product_single order by (endDate - beginDate) limit ${config.indexPage.limitProductsToEnd}`),
     productsMostBid: () => db.load(`
         select *, count(ps.productID) as countBid
         from product_single ps join product_bid pb

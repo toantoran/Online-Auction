@@ -7,7 +7,6 @@ const config = require('../config/default.json');
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-
   const [productsToEnd, productsMostBid, productsHighestPrice, productsNew] = await Promise.all([
     productModel.productsToEnd(),
     productModel.productsMostBid(),
@@ -59,7 +58,7 @@ router.get("/productList/:cateID/:subcateID", async (req, res) => {
   let page = req.query.page || 1;
   if (page < 1) page = 1;
   const offset = (page - 1) * limit;
-
+  
   const [total, productList] = await Promise.all([
     productModel.countBySubCat(cateID, subcateID),
     productModel.pageBySubCat(cateID, subcateID, offset)
@@ -124,11 +123,11 @@ router.get("/product/:productID", async (req, res) => {
 router.post("/product/:productID/bid", async (req, res) => {
   const entity = {
     productID: req.params.productID,
-    bidderID: 12,
+    bidderID: 1,
     price: req.body.bidPrice,
-    isHolder: false,
     bidTime: new Date(),
   }
+  console.log(entity);
   await productModel.addProductBid(entity);
   res.redirect("/product/" + req.params.productID);
 });
