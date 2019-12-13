@@ -1,16 +1,8 @@
-const mysql = require("mysql");
-const util = require("util");
+const mysql = require('mysql');
+const util = require('util');
+const config = require('../config/default.json');
 
-const pool = mysql.createPool({
-  connectionLimit: 50,
-  host: "remotemysql.com",
-  port: 3306,
-  user: "Qya7kDp7gq",
-  password: "nDI427orta",
-  database: "Qya7kDp7gq",
-  dateStrings: true
-});
-
+const pool = mysql.createPool(config.mysql);
 const mysql_query = util.promisify(pool.query).bind(pool);
 
 module.exports = {

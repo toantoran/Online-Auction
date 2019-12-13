@@ -1,0 +1,20 @@
+{
+  "mysql": {
+    "connectionLimit": 50,
+    "host": "sql12.freemysqlhosting.net",
+    "port": 3306,
+    "user": "sql12314720",
+    "password": "qT3Czyatrb",
+    "database": "sql12314720",
+    "dateStrings": true
+  },
+  "paginate": {
+    "limit": 12
+  },
+  "indexPage": {
+    "limitProductsToEnd": 5,
+    "limitProductsMostBid": 5,
+    "limitProductsHighestPrice": 5,
+    "limitProductsNew": 10
+  }
+}

@@ -22,11 +22,7 @@ app.engine(
     exphbs({
         defaultLayout: "main-layout.hbs",
         helpers: {
-            format_money: val => numeral(val).format("0,0") + " đ",
-            format_money_bid: val => {
-                val += val * 0.1;
-                return numeral(val).format("0,0");
-            },
+            format_money: val => numeral(val).format('0,0') + ' đ',
             format_day: val => dateFormat(val, "dd-mm-yyyy"),
             format_day_time: val => dateFormat(val, "dd/mm/yyyy [h:MM:ss TT]"),
             format_name: val => {

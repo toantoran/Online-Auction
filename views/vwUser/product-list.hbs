@@ -106,14 +106,6 @@
 							<a href="#" class="main-btn" style="margin-top:2px"><i class="fas fa-sync-alt"></i></a>
 						</div>
 					</div>
-					<div class="pull-right">
-						<ul class="store-pages">
-							<li><span class="text-uppercase">Page:</span></li>
-							<li class="active">1</li>
-							<li><a href="#">2</a></li>
-							<li><a href="#"><i class="fa fa-caret-right"></i></a></li>
-						</ul>
-					</div>
 				</div>
 				<!-- /store top filter -->
 
@@ -146,7 +138,7 @@
 											<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Xem
 												chi tiết</button>
 											<button class="watch-list btn-wish"><i class="fa fa-heart"></i></button>
-											<img src="/img/product/{{mainImgSrc}}" alt="">
+											<img src="/img/product/{{productID}}/{{mainImgSrc}}" alt="">
 										</div>
 										<div class="product-body">
 											<h2 class="product-name"><a
@@ -154,7 +146,7 @@
 											<p class="product-text">Giá hiện tại: <span
 													class="product-price">{{format_money currentPrice}}</span></p>
 											<div class="product-footer">
-												<small><span>{{stepPrice}}</span> lượt ra giá</small>
+												<small><span>{{countBid}}</span> lượt ra giá</small>
 												<small>Từ <span>{{format_day beginDate}}</span></small>
 											</div>
 										</div>
@@ -173,10 +165,29 @@
 				<div class="store-filter clearfix">
 					<div class="pull-right">
 						<ul class="store-pages">
-							<li><span class="text-uppercase">Page:</span></li>
-							<li class="active">1</li>
-							<li><a href="#">2</a></li>
-							<li><a href="#"><i class="fa fa-caret-right"></i></a></li>
+							{{#if isNotFirst}}
+							<li class="page-item">
+								<a class="page-link" href="?page={{prev_value}}">
+									<i class="fa fa-backward" aria-hidden="true"></i>
+								</a>
+							</li>
+							{{/if}}
+							{{#each this.page_numbers}}
+							{{#if isCurrentPage}}
+							<li class="active">{{value}}</li>
+							{{else}}
+							<li class="page-item">
+								<a class="page-link" href="?page={{value}}">{{value}}</a>
+							</li>
+							{{/if}}
+							{{/each}}
+							{{#if isNotLast}}
+							<li class="page-item">
+								<a class="page-link" href="?page={{next_value}}">
+									<i class="fa fa-forward" aria-hidden="true"></i>
+								</a>
+							</li>
+							{{/if}}
 						</ul>
 					</div>
 				</div>

@@ -15,7 +15,7 @@
 						{{else}}
 						{{#each listImgSrc}}
 						<div class="product-view">
-							<img src="/img/product/{{imgSrc}}" alt="">
+							<img src="/img/product/{{productID}}/{{imgSrc}}" alt="">
 						</div>
 						{{/each}}
 						{{/if}}
@@ -23,10 +23,10 @@
 					<div id="product-view">
 						{{#each listImgSrc}}
 						<div class="product-view">
-							<img src="/img/product/{{imgSrc}}" alt="">
+							<img src="/img/product/{{productID}}/{{imgSrc}}" alt="">
 						</div>
 						{{/each}}
-					</div>		
+					</div>
 				</div>
 				<div class="col-md-7">
 					<div class="product-body">
@@ -52,17 +52,22 @@
 							<p>Giá mua ngay: <span class="product-price">{{format_money product.immePrice}}</span></p>
 						</div>
 						<div class="product-btns">
-							<div class="qty-input">
-								<input class="input price-input" value={{format_money_bid product.currentPrice}}>
-								{{!-- format chỗ này nữa --}}
-							</div>
-							<button class="primary-btn btn-bid" type="submit">Ra giá <i
-									class="fas fa-gavel"></i></button>
-							<div class="pull-right">
-								<button class="main-btn icon-btn btn-delete"><i class="fas fa-trash"></i></button>
-								<button class="main-btn icon-btn" id="myPopUp"><i class="fa fa-share-alt"></i></button>
-								<button class="btn-wish"><i class="fa fa-heart"></i></button>
-							</div>
+							<form method="POST">
+								<div class="qty-input">
+									<input class="input price-input" name="bidPrice" value={{bidPrice}}>
+								</div>
+								<button class="primary-btn btn-bid"
+									formaction="/product/{{product.productID}}/bid" type="submit">Ra giá <i
+										class="fas fa-gavel"></i></button>
+								<div class="pull-right">
+									<button class="main-btn icon-btn btn-delete"
+										formaction="/seller/product/{{product.productID}}/delete"><i
+											class="fas fa-trash"></i></button>
+									<button class="main-btn icon-btn" id="myPopUp"><i
+											class="fa fa-share-alt"></i></button>
+									<button class="btn-wish"><i class="fa fa-heart"></i></button>
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -82,8 +87,8 @@
 										</h4>
 										{{#each note}}
 										<div class="note" id="note{{noteID}}">
-											<p><i class="fas fa-edit"></i> 
-											<span>{{format_day noteDate}}</span>
+											<p><i class="fas fa-edit"></i>
+												<span>{{format_day noteDate}}</span>
 											</p>
 											<p>{{noteContents}}</p>
 										</div>
@@ -99,12 +104,9 @@
 													{{!-- nó phân trang sẵn rồi, thầy bảo ko nên dùng cái này, nhưng mà cái này ít, dùng được --}}
 												</table>
 											</div>
-
 										</div>
 									</div>
 								</div>
-
-
 							</div>
 						</div>
 					</div>
