@@ -1,28 +1,31 @@
 const express = require("express");
+const app = express();
+
 const exphbs = require("express-handlebars");
 const numeral = require("numeral");
 const dateFormat = require("dateformat");
-
-const app = express();
-
-
+const passport = require("passport");
+const flash = require("express-flash");
+const session = require("express-session");
+const morgan = require("morgan");
+// app.use(morgan("dev"));
 app.use(express.json());
 app.use(
     express.urlencoded({
-        extended: true
+        extended: false
     })
 );
-app.use(express.static('public'));
+app.use(express.static("public"));
 
 app.engine(
     "hbs",
     exphbs({
         defaultLayout: "main-layout.hbs",
         helpers: {
-            format_money: val => numeral(val).format('0,0') + ' đ',
+            format_money: val => numeral(val).format("0,0") + " đ",
             format_money_bid: val => {
                 val += val * 0.1;
-                return numeral(val).format('0,0')
+                return numeral(val).format("0,0");
             },
             format_day: val => dateFormat(val, "dd-mm-yyyy"),
             format_day_time: val => dateFormat(val, "dd/mm/yyyy [h:MM:ss TT]"),
@@ -36,16 +39,28 @@ app.engine(
                     return temp;
                 }
                 return val;
-            }
+            },
+            compare: (val1, val2) => val1 === val2
         }
     })
 );
 app.set("view engine", "hbs");
 
+app.use(flash());
+app.use(
+    session({
+        secret: "yato",
+        resave: true,
+        saveUninitialized: true
+    })
+);
+require("./passport-config")(passport);
+app.use(passport.initialize());
+app.use(passport.session());
 
 //Cái này để yên
-require('./middlewares/locals.mdw')(app);
-require('./middlewares/routes.mdw')(app);
+require("./middlewares/locals.mdw")(app);
+require("./middlewares/routes.mdw")(app);
 
 const PORT = 3000;
 app.listen(PORT, () => {
