@@ -1,3 +1,7 @@
+{{#section 'js'}}
+	<script src="/js/sample/index.js"></script>
+{{/section}}
+
 <!-- section -->
 <div class="section">
 	<!-- container -->
@@ -150,6 +154,7 @@
 												<small>Từ <span>{{format_day beginDate}}</span></small>
 											</div>
 										</div>
+										<input type="hidden" id="endDate" value="{{format_day_value endDate}}">
 									</div>
 								</div>
 								{{/each}}

@@ -53,13 +53,16 @@ function showCountDown(object) {
             let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             hours += days * 24;
             let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            console.log(hours);
+            console.log(minutes);
             let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            h.innerHTML  = hours + ' H';
-            m.tinnerHTML = minutes + ' M';
-            s.innerHTML  = seconds + ' S';
+            console.log(seconds);
+            h.innerHTML = hours + ' H';
+            m.innerHTML = minutes + ' M';
+            s.innerHTML = seconds + ' S';
             if (distance < 0) {
                 clearInterval(x);
-                object[i].innerHTML = "Phiên đấu giá đã kết thúc" ;
+                object[i].innerHTML = "Phiên đấu giá đã kết thúc";
             }
         }, 1000);
     }
