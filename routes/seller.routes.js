@@ -6,7 +6,7 @@ const router = express.Router();
 const uuid = require('uuid/v1');
 const checkUser = require("../middlewares/user.mdw");
 
-router.get("/new-product", checkUser.checkAuthenticated, async (req, res,next) => {
+router.get("/new-product", checkUser.checkAuthenticated, async (req, res, next) => {
     res.render("vwSeller/new-product", {
         user: req.user,
         title: "Mở phiên đấu giá",
@@ -16,18 +16,18 @@ router.get("/new-product", checkUser.checkAuthenticated, async (req, res,next) =
     req.session.lastUrl = req.originalUrl;
 });
 
-router.post("/new-product/",upload.array('files[]'), checkUser.checkAuthenticated, async (req, res,next) => {
+router.post("/new-product/", upload.array('files[]'), checkUser.checkAuthenticatedPost, async (req, res, next) => {
     const entityProductSingle = {
         productID: req.body.id,
-        productName : req.body.productName,
+        productName: req.body.productName,
         seller: req.user.userID,
-        brand : req.body.brand,
-        pFrom : req.body.pFrom,
-        beginPrice : req.body.beginPrice,
+        brand: req.body.brand,
+        pFrom: req.body.pFrom,
+        beginPrice: req.body.beginPrice,
         currentPrice: req.body.beginPrice,
-        stepPrice : req.body.stepPrice,
-        immePrice : req.body.immePrice,
-        description : req.body.description,
+        stepPrice: req.body.stepPrice,
+        immePrice: req.body.immePrice,
+        description: req.body.description,
         beginDate: new Date(),
         endDate: new Date(new Date().setDate(new Date().getDate() + 7)),
         autoExtend: req.body.autoExtend === "on",
@@ -46,7 +46,9 @@ router.post("/new-product/",upload.array('files[]'), checkUser.checkAuthenticate
 });
 
 router.post("/product/:productID/delete", async (req, res) => {
-    await productModel.deleteProduct(req.params.productID);
+    if (product.seller === req.user.userID){
+        await productModel.deleteProduct(req.params.productID);
+    }
     res.send(req.params.productID);
 });
 

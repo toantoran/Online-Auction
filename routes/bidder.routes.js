@@ -132,12 +132,14 @@ router.get("/product/:productID", async (req, res) => {
     emptyImg: listImgSrc.length === 0,
     title: "Chi tiết sản phẩm",
     message: req.query.message,
+    status: req.query.status,
+    isSeller: req.user? product.seller === req.user.userID : false,
   });
 
   req.session.lastUrl = req.originalUrl;
 });
 
-router.post("/product/:productID/bid", checkUser.checkAuthenticated, async (req, res) => {
+router.post("/product/:productID/bid", checkUser.checkAuthenticatedPost, async (req, res) => {
   const productSingle = await productModel.single(req.params.productID);
   const product = productSingle[0];
 
@@ -145,10 +147,12 @@ router.post("/product/:productID/bid", checkUser.checkAuthenticated, async (req,
 
   if (product.seller === req.user.userID) {
     query = querystring.stringify({
+      status: false,
       message: "Bạn là người bán sản phẩm này, không thể ra giá!"
     });
   } else {
     query = querystring.stringify({
+      status: true,
       message: "Ra giá thành công!"
     });
 
@@ -236,7 +240,8 @@ router.post("/signup", async (req, res) => {
 router.get("/logout", (req, res) => {
   req.logout();
   req.session.destroy();
-  res.redirect(req.headers.referer);
+  //res.redirect(req.headers.referer);
+  res.redirect("/");
 });
 
 module.exports = router;
