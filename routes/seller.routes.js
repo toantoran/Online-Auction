@@ -4,18 +4,23 @@ const productModel = require("../models/product.model");
 const upload = require("../middlewares/upload.mdw");
 const router = express.Router();
 const uuid = require('uuid/v1');
+const checkUser = require("../middlewares/user.mdw");
 
-router.get("/new-product", async (req, res) => {
+router.get("/new-product", checkUser.checkAuthenticated, async (req, res,next) => {
     res.render("vwSeller/new-product", {
+        user: req.user,
         title: "Mở phiên đấu giá",
         id: uuid(),
     });
+
+    req.session.lastUrl = req.originalUrl;
 });
 
-router.post("/new-product/",upload.array('files[]'), async (req, res) => {
+router.post("/new-product/",upload.array('files[]'), checkUser.checkAuthenticated, async (req, res,next) => {
     const entityProductSingle = {
         productID: req.body.id,
         productName : req.body.productName,
+        seller: req.user.userID,
         brand : req.body.brand,
         pFrom : req.body.pFrom,
         beginPrice : req.body.beginPrice,

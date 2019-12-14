@@ -3,8 +3,9 @@ const passport = require("passport");
 const bcrypt = require("bcryptjs");
 const userModel = require("../models/user.model");
 const productModel = require("../models/product.model");
-let lastUrl = null;
 const config = require("../config/default.json");
+const querystring = require('querystring');
+const checkUser = require("../middlewares/user.mdw");
 
 const router = express.Router();
 
@@ -54,7 +55,7 @@ router.get("/", async (req, res) => {
     productsNew
   });
 
-  lastUrl = req.originalUrl;
+  req.session.lastUrl = req.originalUrl;
 });
 
 //Link: /user/productList/cateID/subcateID
@@ -67,7 +68,7 @@ router.get("/productList/:cateID/:subcateID", async (req, res) => {
   let page = req.query.page || 1;
   if (page < 1) page = 1;
   const offset = (page - 1) * limit;
-  
+
   const [total, productList] = await Promise.all([
     productModel.countBySubCat(cateID, subcateID),
     productModel.pageBySubCat(cateID, subcateID, offset)
@@ -102,7 +103,7 @@ router.get("/productList/:cateID/:subcateID", async (req, res) => {
     isNotLast: +page !== nPages
   });
 
-  lastUrl = req.originalUrl;
+  req.session.lastUrl = req.originalUrl;
 });
 
 router.get("/product/:productID", async (req, res) => {
@@ -123,45 +124,60 @@ router.get("/product/:productID", async (req, res) => {
   product.currentPrice = maxPrice;
 
   res.render("vwUser/product-details", {
+    user: req.user,
     product,
     bidPrice: product.stepPrice + product.currentPrice,
     listImgSrc,
     note,
     emptyImg: listImgSrc.length === 0,
-    title: "Chi tiết sản phẩm"
+    title: "Chi tiết sản phẩm",
+    message: req.query.message,
   });
 
-  lastUrl = req.originalUrl;
+  req.session.lastUrl = req.originalUrl;
 });
 
-router.post("/product/:productID/bid", async (req, res) => {
-  const entity = {
-    productID: req.params.productID,
-    bidderID: 1,
-    price: req.body.bidPrice,
-    bidTime: new Date(),
+router.post("/product/:productID/bid", checkUser.checkAuthenticated, async (req, res) => {
+  const productSingle = await productModel.single(req.params.productID);
+  const product = productSingle[0];
+
+  let query;
+
+  if (product.seller === req.user.userID) {
+    query = querystring.stringify({
+      message: "Bạn là người bán sản phẩm này, không thể ra giá!"
+    });
+  } else {
+    query = querystring.stringify({
+      message: "Ra giá thành công!"
+    });
+
+    const entity = {
+      productID: req.params.productID,
+      bidderID: req.user.userID,
+      price: req.body.bidPrice,
+      bidTime: new Date(),
+    }
+    await productModel.addProductBid(entity);
   }
 
-  await productModel.addProductBid(entity);
-  res.redirect("/product/" + req.params.productID);
+  res.redirect(`/product/${req.params.productID}/?${query}`);
 });
 
-//Từ đây phải kiểm tra đăng nhập (đăng nhập dùng passport.js)
-//Link: /user/account
-router.get("/account", checkAuthenticated, async (req, res) => {
+router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
   //Quản lý tài khoản
   //render account.hbs
-  lastUrl = req.originalUrl;
+  req.session.lastUrl = req.originalUrl;
 });
 
 //Link: /user/checkout/:productID
-router.get("/checkout/:productID", checkAuthenticated, async (req, res) => {
+router.get("/checkout/:productID", checkUser.checkAuthenticated, async (req, res) => {
   //Thanh toán
   //render checkout.hbs
-  lastUrl = req.originalUrl;
+  req.session.lastUrl = req.originalUrl;
 });
 
-router.get("/login", checkNotAuthenticated, (req, res) => {
+router.get("/login", checkUser.checkNotAuthenticated, (req, res) => {
   let errMsg = null;
   console.log(req.session.flash);
   if (req.session.flash != null)
@@ -172,28 +188,25 @@ router.get("/login", checkNotAuthenticated, (req, res) => {
     email: req.session.email,
     message: errMsg
   });
-  req.session.destroy();
+  req.session.lastUrl = req.session.lastUrl || "/";
+  //  req.session.destroy();
 });
 
-router.get("/signup", checkNotAuthenticated, (req, res) => {
+router.get("/signup", checkUser.checkNotAuthenticated, (req, res) => {
   res.render("vwUser/signup", {
     layout: false,
     message: req.session.message
   });
 });
 
-router.post(
-  "/login",
-  passport.authenticate("local", {
-    successRedirect: lastUrl,
-    failureRedirect: "/login",
-    failureFlash: "Email hoặc mật khẩu không đúng",
-    successFlash: "Welcome!"
-  }),
-  (req, res) => {
-    res.redirect("/login");
-  }
-);
+router.post('/login', function(req, res, next) {
+  passport.authenticate('local',  {
+      successRedirect: req.session.lastUrl,
+      failureRedirect: "/login",
+      failureFlash: "Email hoặc mật khẩu không đúng",
+      successFlash: "Welcome!"
+  })(req, res, next)
+});
 
 router.post("/signup", async (req, res) => {
   console.log(req.body.email);
@@ -225,20 +238,5 @@ router.get("/logout", (req, res) => {
   req.session.destroy();
   res.redirect(req.headers.referer);
 });
-
-function checkAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-
-  res.redirect("/login");
-}
-
-function checkNotAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return res.redirect(lastUrl);
-  }
-  next();
-}
 
 module.exports = router;
