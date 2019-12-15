@@ -170,30 +170,66 @@
   $('.check-out').click((event) => {
     window.location.href = 'checkout.html';
   });
+
   $('.btn-wish').click((event) => {
     let target = $(event.target).closest('.btn-wish')
     target.toggleClass('focus');
+
+    var productID = target.attr("productID");
+    var userID = target.attr("userID");
+
+    var wishItem = {
+      productID: productID,
+      userID: userID,
+    };
     if (target.hasClass('focus')) {
-      new SnackBar({
-        message: "Đã thêm vào danh sách yêu thích",
-        status: "success",
-        fixed: true,
-        timeout: 2000
+      $.ajax({
+        url: '/product/' + productID + '/addToWishList',
+        type: 'post',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify(wishItem),
+        success: function (data) {
+          if (data == "1") {
+            new SnackBar({
+              message: "Đã thêm vào danh sách yêu thích",
+              status: "success",
+              fixed: true,
+              timeout: 2000
+            });
+          }else{
+            new SnackBar({
+              message: "Đã tồn tại trong danh sách yêu thích",
+              status: "warning",
+              fixed: true,
+              timeout: 2000
+            });
+          }
+        },
       });
     } else {
-      new SnackBar({
-        message: "Đã xóa khỏi danh sách yêu thích",
-        status: "warning",
-        fixed: true,
-        timeout: 2000
+      $.ajax({
+        url: '/product/' + productID + '/deleteToWishList',
+        type: 'post',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify(wishItem),
+        success: function (data) {
+          if (data == "1") {
+            new SnackBar({
+              message: "Đã xóa khỏi danh sách yêu thích",
+              status: "success",
+              fixed: true,
+              timeout: 2000
+            });
+          }
+        },
       });
     }
   });
 
 
-
   //Other
-
   tinymce.init({
     selector: '#editor',
     height: 400

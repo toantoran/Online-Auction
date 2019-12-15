@@ -23,15 +23,5 @@ let isSeller = document.getElementById("isSeller").value;
 
 function checkBid() {
     let flag = true;
-
-    if (isSeller === "true") {
-        new SnackBar({
-            message: "Bạn là người bán sản phẩm này, không thể ra giá!",
-            status: "warning",
-            fixed: true,
-            timeout: 2000
-        });
-        flag = false;
-    }
     return flag;
 }

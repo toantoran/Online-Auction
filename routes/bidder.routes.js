@@ -122,7 +122,6 @@ router.get("/product/:productID", async (req, res) => {
   }
 
   product.currentPrice = maxPrice;
-
   res.render("vwUser/product-details", {
     user: req.user,
     product,
@@ -133,7 +132,8 @@ router.get("/product/:productID", async (req, res) => {
     title: "Chi tiết sản phẩm",
     message: req.query.message,
     status: req.query.status,
-    isSeller: req.user? product.seller === req.user.userID : false,
+    isSeller: req.user ? product.seller === req.user.userID : false,
+    isExistWishItem: req.user ? await productModel.isExistWishItem(product.productID, req.user.userID): false,
   });
 
   req.session.lastUrl = req.originalUrl;
@@ -167,6 +167,29 @@ router.post("/product/:productID/bid", checkUser.checkAuthenticatedPost, async (
 
   res.redirect(`/product/${req.params.productID}/?${query}`);
 });
+
+router.post("/product/:productID/addToWishList", checkUser.checkAuthenticatedPost, async (req, res) => {
+  const productID = req.params.productID;
+  const userID = req.user.userID;
+
+  const check = await productModel.isExistWishItem(productID, userID);
+  if (check) {
+    res.json("0");
+  } else {
+    const entity = { productID, userID }
+    await productModel.addWishItem(entity);
+    res.json("1");
+  }
+});
+
+router.post("/product/:productID/deleteToWishList", checkUser.checkAuthenticatedPost, async (req, res) => {
+  const productID = req.params.productID;
+  const userID = req.user.userID;
+
+  await productModel.deleteWishItem(productID, userID);
+  res.json("1");
+});
+
 
 router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
   //Quản lý tài khoản
@@ -203,12 +226,12 @@ router.get("/signup", checkUser.checkNotAuthenticated, (req, res) => {
   });
 });
 
-router.post('/login', function(req, res, next) {
-  passport.authenticate('local',  {
-      successRedirect: req.session.lastUrl,
-      failureRedirect: "/login",
-      failureFlash: "Email hoặc mật khẩu không đúng",
-      successFlash: "Welcome!"
+router.post('/login', function (req, res, next) {
+  passport.authenticate('local', {
+    successRedirect: req.session.lastUrl,
+    failureRedirect: "/login",
+    failureFlash: "Email hoặc mật khẩu không đúng",
+    successFlash: "Welcome!"
   })(req, res, next)
 });
 

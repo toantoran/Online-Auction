@@ -55,5 +55,17 @@ module.exports = {
         order by countBid desc
         limit ${config.indexPage.limitProductsMostBid}`),
     productsHighestPrice: () => db.load(`select * from product_single order by currentPrice desc limit ${config.indexPage.limitProductsHighestPrice}`),
-    productsNew: () => db.load(`select * from product_single order by beginDate limit ${config.indexPage.limitProductsNew}`),
+    productsNew: () => db.load(`select * from product_single order by beginDate desc limit ${config.indexPage.limitProductsNew}`),
+
+    addWishItem: entity => db.add('wish_list', entity),
+    deleteWishItem: (productID, userID) => db.load(`delete from wish_list where userID = ${userID} and productID = "${productID}"`),
+    
+    isExistWishItem: async (productID, userID) => {
+        const rows = await db.load(`select * from wish_list where productID = "${productID}"`);
+        for(const p of rows){
+            if(p.userID === userID)
+            return true;
+        }
+        return false;
+    }
 };
