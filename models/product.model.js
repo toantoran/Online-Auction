@@ -97,7 +97,7 @@ module.exports = {
     limit ${config.account.limitProductsWishList}`),
 
     productsSelling: (userID) => db.load(`
-    select *, count(productID) as count
+    select *
     from product_single
     where seller = ${userID}
     order by beginDate desc

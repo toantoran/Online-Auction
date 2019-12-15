@@ -260,6 +260,9 @@ router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
     productModel.productsSelling(user.userID),
   ]);
 
+  console.log(productsHistoryBid);
+  console.log(productsWishList);
+  console.log(productsSelling);
 
   for (const product of productsHistoryBid) {
     [product.mainImgSrc, product.countBid] = await Promise.all([
