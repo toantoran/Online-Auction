@@ -197,7 +197,7 @@
               fixed: true,
               timeout: 2000
             });
-          }else{
+          } else {
             new SnackBar({
               message: "Đã tồn tại trong danh sách yêu thích",
               status: "warning",
@@ -362,7 +362,12 @@
     var birthDay = document.getElementById("birthDay").value;
 
     var wishItem = {
-      userID, name, email, address, tel, birthDay
+      userID,
+      name,
+      email,
+      address,
+      tel,
+      birthDay
     };
 
     Swal.fire({
@@ -386,9 +391,12 @@
               Swal.fire({
                 title: 'Thông tin đã được cập nhật',
                 icon: 'success',
-                confirmButtonText: '<a href="/login">OK</a>',
+              }).then((result) => {
+                if (result.value) {
+                  window.location="/account";
+                }
               })
-            }else{
+            } else {
               Swal.fire({
                 title: 'Cập nhật thất bại',
                 icon: 'error'

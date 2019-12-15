@@ -306,11 +306,6 @@ router.get("/checkout/:productID", checkUser.checkAuthenticated, async (req, res
   req.session.lastUrl = req.originalUrl;
 });
 
-
-
-
-
-
 router.get("/login", checkUser.checkNotAuthenticated, (req, res) => {
   let errMsg = null;
   console.log(req.session.flash);
