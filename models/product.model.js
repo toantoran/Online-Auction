@@ -6,6 +6,18 @@ module.exports = {
     allByCate: (cateID) => db.load(`select * from product_single where cateID = ${cateID} order by subcateID`),
     allBySubCate: (cateID, subcateID) => db.load(`select * from product_single where cateID = ${cateID} and subcateID = ${subcateID} order by subcateID`),
 
+    countByText: async (textSearch) => {
+        const rows = await db.load(`select count(*) as total from product_single`)
+        return rows[0].total;
+    },
+    pageByText: (textSearch, offset) => db.load(`select * from product_single limit ${config.paginate.limit} offset ${offset}`),
+
+    countByCateAndText: async (textSearch, cateID) => {
+        const rows = await db.load(`select count(*) as total from product_single where cateID = ${cateID}`)
+        return rows[0].total;
+    },
+    pageByCateAndText: (textSearch, cateID, offset) => db.load(`select * from product_single where cateID = ${cateID} limit ${config.paginate.limit} offset ${offset}`),
+
     countBySubCat: async (cateID, subcateID) => {
         const rows = await db.load(`select count(*) as total from product_single where cateID = ${cateID} and subcateID = ${subcateID}`)
         return rows[0].total;
@@ -59,12 +71,12 @@ module.exports = {
 
     addWishItem: entity => db.add('wish_list', entity),
     deleteWishItem: (productID, userID) => db.load(`delete from wish_list where userID = ${userID} and productID = "${productID}"`),
-    
+
     isExistWishItem: async (productID, userID) => {
         const rows = await db.load(`select * from wish_list where productID = "${productID}"`);
-        for(const p of rows){
-            if(p.userID === userID)
-            return true;
+        for (const p of rows) {
+            if (p.userID === userID)
+                return true;
         }
         return false;
     }

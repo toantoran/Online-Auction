@@ -58,7 +58,6 @@ router.get("/", async (req, res) => {
   req.session.lastUrl = req.originalUrl;
 });
 
-//Link: /user/productList/cateID/subcateID
 router.get("/productList/:cateID/:subcateID", async (req, res) => {
   const {
     cateID,
@@ -133,7 +132,7 @@ router.get("/product/:productID", async (req, res) => {
     message: req.query.message,
     status: req.query.status,
     isSeller: req.user ? product.seller === req.user.userID : false,
-    isExistWishItem: req.user ? await productModel.isExistWishItem(product.productID, req.user.userID): false,
+    isExistWishItem: req.user ? await productModel.isExistWishItem(product.productID, req.user.userID) : false,
   });
 
   req.session.lastUrl = req.originalUrl;
@@ -176,7 +175,10 @@ router.post("/product/:productID/addToWishList", checkUser.checkAuthenticatedPos
   if (check) {
     res.json("0");
   } else {
-    const entity = { productID, userID }
+    const entity = {
+      productID,
+      userID
+    }
     await productModel.addWishItem(entity);
     res.json("1");
   }
@@ -190,6 +192,63 @@ router.post("/product/:productID/deleteToWishList", checkUser.checkAuthenticated
   res.json("1");
 });
 
+router.post("/productList/search/", async (req, res) => {
+  const category = req.body.category;
+  const textSearch = req.body.textSearch;
+  res.redirect(`/productList/search/${category}/${textSearch}`);
+});
+
+router.get("/productList/search/:category/:textSearch", async (req, res) => {
+  const category = req.params.category;
+  const textSearch = req.params.textSearch;
+  let productList;
+  let total;
+  const limit = config.paginate.limit;
+  let page = req.query.page || 1;
+  if (page < 1) page = 1;
+  const offset = (page - 1) * limit;
+
+  if (category == 0) {
+    [total, productList] = await Promise.all([
+      productModel.countByText(textSearch),
+      productModel.pageByText(textSearch, offset)
+    ]);
+  } else {
+    [total, productList] = await Promise.all([
+      productModel.countByCateAndText(textSearch, category),
+      productModel.pageByCateAndText(textSearch, category, offset)
+    ]);
+  }
+
+  for (const product of productList) {
+    [product.mainImgSrc, product.countBid] = await Promise.all([
+      productModel.singleMainImgSrcByProduct(product.productID),
+      productModel.countBidProduct(product.productID)
+    ]);
+  }  
+  
+  let nPages = Math.floor(total / limit);
+  if (total % limit > 0) nPages++;
+  const page_numbers = [];
+  for (i = 1; i <= nPages; i++) {
+    page_numbers.push({
+      value: i,
+      isCurrentPage: i === +page
+    });
+  }
+  res.render("vwUser/product-list", {
+    productList,
+    empty: productList.length === 0,
+    title: "Tìm kiếm sản phẩm",
+    textSearch,
+    category,
+    page_numbers,
+    prev_value: +page - 1,
+    next_value: +page + 1,
+    isNotFirst: +page !== 1,
+    isNotLast: +page !== nPages
+  });
+});
 
 router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
   //Quản lý tài khoản

@@ -41,15 +41,15 @@
 
                     <!-- Search -->
                     <div class="header-search">
-                        <form>
-                            <input class="input search-input" type="text" placeholder="Tìm sản phẩm bạn muốn">
-                            <select class="input search-categories">
+                        <form method="POST">  
+                            <input class="input search-input" name="textSearch" type="text" placeholder="Tìm sản phẩm bạn muốn" value={{textSearch}}>
+                            <select name = "category" class="input search-categories">
                                 <option value="0">Tất cả danh mục</option>
                                 {{#each lcCateList}}
                                 <option value="{{this.cateID}}">{{this.cateName}}</option>
                                 {{/each}}
                             </select>
-                            <button class="search-btn"><i class="fa fa-search"></i></button>
+                            <button type="submit" formaction="/productList/search" class="search-btn"><i class="fa fa-search"></i></button>
                         </form>
                     </div>
                     <!-- /Search -->
