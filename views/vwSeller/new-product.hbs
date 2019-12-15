@@ -12,26 +12,54 @@
 						</div>
 						<input type="hidden" name="id" value="{{this.id}}">
 						<div class="form-group">
-							<input class="input" type="text" name="productName" placeholder="Tên sản phẩm" required>
+							<label for="productName">Tên sản phẩm</label>
+							<input class="input" type="text" name="productName"
+								placeholder="Sản phẩm tuyệt vời siêu cấp vũ trụ" required id="productName">
 						</div>
 						<div class="form-group">
-							<input class="input" type="text" name="brand" placeholder="Thương hiệu" required>
+							<label for="pSubcateID">Danh mục sản phẩm</label>
+							<select name="cate" class="input cate-input" required>
+								<option value="0" class="cate-input-header" disabled selected>-- Chọn danh mục sản phẩm
+								</option>
+								{{#each lcCateList}}
+								<option class="cate-input-header" disabled>{{this.cateName}}</option>
+								{{#each this.subCate}}
+								<option cateID="{{this.cateID}}" subcateID="{{this.subcateID}}">
+									&nbsp;&nbsp;&nbsp;{{this.subcateName}}</option>
+								{{/each}}
+								{{/each}}
+							</select>
 						</div>
 						<div class="form-group">
-							<input class="input" type="text" name="pFrom" placeholder="Xuất xứ" required>
+							<label for="brand">Thương hiệu</label>
+							<input class="input" type="text" name="brand" id="brand"
+								placeholder="Nike, Adidas, Uniqlo,..." required>
 						</div>
 						<div class="form-group">
-							<input class="input" type="number" name="beginPrice" placeholder="Giá khởi điểm" required>
+							<label for="pFrom">Xuất xứ</label>
+							<input class="input" type="text" name="pFrom" id="pFrom"
+								placeholder="Việt Nam, Trung Quốc,..." required>
 						</div>
 						<div class="form-group">
-							<input class="input" type="number" name="stepPrice" placeholder="Bước giá" required>
+							<label for="beginPrice">Giá khởi điểm</label>
+							<input class="input" type="number" name="beginPrice" id="beginPrice"
+								placeholder="Ví dụ: {{format_money 1000000}}" required>
 						</div>
 						<div class="form-group">
-							<input class="input" type="number" name="immePrice" placeholder="Giá mua ngay">
+							<label for="stepPrice">Bước giá</label>
+							<input class="input" type="number" name="stepPrice" id="stepPrice"
+								placeholder="Ví dụ: {{format_money 100000}}" required>
 						</div>
 						<div class="form-group">
-							<span style="font-size: large;">Hình ảnh sản phẩm</span>
-							<input type="file" name="files[]" id="filer_input" multiple="multiple" required>
+							<label for="immePrice">Giá mua ngay</label>
+							<input class="input" type="number" name="immePrice" id="immePrice"
+								placeholder="Ví dụ: {{format_money 2000000}}">
+						</div>
+						<div class="pull-right">
+							<div class="form-group">
+								<label for="autoExtend">Tự động gia hạn</label>
+								<input type="checkbox" name="autoExtend" id="autoExtend" class="input js-switch" />
+							</div>
 						</div>
 					</div>
 					<div class="col-md-6">
@@ -41,13 +69,16 @@
 						<div class="form-group">
 							<textarea class="input" id="editor" name="description"></textarea>
 						</div>
+						<div class="section-title">
+							<h3 class="title">Hình ảnh sản phẩm</h3>
+						</div>
+						<div class="form-group">
+							<input type="file" name="files[]" id="filer_input" multiple="multiple" required>
+						</div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12" style="text-align: center;">
-						<div class="form-group"><span style="font-size: large;">Tự động gia hạn</span>
-							<input type="checkbox" name="autoExtend" class="input js-switch" />
-						</div>
 						<div class="form-group">
 							<button class="main-btn btn-new">Tạo phiên đấu giá</button>
 						</div>

@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/switchery.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="/css/new-product.css">
 </head>
 
 <body>
@@ -41,26 +42,30 @@
 
                     <!-- Search -->
                     <div class="header-search">
-                        <form method="POST">  
-                            <input class="input search-input" name="textSearch" type="text" placeholder="Tìm sản phẩm bạn muốn" value={{textSearch}}>
-                            <select name = "category" class="input search-categories">
+                        <form method="POST">
+                            <input class="input search-input" name="textSearch" type="text"
+                                placeholder="Tìm sản phẩm bạn muốn" value={{textSearch}}>
+                            <select name="category" class="input search-categories">
                                 <option value="0">Tất cả danh mục</option>
                                 {{#each lcCateList}}
                                 <option value="{{this.cateID}}">{{this.cateName}}</option>
                                 {{/each}}
                             </select>
-                            <button type="submit" formaction="/productList/search" class="search-btn"><i class="fa fa-search"></i></button>
+                            <button type="submit" formaction="/productList/search" class="search-btn"><i
+                                    class="fa fa-search"></i></button>
                         </form>
                     </div>
                     <!-- /Search -->
                 </div>
                 <div class="pull-right">
                     <ul class="header-btns">
+                        {{#if user.isSeller}}
                         <li class="header-cart dropdown default-dropdown">
                             <a href="/seller/new-product" class="main-btn upload-btn"><i class="fas fa-gavel"></i>
                                 Mở phiên
                                 đấu giá</a>
                         </li>
+                        {{/if}}
                         <!-- Account -->
                         <li class="header-account dropdown default-dropdown" id="account-container">
                             <div class="dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="true">

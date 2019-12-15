@@ -27,8 +27,8 @@ app.engine(
             section: hbs_sections(),
             format_money: val => numeral(val).format('0,0') + ' đ',
             format_day: val => moment(val).format("DD-MM-YYYY"),
-            format_day_time: val => moment(val).format("DD-MM-YYYY")+"  [" + moment(val).format("HH:mm:ss")+"]",
-            format_day_value: val=> moment(val).valueOf(),
+            format_day_time: val => moment(val).format("DD-MM-YYYY") + "  [" + moment(val).format("HH:mm:ss") + "]",
+            format_day_value: val => moment(val).valueOf(),
             format_name: val => {
                 if (val.length > 25) {
                     var temp = "";
@@ -54,7 +54,7 @@ app.use(
         saveUninitialized: true
     })
 );
-require("./passport-config")(passport);
+require("./config/passport-local")(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
