@@ -41,15 +41,17 @@
 
                     <!-- Search -->
                     <div class="header-search">
-                        <form method="POST">  
-                            <input class="input search-input" name="textSearch" type="text" placeholder="Tìm sản phẩm bạn muốn" value={{textSearch}}>
-                            <select name = "category" class="input search-categories">
+                        <form method="POST">
+                            <input class="input search-input" name="textSearch" type="text"
+                                placeholder="Tìm sản phẩm bạn muốn" value={{textSearch}}>
+                            <select name="category" class="input search-categories">
                                 <option value="0">Tất cả danh mục</option>
                                 {{#each lcCateList}}
                                 <option value="{{this.cateID}}">{{this.cateName}}</option>
                                 {{/each}}
                             </select>
-                            <button type="submit" formaction="/productList/search" class="search-btn"><i class="fa fa-search"></i></button>
+                            <button type="submit" formaction="/productList/search" class="search-btn"><i
+                                    class="fa fa-search"></i></button>
                         </form>
                     </div>
                     <!-- /Search -->
@@ -75,15 +77,17 @@
                             </div>
                             <ul class="custom-menu">
                                 {{#if user}}
-                                <li><a href="/account"><i class="fas fa-user-cog"></i> Thông tin cá nhân</a></li>
-                                <li><a href="/account"><i class="fas fa-poll"></i> Lịch sử đấu giá</a></li>
-                                <li><a href="/account"><i class="fa fa-heart"></i> Danh sách yêu thích</a></li>
+                                <li><a href="/account#profile"><i class="fas fa-user-cog"></i> Thông tin cá nhân</a>
+                                </li>
+                                <li><a href="/account#bid-history"><i class="fas fa-poll"></i> Lịch sử đấu giá</a></li>
+                                <li><a href="/account#wish-list"><i class="fa fa-heart"></i> Danh sách yêu thích</a>
+                                </li>
                                 {{#if user.isSeller}}
-                                <li><a href="/account"><i class="fas fa-clipboard"></i> Sản phẩm đã
+                                <li><a href="/account#sold-product"><i class="fas fa-clipboard"></i> Sản phẩm đã
                                         đăng</a></li>
                                 {{/if}}
                                 {{#unless user.isSeller}}
-                                <li><a href="/account"><i class="fa fa-unlock-alt"></i> Đăng ký làm
+                                <li><a href="/account#seller-regis"><i class="fa fa-unlock-alt"></i> Đăng ký làm
                                         người bán</a></li>
                                 {{/unless}}
                                 <li><a href="javascript:void(0)" class="btn-signout"><i class="fas fa-sign-out-alt"></i>

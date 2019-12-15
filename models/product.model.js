@@ -58,7 +58,6 @@ module.exports = {
     },
 
     productsToEnd: () => db.load(`select * from product_single order by (endDate - beginDate) limit ${config.indexPage.limitProductsToEnd}`),
-    productsMostBid: () => db.load(`select * from product_single order by (endDate - beginDate) limit ${config.indexPage.limitProductsToEnd}`),
     productsMostBid: () => db.load(`
         select *, count(ps.productID) as countBid
         from product_single ps join product_bid pb
@@ -79,5 +78,28 @@ module.exports = {
                 return true;
         }
         return false;
-    }
+    },
+
+    productsHistoryBid: (userID) => db.load(`
+    select *, count(ps.productID) as count
+    from product_single ps join product_bid pb
+    on ps.productID = pb.productID and pb.bidderID = ${userID}
+    group by ps.productID
+    order by beginDate desc
+    limit ${config.account.limitProductsHistoryBid}`),
+
+    productsWishList: (userID) => db.load(`
+    select *, count(ps.productID) as count
+    from product_single ps join wish_list wl
+    on ps.productID = wl.productID and wl.userID = ${userID}
+    group by ps.productID
+    order by beginDate desc
+    limit ${config.account.limitProductsWishList}`),
+
+    productsSelling: (userID) => db.load(`
+    select *, count(productID) as count
+    from product_single
+    where seller = ${userID}
+    order by beginDate desc
+    limit ${config.account.limitProductsSelling}`),
 };

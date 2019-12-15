@@ -6,6 +6,7 @@ const productModel = require("../models/product.model");
 const config = require("../config/default.json");
 const querystring = require('querystring');
 const checkUser = require("../middlewares/user.mdw");
+const moment = require('moment');
 
 const router = express.Router();
 
@@ -225,8 +226,8 @@ router.get("/productList/search/:category/:textSearch", async (req, res) => {
       productModel.singleMainImgSrcByProduct(product.productID),
       productModel.countBidProduct(product.productID)
     ]);
-  }  
-  
+  }
+
   let nPages = Math.floor(total / limit);
   if (total % limit > 0) nPages++;
   const page_numbers = [];
@@ -237,6 +238,7 @@ router.get("/productList/search/:category/:textSearch", async (req, res) => {
     });
   }
   res.render("vwUser/product-list", {
+    user: req.user,
     productList,
     empty: productList.length === 0,
     title: "Tìm kiếm sản phẩm",
@@ -251,9 +253,50 @@ router.get("/productList/search/:category/:textSearch", async (req, res) => {
 });
 
 router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
-  //Quản lý tài khoản
-  //render account.hbs
+  const user = req.user;
+  const [productsHistoryBid, productsWishList, productsSelling] = await Promise.all([
+    productModel.productsHistoryBid(user.userID),
+    productModel.productsWishList(user.userID),
+    productModel.productsSelling(user.userID),
+  ]);
+
+
+  for (const product of productsHistoryBid) {
+    [product.mainImgSrc, product.countBid] = await Promise.all([
+      productModel.singleMainImgSrcByProduct(product.productID),
+      productModel.countBidProduct(product.productID)
+    ]);
+  }
+
+  for (const product of productsWishList) {
+    [product.mainImgSrc, product.countBid] = await Promise.all([
+      productModel.singleMainImgSrcByProduct(product.productID),
+      productModel.countBidProduct(product.productID)
+    ]);
+  }
+
+  for (const product of productsSelling) {
+    [product.mainImgSrc, product.countBid] = await Promise.all([
+      productModel.singleMainImgSrcByProduct(product.productID),
+      productModel.countBidProduct(product.productID)
+    ]);
+  }
+
+  res.render("vwUser/account", {
+    user,
+    title: "Quản lí tài khoản",
+    productsHistoryBid,
+    productsWishList,
+    productsSelling,
+  });
+
   req.session.lastUrl = req.originalUrl;
+});
+
+router.post("/account/:userID/updateInfor", checkUser.checkAuthenticatedPost, async (req, res) => {
+  req.body.birthDay = moment(req.body.birthDay, "MM-DD-YYYY").format("YYYY-MM-DD");
+  await userModel.editUser(req.body);
+  res.json("1");
 });
 
 //Link: /user/checkout/:productID
@@ -325,5 +368,6 @@ router.get("/logout", (req, res) => {
   //res.redirect(req.headers.referer);
   res.redirect("/");
 });
+
 
 module.exports = router;

@@ -352,6 +352,19 @@
   });
 
   $('.form-group .btn-edit-info').click(() => {
+    let target = $('.btn-edit-info');
+
+    var userID = target.attr("userID");
+    var name = document.getElementById("name").value;
+    var email = document.getElementById("email").value;
+    var address = document.getElementById("address").value;
+    var tel = document.getElementById("tel").value;
+    var birthDay = document.getElementById("birthDay").value;
+
+    var wishItem = {
+      userID, name, email, address, tel, birthDay
+    };
+
     Swal.fire({
       title: 'Bạn chắc chắn muốn lưu những thay đổi này?',
       icon: 'warning',
@@ -362,10 +375,27 @@
       cancelButtonText: 'Hủy'
     }).then((result) => {
       if (result.value) {
-        Swal.fire({
-          title: 'Thông tin đã được cập nhật',
-          icon: 'success'
-        })
+        $.ajax({
+          url: '/account/' + userID + '/updateInfor',
+          type: 'post',
+          dataType: 'json',
+          contentType: 'application/json',
+          data: JSON.stringify(wishItem),
+          success: function (data) {
+            if (data == "1") {
+              Swal.fire({
+                title: 'Thông tin đã được cập nhật',
+                icon: 'success',
+                confirmButtonText: '<a href="/login">OK</a>',
+              })
+            }else{
+              Swal.fire({
+                title: 'Cập nhật thất bại',
+                icon: 'error'
+              })
+            }
+          },
+        });
       } else {
         Swal.fire({
           title: 'Các thay đổi chưa được cập nhật',
@@ -373,7 +403,6 @@
         })
       }
     });
-
     return false;
   });
 

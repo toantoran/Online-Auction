@@ -16,5 +16,10 @@
     "limitProductsMostBid": 5,
     "limitProductsHighestPrice": 5,
     "limitProductsNew": 10
+  },
+  "account": {
+    "limitProductsHistoryBid": 4,
+    "limitProductsWishList": 8,
+    "limitProductsSelling": 4
   }
 }

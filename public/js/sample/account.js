@@ -88,9 +88,7 @@ let productWish =
         </div>\
         </div>\
     </div>';
-
-
-
+    
 let productHistory = $('.section .container .product-container#history');
 let productWishList = $('.section .container .product-container#wish-list');
 let productSoldList = $('.section .container .product-container#sold-product');
