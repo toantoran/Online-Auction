@@ -30,10 +30,17 @@ module.exports = (passport) => {
   ));
 
   passport.serializeUser(function (user, done) {
-    done(null, user);
+    // console.log('serial');
+    done(null, user.userID);
   });
 
-  passport.deserializeUser(function (user, done) {
+  passport.deserializeUser(async function (id, done) {
+    // console.log('deserial');
+    let matchUser = await userModel.getUserById(id);
+    let user = {}
+    if (matchUser.length != 0)
+      user = matchUser[0];
+    // console.log(user);
     done(null, user);
   });
 }
