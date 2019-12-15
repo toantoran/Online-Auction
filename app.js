@@ -55,7 +55,7 @@ app.use(
         saveUninitialized: true
     })
 );
-require("./passport-config")(passport);
+require("./config/passport-local")(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 

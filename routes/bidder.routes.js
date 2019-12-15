@@ -306,6 +306,11 @@ router.get("/checkout/:productID", checkUser.checkAuthenticated, async (req, res
   req.session.lastUrl = req.originalUrl;
 });
 
+
+
+
+
+
 router.get("/login", checkUser.checkNotAuthenticated, (req, res) => {
   let errMsg = null;
   console.log(req.session.flash);
@@ -328,14 +333,17 @@ router.get("/signup", checkUser.checkNotAuthenticated, (req, res) => {
   });
 });
 
-router.post('/login', function (req, res, next) {
+router.post('/login',
   passport.authenticate('local', {
-    successRedirect: req.session.lastUrl,
+    // successRedirect: req.session.lastUrl,
     failureRedirect: "/login",
     failureFlash: "Email hoặc mật khẩu không đúng",
     successFlash: "Welcome!"
-  })(req, res, next)
-});
+  }), (req, res) => {
+    // console.log(req.user);
+    res.locals.lcUser = req.user;
+    res.redirect(req.session.lastUrl)
+  })
 
 router.post("/signup", async (req, res) => {
   console.log(req.body.email);
@@ -364,8 +372,9 @@ router.post("/signup", async (req, res) => {
 
 router.get("/logout", (req, res) => {
   req.logout();
+  res.locals.lcUser = {};
   req.session.destroy();
-  //res.redirect(req.headers.referer);
+  // res.redirect(req.headers.referer);
   res.redirect("/");
 });
 
