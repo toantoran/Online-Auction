@@ -46,6 +46,4 @@ module.exports = (passport) => {
     // console.log(user);
     done(null, user);
   });
-
-
 }

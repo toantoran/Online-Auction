@@ -29,7 +29,7 @@ module.exports = {
         return rows[0].total;
     },
 
-    single: (productID) => db.load(`select * from product_single where productID = "${productID}" order by subcateID`),
+    single: (productID) => db.load(`select * from product_single where productID = "${productID}"`),
     singleImgSrcByProduct: (productID) => db.load(`select * from product_img where productID = "${productID}"`),
     singleMainImgSrcByProduct: async (productID) => {
         const rows = await db.load(`select * from product_img where productID = "${productID}"`);
@@ -43,6 +43,9 @@ module.exports = {
     addProductBid: entity => db.add('product_bid', entity),
 
     deleteProduct: id => {
+        db.del('wish_list', {
+            productID: id
+        });
         db.del('product_img', {
             productID: id
         });

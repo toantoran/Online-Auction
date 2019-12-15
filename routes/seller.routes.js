@@ -46,6 +46,8 @@ router.post("/new-product/", upload.array('files[]'), checkUser.checkAuthenticat
 });
 
 router.post("/product/:productID/delete", async (req, res) => {
+    const rows = await productModel.single(req.params.productID);
+    const product = rows[0];
     if (product.seller === req.user.userID){
         await productModel.deleteProduct(req.params.productID);
     }
