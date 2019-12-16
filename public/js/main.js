@@ -168,7 +168,7 @@
     window.location.href = $(event.target).parent().parent().find('.product-body .product-name a').attr('href');
   });
   $('.check-out').click((event) => {
-    window.location.href = 'checkout.html';
+    window.location.href = $(event.target).parent().parent().find('.product-body .product-name a').attr('href');
   });
 
   $('.btn-wish').click((event) => {

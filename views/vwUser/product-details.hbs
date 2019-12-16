@@ -45,6 +45,9 @@
 							{{/if}}
 						</div>
 						<div class="product-info">
+							{{#if product.isEndBid}}
+								<h2 style="color: red;">Phiên đấu giá đã kết thúc</h2>
+							{{/if}}
 							<h2 class="product-name">{{product.productName}}</h2>
 							<p>Thương hiệu: <span>{{product.brand}}</span></p>
 							<p>Xuất xứ: <span>{{product.pFrom}}</span></p>
@@ -59,12 +62,15 @@
 						</div>
 						<div class="product-btns">
 							<form method="POST" onsubmit="return checkBid()">
+								<input type="hidden" name="isEndBid" value="{{product.isEndBid}}">
 								{{#unless isSeller}}
-								<div class="qty-input">
-									<input class="input price-input" name="bidPrice" value={{bidPrice}}>
-								</div>
-								<button class="primary-btn btn-bid" formaction="/product/{{product.productID}}/bid"
-									type="submit">Ra giá <i class="fas fa-gavel"></i></button>
+									{{#unless product.isEndBid}}
+									<div class="qty-input">
+										<input class="input price-input" name="bidPrice" value={{bidPrice}}>
+									</div>
+									<button class="primary-btn btn-bid" formaction="/product/{{product.productID}}/bid"
+										type="submit">Ra giá <i class="fas fa-gavel"></i></button>
+									{{/unless}}
 								{{/unless}}
 								<div class="pull-right">
 									{{#if isSeller}}

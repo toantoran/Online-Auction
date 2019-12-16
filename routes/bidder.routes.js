@@ -19,9 +19,10 @@ router.get("/", async (req, res) => {
   ]);
 
   for (const product of productsToEnd) {
-    [product.mainImgSrc, product.countBid] = await Promise.all([
+    [product.mainImgSrc, product.countBid, product.isExistWishItem] = await Promise.all([
       productModel.singleMainImgSrcByProduct(product.productID),
-      productModel.countBidProduct(product.productID)
+      productModel.countBidProduct(product.productID),
+      req.user ? await productModel.isExistWishItem(product.productID, req.user.userID) : false,
     ]);
   }
 
@@ -29,19 +30,22 @@ router.get("/", async (req, res) => {
     product.mainImgSrc = await productModel.singleMainImgSrcByProduct(
       product.productID
     );
+    product.isExistWishItem = req.user ? await productModel.isExistWishItem(product.productID, req.user.userID) : false;
   }
 
   for (const product of productsHighestPrice) {
-    [product.mainImgSrc, product.countBid] = await Promise.all([
+    [product.mainImgSrc, product.countBid, product.isExistWishItem] = await Promise.all([
       productModel.singleMainImgSrcByProduct(product.productID),
-      productModel.countBidProduct(product.productID)
+      productModel.countBidProduct(product.productID),
+      req.user ? await productModel.isExistWishItem(product.productID, req.user.userID) : false,
     ]);
   }
 
   for (const product of productsNew) {
-    [product.mainImgSrc, product.countBid] = await Promise.all([
+    [product.mainImgSrc, product.countBid, product.isExistWishItem] = await Promise.all([
       productModel.singleMainImgSrcByProduct(product.productID),
-      productModel.countBidProduct(product.productID)
+      productModel.countBidProduct(product.productID),
+      req.user ? await productModel.isExistWishItem(product.productID, req.user.userID) : false,
     ]);
   }
 
@@ -75,9 +79,10 @@ router.get("/productList/:cateID/:subcateID", async (req, res) => {
   ]);
 
   for (const product of productList) {
-    [product.mainImgSrc, product.countBid] = await Promise.all([
+    [product.mainImgSrc, product.countBid, product.isExistWishItem] = await Promise.all([
       productModel.singleMainImgSrcByProduct(product.productID),
-      productModel.countBidProduct(product.productID)
+      productModel.countBidProduct(product.productID),
+      req.user ? await productModel.isExistWishItem(product.productID, req.user.userID) : false,
     ]);
   }
 
@@ -111,11 +116,11 @@ router.get("/product/:productID", async (req, res) => {
     productModel.single(req.params.productID),
     productModel.singleImgSrcByProduct(req.params.productID),
     productModel.singleNoteByProduct(req.params.productID),
-    productModel.singleBidByProduct(req.params.productID)
+    productModel.singleBidByProduct(req.params.productID),
   ]);
 
   const product = productSingle[0];
-
+  product.isEndBid = moment(product.endDate).valueOf() < Date.now();
   let maxPrice = product.currentPrice;
   for (const p of productBid) {
     if (p.isHolder === 1) maxPrice = p.price > maxPrice ? p.price : maxPrice;
@@ -145,24 +150,31 @@ router.post("/product/:productID/bid", checkUser.checkAuthenticatedPost, async (
 
   let query;
 
-  if (product.seller === req.user.userID) {
+  if (req.body.isEndBid) {
     query = querystring.stringify({
       status: false,
-      message: "Bạn là người bán sản phẩm này, không thể ra giá!"
+      message: "Phiên đấu giá đã kết thúc!"
     });
   } else {
-    query = querystring.stringify({
-      status: true,
-      message: "Ra giá thành công!"
-    });
+    if (product.seller === req.user.userID) {
+      query = querystring.stringify({
+        status: false,
+        message: "Bạn là người bán sản phẩm này, không thể ra giá!"
+      });
+    } else {
+      query = querystring.stringify({
+        status: true,
+        message: "Ra giá thành công!"
+      });
 
-    const entity = {
-      productID: req.params.productID,
-      bidderID: req.user.userID,
-      price: req.body.bidPrice,
-      bidTime: new Date(),
+      const entity = {
+        productID: req.params.productID,
+        bidderID: req.user.userID,
+        price: req.body.bidPrice,
+        bidTime: new Date(),
+      }
+      await productModel.addProductBid(entity);
     }
-    await productModel.addProductBid(entity);
   }
 
   res.redirect(`/product/${req.params.productID}/?${query}`);
@@ -222,9 +234,10 @@ router.get("/productList/search/:category/:textSearch", async (req, res) => {
   }
 
   for (const product of productList) {
-    [product.mainImgSrc, product.countBid] = await Promise.all([
+    [product.mainImgSrc, product.countBid, product.isExistWishItem] = await Promise.all([
       productModel.singleMainImgSrcByProduct(product.productID),
-      productModel.countBidProduct(product.productID)
+      productModel.countBidProduct(product.productID),
+      req.user ? await productModel.isExistWishItem(product.productID, req.user.userID) : false,
     ]);
   }
 
@@ -260,28 +273,35 @@ router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
     productModel.productsSelling(user.userID),
   ]);
 
-  console.log(productsHistoryBid);
-  console.log(productsWishList);
-  console.log(productsSelling);
-
   for (const product of productsHistoryBid) {
-    [product.mainImgSrc, product.countBid] = await Promise.all([
+    [product.mainImgSrc, product.countBid, product.isExistWishItem, product.isEndBid, product.resultBid] = await Promise.all([
       productModel.singleMainImgSrcByProduct(product.productID),
-      productModel.countBidProduct(product.productID)
+      productModel.countBidProduct(product.productID),
+      req.user ? await productModel.isExistWishItem(product.productID, req.user.userID) : false,
+      product.isEndBid = moment(product.endDate).valueOf() < Date.now(),
+      product.resultBid = 0,
+      //product.resultBid = productModel.singleResultBid(product.productID, userID),
     ]);
   }
 
+  // for (const product of productsHistoryBid) {
+  //   product.isEndBid = moment(product.endDate).valueOf() <= Date.now();
+  //   product.resultBid = 0;
+  // }
+
   for (const product of productsWishList) {
-    [product.mainImgSrc, product.countBid] = await Promise.all([
+    [product.mainImgSrc, product.countBid, product.isExistWishItem] = await Promise.all([
       productModel.singleMainImgSrcByProduct(product.productID),
-      productModel.countBidProduct(product.productID)
+      productModel.countBidProduct(product.productID),
+      req.user ? await productModel.isExistWishItem(product.productID, req.user.userID) : false,
     ]);
   }
 
   for (const product of productsSelling) {
-    [product.mainImgSrc, product.countBid] = await Promise.all([
+    [product.mainImgSrc, product.countBid, product.isExistWishItem] = await Promise.all([
       productModel.singleMainImgSrcByProduct(product.productID),
-      productModel.countBidProduct(product.productID)
+      productModel.countBidProduct(product.productID),
+      req.user ? await productModel.isExistWishItem(product.productID, req.user.userID) : false,
     ]);
   }
 
@@ -306,6 +326,7 @@ router.post("/account/:userID/updateInfor", checkUser.checkAuthenticatedPost, as
 router.get("/checkout/:productID", checkUser.checkAuthenticated, async (req, res) => {
   //Thanh toán
   //render checkout.hbs
+  res.send("312312");
   req.session.lastUrl = req.originalUrl;
 });
 

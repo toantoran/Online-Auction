@@ -95,7 +95,7 @@
                                         <div class="form-group">
                                             <input type='text' class='datepicker-here input' id="birthDay"
                                                 name="birthDay" value="{{format_birthday user.birthDay}}"
-                                                data-language='en'/>
+                                                data-language='en' />
                                         </div>
                                     </div>
                                 </div>
@@ -134,17 +134,46 @@
                                                     <li><span class="cd-m">0 M</span></li>
                                                     <li><span class="cd-s">0 S</span></li>
                                                 </ul>
+                                                {{#if resultBid}}
+                                                <button class="main-btn check-out"><i
+                                                        class="fas fa-money-check-alt"></i> Thanh toán</button>
+                                                {{else}}
                                                 <button class="main-btn quick-view"><i class="fa fa-search-plus"></i>
-                                                    Xem chi
-                                                    tiết</button>
+                                                    Xem chi tiết</button>
+                                                {{/if}}
+                                                <button productID="{{productID}}" userID="{{user.userID}}" type="button"
+                                                    onsubmit="return false;" name="btnWish"
+                                                    class="watch-list btn-wish {{#if isExistWishItem}}focus{{/if}}"><i
+                                                        class="fa fa-heart"></i></button>
                                                 <img src="/img/product/{{productID}}/{{mainImgSrc}}" alt="">
                                             </div>
                                             <div class="product-body">
-                                                <h2 class="product-name"><a
-                                                        href="/product/{{productID}}">{{format_name productName}}</a>
+                                                <h2 class="product-name"><a {{#if resultBid}}
+                                                        href="/checkout/{{productID}}">{{format_name productName}} </a>
+                                                    {{else}}
+                                                    href="/product/{{productID}}">{{format_name productName}} </a>
+                                                    {{/if}}
                                                 </h2>
-                                                <p class="product-text">Giá hiện tại: <span
-                                                        class="product-price">{{format_money currentPrice}}</span></p>
+                                                <p class="product-text">Giá hiện tại: <span class="product-price"
+                                                        {{#if resultBid}} style="color: green 
+                                                 {{else}} style=" color: red"
+                                                        {{/if}}">{{format_money currentPrice}}</span></p>
+                                                <p class="product-text">Giá của bạn: <span class="product-price"
+                                                        style="color: green">{{format_money currentPrice}}</span></p>
+                                                {{#if isEndBid}}
+                                                <p class="product-text">Trạng thái: <span class="product-price"
+                                                        style="color: red">Đã kết thúc</span></p>
+                                                {{#if resultBid}}
+                                                <p class="product-text">Kết quả: <span class="product-price"
+                                                        style="color: green">Thắng cuộc</span></p>
+                                                {{else}}
+                                                <p class="product-text">Kết quả: <span class="product-price"
+                                                        style="color: orange">Thất bại</span></p>
+                                                {{/if}}
+                                                {{else}}
+                                                <p class="product-text">Trạng thái: <span class="product-price"
+                                                        style="color: green">Đang đấu giá</span></p>
+                                                {{/if}}
                                                 <div class="product-footer">
                                                     <small><span>{{countBid}}</span> lượt ra giá</small>
                                                     <small>Từ <span>{{format_day beginDate}}</span></small>
@@ -188,8 +217,11 @@
                                                     <li><span class="cd-s">0 S</span></li>
                                                 </ul>
                                                 <button class="main-btn quick-view"><i class="fa fa-search-plus"></i>
-                                                    Xem chi
-                                                    tiết</button>
+                                                    Xem chi tiết</button>
+                                                <button productID="{{productID}}" userID="{{user.userID}}" type="button"
+                                                    onsubmit="return false;" name="btnWish"
+                                                    class="watch-list btn-wish {{#if isExistWishItem}}focus{{/if}}"><i
+                                                        class="fa fa-heart"></i></button>
                                                 <img src="/img/product/{{productID}}/{{mainImgSrc}}" alt="">
                                             </div>
                                             <div class="product-body">
@@ -241,8 +273,11 @@
                                                     <li><span class="cd-s">0 S</span></li>
                                                 </ul>
                                                 <button class="main-btn quick-view"><i class="fa fa-search-plus"></i>
-                                                    Xem chi
-                                                    tiết</button>
+                                                    Xem chi tiết</button>
+                                                <button productID="{{productID}}" userID="{{user.userID}}" type="button"
+                                                    onsubmit="return false;" name="btnWish"
+                                                    class="watch-list btn-wish {{#if isExistWishItem}}focus{{/if}}"><i
+                                                        class="fa fa-heart"></i></button>
                                                 <img src="/img/product/{{productID}}/{{mainImgSrc}}" alt="">
                                             </div>
                                             <div class="product-body">

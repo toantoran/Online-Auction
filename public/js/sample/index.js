@@ -59,7 +59,9 @@ function showCountDown(object) {
             s.innerHTML = seconds + ' S';
             if (distance < 0) {
                 clearInterval(x);
-                object[i].innerHTML = "Phiên đấu giá đã kết thúc";
+                h.innerHTML = 0 + ' H';
+                m.innerHTML = 0 + ' M';
+                s.innerHTML = 0 + ' S';
             }
         }, 1000);
     }
