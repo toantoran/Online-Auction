@@ -36,18 +36,21 @@
 				</div>
 				<div class="col-md-7">
 					<div class="product-body">
+						{{#if product.isEndBid}}
+								<h2 style="color: red;">Phiên đấu giá đã kết thúc</h2>
+							{{/if}}
+						{{#if isSeller}}
+								<h3 style="color: blue;">*Sản phẩm được đăng bởi bạn*</h3>
+						{{/if}}
 						<div class="product-label">
 							{{#if isNew}}
-							<span>New</span>
+							<span>Mới</span>
 							{{/if}}
 							{{#if isHot}}
 							<span class="sale">Hot <i class="fab fa-hotjar"></i></span>
 							{{/if}}
 						</div>
 						<div class="product-info">
-							{{#if product.isEndBid}}
-								<h2 style="color: red;">Phiên đấu giá đã kết thúc</h2>
-							{{/if}}
 							<h2 class="product-name">{{product.productName}}</h2>
 							<p>Thương hiệu: <span>{{product.brand}}</span></p>
 							<p>Xuất xứ: <span>{{product.pFrom}}</span></p>

@@ -41,6 +41,23 @@ module.exports = {
     addProductSingle: entity => db.add('product_single', entity),
     addProductImg: entity => db.add('product_img', entity),
     addProductBid: entity => db.add('product_bid', entity),
+    addProductNote: entity => db.add('product_note', entity),
+
+    getProductCurrentPrice: async (productID) =>{
+        const rows = await db.load(`select * from product_bid where productID = "${productID}" and isCancel = 0`);
+        let currentPrice = rows[0].price;
+        for(const p of rows)
+        {
+            currentPrice = currentPrice > p.price? currentPrice: p.price;
+        }
+        return currentPrice;
+    },
+
+    updateProductCurrentPrice: (entity) => {
+        const condition = { productID: entity.productID };
+        delete entity.productID;
+        return db.patch('product_single', entity, condition);
+    },
 
     deleteProduct: id => {
         db.del('wish_list', {

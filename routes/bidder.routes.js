@@ -26,12 +26,27 @@ router.get("/", async (req, res) => {
     ]);
   }
 
+  for (const product of productsToEnd) {
+    product.isHot = product.countBid >= config.product.countBidIsHot;
+    const temp = moment(product.beginDate, 'YYYY-MM-DD HH:mm:ss');
+    const minutes =  moment().diff(temp, 'minutes');
+    product.isNew =  minutes <= config.product.minutesIsNew;
+  }
+
   for (const product of productsMostBid) {
     product.mainImgSrc = await productModel.singleMainImgSrcByProduct(
       product.productID
     );
     product.isExistWishItem = req.user ? await productModel.isExistWishItem(product.productID, req.user.userID) : false;
   }
+
+  for (const product of productsMostBid) {
+    product.isHot = product.countBid >= config.product.countBidIsHot;
+    const temp = moment(product.beginDate, 'YYYY-MM-DD HH:mm:ss');
+    const minutes =  moment().diff(temp, 'minutes');
+    product.isNew =  minutes <= config.product.minutesIsNew;
+  }
+
 
   for (const product of productsHighestPrice) {
     [product.mainImgSrc, product.countBid, product.isExistWishItem] = await Promise.all([
@@ -41,12 +56,26 @@ router.get("/", async (req, res) => {
     ]);
   }
 
+  for (const product of productsHighestPrice) {
+    product.isHot = product.countBid >= config.product.countBidIsHot;
+    const temp = moment(product.beginDate, 'YYYY-MM-DD HH:mm:ss');
+    const minutes =  moment().diff(temp, 'minutes');
+    product.isNew =  minutes <= config.product.minutesIsNew;
+  }
+
   for (const product of productsNew) {
     [product.mainImgSrc, product.countBid, product.isExistWishItem] = await Promise.all([
       productModel.singleMainImgSrcByProduct(product.productID),
       productModel.countBidProduct(product.productID),
       req.user ? await productModel.isExistWishItem(product.productID, req.user.userID) : false,
     ]);
+  }
+
+  for (const product of productsNew) {
+    product.isHot = product.countBid >= config.product.countBidIsHot;
+    const temp = moment(product.beginDate, 'YYYY-MM-DD HH:mm:ss');
+    const minutes =  moment().diff(temp, 'minutes');
+    product.isNew =  minutes <= config.product.minutesIsNew;
   }
 
   res.render("vwUser/index", {
@@ -86,6 +115,14 @@ router.get("/productList/:cateID/:subcateID", async (req, res) => {
     ]);
   }
 
+  for (const product of productList) {
+    product.isHot = product.countBid >= config.product.countBidIsHot;
+    const temp = moment(product.beginDate, 'YYYY-MM-DD HH:mm:ss');
+    const minutes =  moment().diff(temp, 'minutes');
+    product.isNew =  minutes <= config.product.minutesIsNew;
+  }
+
+
   let nPages = Math.floor(total / limit);
   if (total % limit > 0) nPages++;
   const page_numbers = [];
@@ -112,21 +149,18 @@ router.get("/productList/:cateID/:subcateID", async (req, res) => {
 });
 
 router.get("/product/:productID", async (req, res) => {
-  const [productSingle, listImgSrc, note, productBid] = await Promise.all([
+  const [productSingle, listImgSrc, note, productBid, countBid] = await Promise.all([
     productModel.single(req.params.productID),
     productModel.singleImgSrcByProduct(req.params.productID),
     productModel.singleNoteByProduct(req.params.productID),
     productModel.singleBidByProduct(req.params.productID),
+    productModel.countBidProduct(req.params.productID),
   ]);
 
   const product = productSingle[0];
   product.isEndBid = moment(product.endDate).valueOf() < Date.now();
-  let maxPrice = product.currentPrice;
-  for (const p of productBid) {
-    if (p.isHolder === 1) maxPrice = p.price > maxPrice ? p.price : maxPrice;
-  }
-
-  product.currentPrice = maxPrice;
+  const temp = moment(product.beginDate, 'YYYY-MM-DD HH:mm:ss');
+  const minutes =  moment().diff(temp, 'minutes');
   res.render("vwUser/product-details", {
     user: req.user,
     product,
@@ -139,8 +173,9 @@ router.get("/product/:productID", async (req, res) => {
     status: req.query.status,
     isSeller: req.user ? product.seller === req.user.userID : false,
     isExistWishItem: req.user ? await productModel.isExistWishItem(product.productID, req.user.userID) : false,
+    isHot: countBid >= config.product.countBidIsHot,
+    isNew: minutes <= config.product.minutesIsNew,
   });
-
   req.session.lastUrl = req.originalUrl;
 });
 
@@ -149,8 +184,7 @@ router.post("/product/:productID/bid", checkUser.checkAuthenticatedPost, async (
   const product = productSingle[0];
 
   let query;
-
-  if (req.body.isEndBid) {
+  if (req.body.isEndBid === "true") {
     query = querystring.stringify({
       status: false,
       message: "Phiên đấu giá đã kết thúc!"
@@ -173,7 +207,13 @@ router.post("/product/:productID/bid", checkUser.checkAuthenticatedPost, async (
         price: req.body.bidPrice,
         bidTime: new Date(),
       }
+
       await productModel.addProductBid(entity);
+      const currentPrice = await productModel.getProductCurrentPrice(product.productID);
+      await productModel.updateProductCurrentPrice({
+        productID: product.productID,
+        currentPrice
+      })
     }
   }
 
@@ -284,10 +324,12 @@ router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
     ]);
   }
 
-  // for (const product of productsHistoryBid) {
-  //   product.isEndBid = moment(product.endDate).valueOf() <= Date.now();
-  //   product.resultBid = 0;
-  // }
+  for (const product of productsHistoryBid) {
+    product.isHot = product.countBid >= config.product.countBidIsHot;
+    const temp = moment(product.beginDate, 'YYYY-MM-DD HH:mm:ss');
+    const minutes =  moment().diff(temp, 'minutes');
+    product.isNew =  minutes <= config.product.minutesIsNew;
+  }
 
   for (const product of productsWishList) {
     [product.mainImgSrc, product.countBid, product.isExistWishItem] = await Promise.all([
@@ -295,6 +337,13 @@ router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
       productModel.countBidProduct(product.productID),
       req.user ? await productModel.isExistWishItem(product.productID, req.user.userID) : false,
     ]);
+  }
+
+  for (const product of productsWishList) {
+    product.isHot = product.countBid >= config.product.countBidIsHot;
+    const temp = moment(product.beginDate, 'YYYY-MM-DD HH:mm:ss');
+    const minutes =  moment().diff(temp, 'minutes');
+    product.isNew =  minutes <= config.product.minutesIsNew;
   }
 
   for (const product of productsSelling) {
@@ -305,12 +354,22 @@ router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
     ]);
   }
 
+  for (const product of productsSelling) {
+    product.isHot = product.countBid >= config.product.countBidIsHot;
+    const temp = moment(product.beginDate, 'YYYY-MM-DD HH:mm:ss');
+    const minutes =  moment().diff(temp, 'minutes');
+    product.isNew =  minutes <= config.product.minutesIsNew;
+  }
+
   res.render("vwUser/account", {
     user,
     title: "Quản lí tài khoản",
     productsHistoryBid,
     productsWishList,
     productsSelling,
+    emptyProductsHistoryBid: productsHistoryBid.length === 0,
+    emptyProductsWishList: productsWishList.length === 0,
+    emptyProductsSelling: productsSelling.length === 0,
   });
 
   req.session.lastUrl = req.originalUrl;

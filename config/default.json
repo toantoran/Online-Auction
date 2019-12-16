@@ -21,5 +21,9 @@
     "limitProductsHistoryBid": 4,
     "limitProductsWishList": 8,
     "limitProductsSelling": 4
+  },
+  "product": {
+    "countBidIsHot": 5,
+    "minutesIsNew": 30
   }
 }
