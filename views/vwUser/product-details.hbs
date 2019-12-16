@@ -121,10 +121,17 @@
 										<h4 style="margin-bottom: 20px;">Lịch sử đấu giá</h4>
 										<div class="row">
 											<div class="col-md-12">
-												<table id="bid-table">
+												<table class="bid-table">
 													{{!-- Cái này t xử lý ở client, trong file public/js/main.js dòng 388 --}}
 													{{!-- m Tham khảo rồi làm theo --}}
 													{{!-- nó phân trang sẵn rồi, thầy bảo ko nên dùng cái này, nhưng mà cái này ít, dùng được --}}
+													{{#each productBid}}
+														<div class="bid-table-data">
+															<input type="hidden" name="bid-bidderName" id="bid-bidderName" value="{{format_name_bid bidderName}}">
+															<input type="hidden" name="bid-bidTime" id="bid-bidTime" value="{{format_time_bid bidTime}}">
+															<input type="hidden" name="bid-Price" id="bid-Price" value="{{format_money price}}">
+														</div>
+													{{/each}}
 												</table>
 											</div>
 										</div>

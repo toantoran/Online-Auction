@@ -39,7 +39,6 @@
 // }
 
 showCountDown($('.product.product-single'))
-
 function showCountDown(object) {
     for (let i = 0; i < object.length; i++) {
         let demoExpDate = object.find("#endDate")[i].value;

@@ -30,6 +30,13 @@ app.engine(
             format_day_time: val => moment(val).format("DD/MM/YYYY")+"  [" + moment(val).format("HH:mm:ss")+"]",
             format_birthday: val => moment(val).format("MM/DD/YYYY"),
             format_day_value: val=> moment(val).valueOf(),
+            format_time_bid: val=> moment(val).format("DD/MM/YYYY HH:mm"),
+            format_name_bid: val => {
+                    var temp = "";
+                    temp += "...";
+                    return temp + val;
+                return val;
+            },
             format_name: val => {
                 if (val.length > 25) {
                     var temp = "";

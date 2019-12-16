@@ -35,7 +35,7 @@ module.exports = {
         const rows = await db.load(`select * from product_img where productID = "${productID}"`);
         return rows[0].imgSrc;
     },
-    singleBidByProduct: (productID) => db.load(`select * from product_bid where productID = "${productID}"`),
+    singleBidByProduct: (productID) => db.load(`select * from product_bid where productID = "${productID}" order by bidTime desc`),
     singleNoteByProduct: (productID) => db.load(`select * from product_note where productID = "${productID}"`),
 
     addProductSingle: entity => db.add('product_single', entity),

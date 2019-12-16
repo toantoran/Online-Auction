@@ -414,8 +414,6 @@
     return false;
   });
 
-
-
   $('.main-btn.icon-btn.btn-delete').click(() => {
     Swal.fire({
       title: 'Bạn chắc chắn muốn gỡ bỏ sản phẩm này?',
@@ -442,32 +440,31 @@
     })
   })
 
-  //Bid Table
-
+//Bid Table
   function Bid(time, name, price) {
     this.time = time;
     this.name = name;
     this.price = price;
     return this;
   };
-  $('#bid-table').DataTable({
+
+  let tempData = [];
+  getdata($('.bid-table-data'))
+  function getdata(object) {
+      for (let i = 0; i < object.length; i++) {
+          let bidderName = object.find('#bid-bidderName')[i].value;
+          let bidTime = object.find('#bid-bidTime')[i].value;
+          let price = object.find('#bid-Price')[i].value;
+          let bid = new Bid(bidTime, bidderName, price);
+          tempData.push(bid);
+      }
+  }
+  let bibTable = $('.bid-table');
+  bibTable.DataTable({
     searching: false,
     sort: false,
     paging: true,
-    data: [
-      new Bid("20/11/2019 19:20", "****Toàn", "6,300,000"),
-      new Bid("20/11/2019 19:20", "****Toàn", "6,300,000"),
-      new Bid("20/11/2019 19:20", "****Toàn", "6,300,000"),
-      new Bid("20/11/2019 19:20", "****Toàn", "6,300,000"),
-      new Bid("20/11/2019 19:20", "****Toàn", "6,300,000"),
-      new Bid("20/11/2019 19:20", "****Toàn", "6,300,000"),
-      new Bid("20/11/2019 19:20", "****Toàn", "6,300,000"),
-      new Bid("20/11/2019 19:20", "****Toàn", "6,300,000"),
-      new Bid("20/11/2019 19:20", "****Toàn", "6,300,000"),
-      new Bid("20/11/2019 19:20", "****Toàn", "6,300,000"),
-      new Bid("20/11/2019 19:20", "****Toàn", "6,300,000"),
-      new Bid("20/11/2019 19:20", "****Toàn", "6,300,000")
-    ],
+    data: tempData,
     columns: [{
         data: 'time',
         sTitle: 'Thời gian'
@@ -495,27 +492,28 @@
     }
   });
 
-  // $('tbody tr').append("<td><button class='main-btn refuse-btn'>Từ chối</button></td>");
-  // $('.refuse-btn').click(() => {
-  //   Swal.fire({
-  //     title: 'Bạn có chắc chắn muốn từ chối lượt đấu giá này?',
-  //     text: "Bạn không thể hoàn tác",
-  //     icon: 'warning',
-  //     showCancelButton: true,
-  //     confirmButtonColor: '#F8694A',
-  //     cancelButtonColor: '#000',
-  //     confirmButtonText: 'Chắn chắn',
-  //     cancelButtonText: 'Hủy bỏ'
-  //   }).then((result) => {
-  //     if (result.value) {
-  //       Swal.fire(
-  //         'Đã từ chối lượt đấu giá !',
-  //         'Người này không thể tham gia đấu giá sản phẩm này nữa',
-  //         'success'
-  //       )
-  //     }
-  //   })
-  // })
+  let bodyBibTalbe = bibTable.find('tbody tr');
+  bodyBibTalbe.append("<td><button class='main-btn refuse-btn'>Từ chối</button></td>");
+  $('.refuse-btn').click(() => {
+    Swal.fire({
+      title: 'Bạn có chắc chắn muốn từ chối lượt đấu giá này?',
+      text: "Bạn không thể hoàn tác",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#F8694A',
+      cancelButtonColor: '#000',
+      confirmButtonText: 'Chắn chắn',
+      cancelButtonText: 'Hủy bỏ'
+    }).then((result) => {
+      if (result.value) {
+        Swal.fire(
+          'Đã từ chối lượt đấu giá !',
+          'Người này không thể tham gia đấu giá sản phẩm này nữa',
+          'success'
+        )
+      }
+    })
+  })
 
   var myMenu =
     '<div>\
@@ -591,7 +589,6 @@
   $('.btn-bid').click(() => {
     let priceStr = $('.btn-bid').parent().find('input.price-input').val();
     let price = parseInt(priceStr.slice(0, priceStr.length - 1).replace(/,/g, ''));
-    console.log(price);
 
     if (price <= getCurrentPrice()) {
       Swal.fire({

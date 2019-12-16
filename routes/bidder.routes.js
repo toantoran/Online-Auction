@@ -161,9 +161,13 @@ router.get("/product/:productID", async (req, res) => {
   product.isEndBid = moment(product.endDate).valueOf() < Date.now();
   const temp = moment(product.beginDate, 'YYYY-MM-DD HH:mm:ss');
   const minutes =  moment().diff(temp, 'minutes');
+  for(const pb of productBid){
+    pb.bidderName = await userModel.getNameById(pb.bidderID);
+  }
   res.render("vwUser/product-details", {
     user: req.user,
     product,
+    productBid,
     bidPrice: product.stepPrice + product.currentPrice,
     listImgSrc,
     note,
