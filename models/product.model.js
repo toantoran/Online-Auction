@@ -122,4 +122,9 @@ module.exports = {
     where seller = ${userID}
     order by beginDate desc
     limit ${config.account.limitProductsSelling}`),
+
+    getSellerNameByProduct: async (productID) =>{
+        const rows = await db.load(`select * from users u join product_single ps on ps.productID= "${productID}" and ps.seller = u.userID`);
+        return rows[0].name;
+    }
 };

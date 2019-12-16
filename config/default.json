@@ -25,5 +25,8 @@
   "product": {
     "countBidIsHot": 5,
     "minutesIsNew": 30
+  },
+  "checkout": {
+    "transportPrice": 0
   }
 }

@@ -383,9 +383,23 @@ router.post("/account/:userID/updateInfor", checkUser.checkAuthenticatedPost, as
 
 //Link: /user/checkout/:productID
 router.get("/checkout/:productID", checkUser.checkAuthenticated, async (req, res) => {
-  //Thanh toán
-  //render checkout.hbs
-  res.send("312312");
+  const rows = await productModel.single(req.params.productID);
+  const product = rows[0];
+
+  [product.mainImgSrc, product.sellerName] = await Promise.all([
+    productModel.singleMainImgSrcByProduct(product.productID),
+    productModel.getSellerNameByProduct(product.productID)
+  ]);
+
+  const transportPrice = config.checkout.transportPrice;
+
+  res.render("vwUser/checkout", {
+    user: req.user,
+    product,
+    transportPrice,
+    totalPrice: +product.currentPrice + +transportPrice,
+    title:"Thanh toán",
+  });
   req.session.lastUrl = req.originalUrl;
 });
 

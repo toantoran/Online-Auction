@@ -495,27 +495,27 @@
     }
   });
 
-  $('tbody tr').append("<td><button class='main-btn refuse-btn'>Từ chối</button></td>");
-  $('.refuse-btn').click(() => {
-    Swal.fire({
-      title: 'Bạn có chắc chắn muốn từ chối lượt đấu giá này?',
-      text: "Bạn không thể hoàn tác",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#F8694A',
-      cancelButtonColor: '#000',
-      confirmButtonText: 'Chắn chắn',
-      cancelButtonText: 'Hủy bỏ'
-    }).then((result) => {
-      if (result.value) {
-        Swal.fire(
-          'Đã từ chối lượt đấu giá !',
-          'Người này không thể tham gia đấu giá sản phẩm này nữa',
-          'success'
-        )
-      }
-    })
-  })
+  // $('tbody tr').append("<td><button class='main-btn refuse-btn'>Từ chối</button></td>");
+  // $('.refuse-btn').click(() => {
+  //   Swal.fire({
+  //     title: 'Bạn có chắc chắn muốn từ chối lượt đấu giá này?',
+  //     text: "Bạn không thể hoàn tác",
+  //     icon: 'warning',
+  //     showCancelButton: true,
+  //     confirmButtonColor: '#F8694A',
+  //     cancelButtonColor: '#000',
+  //     confirmButtonText: 'Chắn chắn',
+  //     cancelButtonText: 'Hủy bỏ'
+  //   }).then((result) => {
+  //     if (result.value) {
+  //       Swal.fire(
+  //         'Đã từ chối lượt đấu giá !',
+  //         'Người này không thể tham gia đấu giá sản phẩm này nữa',
+  //         'success'
+  //       )
+  //     }
+  //   })
+  // })
 
   var myMenu =
     '<div>\
