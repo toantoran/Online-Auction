@@ -2,6 +2,7 @@ const express = require("express");
 
 const productModel = require("../models/product.model");
 const upload = require("../middlewares/upload.mdw");
+const fs = require('fs-extra')
 const router = express.Router();
 const uuid = require('uuid/v1');
 const checkUser = require("../middlewares/user.mdw");
@@ -48,8 +49,18 @@ router.post("/new-product/", upload.array('files[]'), checkUser.checkAuthenticat
 router.post("/product/:productID/delete", async (req, res) => {
     const rows = await productModel.single(req.params.productID);
     const product = rows[0];
-    if (product.seller === req.user.userID){
+    if (product.seller === req.user.userID) {
         await productModel.deleteProduct(req.params.productID);
+
+        const dir = `./public/img/product/${req.params.productID}`;
+        fs.exists(dir, exist => {
+            if (exist) {
+                fs.remove(dir, (error) => {
+                    if (error) console.log(error.message);
+                })
+            }
+        })
+
     }
     res.send(req.params.productID);
 });
