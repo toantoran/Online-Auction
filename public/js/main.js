@@ -393,7 +393,7 @@
                 icon: 'success',
               }).then((result) => {
                 if (result.value) {
-                  window.location="/account";
+                  window.location = "/account";
                 }
               })
             } else {
@@ -440,7 +440,7 @@
     })
   })
 
-//Bid Table
+  //Bid Table
   function Bid(time, name, price) {
     this.time = time;
     this.name = name;
@@ -449,21 +449,30 @@
   };
 
   let tempData = [];
+  let wishData = [];
   getdata($('.bid-table-data'))
+
   function getdata(object) {
-      for (let i = 0; i < object.length; i++) {
-          let bidderName = object.find('#bid-bidderName')[i].value;
-          let bidTime = object.find('#bid-bidTime')[i].value;
-          let price = object.find('#bid-Price')[i].value;
-          let bid = new Bid(bidTime, bidderName, price);
-          tempData.push(bid);
-      }
+    for (let i = 0; i < object.length; i++) {
+      let bidderName = object.find('#bid-bidderName')[i].value;
+      let bidTime = object.find('#bid-bidTime')[i].value;
+      let price = object.find('#bid-Price')[i].value;
+      let bid = new Bid(bidTime, bidderName, price);
+      tempData.push(bid);
+
+      let productID = object.find('#bid-productID')[i].value;
+      let bidderID = object.find('#bid-bidderID')[i].value;
+      wishData.push({
+        productID,
+        bidderID,
+      });
+    }
   }
   let bibTable = $('.bid-table');
   bibTable.DataTable({
     searching: false,
     sort: false,
-    paging: true,
+    paging: false,
     data: tempData,
     columns: [{
         data: 'time',
@@ -493,27 +502,65 @@
   });
 
   let bodyBibTalbe = bibTable.find('tbody tr');
-  bodyBibTalbe.append("<td><button class='main-btn refuse-btn'>Từ chối</button></td>");
-  $('.refuse-btn').click(() => {
-    Swal.fire({
-      title: 'Bạn có chắc chắn muốn từ chối lượt đấu giá này?',
-      text: "Bạn không thể hoàn tác",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#F8694A',
-      cancelButtonColor: '#000',
-      confirmButtonText: 'Chắn chắn',
-      cancelButtonText: 'Hủy bỏ'
-    }).then((result) => {
-      if (result.value) {
-        Swal.fire(
-          'Đã từ chối lượt đấu giá !',
-          'Người này không thể tham gia đấu giá sản phẩm này nữa',
-          'success'
-        )
+  let isSeller = document.getElementById('isSellerBid').value;
+  if (isSeller === "true" && tempData.length > 0) {
+    bodyBibTalbe.append("<td><button class='main-btn refuse-btn'>Từ chối</button></td>");
+  }
+
+  setEventRefuseBtn($('.refuse-btn'))
+  function setEventRefuseBtn(object) {
+    for (let i = 0; i < object.length; i++) {
+      object[i].onclick = () => {
+        Swal.fire({
+          title: 'Bạn có chắc chắn muốn từ chối lượt đấu giá này?',
+          text: "Bạn không thể hoàn tác",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#F8694A',
+          cancelButtonColor: '#000',
+          confirmButtonText: 'Chắn chắn',
+          cancelButtonText: 'Hủy bỏ'
+        }).then((result) => {
+          if (result.value) {
+            var wishItem = wishData[i];
+            $.ajax({
+              url: '/product/' + wishItem.productID + '/refuseBid',
+              type: 'post',
+              dataType: 'json',
+              contentType: 'application/json',
+              data: JSON.stringify(wishItem),
+              success: function (data) {
+                if (data === "1") {
+                  new SnackBar({
+                    message: "Từ chối đấu giá thành công",
+                    status: "success",
+                    fixed: true,
+                    timeout: 2000
+                  });
+                  Swal.fire({
+                    title: 'Đã từ chối lượt đấu giá !',
+                    text: 'Người này không thể tham gia đấu giá sản phẩm này nữa',
+                    icon: 'success'
+                  }).then((result) => {
+                    if (result.value) {
+                      window.location = '/product/' + wishItem.productID;
+                    }
+                  })
+                } else {
+                  new SnackBar({
+                    message: "Bạn không phải chủ sở hữu sản phẩm này!",
+                    status: "warning",
+                    fixed: true,
+                    timeout: 2000
+                  });
+                }
+              }
+            });
+          }
+        })
       }
-    })
-  })
+    }
+  }
 
   var myMenu =
     '<div>\

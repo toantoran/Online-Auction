@@ -167,19 +167,24 @@
                                                         {{/if}}">{{format_money currentPrice}}</span></p>
                                                 <p class="product-text">Giá của bạn: <span class="product-price"
                                                         style="color: green">{{format_money currentPrice}}</span></p>
-                                                {{#if isEndBid}}
+                                                {{#if isCancel}}
                                                 <p class="product-text">Trạng thái: <span class="product-price"
-                                                        style="color: red">Đã kết thúc</span></p>
-                                                {{#if resultBid}}
-                                                <p class="product-text">Kết quả: <span class="product-price"
-                                                        style="color: green">Thắng cuộc</span></p>
+                                                        style="color: orange">Đã bị huỷ</span></p>
                                                 {{else}}
-                                                <p class="product-text">Kết quả: <span class="product-price"
-                                                        style="color: orange">Thất bại</span></p>
-                                                {{/if}}
-                                                {{else}}
-                                                <p class="product-text">Trạng thái: <span class="product-price"
-                                                        style="color: green">Đang đấu giá</span></p>
+                                                    {{#if isEndBid}}
+                                                    <p class="product-text">Trạng thái: <span class="product-price"
+                                                            style="color: red">Đã kết thúc</span></p>
+                                                        {{#if resultBid}}
+                                                        <p class="product-text">Kết quả: <span class="product-price"
+                                                                style="color: green">Thắng cuộc</span></p>
+                                                        {{else}}
+                                                        <p class="product-text">Kết quả: <span class="product-price"
+                                                                style="color: orange">Thất bại</span></p>
+                                                        {{/if}}
+                                                    {{else}}
+                                                    <p class="product-text">Trạng thái: <span class="product-price"
+                                                            style="color: green">Đang đấu giá</span></p>
+                                                    {{/if}}
                                                 {{/if}}
                                                 <div class="product-footer">
                                                     <small><span>{{countBid}}</span> lượt ra giá</small>

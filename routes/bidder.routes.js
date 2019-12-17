@@ -29,8 +29,8 @@ router.get("/", async (req, res) => {
   for (const product of productsToEnd) {
     product.isHot = product.countBid >= config.product.countBidIsHot;
     const temp = moment(product.beginDate, 'YYYY-MM-DD HH:mm:ss');
-    const minutes =  moment().diff(temp, 'minutes');
-    product.isNew =  minutes <= config.product.minutesIsNew;
+    const minutes = moment().diff(temp, 'minutes');
+    product.isNew = minutes <= config.product.minutesIsNew;
   }
 
   for (const product of productsMostBid) {
@@ -43,8 +43,8 @@ router.get("/", async (req, res) => {
   for (const product of productsMostBid) {
     product.isHot = product.countBid >= config.product.countBidIsHot;
     const temp = moment(product.beginDate, 'YYYY-MM-DD HH:mm:ss');
-    const minutes =  moment().diff(temp, 'minutes');
-    product.isNew =  minutes <= config.product.minutesIsNew;
+    const minutes = moment().diff(temp, 'minutes');
+    product.isNew = minutes <= config.product.minutesIsNew;
   }
 
 
@@ -59,8 +59,8 @@ router.get("/", async (req, res) => {
   for (const product of productsHighestPrice) {
     product.isHot = product.countBid >= config.product.countBidIsHot;
     const temp = moment(product.beginDate, 'YYYY-MM-DD HH:mm:ss');
-    const minutes =  moment().diff(temp, 'minutes');
-    product.isNew =  minutes <= config.product.minutesIsNew;
+    const minutes = moment().diff(temp, 'minutes');
+    product.isNew = minutes <= config.product.minutesIsNew;
   }
 
   for (const product of productsNew) {
@@ -74,8 +74,8 @@ router.get("/", async (req, res) => {
   for (const product of productsNew) {
     product.isHot = product.countBid >= config.product.countBidIsHot;
     const temp = moment(product.beginDate, 'YYYY-MM-DD HH:mm:ss');
-    const minutes =  moment().diff(temp, 'minutes');
-    product.isNew =  minutes <= config.product.minutesIsNew;
+    const minutes = moment().diff(temp, 'minutes');
+    product.isNew = minutes <= config.product.minutesIsNew;
   }
 
   res.render("vwUser/index", {
@@ -118,8 +118,8 @@ router.get("/productList/:cateID/:subcateID", async (req, res) => {
   for (const product of productList) {
     product.isHot = product.countBid >= config.product.countBidIsHot;
     const temp = moment(product.beginDate, 'YYYY-MM-DD HH:mm:ss');
-    const minutes =  moment().diff(temp, 'minutes');
-    product.isNew =  minutes <= config.product.minutesIsNew;
+    const minutes = moment().diff(temp, 'minutes');
+    product.isNew = minutes <= config.product.minutesIsNew;
   }
 
 
@@ -160,8 +160,8 @@ router.get("/product/:productID", async (req, res) => {
   const product = productSingle[0];
   product.isEndBid = moment(product.endDate).valueOf() < Date.now();
   const temp = moment(product.beginDate, 'YYYY-MM-DD HH:mm:ss');
-  const minutes =  moment().diff(temp, 'minutes');
-  for(const pb of productBid){
+  const minutes = moment().diff(temp, 'minutes');
+  for (const pb of productBid) {
     pb.bidderName = await userModel.getNameById(pb.bidderID);
   }
   res.render("vwUser/product-details", {
@@ -186,42 +186,65 @@ router.get("/product/:productID", async (req, res) => {
 router.post("/product/:productID/bid", checkUser.checkAuthenticatedPost, async (req, res) => {
   const productSingle = await productModel.single(req.params.productID);
   const product = productSingle[0];
-
+  const checkBan = await productModel.checkBanBid(req.params.productID, req.user.userID);
   let query;
-  if (req.body.isEndBid === "true") {
+  if (checkBan) {
     query = querystring.stringify({
       status: false,
-      message: "Phiên đấu giá đã kết thúc!"
+      message: "Bạn đã bị cấm đấu giá sản phẩm này!!!"
     });
   } else {
-    if (product.seller === req.user.userID) {
+    if (req.body.isEndBid === "true") {
       query = querystring.stringify({
         status: false,
-        message: "Bạn là người bán sản phẩm này, không thể ra giá!"
+        message: "Phiên đấu giá đã kết thúc!"
       });
     } else {
-      query = querystring.stringify({
-        status: true,
-        message: "Ra giá thành công!"
-      });
+      if (product.seller === req.user.userID) {
+        query = querystring.stringify({
+          status: false,
+          message: "Bạn là người bán sản phẩm này, không thể ra giá!"
+        });
+      } else {
+        query = querystring.stringify({
+          status: true,
+          message: "Ra giá thành công!"
+        });
 
-      const entity = {
-        productID: req.params.productID,
-        bidderID: req.user.userID,
-        price: req.body.bidPrice,
-        bidTime: new Date(),
+        const entity = {
+          productID: req.params.productID,
+          bidderID: req.user.userID,
+          price: req.body.bidPrice,
+          bidTime: new Date(),
+        }
+
+        await productModel.addProductBid(entity);
+        const currentPrice = await productModel.getProductCurrentPrice(product.productID);
+        await productModel.updateProductCurrentPrice({
+          productID: product.productID,
+          currentPrice
+        })
       }
-
-      await productModel.addProductBid(entity);
-      const currentPrice = await productModel.getProductCurrentPrice(product.productID);
-      await productModel.updateProductCurrentPrice({
-        productID: product.productID,
-        currentPrice
-      })
     }
   }
 
   res.redirect(`/product/${req.params.productID}/?${query}`);
+});
+
+router.post("/product/:productID/refuseBid", async (req, res) => {
+  const rows = await productModel.single(req.body.productID);
+  const product = rows[0];
+  const isSeller = req.user ? product.seller === req.user.userID : false;
+  if (isSeller) {
+    await productModel.cancelProductBid(req.body.productID, req.body.bidderID);
+    await productModel.addBanBid({
+      productID: req.body.productID,
+      bidderID: req.body.bidderID,
+    });
+    res.json("1");
+  } else {
+    res.json("0");
+  }
 });
 
 router.post("/product/:productID/addToWishList", checkUser.checkAuthenticatedPost, async (req, res) => {
@@ -331,8 +354,8 @@ router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
   for (const product of productsHistoryBid) {
     product.isHot = product.countBid >= config.product.countBidIsHot;
     const temp = moment(product.beginDate, 'YYYY-MM-DD HH:mm:ss');
-    const minutes =  moment().diff(temp, 'minutes');
-    product.isNew =  minutes <= config.product.minutesIsNew;
+    const minutes = moment().diff(temp, 'minutes');
+    product.isNew = minutes <= config.product.minutesIsNew;
   }
 
   for (const product of productsWishList) {
@@ -346,8 +369,8 @@ router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
   for (const product of productsWishList) {
     product.isHot = product.countBid >= config.product.countBidIsHot;
     const temp = moment(product.beginDate, 'YYYY-MM-DD HH:mm:ss');
-    const minutes =  moment().diff(temp, 'minutes');
-    product.isNew =  minutes <= config.product.minutesIsNew;
+    const minutes = moment().diff(temp, 'minutes');
+    product.isNew = minutes <= config.product.minutesIsNew;
   }
 
   for (const product of productsSelling) {
@@ -361,8 +384,8 @@ router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
   for (const product of productsSelling) {
     product.isHot = product.countBid >= config.product.countBidIsHot;
     const temp = moment(product.beginDate, 'YYYY-MM-DD HH:mm:ss');
-    const minutes =  moment().diff(temp, 'minutes');
-    product.isNew =  minutes <= config.product.minutesIsNew;
+    const minutes = moment().diff(temp, 'minutes');
+    product.isNew = minutes <= config.product.minutesIsNew;
   }
 
   res.render("vwUser/account", {
@@ -402,7 +425,7 @@ router.get("/checkout/:productID", checkUser.checkAuthenticated, async (req, res
     product,
     transportPrice,
     totalPrice: +product.currentPrice + +transportPrice,
-    title:"Thanh toán",
+    title: "Thanh toán",
   });
   req.session.lastUrl = req.originalUrl;
 });

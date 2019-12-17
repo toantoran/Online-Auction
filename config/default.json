@@ -18,9 +18,9 @@
     "limitProductsNew": 10
   },
   "account": {
-    "limitProductsHistoryBid": 4,
-    "limitProductsWishList": 8,
-    "limitProductsSelling": 4
+    "limitProductsHistoryBid": 10,
+    "limitProductsWishList": 10,
+    "limitProductsSelling": 10
   },
   "product": {
     "countBidIsHot": 5,

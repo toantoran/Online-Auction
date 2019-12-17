@@ -19,8 +19,6 @@ if (message !== "") {
     }
 }
 
-let isSeller = document.getElementById("isSeller").value;
-
 function checkBid() {
     let flag = true;
     return flag;

@@ -25,7 +25,7 @@ module.exports = {
     pageBySubCat: (cateID, subcateID, offset) => db.load(`select * from product_single where cateID = ${cateID} and subcateID = ${subcateID} limit ${config.paginate.limit} offset ${offset}`),
 
     countBidProduct: async (productID) => {
-        const rows = await db.load(`select count(*) as total from product_bid where productID = "${productID}"`)
+        const rows = await db.load(`select count(*) as total from product_bid where productID = "${productID} and isCancel = 0 "`)
         return rows[0].total;
     },
 
@@ -35,7 +35,7 @@ module.exports = {
         const rows = await db.load(`select * from product_img where productID = "${productID}"`);
         return rows[0].imgSrc;
     },
-    singleBidByProduct: (productID) => db.load(`select * from product_bid where productID = "${productID}" order by bidTime desc`),
+    singleBidByProduct: (productID) => db.load(`select * from product_bid where productID = "${productID}" and isCancel="0" order by bidTime desc`),
     singleNoteByProduct: (productID) => db.load(`select * from product_note where productID = "${productID}"`),
 
     addProductSingle: entity => db.add('product_single', entity),
@@ -43,18 +43,26 @@ module.exports = {
     addProductBid: entity => db.add('product_bid', entity),
     addProductNote: entity => db.add('product_note', entity),
 
-    getProductCurrentPrice: async (productID) =>{
+    addBanBid: entity => db.add('product_ban_bid', entity),
+    cancelProductBid: (productID, bidderID) => db.load(`update product_bid set isCancel = 1 where productID = "${productID}" and bidderID = ${bidderID}`),
+    checkBanBid: async (productID, bidderID) => {
+        const rows = await db.load(`select * from product_ban_bid where productID = "${productID}" and bidderID = ${bidderID}`)
+        return (rows.length > 0);
+    },
+
+    getProductCurrentPrice: async (productID) => {
         const rows = await db.load(`select * from product_bid where productID = "${productID}" and isCancel = 0`);
         let currentPrice = rows[0].price;
-        for(const p of rows)
-        {
-            currentPrice = currentPrice > p.price? currentPrice: p.price;
+        for (const p of rows) {
+            currentPrice = currentPrice > p.price ? currentPrice : p.price;
         }
         return currentPrice;
     },
 
     updateProductCurrentPrice: (entity) => {
-        const condition = { productID: entity.productID };
+        const condition = {
+            productID: entity.productID
+        };
         delete entity.productID;
         return db.patch('product_single', entity, condition);
     },
@@ -101,7 +109,7 @@ module.exports = {
     },
 
     productsHistoryBid: (userID) => db.load(`
-    select *, count(ps.productID) as count
+    select *
     from product_single ps join product_bid pb
     on ps.productID = pb.productID and pb.bidderID = ${userID}
     group by ps.productID
@@ -123,7 +131,7 @@ module.exports = {
     order by beginDate desc
     limit ${config.account.limitProductsSelling}`),
 
-    getSellerNameByProduct: async (productID) =>{
+    getSellerNameByProduct: async (productID) => {
         const rows = await db.load(`select * from users u join product_single ps on ps.productID= "${productID}" and ps.seller = u.userID`);
         return rows[0].name;
     }
