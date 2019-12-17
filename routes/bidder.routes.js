@@ -241,6 +241,16 @@ router.post("/product/:productID/refuseBid", async (req, res) => {
       productID: req.body.productID,
       bidderID: req.body.bidderID,
     });
+
+    let currentPrice = await productModel.getProductCurrentPrice(product.productID);
+    if (currentPrice === 0){
+      currentPrice = product.beginPrice;
+    }
+    await productModel.updateProductCurrentPrice({
+      productID: product.productID,
+      currentPrice
+    })
+   
     res.json("1");
   } else {
     res.json("0");

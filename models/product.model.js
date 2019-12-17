@@ -52,7 +52,7 @@ module.exports = {
 
     getProductCurrentPrice: async (productID) => {
         const rows = await db.load(`select * from product_bid where productID = "${productID}" and isCancel = 0`);
-        let currentPrice = rows[0].price;
+        let currentPrice = 0;
         for (const p of rows) {
             currentPrice = currentPrice > p.price ? currentPrice : p.price;
         }
@@ -112,8 +112,7 @@ module.exports = {
     select *
     from product_single ps join product_bid pb
     on ps.productID = pb.productID and pb.bidderID = ${userID}
-    group by ps.productID
-    order by beginDate desc
+    order by pb.bidTime desc
     limit ${config.account.limitProductsHistoryBid}`),
 
     productsWishList: (userID) => db.load(`
