@@ -25,7 +25,7 @@ module.exports = {
     pageBySubCat: (cateID, subcateID, offset) => db.load(`select * from product_single where cateID = ${cateID} and subcateID = ${subcateID} limit ${config.paginate.limit} offset ${offset}`),
 
     countBidProduct: async (productID) => {
-        const rows = await db.load(`select count(*) as total from product_bid where productID = "${productID} and isCancel = 0 "`)
+        const rows = await db.load(`select count(*) as total from product_bid where productID = "${productID}" and isCancel = "0"`)
         return rows[0].total;
     },
 
@@ -85,16 +85,16 @@ module.exports = {
         });
     },
 
-    productsToEnd: () => db.load(`select * from product_single order by (endDate - beginDate) limit ${config.indexPage.limitProductsToEnd}`),
+    productsToEnd: () => db.load(`select * from product_single where endDate > NOW() order by (endDate - NOW()) limit ${config.indexPage.limitProductsToEnd}`),
     productsMostBid: () => db.load(`
         select *, count(ps.productID) as countBid
         from product_single ps join product_bid pb
-        on ps.productID = pb.productID
+        on ps.productID = pb.productID and pb.isCancel = 0 and ps.endDate > NOW()
         group by ps.productID
         order by countBid desc
         limit ${config.indexPage.limitProductsMostBid}`),
-    productsHighestPrice: () => db.load(`select * from product_single order by currentPrice desc limit ${config.indexPage.limitProductsHighestPrice}`),
-    productsNew: () => db.load(`select * from product_single order by beginDate desc limit ${config.indexPage.limitProductsNew}`),
+    productsHighestPrice: () => db.load(`select * from product_single where endDate > NOW() order by currentPrice desc limit ${config.indexPage.limitProductsHighestPrice}`),
+    productsNew: () => db.load(`select * from product_single where endDate > NOW() order by beginDate desc limit ${config.indexPage.limitProductsNew}`),
 
     addWishItem: entity => db.add('wish_list', entity),
     deleteWishItem: (productID, userID) => db.load(`delete from wish_list where userID = ${userID} and productID = "${productID}"`),
