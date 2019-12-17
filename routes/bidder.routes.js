@@ -31,6 +31,14 @@ router.get("/", async (req, res) => {
     const temp = moment(product.beginDate, 'YYYY-MM-DD HH:mm:ss');
     const minutes = moment().diff(temp, 'minutes');
     product.isNew = minutes <= config.product.minutesIsNew;
+
+    if(product.countBid > 0)
+    {
+      product.isBided = true;
+      product.winner = await productModel.getNameWinnerOfBidByProduct(product.productID);
+    }else{
+      product.isBided = false;
+    }
   }
 
   for (const product of productsMostBid) {
@@ -45,6 +53,15 @@ router.get("/", async (req, res) => {
     const temp = moment(product.beginDate, 'YYYY-MM-DD HH:mm:ss');
     const minutes = moment().diff(temp, 'minutes');
     product.isNew = minutes <= config.product.minutesIsNew;
+
+    
+    if(product.countBid > 0)
+    {
+      product.isBided = true;
+      product.winner = await productModel.getNameWinnerOfBidByProduct(product.productID);
+    }else{
+      product.isBided = false;
+    }
   }
 
 
@@ -61,6 +78,14 @@ router.get("/", async (req, res) => {
     const temp = moment(product.beginDate, 'YYYY-MM-DD HH:mm:ss');
     const minutes = moment().diff(temp, 'minutes');
     product.isNew = minutes <= config.product.minutesIsNew;
+
+    if(product.countBid > 0)
+    {
+      product.isBided = true;
+      product.winner = await productModel.getNameWinnerOfBidByProduct(product.productID);
+    }else{
+      product.isBided = false;
+    }
   }
 
   for (const product of productsNew) {
@@ -76,6 +101,14 @@ router.get("/", async (req, res) => {
     const temp = moment(product.beginDate, 'YYYY-MM-DD HH:mm:ss');
     const minutes = moment().diff(temp, 'minutes');
     product.isNew = minutes <= config.product.minutesIsNew;
+    
+    if(product.countBid > 0)
+    {
+      product.isBided = true;
+      product.winner = await productModel.getNameWinnerOfBidByProduct(product.productID);
+    }else{
+      product.isBided = false;
+    }
   }
 
   res.render("vwUser/index", {
@@ -120,8 +153,15 @@ router.get("/productList/:cateID/:subcateID", async (req, res) => {
     const temp = moment(product.beginDate, 'YYYY-MM-DD HH:mm:ss');
     const minutes = moment().diff(temp, 'minutes');
     product.isNew = minutes <= config.product.minutesIsNew;
-  }
 
+    if(product.countBid > 0)
+    {
+      product.isBided = true;
+      product.winner = await productModel.getNameWinnerOfBidByProduct(product.productID);
+    }else{
+      product.isBided = false;
+    }
+  }
 
   let nPages = Math.floor(total / limit);
   if (total % limit > 0) nPages++;
@@ -149,12 +189,13 @@ router.get("/productList/:cateID/:subcateID", async (req, res) => {
 });
 
 router.get("/product/:productID", async (req, res) => {
-  const [productSingle, listImgSrc, note, productBid, countBid] = await Promise.all([
+  const [productSingle, listImgSrc, note, productBid, countBid, seller] = await Promise.all([
     productModel.single(req.params.productID),
     productModel.singleImgSrcByProduct(req.params.productID),
     productModel.singleNoteByProduct(req.params.productID),
     productModel.singleBidByProduct(req.params.productID),
     productModel.countBidProduct(req.params.productID),
+    productModel.getSellerByProduct(req.params.productID),
   ]);
 
   const product = productSingle[0];
@@ -164,8 +205,42 @@ router.get("/product/:productID", async (req, res) => {
   for (const pb of productBid) {
     pb.bidderName = await userModel.getNameById(pb.bidderID);
   }
+
+  let winner;
+  if(productBid.length > 0)
+  {
+     winner = await productModel.getWinnerOfBidByProduct(product.productID);
+  }
+
+  const productListSame = await productModel.sameBySubCate(req.params.productID, product.cateID, product.subcateID);
+  for (const product of productListSame) {
+    [product.mainImgSrc, product.countBid, product.isExistWishItem] = await Promise.all([
+      productModel.singleMainImgSrcByProduct(product.productID),
+      productModel.countBidProduct(product.productID),
+      req.user ? await productModel.isExistWishItem(product.productID, req.user.userID) : false,
+    ]);
+  }
+
+  for (const product of productListSame) {
+    product.isHot = product.countBid >= config.product.countBidIsHot;
+    const temp = moment(product.beginDate, 'YYYY-MM-DD HH:mm:ss');
+    const minutes = moment().diff(temp, 'minutes');
+    product.isNew = minutes <= config.product.minutesIsNew;
+
+    if(product.countBid > 0)
+    {
+      product.isBided = true;
+      product.winner = await productModel.getNameWinnerOfBidByProduct(product.productID);
+    }else{
+      product.isBided = false;
+    }
+  }
+
   res.render("vwUser/product-details", {
     user: req.user,
+    seller,
+    winner,
+    isBided: productBid.length > 0,
     product,
     productBid,
     bidPrice: product.stepPrice + product.currentPrice,
@@ -179,6 +254,7 @@ router.get("/product/:productID", async (req, res) => {
     isExistWishItem: req.user ? await productModel.isExistWishItem(product.productID, req.user.userID) : false,
     isHot: countBid >= config.product.countBidIsHot,
     isNew: minutes <= config.product.minutesIsNew,
+    productListSame,
   });
   req.session.lastUrl = req.originalUrl;
 });
@@ -318,6 +394,21 @@ router.get("/productList/search/:category/:textSearch", async (req, res) => {
     ]);
   }
 
+  for (const product of productList) {
+    product.isHot = product.countBid >= config.product.countBidIsHot;
+    const temp = moment(product.beginDate, 'YYYY-MM-DD HH:mm:ss');
+    const minutes = moment().diff(temp, 'minutes');
+    product.isNew = minutes <= config.product.minutesIsNew;
+
+    if(product.countBid > 0)
+    {
+      product.isBided = true;
+      product.winner = await productModel.getNameWinnerOfBidByProduct(product.productID);
+    }else{
+      product.isBided = false;
+    }
+  }
+
   let nPages = Math.floor(total / limit);
   if (total % limit > 0) nPages++;
   const page_numbers = [];
@@ -351,13 +442,12 @@ router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
   ]);
 
   for (const product of productsHistoryBid) {
-    [product.mainImgSrc, product.countBid, product.isExistWishItem, product.isEndBid, product.resultBid] = await Promise.all([
+    [product.mainImgSrc, product.countBid, product.isExistWishItem, product.isEndBid, product.isWinner] = await Promise.all([
       productModel.singleMainImgSrcByProduct(product.productID),
       productModel.countBidProduct(product.productID),
       req.user ? await productModel.isExistWishItem(product.productID, req.user.userID) : false,
       product.isEndBid = moment(product.endDate).valueOf() < Date.now(),
-      product.resultBid = 0,
-      //product.resultBid = productModel.singleResultBid(product.productID, userID),
+      req.user ? ((await productModel.getWinnerOfBidByProduct(product.productID)).userID === req.user.userID): false,
     ]);
   }
 
@@ -366,6 +456,7 @@ router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
     const temp = moment(product.beginDate, 'YYYY-MM-DD HH:mm:ss');
     const minutes = moment().diff(temp, 'minutes');
     product.isNew = minutes <= config.product.minutesIsNew;
+    product.resultBid = (product.isEndBid && product.isWinner);
   }
 
   for (const product of productsWishList) {
@@ -381,6 +472,15 @@ router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
     const temp = moment(product.beginDate, 'YYYY-MM-DD HH:mm:ss');
     const minutes = moment().diff(temp, 'minutes');
     product.isNew = minutes <= config.product.minutesIsNew;
+
+    
+    if(product.countBid > 0)
+    {
+      product.isBided = true;
+      product.winner = await productModel.getNameWinnerOfBidByProduct(product.productID);
+    }else{
+      product.isBided = false;
+    }
   }
 
   for (const product of productsSelling) {
@@ -396,6 +496,15 @@ router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
     const temp = moment(product.beginDate, 'YYYY-MM-DD HH:mm:ss');
     const minutes = moment().diff(temp, 'minutes');
     product.isNew = minutes <= config.product.minutesIsNew;
+
+    
+    if(product.countBid > 0)
+    {
+      product.isBided = true;
+      product.winner = await productModel.getNameWinnerOfBidByProduct(product.productID);
+    }else{
+      product.isBided = false;
+    }
   }
 
   res.render("vwUser/account", {
@@ -418,7 +527,6 @@ router.post("/account/:userID/updateInfor", checkUser.checkAuthenticatedPost, as
   res.json("1");
 });
 
-//Link: /user/checkout/:productID
 router.get("/checkout/:productID", checkUser.checkAuthenticated, async (req, res) => {
   const rows = await productModel.single(req.params.productID);
   const product = rows[0];
@@ -472,7 +580,7 @@ router.post('/login',
     // console.log(req.user);
     res.locals.lcUser = req.user;
     res.redirect(req.session.lastUrl)
-  })
+})
 
 router.post("/signup", async (req, res) => {
   console.log(req.body.email);

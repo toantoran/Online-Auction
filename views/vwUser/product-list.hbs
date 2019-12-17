@@ -101,11 +101,10 @@
 							<select class="input">
 								<option value="0">Thời gian kết thúc</option>
 								<option value="1">Giá</option>
-								<option value="2">Số lượt ra giá</option>
 							</select>
 							<select class="input" id="sort-type">
-								<option value="0">Tăng dần</option>
-								<option value="1">Giảm dần</option>
+								<option value="0">Giảm dần</option>
+								<option value="1">Tăng dần</option>
 							</select>
 							<a href="#" class="main-btn" style="margin-top:2px"><i class="fas fa-sync-alt"></i></a>
 						</div>
@@ -156,6 +155,12 @@
 													href="/product/{{productID}}">{{format_name productName}}</a></h2>
 											<p class="product-text">Giá hiện tại: <span
 													class="product-price">{{format_money currentPrice}}</span></p>
+											<p class="product-text">Giá bán ngay: <span
+													class="product-price">{{format_money immePrice}}</span></p>
+											{{#if isBided}}
+											<p class="product-text">Đặt cao nhất: <span
+													class="product-price">{{winner}}</span></p>
+											{{/if}}
 											<div class="product-footer">
 												<small><span>{{countBid}}</span> lượt ra giá</small>
 												<small>Từ <span>{{format_day beginDate}}</span></small>

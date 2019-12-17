@@ -38,30 +38,30 @@
 //     return date;
 // }
 
-showCountDown($('.product.product-single'))
-function showCountDown(object) {
-    for (let i = 0; i < object.length; i++) {
-        let demoExpDate = object.find("#endDate")[i].value;
-        let h = object.find('.product-countdown li:nth-child(1) span')[i];
-        let m = object.find('.product-countdown li:nth-child(2) span')[i];
-        let s = object.find('.product-countdown li:nth-child(3) span')[i];
-        let x = setInterval(function () {
-            let now = new Date().getTime();
-            let distance = demoExpDate - now;
-            let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            hours += days * 24;
-            let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            h.innerHTML = hours + ' H';
-            m.innerHTML = minutes + ' M';
-            s.innerHTML = seconds + ' S';
-            if (distance < 0) {
-                clearInterval(x);
-                h.innerHTML = 0 + ' H';
-                m.innerHTML = 0 + ' M';
-                s.innerHTML = 0 + ' S';
-            }
-        }, 1000);
-    }
-}
+// showCountDown($('.product.product-single'))
+// function showCountDown(object) {
+//     for (let i = 0; i < object.length; i++) {
+//         let demoExpDate = object.find("#endDate")[i].value;
+//         let h = object.find('.product-countdown li:nth-child(1) span')[i];
+//         let m = object.find('.product-countdown li:nth-child(2) span')[i];
+//         let s = object.find('.product-countdown li:nth-child(3) span')[i];
+//         let x = setInterval(function () {
+//             let now = new Date().getTime();
+//             let distance = demoExpDate - now;
+//             let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+//             let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+//             hours += days * 24;
+//             let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+//             let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+//             h.innerHTML = hours + ' H';
+//             m.innerHTML = minutes + ' M';
+//             s.innerHTML = seconds + ' S';
+//             if (distance < 0) {
+//                 clearInterval(x);
+//                 h.innerHTML = 0 + ' H';
+//                 m.innerHTML = 0 + ' M';
+//                 s.innerHTML = 0 + ' S';
+//             }
+//         }, 1000);
+//     }
+// }

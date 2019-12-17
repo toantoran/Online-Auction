@@ -1,11 +1,13 @@
 const db = require('../utils/db');
 const config = require('../config/default.json');
+const userModel = require("../models/user.model");
 
 module.exports = {
     all: () => db.load('select * from product_single order by cateID'),
     allByCate: (cateID) => db.load(`select * from product_single where cateID = ${cateID} order by subcateID`),
     allBySubCate: (cateID, subcateID) => db.load(`select * from product_single where cateID = ${cateID} and subcateID = ${subcateID} order by subcateID`),
-
+    sameBySubCate: (productID, cateID, subcateID) => db.load(`select * from product_single where cateID = ${cateID} and subcateID = ${subcateID} 
+    and productID <> "${productID}" and endDate > NOW() limit 5`),
     countByText: async (textSearch) => {
         const rows = await db.load(`select count(*) as total from product_single`)
         return rows[0].total;
@@ -22,7 +24,7 @@ module.exports = {
         const rows = await db.load(`select count(*) as total from product_single where cateID = ${cateID} and subcateID = ${subcateID}`)
         return rows[0].total;
     },
-    pageBySubCat: (cateID, subcateID, offset) => db.load(`select * from product_single where cateID = ${cateID} and subcateID = ${subcateID} limit ${config.paginate.limit} offset ${offset}`),
+    pageBySubCat: (cateID, subcateID, offset) => db.load(`select * from product_single where cateID = ${cateID} and subcateID = ${subcateID} order by (endDate - NOW()) limit ${config.paginate.limit} offset ${offset}`),
 
     countBidProduct: async (productID) => {
         const rows = await db.load(`select count(*) as total from product_bid where productID = "${productID}" and isCancel = "0"`)
@@ -80,6 +82,9 @@ module.exports = {
         db.del('product_note', {
             productID: id
         });
+        db.del('product_ban_bid', {
+            productID: id
+        });
         db.del('product_single', {
             productID: id
         });
@@ -116,10 +121,9 @@ module.exports = {
     limit ${config.account.limitProductsHistoryBid}`),
 
     productsWishList: (userID) => db.load(`
-    select *, count(ps.productID) as count
+    select *
     from product_single ps join wish_list wl
     on ps.productID = wl.productID and wl.userID = ${userID}
-    group by ps.productID
     order by beginDate desc
     limit ${config.account.limitProductsWishList}`),
 
@@ -131,7 +135,40 @@ module.exports = {
     limit ${config.account.limitProductsSelling}`),
 
     getSellerNameByProduct: async (productID) => {
-        const rows = await db.load(`select * from users u join product_single ps on ps.productID= "${productID}" and ps.seller = u.userID`);
-        return rows[0].name;
+        const rows = await db.load(`select * from product_single where productID= "${productID}"`);
+        const result = await userModel.getNameById(rows[0].seller);
+        return result;
+    },
+
+    getSellerByProduct: async (productID) => {
+        const rows = await db.load(`select * from product_single where productID= "${productID}"`);
+        const result = await userModel.getUserById(rows[0].seller);
+        return result[0];
+    },
+
+    getNameWinnerOfBidByProduct: async (productID) => {
+        const rows = await db.load(`
+            select *
+            from product_bid
+            where isCancel = 0 and productID = "${productID}"
+            order by price desc
+            limit 1`);
+        if(rows.length < 1)
+            return false;
+        const result = await userModel.getNameById(rows[0].bidderID);
+        return result;
+    },
+
+    getWinnerOfBidByProduct: async (productID) => {
+        const rows = await db.load(`
+            select *
+            from product_bid
+            where isCancel = 0 and productID = "${productID}"
+            order by price desc
+            limit 1`);
+        if(rows.length < 1)
+            return false;
+        const result = await userModel.getUserById(rows[0].bidderID);
+        return result[0];
     }
 };

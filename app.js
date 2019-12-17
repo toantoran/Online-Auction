@@ -27,15 +27,13 @@ app.engine(
             section: hbs_sections(),
             format_money: val => numeral(val).format('0,0') + ' đ',
             format_day: val => moment(val).format("DD/MM/YYYY"),
-            format_day_time: val => moment(val).format("DD/MM/YYYY")+"  [" + moment(val).format("HH:mm:ss")+"]",
+            format_day_time: val => moment(val).format("DD/MM/YYYY") + "  [" + moment(val).format("HH:mm:ss") + "]",
             format_birthday: val => moment(val).format("MM/DD/YYYY"),
-            format_day_value: val=> moment(val).valueOf(),
-            format_time_bid: val=> moment(val).format("DD/MM/YYYY HH:mm"),
+            format_day_value: val => moment(val).valueOf(),
+            format_time_bid: val => moment(val).format("DD/MM/YYYY HH:mm"),
             format_name_bid: val => {
-                    var temp = "";
-                    temp += "...";
-                    return temp + val;
-                return val;
+                var temp = val.split(" ");
+                return '****' + temp[temp.length - 1];
             },
             format_name: val => {
                 if (val.length > 25) {
@@ -66,7 +64,6 @@ require("./config/passport-local")(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
-//Cái này để yên
 require("./middlewares/locals.mdw")(app);
 require("./middlewares/routes.mdw")(app);
 
