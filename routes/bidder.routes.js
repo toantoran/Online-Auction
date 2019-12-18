@@ -32,11 +32,10 @@ router.get("/", async (req, res) => {
     const minutes = moment().diff(temp, 'minutes');
     product.isNew = minutes <= config.product.minutesIsNew;
 
-    if(product.countBid > 0)
-    {
+    if (product.countBid > 0) {
       product.isBided = true;
       product.winner = await productModel.getNameWinnerOfBidByProduct(product.productID);
-    }else{
+    } else {
       product.isBided = false;
     }
   }
@@ -54,12 +53,11 @@ router.get("/", async (req, res) => {
     const minutes = moment().diff(temp, 'minutes');
     product.isNew = minutes <= config.product.minutesIsNew;
 
-    
-    if(product.countBid > 0)
-    {
+
+    if (product.countBid > 0) {
       product.isBided = true;
       product.winner = await productModel.getNameWinnerOfBidByProduct(product.productID);
-    }else{
+    } else {
       product.isBided = false;
     }
   }
@@ -79,11 +77,10 @@ router.get("/", async (req, res) => {
     const minutes = moment().diff(temp, 'minutes');
     product.isNew = minutes <= config.product.minutesIsNew;
 
-    if(product.countBid > 0)
-    {
+    if (product.countBid > 0) {
       product.isBided = true;
       product.winner = await productModel.getNameWinnerOfBidByProduct(product.productID);
-    }else{
+    } else {
       product.isBided = false;
     }
   }
@@ -101,12 +98,11 @@ router.get("/", async (req, res) => {
     const temp = moment(product.beginDate, 'YYYY-MM-DD HH:mm:ss');
     const minutes = moment().diff(temp, 'minutes');
     product.isNew = minutes <= config.product.minutesIsNew;
-    
-    if(product.countBid > 0)
-    {
+
+    if (product.countBid > 0) {
       product.isBided = true;
       product.winner = await productModel.getNameWinnerOfBidByProduct(product.productID);
-    }else{
+    } else {
       product.isBided = false;
     }
   }
@@ -135,10 +131,27 @@ router.get("/productList/:cateID/:subcateID", async (req, res) => {
   if (page < 1) page = 1;
   const offset = (page - 1) * limit;
 
-  const [total, productList] = await Promise.all([
-    productModel.countBySubCat(cateID, subcateID),
-    productModel.pageBySubCat(cateID, subcateID, offset)
-  ]);
+  const option = req.query.option || 0;
+  const order = req.query.order || 0;
+
+  const total = await productModel.countBySubCat(cateID, subcateID);
+  let productList;
+
+  if (option == 0) {
+    if (order == 0) {
+      productList = await productModel.pageBySubCatDefault(cateID, subcateID, offset);
+    } else {
+      productList = await productModel.pageBySubCat(cateID, subcateID, offset, "(endDate - NOW())", "desc");
+    }
+  } else {
+    if (order == 0) {
+      productList = await productModel.pageBySubCat(cateID, subcateID, offset, "currentPrice", "asc");
+    } else {
+      productList = await productModel.pageBySubCat(cateID, subcateID, offset, "currentPrice", "desc");
+    }
+  }
+
+
 
   for (const product of productList) {
     [product.mainImgSrc, product.countBid, product.isExistWishItem] = await Promise.all([
@@ -154,11 +167,10 @@ router.get("/productList/:cateID/:subcateID", async (req, res) => {
     const minutes = moment().diff(temp, 'minutes');
     product.isNew = minutes <= config.product.minutesIsNew;
 
-    if(product.countBid > 0)
-    {
+    if (product.countBid > 0) {
       product.isBided = true;
       product.winner = await productModel.getNameWinnerOfBidByProduct(product.productID);
-    }else{
+    } else {
       product.isBided = false;
     }
   }
@@ -182,10 +194,21 @@ router.get("/productList/:cateID/:subcateID", async (req, res) => {
     prev_value: +page - 1,
     next_value: +page + 1,
     isNotFirst: +page !== 1,
-    isNotLast: +page !== nPages
+    isNotLast: +page !== nPages,
+    option,
+    order
   });
 
   req.session.lastUrl = req.originalUrl;
+});
+
+router.post("/productList/:cateID/:subcateID", async (req, res) => {
+  const query = querystring.stringify({
+    option: req.body.option,
+    order: req.body.order
+  });
+
+  res.redirect(`/productList/${req.params.cateID}/${req.params.subcateID}/?${query}`);
 });
 
 router.get("/product/:productID", async (req, res) => {
@@ -207,9 +230,8 @@ router.get("/product/:productID", async (req, res) => {
   }
 
   let winner;
-  if(productBid.length > 0)
-  {
-     winner = await productModel.getWinnerOfBidByProduct(product.productID);
+  if (productBid.length > 0) {
+    winner = await productModel.getWinnerOfBidByProduct(product.productID);
   }
 
   const productListSame = await productModel.sameBySubCate(req.params.productID, product.cateID, product.subcateID);
@@ -227,11 +249,10 @@ router.get("/product/:productID", async (req, res) => {
     const minutes = moment().diff(temp, 'minutes');
     product.isNew = minutes <= config.product.minutesIsNew;
 
-    if(product.countBid > 0)
-    {
+    if (product.countBid > 0) {
       product.isBided = true;
       product.winner = await productModel.getNameWinnerOfBidByProduct(product.productID);
-    }else{
+    } else {
       product.isBided = false;
     }
   }
@@ -319,14 +340,14 @@ router.post("/product/:productID/refuseBid", async (req, res) => {
     });
 
     let currentPrice = await productModel.getProductCurrentPrice(product.productID);
-    if (currentPrice === 0){
+    if (currentPrice === 0) {
       currentPrice = product.beginPrice;
     }
     await productModel.updateProductCurrentPrice({
       productID: product.productID,
       currentPrice
     })
-   
+
     res.json("1");
   } else {
     res.json("0");
@@ -367,6 +388,7 @@ router.post("/productList/search/", async (req, res) => {
 router.get("/productList/search/:category/:textSearch", async (req, res) => {
   const category = req.params.category;
   const textSearch = req.params.textSearch;
+
   let productList;
   let total;
   const limit = config.paginate.limit;
@@ -374,16 +396,39 @@ router.get("/productList/search/:category/:textSearch", async (req, res) => {
   if (page < 1) page = 1;
   const offset = (page - 1) * limit;
 
+  const option = req.query.option || 0;
+  const order = req.query.order || 0;
+
   if (category == 0) {
-    [total, productList] = await Promise.all([
-      productModel.countByText(textSearch),
-      productModel.pageByText(textSearch, offset)
-    ]);
+    total = await productModel.countByText(textSearch);
+    if (option == 0) {
+      if (order == 0) {
+        productList = await productModel.pageByTextDefault(textSearch, offset);
+      } else {
+        productList = await productModel.pageByText(textSearch, offset, "(endDate - NOW())", "desc");
+      }
+    } else {
+      if (order == 0) {
+        productList = await productModel.pageByText(textSearch, offset, "currentPrice", "asc");
+      } else {
+        productList = await productModel.pageByText(textSearch, offset, "currentPrice", "desc");
+      }
+    }
   } else {
-    [total, productList] = await Promise.all([
-      productModel.countByCateAndText(textSearch, category),
-      productModel.pageByCateAndText(textSearch, category, offset)
-    ]);
+    total = await productModel.countByCateAndText(textSearch, category);
+    if (option == 0) {
+      if (order == 0) {
+        productList = await productModel.pageByCateAndTextDefault(textSearch, category, offset);
+      } else {
+        productList = await productModel.pageByCateAndText(textSearch, category, offset, "(endDate - NOW())", "desc");
+      }
+    } else {
+      if (order == 0) {
+        productList = await productModel.pageByCateAndText(textSearch, category, offset, "currentPrice", "asc");
+      } else {
+        productList = await productModel.pageByCateAndText(textSearch, category, offset, "currentPrice", "desc");
+      }
+    }
   }
 
   for (const product of productList) {
@@ -400,11 +445,10 @@ router.get("/productList/search/:category/:textSearch", async (req, res) => {
     const minutes = moment().diff(temp, 'minutes');
     product.isNew = minutes <= config.product.minutesIsNew;
 
-    if(product.countBid > 0)
-    {
+    if (product.countBid > 0) {
       product.isBided = true;
       product.winner = await productModel.getNameWinnerOfBidByProduct(product.productID);
-    }else{
+    } else {
       product.isBided = false;
     }
   }
@@ -429,8 +473,19 @@ router.get("/productList/search/:category/:textSearch", async (req, res) => {
     prev_value: +page - 1,
     next_value: +page + 1,
     isNotFirst: +page !== 1,
-    isNotLast: +page !== nPages
+    isNotLast: +page !== nPages,
+    option,
+    order
   });
+});
+
+router.post("/productList/search/:category/:textSearch", async (req, res) => {
+  const query = querystring.stringify({
+    option: req.body.option,
+    order: req.body.order
+  });
+
+  res.redirect(`/productList/search/${req.params.category}/${req.textSearch}/?${query}`);
 });
 
 router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
@@ -447,7 +502,7 @@ router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
       productModel.countBidProduct(product.productID),
       req.user ? await productModel.isExistWishItem(product.productID, req.user.userID) : false,
       product.isEndBid = moment(product.endDate).valueOf() < Date.now(),
-      req.user ? ((await productModel.getWinnerOfBidByProduct(product.productID)).userID === req.user.userID): false,
+      req.user ? ((await productModel.getWinnerOfBidByProduct(product.productID)).userID === req.user.userID) : false,
     ]);
   }
 
@@ -473,12 +528,11 @@ router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
     const minutes = moment().diff(temp, 'minutes');
     product.isNew = minutes <= config.product.minutesIsNew;
 
-    
-    if(product.countBid > 0)
-    {
+
+    if (product.countBid > 0) {
       product.isBided = true;
       product.winner = await productModel.getNameWinnerOfBidByProduct(product.productID);
-    }else{
+    } else {
       product.isBided = false;
     }
   }
@@ -497,12 +551,11 @@ router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
     const minutes = moment().diff(temp, 'minutes');
     product.isNew = minutes <= config.product.minutesIsNew;
 
-    
-    if(product.countBid > 0)
-    {
+
+    if (product.countBid > 0) {
       product.isBided = true;
       product.winner = await productModel.getNameWinnerOfBidByProduct(product.productID);
-    }else{
+    } else {
       product.isBided = false;
     }
   }
@@ -580,7 +633,7 @@ router.post('/login',
     // console.log(req.user);
     res.locals.lcUser = req.user;
     res.redirect(req.session.lastUrl)
-})
+  })
 
 router.post("/signup", async (req, res) => {
   console.log(req.body.email);

@@ -97,16 +97,19 @@
 				<div class="store-filter clearfix">
 					<div class="pull-left">
 						<div class="sort-filter">
-							<span class="text-uppercase">Sắp xếp theo:</span>
-							<select class="input">
-								<option value="0">Thời gian kết thúc</option>
-								<option value="1">Giá</option>
-							</select>
-							<select class="input" id="sort-type">
-								<option value="0">Giảm dần</option>
-								<option value="1">Tăng dần</option>
-							</select>
-							<a href="#" class="main-btn" style="margin-top:2px"><i class="fas fa-sync-alt"></i></a>
+							<form method="POST">
+								<span class="text-uppercase">Sắp xếp theo:</span>
+								<select name="option" class="input" value="{{option}}">
+									<option value="0">Thời gian kết thúc</option>
+									<option value="1">Giá</option>
+								</select>
+								<select name="order" class="input" id="sort-type" value="{{order}}">
+									<option value="0">Tăng dần</option>
+									<option value="1">Giảm dần</option>
+								</select>
+								<button type="submit" class="main-btn" style="margin-top:2px"><i
+										class="fas fa-sync-alt"></i></button>
+							</form>
 						</div>
 					</div>
 				</div>

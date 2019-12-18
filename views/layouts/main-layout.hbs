@@ -45,7 +45,7 @@
                         <form method="POST">
                             <input class="input search-input" name="textSearch" type="text"
                                 placeholder="Tìm sản phẩm bạn muốn" value={{textSearch}}>
-                            <select name="category" class="input search-categories">
+                            <select name="category" class="input search-categories" value={{category}}>
                                 <option value="0">Tất cả danh mục</option>
                                 {{#each lcCateList}}
                                 <option value="{{this.cateID}}">{{this.cateName}}</option>

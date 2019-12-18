@@ -257,6 +257,7 @@
     }
   }
 
+  $("select").each(function(){ $(this).find('option[value="'+$(this).attr("value")+'"]').prop('selected', true); });
 
   //Other
   tinymce.init({

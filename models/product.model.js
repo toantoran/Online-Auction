@@ -12,19 +12,28 @@ module.exports = {
         const rows = await db.load(`select count(*) as total from product_single`)
         return rows[0].total;
     },
-    pageByText: (textSearch, offset) => db.load(`select * from product_single limit ${config.paginate.limit} offset ${offset}`),
+    pageByTextDefault: (textSearch, offset) => db.load(`select * from product_single 
+    order by (endDate - NOW()) limit ${config.paginate.limit} offset ${offset}`),
+    pageByText: (textSearch, offset, option, order) => db.load(`select * from product_single 
+    order by ${option} ${order} limit ${config.paginate.limit} offset ${offset}`),
 
     countByCateAndText: async (textSearch, cateID) => {
         const rows = await db.load(`select count(*) as total from product_single where cateID = ${cateID}`)
         return rows[0].total;
     },
-    pageByCateAndText: (textSearch, cateID, offset) => db.load(`select * from product_single where cateID = ${cateID} limit ${config.paginate.limit} offset ${offset}`),
+    pageByCateAndTextDefault: (textSearch, cateID, offset) => db.load(`select * from product_single where cateID = ${cateID} 
+    order by (endDate - NOW()) limit ${config.paginate.limit} offset ${offset}`),
+    pageByCateAndText: (textSearch, cateID, offset, option, order) => db.load(`select * from product_single where cateID = ${cateID} 
+    order by ${option} ${order} limit ${config.paginate.limit} offset ${offset}`),
 
     countBySubCat: async (cateID, subcateID) => {
         const rows = await db.load(`select count(*) as total from product_single where cateID = ${cateID} and subcateID = ${subcateID}`)
         return rows[0].total;
     },
-    pageBySubCat: (cateID, subcateID, offset) => db.load(`select * from product_single where cateID = ${cateID} and subcateID = ${subcateID} order by (endDate - NOW()) limit ${config.paginate.limit} offset ${offset}`),
+    pageBySubCatDefault: (cateID, subcateID, offset) => db.load(`select * from product_single where cateID = ${cateID} and subcateID = ${subcateID} 
+    order by (endDate - NOW()) limit ${config.paginate.limit} offset ${offset}`),
+    pageBySubCat: (cateID, subcateID, offset, option, order) => db.load(`select * from product_single where cateID = ${cateID} and subcateID = ${subcateID} 
+    order by ${option} ${order} limit ${config.paginate.limit} offset ${offset}`),
 
     countBidProduct: async (productID) => {
         const rows = await db.load(`select count(*) as total from product_bid where productID = "${productID}" and isCancel = "0"`)
