@@ -308,15 +308,33 @@ router.post("/product/:productID/bid", checkUser.checkAuthenticatedPost, async (
           message: "Ra giá thành công!"
         });
 
+        const price = req.body.bidPrice;
+        let currentPrice = product.currentPrice;
+        const priceHold = await productModel.getPriceOfHolderByProduct(product.productID);
+        let isHolder;
+        if (price <= priceHold) {
+          currentPrice = price;
+          isHolder = 0;
+        } else {
+          if (priceHold !== 0) {
+            currentPrice = priceHold + product.stepPrice;
+          }
+          isHolder = 1;
+        }
+
         const entity = {
           productID: req.params.productID,
           bidderID: req.user.userID,
-          price: req.body.bidPrice,
+          price,
+          priceHold: currentPrice,
           bidTime: new Date(),
+          isHolder
         }
-
+        if(isHolder === 1)
+        {
+          await productModel.setFalseIsHolderProductBid(product.productID);
+        }
         await productModel.addProductBid(entity);
-        const currentPrice = await productModel.getProductCurrentPrice(product.productID);
         await productModel.updateProductCurrentPrice({
           productID: product.productID,
           currentPrice
@@ -347,6 +365,8 @@ router.post("/product/:productID/refuseBid", async (req, res) => {
       productID: product.productID,
       currentPrice
     })
+
+    await productModel.updateProductBidIsHolder(product.productID);
 
     res.json("1");
   } else {

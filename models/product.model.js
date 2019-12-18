@@ -55,7 +55,20 @@ module.exports = {
     addProductNote: entity => db.add('product_note', entity),
 
     addBanBid: entity => db.add('product_ban_bid', entity),
-    cancelProductBid: (productID, bidderID) => db.load(`update product_bid set isCancel = 1 where productID = "${productID}" and bidderID = ${bidderID}`),
+    cancelProductBid: (productID, bidderID) => db.load(`update product_bid set isCancel = 1, isHolder = 0 where productID = "${productID}" and bidderID = ${bidderID}`),
+    updateProductBidIsHolder: async (productID) =>{
+        const rows = await db.load(`
+            select *
+            from product_bid
+            where isCancel = 0 and productID = "${productID}"
+            order by price desc, bidTime asc
+            limit 1`);
+        if (rows.length < 1)
+            return false;
+        const bidID = rows[0].bidID;
+        return db.load(`update product_bid set isHolder = 1 where bidID = ${bidID}`);
+    },
+    setFalseIsHolderProductBid: (productID)=> db.load(`update product_bid set isHolder = 0 where productID = "${productID}"`),
     checkBanBid: async (productID, bidderID) => {
         const rows = await db.load(`select * from product_ban_bid where productID = "${productID}" and bidderID = ${bidderID}`)
         return (rows.length > 0);
@@ -65,7 +78,7 @@ module.exports = {
         const rows = await db.load(`select * from product_bid where productID = "${productID}" and isCancel = 0`);
         let currentPrice = 0;
         for (const p of rows) {
-            currentPrice = currentPrice > p.price ? currentPrice : p.price;
+            currentPrice = currentPrice > p.priceHold ? currentPrice : p.priceHold;
         }
         return currentPrice;
     },
@@ -159,10 +172,8 @@ module.exports = {
         const rows = await db.load(`
             select *
             from product_bid
-            where isCancel = 0 and productID = "${productID}"
-            order by price desc
-            limit 1`);
-        if(rows.length < 1)
+            where isCancel = 0 and productID = "${productID}" and isHolder = 1`);
+        if (rows.length < 1)
             return false;
         const result = await userModel.getNameById(rows[0].bidderID);
         return result;
@@ -172,12 +183,20 @@ module.exports = {
         const rows = await db.load(`
             select *
             from product_bid
-            where isCancel = 0 and productID = "${productID}"
-            order by price desc
-            limit 1`);
-        if(rows.length < 1)
+            where isCancel = 0 and productID = "${productID}" and isHolder = 1`);
+        if (rows.length < 1)
             return false;
         const result = await userModel.getUserById(rows[0].bidderID);
         return result[0];
-    }
+    },
+
+    getPriceOfHolderByProduct: async (productID) => {
+        const rows = await db.load(`
+            select *
+            from product_bid
+            where isCancel = 0 and productID = "${productID}" and isHolder = 1`);
+        if (rows.length < 1)
+            return 0;
+        return rows[0].price;
+    },
 };

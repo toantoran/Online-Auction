@@ -347,6 +347,60 @@
                     <!-- /row -->
                 </div>
 
+                <div id="win-list">
+                    <!-- row -->
+                    <div class="row">
+                        <!-- MAIN -->
+                        <div class="col-md-12">
+                            <div class="section-title">
+                                <h3 class="title">Danh sách sản phẩm đã thắng</h3>
+                            </div>
+                            <!-- row -->
+                            <div class="row">
+                                {{#if emptyProductsSelling}}
+                                <p>Không có sản phẩm</p>
+                                {{else}}
+                                <div class="col-md-12 product-container" id="sold-product">
+                                    {{#each this.productsSelling}}
+                                    <div class="col-md-3 col-sm-4 col-xs-6">
+                                        <div class="product product-single">
+                                            <div class="product-thumb">
+                                                <ul class="product-countdown">
+                                                    <li><span class="cd-h">0 H</span></li>
+                                                    <li><span class="cd-m">0 M</span></li>
+                                                    <li><span class="cd-s">0 S</span></li>
+                                                </ul>
+                                                <button class="main-btn check-out"><i
+                                                        class="fas fa-money-check-alt"></i> Thanh toán</button>
+                                                <button productID="{{productID}}" userID="{{user.userID}}" type="button"
+                                                    onsubmit="return false;" name="btnWish"
+                                                    class="watch-list btn-wish {{#if isExistWishItem}}focus{{/if}}"><i
+                                                        class="fa fa-heart"></i></button>
+                                                <img src="/img/product/{{productID}}/{{mainImgSrc}}" alt="">
+                                            </div>
+                                            <div class="product-body">
+                                                <h2 class="product-name"><a
+                                                        href="/checkout/{{productID}}">{{format_name productName}}</a>
+                                                </h2>
+                                                <p class="product-text">Giá hiện tại: <span
+                                                        class="product-price">{{format_money currentPrice}}</span></p>
+                                                <div class="product-footer">
+                                                </div>
+                                            </div>
+                                            <input type="hidden" id="endDate" value="{{format_day_value endDate}}">
+                                        </div>
+                                    </div>
+                                    {{/each}}
+                                </div>
+                                {{/if}}
+                            </div>
+                            <!-- /row -->
+                        </div>
+                        <!-- /MAIN -->
+                    </div>
+                    <!-- /row -->
+                </div>
+
                 <div id="seller-regis">
                     <!-- row -->
                     <div class="row">
