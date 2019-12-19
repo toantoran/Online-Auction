@@ -133,7 +133,7 @@ function setEventRefuseBtn(object) {
                                 })
                             } else {
                                 new SnackBar({
-                                    message: "Bạn không phải chủ sở hữu sản phẩm này!",
+                                    message: "Bạn không có thẩm quyền từ chối!",
                                     status: "warning",
                                     fixed: true,
                                     timeout: 2000

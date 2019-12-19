@@ -309,17 +309,32 @@ router.post("/product/:productID/bid", checkUser.checkAuthenticatedPost, async (
         });
 
         const price = req.body.bidPrice;
+        const immePrice = product.immePrice || 0;
         let currentPrice = product.currentPrice;
         const priceHold = await productModel.getPriceOfHolderByProduct(product.productID);
         let isHolder;
-        if (price <= priceHold) {
-          currentPrice = price;
-          isHolder = 0;
-        } else {
-          if (priceHold !== 0) {
-            currentPrice = priceHold + product.stepPrice;
-          }
+        if (+price === immePrice) {
+          currentPrice = immePrice;
           isHolder = 1;
+          product.endDate = new Date();
+        } else {
+          if (price <= priceHold) {
+            currentPrice = price;
+            isHolder = 0;
+          } else {
+            if (priceHold !== 0) {
+              currentPrice = priceHold + product.stepPrice;
+            }
+            isHolder = 1;
+          }
+          if (product.autoExtend) {
+            const temp = moment(product.endDate, 'YYYY-MM-DD HH:mm:ss');
+            let minutes = moment().diff(temp, 'minutes');
+            if (minutes >= -5) {
+              product.endDate = moment(product.endDate).add(10, 'minutes');
+              product.endDate = moment(product.endDate).format('YYYY-MM-DD HH:mm:ss');
+            }
+          }
         }
 
         const entity = {
@@ -330,14 +345,14 @@ router.post("/product/:productID/bid", checkUser.checkAuthenticatedPost, async (
           bidTime: new Date(),
           isHolder
         }
-        if(isHolder === 1)
-        {
+        if (isHolder === 1) {
           await productModel.setFalseIsHolderProductBid(product.productID);
         }
         await productModel.addProductBid(entity);
         await productModel.updateProductCurrentPrice({
           productID: product.productID,
-          currentPrice
+          currentPrice,
+          endDate: product.endDate,
         })
       }
     }
@@ -350,7 +365,8 @@ router.post("/product/:productID/refuseBid", async (req, res) => {
   const rows = await productModel.single(req.body.productID);
   const product = rows[0];
   const isSeller = req.user ? product.seller === req.user.userID : false;
-  if (isSeller) {
+  product.isEndBid = moment(product.endDate).valueOf() < Date.now();
+  if (isSeller && (!product.isEndBid)) {
     await productModel.cancelProductBid(req.body.productID, req.body.bidderID);
     await productModel.addBanBid({
       productID: req.body.productID,
@@ -510,10 +526,11 @@ router.post("/productList/search/:category/:textSearch", async (req, res) => {
 
 router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
   const user = req.user;
-  const [productsHistoryBid, productsWishList, productsSelling] = await Promise.all([
+  const [productsHistoryBid, productsWishList, productsSelling, productsWinList] = await Promise.all([
     productModel.productsHistoryBid(user.userID),
     productModel.productsWishList(user.userID),
     productModel.productsSelling(user.userID),
+    productModel.productsWinList(user.userID),
   ]);
 
   for (const product of productsHistoryBid) {
@@ -580,15 +597,25 @@ router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
     }
   }
 
+  for (const product of productsWinList) {
+    [product.mainImgSrc, product.countBid, product.isExistWishItem] = await Promise.all([
+      productModel.singleMainImgSrcByProduct(product.productID),
+      productModel.countBidProduct(product.productID),
+      req.user ? await productModel.isExistWishItem(product.productID, req.user.userID) : false,
+    ]);
+  }
+
   res.render("vwUser/account", {
     user,
     title: "Quản lí tài khoản",
     productsHistoryBid,
     productsWishList,
     productsSelling,
+    productsWinList,
     emptyProductsHistoryBid: productsHistoryBid.length === 0,
     emptyProductsWishList: productsWishList.length === 0,
     emptyProductsSelling: productsSelling.length === 0,
+    emptyProductsWinList: productsWinList.length ===0,
   });
 
   req.session.lastUrl = req.originalUrl;

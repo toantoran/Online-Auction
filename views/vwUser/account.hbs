@@ -357,11 +357,11 @@
                             </div>
                             <!-- row -->
                             <div class="row">
-                                {{#if emptyProductsSelling}}
+                                {{#if emptyProductsWinList}}
                                 <p>Không có sản phẩm</p>
                                 {{else}}
                                 <div class="col-md-12 product-container" id="sold-product">
-                                    {{#each this.productsSelling}}
+                                    {{#each this.productsWinList}}
                                     <div class="col-md-3 col-sm-4 col-xs-6">
                                         <div class="product product-single">
                                             <div class="product-thumb">
@@ -382,9 +382,10 @@
                                                 <h2 class="product-name"><a
                                                         href="/checkout/{{productID}}">{{format_name productName}}</a>
                                                 </h2>
-                                                <p class="product-text">Giá hiện tại: <span
+                                                <p class="product-text">Giá sản phẩm: <span
                                                         class="product-price">{{format_money currentPrice}}</span></p>
                                                 <div class="product-footer">
+                                                    <small>Thời điểm:  <span>{{format_time_bid endDate}}</span></small>
                                                 </div>
                                             </div>
                                             <input type="hidden" id="endDate" value="{{format_day_value endDate}}">

@@ -156,6 +156,13 @@ module.exports = {
     order by beginDate desc
     limit ${config.account.limitProductsSelling}`),
 
+    productsWinList: (userID) => db.load(`
+    select *
+    from product_single ps join product_bid pb
+    where ps.productID = pb.productID and ps.endDate < NOW() and pb.bidderID = ${userID} and pb.isHolder = 1 and pb.isCancel = 0
+    order by ps.endDate desc
+    limit ${config.account.limitProductsWinList}`),
+
     getSellerNameByProduct: async (productID) => {
         const rows = await db.load(`select * from product_single where productID= "${productID}"`);
         const result = await userModel.getNameById(rows[0].seller);

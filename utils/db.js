@@ -5,6 +5,14 @@ const config = require('../config/default.json');
 const pool = mysql.createPool(config.mysql);
 const mysql_query = util.promisify(pool.query).bind(pool);
 
+pool.on('connection', conn => {
+    conn.query("SET time_zone='+07:00';", error => {
+        if(error){
+            throw error
+        }
+    })
+})
+
 module.exports = {
   load: query => mysql_query(query),
   add: (tableName, entity) =>
