@@ -206,4 +206,6 @@ module.exports = {
             return 0;
         return rows[0].price;
     },
+
+    productsEndBid: () => db.load('select * from product_single where endDate < NOW()'),
 };

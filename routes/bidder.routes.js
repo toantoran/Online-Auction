@@ -7,6 +7,7 @@ const config = require("../config/default.json");
 const querystring = require('querystring');
 const checkUser = require("../middlewares/user.mdw");
 const moment = require('moment');
+const mailer = require("../middlewares/mail.mdw");
 
 const router = express.Router();
 
@@ -308,6 +309,7 @@ router.post("/product/:productID/bid", checkUser.checkAuthenticatedPost, async (
           message: "Ra giá thành công!"
         });
 
+        const oldHolder = await productModel.getWinnerOfBidByProduct(product.productID);
         const price = req.body.bidPrice;
         const immePrice = product.immePrice || 0;
         let currentPrice = product.currentPrice;
@@ -354,6 +356,17 @@ router.post("/product/:productID/bid", checkUser.checkAuthenticatedPost, async (
           currentPrice,
           endDate: product.endDate,
         })
+        
+        //Gui mail
+        const seller = await userModel.getUserById(product.seller);
+        const sellerEMail = seller[0].email;
+
+        const bidderEmail = req.user.email;
+
+        const oldHolderEmail = (oldHolder == false)? false: oldHolder.email;
+        console.log(oldHolderEmail);
+
+        await mailer.sendMailConfirmBid(sellerEMail, bidderEmail, oldHolderEmail, product);
       }
     }
   }
@@ -384,6 +397,12 @@ router.post("/product/:productID/refuseBid", async (req, res) => {
 
     await productModel.updateProductBidIsHolder(product.productID);
 
+
+    //Gui mail cho nguoi dau gia
+    const bidder = await userModel.getUserById(req.body.bidderID);
+    const bidderEmail = bidder[0].email;
+    await mailer.sendMailRefuseBidToSBidder(bidderEmail, product);
+    
     res.json("1");
   } else {
     res.json("0");

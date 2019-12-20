@@ -10,6 +10,9 @@ const passport = require("passport");
 const flash = require("express-flash");
 const session = require("express-session");
 const morgan = require("morgan");
+const job = require('./cron-job/checkEndBid');
+job.start();
+
 // app.use(morgan("dev"));
 app.use(express.json());
 app.use(
