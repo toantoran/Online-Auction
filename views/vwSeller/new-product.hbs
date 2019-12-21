@@ -1,92 +1,132 @@
-<body>
-	<!-- section -->
-	<div class="section">
-		<!-- container -->
-		<div class="container">
-			<form method="POST" enctype="multipart/form-data">
-				<!-- row -->
-				<div class="row">
-					<div class="col-md-6">
-						<div class="section-title">
-							<h3 class="title">Đăng sản phẩm</h3>
-						</div>
-						<input type="hidden" name="id" value="{{this.id}}">
-						<div class="form-group">
-							<label for="productName">Tên sản phẩm</label>
-							<input class="input" type="text" name="productName"
-								placeholder="Sản phẩm tuyệt vời siêu cấp vũ trụ" required id="productName">
-						</div>
-						<div class="form-group">
-							<label for="pSubcateID">Danh mục sản phẩm</label>
-							<select name="cate" class="input cate-input" required>
-								<option value="0" class="cate-input-header" disabled selected>-- Chọn danh mục sản phẩm
-								</option>
-								{{#each lcCateList}}
-								<option class="cate-input-header" disabled>{{this.cateName}}</option>
-								{{#each this.subCate}}
-								<option cateID="{{this.cateID}}" subcateID="{{this.subcateID}}">
-									&nbsp;&nbsp;&nbsp;{{this.subcateName}}</option>
-								{{/each}}
-								{{/each}}
-							</select>
-						</div>
-						<div class="form-group">
-							<label for="brand">Thương hiệu</label>
-							<input class="input" type="text" name="brand" id="brand"
-								placeholder="Nike, Adidas, Uniqlo,..." required>
-						</div>
-						<div class="form-group">
-							<label for="pFrom">Xuất xứ</label>
-							<input class="input" type="text" name="pFrom" id="pFrom"
-								placeholder="Việt Nam, Trung Quốc,..." required>
-						</div>
-						<div class="form-group">
-							<label for="beginPrice">Giá khởi điểm</label>
-							<input class="input" type="number" name="beginPrice" id="beginPrice"
-								placeholder="Ví dụ: {{format_money 1000000}}" required>
-						</div>
-						<div class="form-group">
-							<label for="stepPrice">Bước giá</label>
-							<input class="input" type="number" name="stepPrice" id="stepPrice"
-								placeholder="Ví dụ: {{format_money 100000}}" required>
-						</div>
-						<div class="form-group">
-							<label for="immePrice">Giá mua ngay</label>
-							<input class="input" type="number" name="immePrice" id="immePrice"
-								placeholder="Ví dụ: {{format_money 2000000}}">
-						</div>
-						<div class="pull-right">
-							<div class="form-group">
-								<label for="autoExtend">Tự động gia hạn</label>
-								<input type="checkbox" name="autoExtend" id="autoExtend" class="input js-switch" />
-							</div>
-						</div>
+<!-- section -->
+<div class="section">
+	<!-- container -->
+	<div class="container">
+		<form method="POST" enctype="multipart/form-data" id="frmNew" onsubmit="return validateNewProduct(event)">
+			<!-- row -->
+			<div class="row">
+				<div class="col-md-6">
+					<div class="section-title">
+						<h3 class="title">Thông tin sản phẩm</h3>
 					</div>
-					<div class="col-md-6">
-						<div class="section-title">
-							<h3 class="title">Mô tả sản phẩm</h3>
-						</div>
-						<div class="form-group">
-							<textarea class="input" id="editor" name="description"></textarea>
-						</div>
-						<div class="section-title">
-							<h3 class="title">Hình ảnh sản phẩm</h3>
-						</div>
-						<div class="form-group">
-							<input type="file" name="files[]" id="filer_input" multiple="multiple" required>
-						</div>
+					<input type="hidden" name="id" value="{{this.id}}">
+					<div class="form-group">
+						<label for="productName">Tên sản phẩm</label>
+						<p class="err-validate" id="err-name"></p>
+						<input class="input" type="text" name="productName"
+							placeholder="Sản phẩm tuyệt vời siêu cấp vũ trụ" id="productName" />
+					</div>
+					<div class="form-group">
+						<label for="productCate">Danh mục sản phẩm</label>
+						<p class="err-validate" id="err-cate"></p>
+						<select name="productCate" class="input cate-input" id="productCate">
+							<option class="cate-input-header" disabled selected>-- Chọn danh mục sản phẩm
+							</option>
+							{{#each lcCateList}}
+							<option class="cate-input-header" disabled>{{this.cateName}}</option>
+							{{#each this.subCate}}
+							<option cateID="{{this.cateID}}" subcateID="{{this.subcateID}}">
+								&nbsp;&nbsp;&nbsp;{{this.subcateName}}</option>
+							{{/each}}
+							{{/each}}
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="brand">Thương hiệu</label>
+						<input class="input" type="text" name="brand" id="brand"
+							placeholder="Nike, Adidas, Uniqlo,..." />
+					</div>
+					<div class="form-group">
+						<label for="pFrom">Xuất xứ</label>
+						<input class="input" type="text" name="pFrom" id="pFrom"
+							placeholder="Việt Nam, Trung Quốc,..." />
+					</div>
+					<div class="form-group">
+						<label for="beginPrice">Giá khởi điểm</label>
+						<p class="err-validate" id="err-begin"></p>
+						<input class="input price" type="text" name="beginPrice" id="beginPrice"
+							placeholder="Ví dụ: {{format_money 1000000}}" />
+					</div>
+					<div class="form-group">
+						<label for="stepPrice">Bước giá</label>
+						<p class="err-validate" id="err-step"></p>
+						<input class="input price" type="text" name="stepPrice" id="stepPrice"
+							placeholder="Ví dụ: {{format_money 100000}}" />
+					</div>
+					<div class="form-group">
+						<label for="immePrice">Giá mua ngay</label>
+						<p class="err-validate" id="err-imme"></p>
+						<input class="input price" type="text" name="immePrice" id="immePrice"
+							placeholder="Ví dụ: {{format_money 2000000}}" />
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-md-12" style="text-align: center;">
-						<div class="form-group">
-							<button class="main-btn btn-new">Tạo phiên đấu giá</button>
-						</div>
+				<div class="col-md-6">
+					<div class="section-title">
+						<h3 class="title">Mô tả sản phẩm</h3>
+					</div>
+					<div class="form-group">
+						<textarea class="input" id="desc-editor" name="description"></textarea>
 					</div>
 				</div>
-			</form>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="section-title">
+						<h3 class="title">Hình ảnh sản phẩm</h3>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label for="file-input-main">Ảnh chính</label>
+						<p class="err-validate" id="err-mainImg"></p>
+						<input type="file" name="files[]" id="file-input-main" />
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label for="file-input-thumb">Các ảnh phụ</label>
+						<p class="err-validate" id="err-thumb"></p>
+						<input type="file" name="files[]" id="file-input-thumb" multiple />
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12" style="text-align: center;">
+					<div class="form-group">
+						<label for="autoExtend">Tự động gia hạn</label>
+						<input type="checkbox" name="autoExtend" id="autoExtend" class="input js-switch" />
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12" style="text-align: center; display:none">
+					<button class="main-btn" type="submit" id="btn-submit">Tạo phiên đấu giá</button>
+				</div>
+			</div>
+		</form>
+		<div class="row">
+			<div class="col-md-12" style="text-align: center;">
+				<button class="main-btn btn-new">Tạo phiên đấu giá</button>
+			</div>
 		</div>
 	</div>
-</body>
+</div>
 
-</html>
+
+{{#section 'css'}}
+<link rel="stylesheet" href="/css/jquery.filer-dragdropbox-theme.css">
+<link rel="stylesheet" href="/css/jquery.filer.css">
+<link rel="stylesheet" href="/css/new-product.css">
+
+{{/section}}
+
+{{#section 'js'}}
+<script
+	src="https://cdn.tiny.cloud/1/sfxod6yk264sspcnxgqvv1tt368ja0csyad2gm36255qvya4/tinymce/5/tinymce.min.js"></script>
+<script src="/js/plugin/jquery.filer.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+
+<script src="/js/new-product.js"></script>
+{{/section}}

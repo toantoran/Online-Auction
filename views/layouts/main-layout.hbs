@@ -12,8 +12,6 @@
     <link href="css/datepicker.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/col5.css">
     <link rel="stylesheet" href="/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/css/jquery.filer-dragdropbox-theme.css">
-    <link rel="stylesheet" href="/css/jquery.filer.css">
     <link rel="stylesheet" href="/css/js-snackbar.min.css">
     <link rel="stylesheet" href="/css/nouislider.min.css">
     <link rel="stylesheet" href="/css/Popup-plugin.css">
@@ -22,7 +20,7 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/switchery.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="/css/new-product.css">
+    {{{_sections.css}}}
 </head>
 
 <body>
@@ -89,7 +87,8 @@
                                 <li><a href="/account#sold-product"><i class="fas fa-clipboard"></i> Sản phẩm đã
                                         đăng</a></li>
                                 {{/if}}
-                                <li><a href="/account#win-list"><i class="fa fa-clipboard-check"></i> Danh sách đã thắng</a>
+                                <li><a href="/account#win-list"><i class="fa fa-clipboard-check"></i> Danh sách đã
+                                        thắng</a>
                                 </li>
                                 {{#unless user.isSeller}}
                                 <li><a href="/account#seller-regis"><i class="fa fa-unlock-alt"></i> Đăng ký làm
@@ -278,15 +277,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" charset="utf8"
         src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/autonumeric@4.5.4"></script>
-    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="https://use.fontawesome.com/releases/v5.11.2/js/all.js" data-auto-replace-svg="nest"></script>
     <script src='https://www.google.com/recaptcha/api.js'></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
     <script src="/js/plugin/datepicker.min.js"></script>
     <script src="/js/plugin/datepicker.en.js"></script>
-    <script src="/js/plugin/jquery.filer.min.js"></script>
     <script src="/js/plugin/jquery.zoom.min.js"></script>
     <script src="/js/plugin/js-snackbar.min.js"></script>
     <script src="/js/plugin/nouislider.min.js"></script>

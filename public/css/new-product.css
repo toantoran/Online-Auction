@@ -2,3 +2,8 @@
     font-weight: bold;
     font-size: 16px;
 }
+
+p.err-validate {
+    color: #F8694A;
+    display: none;
+}

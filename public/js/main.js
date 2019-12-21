@@ -258,12 +258,8 @@
   }
 
   //set value selected
-  $("select").each(function(){ $(this).find('option[value="'+$(this).attr("value")+'"]').prop('selected', true); });
-
-  //Other
-  tinymce.init({
-    selector: '#editor',
-    height: 400
+  $("select").each(function () {
+    $(this).find('option[value="' + $(this).attr("value") + '"]').prop('selected', true);
   });
 
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -295,50 +291,6 @@
     })
     return false;
   })
-
-  $('#filer_input').filer({
-    addMore: true,
-    extensions: ["jpg", "png", "gif"],
-    showThumbs: true,
-    templates: {
-      box: '<ul class="jFiler-items-list jFiler-items-default"></ul>',
-      item: '<li class="jFiler-item"><div class="jFiler-item-container"><div class="jFiler-item-inner"><div class="jFiler-item-icon pull-left">{{fi-icon}}</div><div class="jFiler-item-info pull-left"><div class="jFiler-item-title" title="{{fi-name}}">{{fi-name | limitTo:30}}</div><div class="jFiler-item-others"><span>size: {{fi-size2}}</span><span>type: {{fi-extension}}</span><span class="jFiler-item-status">{{fi-progressBar}}</span></div><div class="jFiler-item-assets"><ul class="list-inline"><li><a class="icon-jfi-trash jFiler-item-trash-action"></a></li></ul></div></div></div></div></li>',
-      itemAppend: '<li class="jFiler-item"><div class="jFiler-item-container"><div class="jFiler-item-inner"><div class="jFiler-item-icon pull-left">{{fi-icon}}</div><div class="jFiler-item-info pull-left"><div class="jFiler-item-title">{{fi-name | limitTo:35}}</div><div class="jFiler-item-others"><span>size: {{fi-size2}}</span><span>type: {{fi-extension}}</span><span class="jFiler-item-status"></span></div><div class="jFiler-item-assets"><ul class="list-inline"><li><a class="icon-jfi-trash jFiler-item-trash-action"></a></li></ul></div></div></div></div></li>',
-      progressBar: '<div class="bar"></div>',
-      itemAppendToEnd: false,
-      removeConfirmation: true,
-      canvasImage: true,
-      _selectors: {
-        list: '.jFiler-items-list',
-        item: '.jFiler-item',
-        progressBar: '.bar',
-        remove: '.jFiler-item-trash-action'
-      }
-    },
-    afterShow: () => {
-      $('.jFiler-items-default .jFiler-item-assets a').html('<i class="fas fa-trash-alt"></i>')
-    }
-  });
-
-  $('.main-btn.btn-new').click(() => {
-    Swal.fire({
-      title: 'Tạo phiên đấu giá cho sản phẩm này ?',
-      icon: 'info',
-      showCancelButton: true,
-      confirmButtonColor: '#F8694A',
-      cancelButtonColor: '#000',
-      confirmButtonText: 'Đấu giá sản phẩm <i class="fas fa-gavel"></i>',
-      cancelButtonText: 'Hủy bỏ'
-    }).then((result) => {
-      if (result.value) {
-        Swal.fire({
-          title: 'Sản phẩm đã được đấu giá',
-          icon: 'success',
-          footer: '<a href="product-page.html">Xem sản phẩm?</a>'
-        })
-      }
-    })
-  });
 
 
   $('.section-title .title small').click(() => {
