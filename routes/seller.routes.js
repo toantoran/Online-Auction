@@ -7,7 +7,7 @@ const router = express.Router();
 const uuid = require('uuid/v1');
 const checkUser = require("../middlewares/user.mdw");
 
-router.get("/new-product", checkUser.checkAuthenticated, async (req, res, next) => {
+router.get("/new-product", checkUser.checkSeller, async (req, res, next) => {
     res.render("vwSeller/new-product", {
         user: req.user,
         title: "Mở phiên đấu giá",

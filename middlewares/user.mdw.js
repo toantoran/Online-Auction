@@ -1,6 +1,6 @@
 module.exports = {
     checkAuthenticated(req, res, next) {
-        req.session.lastUrl = req.originalUrl || '/'
+        req.session.lastUrl = req.originalUrl
         if (req.isAuthenticated()) {
             return next();
         }
@@ -24,9 +24,11 @@ module.exports = {
     },
 
     checkSeller(req, res, next) {
-        if (req.user && req.user.isSeller == 1) {
+        req.session.lastUrl = req.originalUrl;
+        if (req.isAuthenticated() && req.user.isSeller) {
             return next();
         }
-        return res.redirect(req.session.lastUrl)
+
+        res.redirect("/login");
     }
 }

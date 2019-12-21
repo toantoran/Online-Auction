@@ -164,6 +164,15 @@ function validateNewProduct(event) {
             msg.stepPrice.css('display', 'none')
         }
     }
+    if (product.immePrice != 0 && product.immePrice != null) {
+        if (product.immePrice <= product.beginPrice) {
+            msg.immePrice.html('<i class="fas fa-exclamation-triangle"></i>&nbsp;Giá mua ngay phải lớn hơn giá khởi điểm').css('display', 'block')
+            msg.immePrice.scrollView();
+            return false;
+        } else {
+            msg.immePrice.css('display', 'none')
+        }
+    }
 
     if (product.mainImg == '') {
         msg.mainImg.html('<i class="fas fa-exclamation-triangle"></i>&nbsp;Sản phẩm phải có một ảnh chính').css('display', 'block')

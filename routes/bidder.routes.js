@@ -119,7 +119,7 @@ router.get("/", async (req, res) => {
     productsNew
   });
 
-  req.session.lastUrl = req.originalUrl || '/';
+  req.session.lastUrl = req.originalUrl;
 });
 
 router.get("/productList/:cateID/:subcateID", async (req, res) => {
@@ -200,7 +200,7 @@ router.get("/productList/:cateID/:subcateID", async (req, res) => {
     order
   });
 
-  req.session.lastUrl = req.originalUrl || '/';
+  req.session.lastUrl = req.originalUrl;
 });
 
 router.post("/productList/:cateID/:subcateID", async (req, res) => {
@@ -278,7 +278,7 @@ router.get("/product/:productID", async (req, res) => {
     isNew: minutes <= config.product.minutesIsNew,
     productListSame,
   });
-  req.session.lastUrl = req.originalUrl || '/';
+  req.session.lastUrl = req.originalUrl;
 });
 
 router.post("/product/:productID/bid", checkUser.checkAuthenticatedPost, async (req, res) => {
@@ -637,7 +637,7 @@ router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
     emptyProductsWinList: productsWinList.length === 0,
   });
 
-  req.session.lastUrl = req.originalUrl || '/'
+  req.session.lastUrl = req.originalUrl
 });
 
 router.post("/account/:userID/updateInfor", checkUser.checkAuthenticatedPost, async (req, res) => {
@@ -664,7 +664,7 @@ router.get("/checkout/:productID", checkUser.checkAuthenticated, async (req, res
     totalPrice: +product.currentPrice + +transportPrice,
     title: "Thanh toán",
   });
-  req.session.lastUrl = req.originalUrl || '/';
+  req.session.lastUrl = req.originalUrl;
 });
 
 router.get("/login", checkUser.checkNotAuthenticated, (req, res) => {
