@@ -43,7 +43,7 @@ module.exports = {
     single: (productID) => db.load(`select * from product_single where productID = "${productID}"`),
     singleImgSrcByProduct: (productID) => db.load(`select * from product_img where productID = "${productID}"`),
     singleMainImgSrcByProduct: async (productID) => {
-        const rows = await db.load(`select * from product_img where productID = "${productID}"`);
+        const rows = await db.load(`select * from product_img where productID = "${productID}" and isMain = 1`);
         return rows[0].imgSrc;
     },
     singleBidByProduct: (productID) => db.load(`select * from product_bid where productID = "${productID}" and isCancel="0" order by bidTime desc`),
@@ -56,7 +56,7 @@ module.exports = {
 
     addBanBid: entity => db.add('product_ban_bid', entity),
     cancelProductBid: (productID, bidderID) => db.load(`update product_bid set isCancel = 1, isHolder = 0 where productID = "${productID}" and bidderID = ${bidderID}`),
-    updateProductBidIsHolder: async (productID) =>{
+    updateProductBidIsHolder: async (productID) => {
         const rows = await db.load(`
             select *
             from product_bid
@@ -68,7 +68,7 @@ module.exports = {
         const bidID = rows[0].bidID;
         return db.load(`update product_bid set isHolder = 1 where bidID = ${bidID}`);
     },
-    setFalseIsHolderProductBid: (productID)=> db.load(`update product_bid set isHolder = 0 where productID = "${productID}"`),
+    setFalseIsHolderProductBid: (productID) => db.load(`update product_bid set isHolder = 0 where productID = "${productID}"`),
     checkBanBid: async (productID, bidderID) => {
         const rows = await db.load(`select * from product_ban_bid where productID = "${productID}" and bidderID = ${bidderID}`)
         return (rows.length > 0);

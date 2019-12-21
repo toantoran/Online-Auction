@@ -678,7 +678,7 @@ router.get("/login", checkUser.checkNotAuthenticated, (req, res) => {
     email: req.session.email,
     message: errMsg
   });
-  req.session.lastUrl = req.session.lastUrl || "/";
+  req.session.lastUrl = req.session.lastUrl;
   //  req.session.destroy();
 });
 

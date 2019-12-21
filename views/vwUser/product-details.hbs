@@ -1,4 +1,6 @@
 {{#section 'js'}}
+<script
+	src="https://cdn.tiny.cloud/1/sfxod6yk264sspcnxgqvv1tt368ja0csyad2gm36255qvya4/tinymce/5/tinymce.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 <script src="/js/product-details.js"></script>
 {{/section}}
@@ -62,8 +64,6 @@
 							<h2 class="product-name">{{product.productName}}</h2>
 							<p>Thương hiệu: <span>{{product.brand}}</span></p>
 							<p>Xuất xứ: <span>{{product.pFrom}}</span></p>
-							<p>Mô tả sản phẩm:</p>
-							{{{product.description}}}
 							<p>Ngày bắt đầu: <span class="time">{{format_day_time product.beginDate}}</span></p>
 							<p>Ngày kết thúc: <span>{{format_day_time product.endDate}}</span></p>
 							<hr>
@@ -130,11 +130,11 @@
 							<div id="tab1" class="tab-pane fade in active">
 								<div class="row">
 									<div class="col-md-6">
-										<h4 style="margin-bottom: 20px;">Ghi chú của người bán<span class="pull-right"
+										<h4 style="margin-bottom: 20px;">Mô tả của người bán<span class="pull-right"
 												style="font-size: 14px; margin-top:-5px">
 												{{#if isSeller}}
-												<button class="main-btn note-btn"><i class="far fa-edit"></i> Thêm ghi
-													chú</button></span>
+												<button class="main-btn note-btn"><i class="far fa-edit"></i> Thêm mô
+													tả</button></span>
 											{{/if}}
 										</h4>
 										{{#each note}}

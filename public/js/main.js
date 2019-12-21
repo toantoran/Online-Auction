@@ -439,61 +439,6 @@
     zIndex: 100
   });
 
-  $('.note-btn').click(() => {
-    $('.note-btn').prop('disabled', true);
-    var d = new Date();
-    var strDate = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
-    $('.note-btn').parent().parent().parent().append(
-      '<div class="note">\
-          <p><i class="fas fa-edit"></i> <span class="note-date">' + strDate + '</span></p>\
-          <textarea></textarea>\
-        </div>\
-        <div class="deletable pull-right">\
-          <button class="main-btn" id="done-note-btn">Xong</button>\
-          <button class="main-btn" id="cancel-note-btn">Hủy bỏ</button>\
-        </div>');
-
-    $('#done-note-btn').click(() => {
-      if ($('.note textarea').val().trim().length == 0) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Hmm......',
-          text: 'Nội dung không được để trống'
-        })
-      } else {
-        Swal.fire({
-          title: 'Thêm ghi chú này?',
-          text: "Bạn không thể hoàn tác",
-          icon: 'info',
-          showCancelButton: true,
-          confirmButtonColor: '#F8694A',
-          cancelButtonColor: '#000',
-          confirmButtonText: 'Thêm',
-          cancelButtonText: 'Hủy bỏ'
-        }).then((result) => {
-          if (result.value) {
-            Swal.fire({
-              title: 'Đã thêm ghi chú!',
-              icon: 'success'
-            })
-            $('.note textarea').replaceWith('<p>' + $('.note textarea').val() + '<p>');
-            $('.note-btn').prop('disabled', false);
-            $('.deletable').remove();
-          } else {
-            $('#cancel-note-btn').trigger('click');
-          }
-        })
-      }
-    });
-
-    $('#cancel-note-btn').click(() => {
-      $('.note-btn').prop('disabled', false);
-      $('.deletable').remove();
-      $('.note:last-child').remove();
-    });
-
-  });
-
   var radio = document.querySelector('.js-switch-radio');
   var radioInit = new Switchery(radio, {
     color: '#F8694A',

@@ -17,7 +17,13 @@ router.get("/new-product", checkUser.checkSeller, async (req, res, next) => {
     req.session.lastUrl = req.originalUrl;
 });
 
-router.post("/new-product/", upload.array('files[]'), checkUser.checkAuthenticatedPost, async (req, res, next) => {
+var filesConfig = [{
+    name: 'fileMain',
+    maxCount: 1
+}, {
+    name: 'filesThumb[]'
+}];
+router.post("/new-product/", upload.fields(filesConfig), checkUser.checkAuthenticatedPost, async (req, res, next) => {
     const entityProductSingle = {
         productID: req.body.id,
         productName: req.body.productName,
@@ -36,13 +42,21 @@ router.post("/new-product/", upload.array('files[]'), checkUser.checkAuthenticat
 
     await productModel.addProductSingle(entityProductSingle);
 
-    for (const file of req.files) {
-        const entityProductImg = {
+    const mainImg = req.files.fileMain;
+    let entityProductImg = {
+        productID: req.body.id,
+        imgSrc: mainImg[0].filename,
+        isMain: 1,
+    }
+    await productModel.addProductImg(entityProductImg);
+    for (const file of req.files['filesThumb[]']) {
+        entityProductImg = {
             productID: req.body.id,
             imgSrc: file.filename,
         }
         await productModel.addProductImg(entityProductImg);
     }
+
     res.redirect(`/product/${req.body.id}`);
 });
 

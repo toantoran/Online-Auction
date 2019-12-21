@@ -19,6 +19,17 @@ if (message !== "") {
     }
 }
 
+tinymce.init({
+    selector: '#desc-editor',
+    height: 500,
+    plugins: 'paste image link autolink lists table media',
+    menubar: false,
+    toolbar: [
+        'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright forecolor backcolor',
+        'table link image media',
+    ],
+});
+
 $('#btn-bid').click((event) => {
     event.preventDefault();
     Swal.fire({
@@ -27,16 +38,20 @@ $('#btn-bid').click((event) => {
         showCancelButton: true,
         confirmButtonColor: '#F8694A',
         cancelButtonColor: '#000',
-        confirmButtonText: '<a onclick="formSubmit()">Ra giá <i class="fas fa-gavel"></i></a>',
+        confirmButtonText: '<a onclick="bidSubmit()">Ra giá <i class="fas fa-gavel"></i></a>',
         cancelButtonText: 'Hủy bỏ'
     })
 })
 
-function formSubmit() {
+function bidSubmit() {
     // alert('abc');
     $('#btn-submit').click();
 }
 
+function noteSubmit() {
+    // alert('abc')
+    $('#submit-note-btn').click();
+}
 
 function checkBid() {
     let a = $('input#bidPrice');
@@ -55,6 +70,10 @@ function checkBid() {
     return true;
 }
 
+function checkNote() {
+
+    return true;
+}
 
 $('input#bidPrice').val(numeral($('input#bidPrice').val()).format('0,0'))
 $('input#bidPrice').on('input', function () {
@@ -67,6 +86,64 @@ $('input#bidPrice').focusout(() => {
         a.val(a.val().replace(/,\d\d\d(?!,)/, ',000'));
     }
 })
+
+$('.note-btn').click(() => {
+    $('.note-btn').prop('disabled', true);
+    var d = new Date();
+    var strDate = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+    let rtn = "return checkNote()";
+    $('.note-btn').parent().parent().parent().append(
+        `<form method="post" action="/addNote" class="deletable" onsubmit="${rtn}">\
+            <div class="note">\
+                <p><i class="fas fa-edit"></i> <span class="note-date">${strDate}</span></p>\
+                <textarea id="desc-editor" name="note"></textarea>\
+            </div>\
+            <div class="pull-right">\
+                <button class="main-btn" id="submit-note-btn" type="submit" style="display: none">Xong</button>\
+                <button class="main-btn" id="done-note-btn">Xong</button>\
+                <button class="main-btn" id="cancel-note-btn">Hủy bỏ</button>\
+            </div>\
+        </form>`);
+    tinymce.init({
+        selector: '#desc-editor',
+        height: 400,
+        plugins: 'paste image link autolink lists table media',
+        menubar: false,
+        toolbar: [
+            'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright forecolor backcolor',
+            'table link image media',
+        ],
+    });
+
+    $('#done-note-btn').click((event) => {
+        event.preventDefault();
+        tinyMCE.triggerSave();
+        if ($('#desc-editor').val().trim().length == 0) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Nội dung không được để trống',
+                confirmButtonColor: '#F8694A'
+            });
+        } else {
+            Swal.fire({
+                title: 'Thêm mô tả này ?',
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#F8694A',
+                cancelButtonColor: '#000',
+                confirmButtonText: '<a onclick="noteSubmit()">Thêm</a>',
+                cancelButtonText: 'Hủy bỏ'
+            })
+        }
+    });
+
+    $('#cancel-note-btn').click(() => {
+        $('.note-btn').prop('disabled', false);
+        tinymce.remove('#desc-editor');
+        $('.deletable').remove();
+    });
+
+});
 
 //Bid Table
 function Bid(time, name, price) {
