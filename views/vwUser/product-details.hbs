@@ -1,5 +1,6 @@
 {{#section 'js'}}
-<script src="/js/sample/product-details.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+<script src="/js/product-details.js"></script>
 {{/section}}
 
 <!-- section -->
@@ -83,17 +84,24 @@
 							<p>Giá hiện tại: <span class="product-price"
 									id="current">{{format_money product.currentPrice}}</span></p>
 							<p>Giá mua ngay: <span class="product-price">{{format_money product.immePrice}}</span></p>
+							<p>Bước giá: <span class="product-price" id="step">{{format_money product.stepPrice}}</span>
+							</p>
 						</div>
 						<div class="product-btns">
 							<form method="POST" onsubmit="return checkBid()">
 								<input type="hidden" name="isEndBid" value="{{product.isEndBid}}">
 								{{#unless isSeller}}
 								{{#unless product.isEndBid}}
+								<p class="err-validate" id="err-bidPrice"></p>
 								<div class="qty-input">
-									<input class="input price-input" name="bidPrice" value={{bidPrice}}>
+									<input class="input price-input" name="bidPrice" value={{bidPrice}} id="bidPrice"
+										type="text">
 								</div>
-								<button class="primary-btn btn-bid" formaction="/product/{{product.productID}}/bid"
-									type="submit">Ra giá <i class="fas fa-gavel"></i></button>
+								<button id="btn-submit" class="primary-btn btn-bid"
+									formaction="/product/{{product.productID}}/bid" type="submit"
+									style="display: none;">Ra giá <i class="fas fa-gavel"></i></button>
+								<button id="btn-bid" class="primary-btn btn-bid">Ra giá <i
+										class="fas fa-gavel"></i></button>
 								{{/unless}}
 								{{/unless}}
 								<div class="pull-right">
@@ -102,8 +110,8 @@
 										formaction="/seller/product/{{product.productID}}/delete"><i
 											class="fas fa-trash"></i></button>
 									{{/if}}
-									<button class="main-btn icon-btn" id="myPopUp"><i
-											class="fa fa-share-alt"></i></button>
+									{{!-- <button class="main-btn icon-btn" id="myPopUp"><i
+											class="fa fa-share-alt"></i></button> --}}
 									<button productID="{{product.productID}}" userID="{{user.userID}}" type="button"
 										onsubmit="return false;" name="btnWish"
 										class="btn-wish {{#if isExistWishItem}}focus{{/if}}"><i

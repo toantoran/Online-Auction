@@ -494,42 +494,6 @@
 
   });
 
-  $('.btn-bid').click(() => {
-    let priceStr = $('.btn-bid').parent().find('input.price-input').val();
-    let price = parseInt(priceStr.slice(0, priceStr.length - 1).replace(/,/g, ''));
-
-    if (price <= getCurrentPrice()) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Giá không hợp lệ!',
-        text: 'Giá đưa ra phải lớn hơn giá hiện tại'
-      })
-    } else {
-      Swal.fire({
-        title: priceStr,
-        text: "Bạn có chắc chắn với mức giá này?",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#F8694A',
-        cancelButtonColor: '#000',
-        confirmButtonText: 'Ra giá <i class="fas fa-gavel"></i>',
-        cancelButtonText: 'Hủy bỏ'
-      }).then((result) => {
-        if (result.value) {
-          Swal.fire({
-            title: 'Ra giá thành công',
-            icon: 'success'
-          })
-        } else {
-          Swal.fire({
-            icon: 'error',
-            title: 'Đã hủy lượt ra giá'
-          })
-        }
-      })
-    }
-  });
-
   var radio = document.querySelector('.js-switch-radio');
   var radioInit = new Switchery(radio, {
     color: '#F8694A',
