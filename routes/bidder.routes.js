@@ -684,6 +684,7 @@ router.post("/evaluation/seller/:productID", checkUser.checkAuthenticatedPost, a
     productID: req.params.productID,
     isGood,
     isBad,
+    content: req.body.contents
   }
   console.log(entity);
   await userModel.addUserEvaluation(entity);
