@@ -34,7 +34,6 @@ router.post("/new-product/", upload.fields(filesConfig), checkUser.checkAuthenti
         currentPrice: req.body.beginPrice,
         stepPrice: req.body.stepPrice,
         immePrice: req.body.immePrice,
-        description: req.body.description,
         beginDate: new Date(),
         endDate: new Date(new Date().setDate(new Date().getDate() + 7)),
         autoExtend: req.body.autoExtend === "on",
