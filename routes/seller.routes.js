@@ -27,12 +27,14 @@ var filesConfig = [{
     name: 'filesThumb[]'
 }];
 router.post("/new-product/", upload.fields(filesConfig), checkUser.checkAuthenticatedPost, async (req, res, next) => {
+    // console.log(req.body);
     const productCate = await categoryModel.getFromName(req.body.productCate);
+    // console.log(productCate);
     const entityProductSingle = {
         productID: req.body.id,
         productName: req.body.productName,
-        cateID: productCate.cateID,
-        subcateID: productCate.subcateID,
+        cateID: productCate[0].cateID,
+        subcateID: productCate[0].subcateID,
         seller: req.user.userID,
         brand: req.body.brand,
         pFrom: req.body.pFrom,
