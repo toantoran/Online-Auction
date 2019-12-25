@@ -380,7 +380,9 @@
                                                     class="watch-list btn-wish {{#if isExistWishItem}}focus{{/if}}"><i
                                                         class="fa fa-heart"></i></button>
                                                 <img src="/img/product/{{productID}}/{{mainImgSrc}}" alt="">
-                                                <button class="main-btn btn-rating" productID="{{productID}}"><a
+                                                <button class="main-btn btn-rating" sellerName="{{seller.name}}"
+                                                    sellerEmail="{{seller.email}}" sellerTel="{{seller.tel}}"
+                                                    sellerID="{{seller.userID}}" productID="{{productID}}"><a
                                                         href="#ratingSeller" data-toggle="modal" id="link-rating"
                                                         class="trigger-btn"><i class="fas fa-thumbs-up"></i>&nbsp;Đánh
                                                         giá</a></button>
@@ -478,7 +480,7 @@
                     aria-hidden="true">&times;</button>
             </div>
             <div class="modal-body">
-                <form method="post" action="/rating">
+                <form method="post" action="/evaluation/seller/productID">
                     <div class="form-group">
                         <div class="input-group" id="like-group">
                             <input type="radio" class="radio-like" value="1" name="isLiked" id="up" checked>
@@ -495,9 +497,8 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-block btn-lg">Đánh giá</button>
+                        <button type="button" class="btn btn-primary btn-block btn-lg">Đánh giá</button>
                     </div>
-                </form>
             </div>
         </div>
     </div>
@@ -511,26 +512,24 @@
                     aria-hidden="true">&times;</button>
             </div>
             <div class="modal-body">
-                <form action="/rating" method="post">
-                    <div class="form-group">
-                        <div class="input-group" id="like-group">
-                            <input type="radio" class="radio-like" value="1" name="isLiked" id="up" checked>
-                            <label class="label-like" for="up"><i class="fas fa-thumbs-up"></i></label>
-                            <input type="radio" class="radio-like" value="0" name="isLiked" id="down">
-                            <label class="label-like" for="down"><i class="fas fa-thumbs-down"></i></label>
-                            <input type="text" name="productID" class="message-pID" value="" style="display: none;">
-                        </div>
+                <div class="form-group">
+                    <div class="input-group" id="like-group">
+                        <input type="radio" class="radio-like" value="1" name="isLiked" id="up" checked>
+                        <label class="label-like" for="up"><i class="fas fa-thumbs-up"></i></label>
+                        <input type="radio" class="radio-like" value="0" name="isLiked" id="down">
+                        <label class="label-like" for="down"><i class="fas fa-thumbs-down"></i></label>
+                        <input type="text" name="productID" class="message-pID" value="" style="display: none;">
                     </div>
-                    <div class="form-group">
-                        <div class="input-group" style="width: 100%">
-                            <textarea name="message" style="width: 100%; padding: 5px" rows="5"
-                                placeholder="Nhận xét người thắng"></textarea>
-                        </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group" style="width: 100%">
+                        <textarea name="message" style="width: 100%; padding: 5px" rows="5"
+                            placeholder="Nhận xét người thắng"></textarea>
                     </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-block btn-lg">Đánh giá</button>
-                    </div>
-                </form>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary btn-block btn-lg">Đánh giá</button>
+                </div>
             </div>
         </div>
     </div>

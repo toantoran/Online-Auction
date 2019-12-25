@@ -626,6 +626,8 @@ router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
       productModel.countBidProduct(product.productID),
       req.user ? await productModel.isExistWishItem(product.productID, req.user.userID) : false,
     ]);
+
+    product.seller = await productModel.getSellerByProduct(product.productID);
   }
 
   res.render("vwUser/account", {
@@ -672,13 +674,19 @@ router.get("/checkout/:productID", checkUser.checkAuthenticated, async (req, res
   req.session.lastUrl = req.originalUrl;
 });
 
-router.post("/evaluation/:userID", checkUser.checkAuthenticatedPost, async (req, res) => {
-  const entity= {
+router.post("/evaluation/seller/:productID", checkUser.checkAuthenticatedPost, async (req, res) => {
+  const seller = await productModel.getSellerByProduct(req.params.productID);
+  const isGood = req.body.isLiked === 1;
+  const isBad = (isGood === 1) ? 0 : 1;
+  const entity = {
     sender: req.user.userID,
-    receiver: userID,
+    receiver: seller.userID,
+    productID: req.params.productID,
+    isGood,
+    isBad,
   }
-  //await userModel.addUserEvaluation(entity);
   console.log(entity);
+  await userModel.addUserEvaluation(entity);
   res.json("1");
 });
 
