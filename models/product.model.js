@@ -91,6 +91,14 @@ module.exports = {
         return db.patch('product_single', entity, condition);
     },
 
+    updateMailEndBid: (entity) => {
+        const condition = {
+            productID: entity.productID
+        };
+        delete entity.productID;
+        return db.patch('product_single', entity, condition);
+    },
+
     deleteProduct: id => {
         db.del('wish_list', {
             productID: id
@@ -208,4 +216,5 @@ module.exports = {
     },
 
     productsEndBid: () => db.load('select * from product_single where endDate < NOW()'),
+
 };

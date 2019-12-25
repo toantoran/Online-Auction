@@ -364,7 +364,6 @@ router.post("/product/:productID/bid", checkUser.checkAuthenticatedPost, async (
         const bidderEmail = req.user.email;
 
         const oldHolderEmail = (oldHolder == false) ? false : oldHolder.email;
-        console.log(oldHolderEmail);
 
         await mailer.sendMailConfirmBid(sellerEMail, bidderEmail, oldHolderEmail, product);
       }
