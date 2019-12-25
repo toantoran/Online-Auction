@@ -1,5 +1,9 @@
 {{#section 'js'}}
-<script src="js/sample/index.js"></script>
+<script src="/js/account.js"></script>
+{{/section}}
+
+{{#section 'css'}}
+<link rel="stylesheet" href="/css/rating.css">
 {{/section}}
 
 <div class="section">
@@ -310,6 +314,10 @@
                                                 </ul>
                                                 <button class="main-btn quick-view"><i class="fa fa-search-plus"></i>
                                                     Xem chi tiết</button>
+                                                <button class="main-btn btn-rating-top" productID="{{productID}}"><a
+                                                        href="#ratingBidder" data-toggle="modal" id="link-rating"
+                                                        class="trigger-btn"><i class="fas fa-thumbs-up"></i>&nbsp;Đánh
+                                                        giá</a></button>
                                                 <button productID="{{productID}}" userID="{{user.userID}}" type="button"
                                                     onsubmit="return false;" name="btnWish"
                                                     class="watch-list btn-wish {{#if isExistWishItem}}focus{{/if}}"><i
@@ -372,8 +380,9 @@
                                                     class="watch-list btn-wish {{#if isExistWishItem}}focus{{/if}}"><i
                                                         class="fa fa-heart"></i></button>
                                                 <img src="/img/product/{{productID}}/{{mainImgSrc}}" alt="">
-                                                <button class="main-btn"><a href="#signin"><i
-                                                            class="fas fa-thumbs-up"></i> Đánh
+                                                <button class="main-btn btn-rating" productID="{{productID}}"><a
+                                                        href="#ratingSeller" data-toggle="modal" id="link-rating"
+                                                        class="trigger-btn"><i class="fas fa-thumbs-up"></i>&nbsp;Đánh
                                                         giá</a></button>
                                             </div>
                                             <div class="product-body">
@@ -453,6 +462,75 @@
                     </div>
                 </div>
                 {{/unless}}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="ratingSeller" class="modal fade">
+    <div class="modal-dialog modal-login">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Đánh giá người bán</h4>
+                <button type="button" class="close" data-dismiss="modal" id="btn-exit-rating"
+                    aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="/rating">
+                    <div class="form-group">
+                        <div class="input-group" id="like-group">
+                            <input type="radio" class="radio-like" value="1" name="isLiked" id="up" checked>
+                            <label class="label-like" for="up"><i class="fas fa-thumbs-up"></i></label>
+                            <input type="radio" class="radio-like" value="0" name="isLiked" id="down">
+                            <label class="label-like" for="down"><i class="fas fa-thumbs-down"></i></label>
+                            <input type="text" name="productID" class="message-pID" value="" style="display: none;">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group" style="width: 100%">
+                            <textarea name="message" style="width: 100%; padding: 5px" rows="5"
+                                placeholder="Nhận xét người bán"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block btn-lg">Đánh giá</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="ratingBidder" class="modal fade">
+    <div class="modal-dialog modal-login">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Đánh giá người thắng</h4>
+                <button type="button" class="close" data-dismiss="modal" id="btn-exit-rating"
+                    aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form action="/rating" method="post">
+                    <div class="form-group">
+                        <div class="input-group" id="like-group">
+                            <input type="radio" class="radio-like" value="1" name="isLiked" id="up" checked>
+                            <label class="label-like" for="up"><i class="fas fa-thumbs-up"></i></label>
+                            <input type="radio" class="radio-like" value="0" name="isLiked" id="down">
+                            <label class="label-like" for="down"><i class="fas fa-thumbs-down"></i></label>
+                            <input type="text" name="productID" class="message-pID" value="" style="display: none;">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group" style="width: 100%">
+                            <textarea name="message" style="width: 100%; padding: 5px" rows="5"
+                                placeholder="Nhận xét người thắng"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block btn-lg">Đánh giá</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

@@ -8,6 +8,7 @@ const querystring = require('querystring');
 const checkUser = require("../middlewares/user.mdw");
 const moment = require('moment');
 const mailer = require("../middlewares/mail.mdw");
+const numeral = require("numeral")
 
 const router = express.Router();
 
@@ -310,7 +311,7 @@ router.post("/product/:productID/bid", checkUser.checkAuthenticatedPost, async (
         });
 
         const oldHolder = await productModel.getWinnerOfBidByProduct(product.productID);
-        const price = req.body.bidPrice;
+        const price = numeral(req.body.bidPrice).value();
         const immePrice = product.immePrice || 0;
         let currentPrice = product.currentPrice;
         const priceHold = await productModel.getPriceOfHolderByProduct(product.productID);
