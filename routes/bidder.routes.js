@@ -610,15 +610,14 @@ router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
     const temp = moment(product.beginDate, 'YYYY-MM-DD HH:mm:ss');
     const minutes = moment().diff(temp, 'minutes');
     product.isNew = minutes <= config.product.minutesIsNew;
-
-
     if (product.countBid > 0) {
       product.isBided = true;
-      product.winner = await productModel.getNameWinnerOfBidByProduct(product.productID);
+      product.winner = await productModel.getWinnerOfBidByProduct(product.productID);
     } else {
       product.isBided = false;
     }
   }
+  console.log(productsSelling);
 
   for (const product of productsWinList) {
     [product.mainImgSrc, product.countBid, product.isExistWishItem] = await Promise.all([
@@ -675,21 +674,46 @@ router.get("/checkout/:productID", checkUser.checkAuthenticated, async (req, res
 });
 
 router.post("/evaluation/seller/:productID", checkUser.checkAuthenticatedPost, async (req, res) => {
-  const seller = await productModel.getSellerByProduct(req.params.productID);
-  const isGood = req.body.isLiked === 1;
-  const isBad = (isGood === 1) ? 0 : 1;
-  const entity = {
-    sender: req.user.userID,
-    receiver: seller.userID,
-    productID: req.params.productID,
-    isGood,
-    isBad,
-    content: req.body.contents
+  const check = await userModel.checkExitsEvaluation(req.user.userID, req.body.sellerID, req.params.productID);
+  if (!check) {
+    const receiver = req.body.sellerID;
+    const entity = {
+      sender: req.user.userID,
+      receiver,
+      productID: req.params.productID,
+      isGood: req.body.isGood,
+      isBad: 1 - req.body.isGood,
+      content: req.body.content,
+      time: new Date()
+    }
+    await userModel.addUserEvaluation(entity);
+    res.json("1");
+  } else {
+    res.json("0");
   }
-  console.log(entity);
-  await userModel.addUserEvaluation(entity);
-  res.json("1");
 });
+
+
+router.post("/evaluation/winner/:productID", checkUser.checkAuthenticatedPost, async (req, res) => {
+  const check = await userModel.checkExitsEvaluation(req.user.userID, req.body.winnerID, req.params.productID);
+  if (!check) { // roi :v không đổi , chưa nhen :v đúng r mà thử
+    const receiver = req.body.winnerID;
+    const entity = {
+      sender: req.user.userID,
+      receiver,
+      productID: req.params.productID,
+      isGood: req.body.isGood,
+      isBad: 1 - req.body.isGood,
+      content: req.body.content,
+      time: new Date()
+    }
+    await userModel.addUserEvaluation(entity);
+    res.json("1");
+  } else {
+    res.json("0");
+  }
+});
+
 
 router.get("/login", checkUser.checkNotAuthenticated, (req, res) => {
   let errMsg = null;

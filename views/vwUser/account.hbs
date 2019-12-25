@@ -314,8 +314,10 @@
                                                 </ul>
                                                 <button class="main-btn quick-view"><i class="fa fa-search-plus"></i>
                                                     Xem chi tiết</button>
-                                                <button class="main-btn btn-rating-top" productID="{{productID}}"><a
-                                                        href="#ratingBidder" data-toggle="modal" id="link-rating"
+                                                <button class="main-btn btn-rating-top" winnerName="{{winner.name}}"
+                                                    winnerEmail="{{winner.email}}" winnerTel="{{winner.tel}}"
+                                                    winnerID="{{winner.userID}}" productID="{{productID}}"><a
+                                                        href="#ratingWinner" data-toggle="modal" id="link-rating-winner"
                                                         class="trigger-btn"><i class="fas fa-thumbs-up"></i>&nbsp;Đánh
                                                         giá</a></button>
                                                 <button productID="{{productID}}" userID="{{user.userID}}" type="button"
@@ -334,7 +336,7 @@
                                                         class="product-price">{{format_money immePrice}}</span></p>
                                                 {{#if isBided}}
                                                 <p class="product-text">Đặt cao nhất: <span
-                                                        class="product-price">{{winner}}</span></p>
+                                                        class="product-price">{{winner.name}}</span></p>
                                                 {{/if}}
                                                 <div class="product-footer">
                                                     <small><span>{{countBid}}</span> lượt ra giá</small>
@@ -476,7 +478,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Đánh giá người bán</h4>
-                <button type="button" class="close" data-dismiss="modal" id="btn-exit-rating"
+                <button type="button" class="close" data-dismiss="modal" id="btn-exit-rating-seller"
                     aria-hidden="true">&times;</button>
                 <div style="text-align: center; margin: 20px 0 -30px 0">
                     <h5 class="rating-seller-name"></h5>
@@ -486,18 +488,18 @@
             <div class="modal-body">
                 <div class="form-group">
                     <div class="input-group" id="like-group">
-                        <input type="radio" class="radio-like" value="1" name="isLiked" id="up" checked>
+                        <input type="radio" class="radio-like" value="1" name="isLiked" id="seller-up">
                         <label class="label-like" for="up"><i class="fas fa-thumbs-up"></i></label>
-                        <input type="radio" class="radio-like" value="0" name="isLiked" id="down">
+                        <input type="radio" class="radio-like" value="0" name="isLiked" id="seller-down">
                         <label class="label-like" for="down"><i class="fas fa-thumbs-down"></i></label>
-                        <input type="text" id="productID" class="rating-seller-pID" value="" style="display: none;">
-                        <input type="text" id="sellerID" class="rating-seller-id" value="" style="display: none;">
+                        <input type="text" class="rating-seller-pID" value="" style="display: none;">
+                        <input type="text" class="rating-seller-id" value="" style="display: none;">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="input-group" style="width: 100%">
-                        <textarea name="contents" style="width: 100%; padding: 5px" rows="5"
-                            placeholder="Nhận xét người bán"></textarea>
+                        <textarea name="contents" class="rating-seller-content" style="width: 100%; padding: 5px"
+                            rows="5" placeholder="Nhận xét người bán"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -507,32 +509,37 @@
         </div>
     </div>
 </div>
-<div id="ratingBidder" class="modal fade">
+<div id="ratingWinner" class="modal fade">
     <div class="modal-dialog modal-login">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Đánh giá người thắng</h4>
-                <button type="button" class="close" data-dismiss="modal" id="btn-exit-rating"
+                <button type="button" class="close" data-dismiss="modal" id="btn-exit-rating-winner"
                     aria-hidden="true">&times;</button>
+                <div style="text-align: center; margin: 20px 0 -30px 0">
+                    <h5 class="rating-winner-name"></h5>
+                    <p class="rating-winner-email"></p>
+                </div>
             </div>
             <div class="modal-body">
                 <div class="form-group">
                     <div class="input-group" id="like-group">
-                        <input type="radio" class="radio-like" value="1" name="isLiked" id="up" checked>
-                        <label class="label-like" for="up"><i class="fas fa-thumbs-up"></i></label>
-                        <input type="radio" class="radio-like" value="0" name="isLiked" id="down">
-                        <label class="label-like" for="down"><i class="fas fa-thumbs-down"></i></label>
-                        <input type="text" name="productID" class="message-pID" value="" style="display: none;">
+                        <input type="radio" class="radio-like" value="1" name="isLiked" id="winner-up">
+                        <label class="label-like" for="winner-up"><i class="fas fa-thumbs-up"></i></label>
+                        <input type="radio" class="radio-like" value="0" name="isLiked" id="winner-down">
+                        <label class="label-like" for="winner-down"><i class="fas fa-thumbs-down"></i></label>
+                        <input type="text" class="rating-winner-pID" value="" style="display: none;">
+                        <input type="text" class="rating-winner-id" value="" style="display: none;">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="input-group" style="width: 100%">
-                        <textarea name="message" style="width: 100%; padding: 5px" rows="5"
-                            placeholder="Nhận xét người thắng"></textarea>
+                        <textarea name="contents" class="rating-winner-content" style="width: 100%; padding: 5px"
+                            rows="5" placeholder="Nhận xét người thắng cuộc"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
-                    <button type="button" class="btn btn-primary btn-block btn-lg">Đánh giá</button>
+                    <button type="button" class="btn btn-primary btn-block btn-lg btn-rating-winner">Đánh giá</button>
                 </div>
             </div>
         </div>
