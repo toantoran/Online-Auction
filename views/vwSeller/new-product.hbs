@@ -25,8 +25,8 @@
 							{{#each lcCateList}}
 							<option class="cate-input-header" disabled>{{this.cateName}}</option>
 							{{#each this.subCate}}
-							<option cateID="{{this.cateID}}" subcateID="{{this.subcateID}}">
-								&nbsp;&nbsp;&nbsp;{{this.subcateName}}</option>
+							<option cateID="{{this.cateID}}" subcateID="{{this.subcateID}}"
+								value="{{this.subcateName}}">&nbsp;&nbsp;&nbsp;{{this.subcateName}}</option>
 							{{/each}}
 							{{/each}}
 						</select>

@@ -90,13 +90,14 @@ $('input#bidPrice').focusout(() => {
 $('.note-btn').click(() => {
     $('.note-btn').prop('disabled', true);
     var d = new Date();
-    var strDate = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+    var strDate = `${d.getDate()}/${d.getMonth()}/${d.getFullYear()} [${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}]`;
     let rtn = "return checkNote()";
+    const productID = $('.note-btn').attr('productID');
     $('.note-btn').parent().parent().parent().append(
-        `<form method="post" action="/addNote" class="deletable" onsubmit="${rtn}">\
+        `<form method="post" action="/seller/product/${productID}/addDesc" class="deletable" onsubmit="${rtn}">\
             <div class="note">\
                 <p><i class="fas fa-edit"></i> <span class="note-date">${strDate}</span></p>\
-                <textarea id="desc-editor" name="note"></textarea>\
+                <textarea id="desc-editor" name="desc"></textarea>\
             </div>\
             <div class="pull-right">\
                 <button class="main-btn" id="submit-note-btn" type="submit" style="display: none">Xong</button>\
