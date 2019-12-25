@@ -45,14 +45,16 @@ router.post("/new-product/", upload.fields(filesConfig), checkUser.checkAuthenti
         autoExtend: req.body.autoExtend === "on",
     }
 
-    const entityDesc = {
-        productID: req.body.id,
-        descContents: req.body.description,
-        descDate: new Date()
-    }
-
     await productModel.addProductSingle(entityProductSingle);
-    await descModel.addDesc(entityDesc)
+
+    if (req.body.description.trim() != '') {
+        const entityDesc = {
+            productID: req.body.id,
+            descContents: req.body.description,
+            descDate: new Date()
+        }
+        await descModel.addDesc(entityDesc)
+    }
 
     const mainImg = req.files.fileMain;
     let entityProductImg = {
