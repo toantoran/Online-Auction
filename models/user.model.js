@@ -14,5 +14,17 @@ module.exports = {
         };
         delete entity.userID;
         return db.patch('users', entity, condition);
-    }
+    },
+
+    addUserEvaluation: entity => db.add('user_evaluation', entity),
+    getPointEvaluation: userID => {
+        const countGood = db.load(`{
+            select count(*) from user_valuation where userID = ${userID} and isGood = 1
+        }`);
+        const countSum = db.load(`{
+            select count(*) from user_valuation where userID = ${userID}
+        }`);
+        return countGood/countSum;
+    },
+    getEvaluationById: userID =>(`select * from user_valuation where userID = ${userID}`),
 };

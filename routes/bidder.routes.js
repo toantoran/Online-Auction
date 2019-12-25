@@ -284,6 +284,9 @@ router.get("/product/:productID", async (req, res) => {
 router.post("/product/:productID/bid", checkUser.checkAuthenticatedPost, async (req, res) => {
   const productSingle = await productModel.single(req.params.productID);
   const product = productSingle[0];
+  // const point = await userModel.getPointEvaluation(req.user.userID);
+  // console.log(checkPoint);
+  // const checkPoint = point < 8;
   const checkBan = await productModel.checkBanBid(req.params.productID, req.user.userID);
   let query;
   if (checkBan) {
@@ -544,11 +547,12 @@ router.post("/productList/search/:category/:textSearch", async (req, res) => {
 
 router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
   const user = req.user;
-  const [productsHistoryBid, productsWishList, productsSelling, productsWinList] = await Promise.all([
+  const [productsHistoryBid, productsWishList, productsSelling, productsWinList, evaluation] = await Promise.all([
     productModel.productsHistoryBid(user.userID),
     productModel.productsWishList(user.userID),
     productModel.productsSelling(user.userID),
     productModel.productsWinList(user.userID),
+    userModel.getEvaluationById(user.userID)
   ]);
 
   for (const product of productsHistoryBid) {
@@ -634,6 +638,7 @@ router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
     emptyProductsWishList: productsWishList.length === 0,
     emptyProductsSelling: productsSelling.length === 0,
     emptyProductsWinList: productsWinList.length === 0,
+    //evaluation
   });
 
   req.session.lastUrl = req.originalUrl
@@ -666,7 +671,15 @@ router.get("/checkout/:productID", checkUser.checkAuthenticated, async (req, res
   req.session.lastUrl = req.originalUrl;
 });
 
-
+router.post("/evaluation/:userID", checkUser.checkAuthenticatedPost, async (req, res) => {
+  const entity= {
+    sender: req.user.userID,
+    receiver: userID,
+  }
+  //await userModel.addUserEvaluation(entity);
+  console.log(entity);
+  res.json("1");
+});
 
 router.get("/login", checkUser.checkNotAuthenticated, (req, res) => {
   let errMsg = null;
