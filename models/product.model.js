@@ -47,7 +47,7 @@ module.exports = {
         return rows[0].imgSrc;
     },
     singleBidByProduct: (productID) => db.load(`select * from product_bid where productID = "${productID}" and isCancel="0" order by bidTime desc`),
-    singleNoteByProduct: (productID) => db.load(`select * from product_note where productID = "${productID}"`),
+    allDescByProduct: (productID) => db.load(`select * from product_description where productID = "${productID}"`),
 
     addProductSingle: entity => db.add('product_single', entity),
     addProductImg: entity => db.add('product_img', entity),

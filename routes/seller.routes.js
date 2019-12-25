@@ -1,11 +1,14 @@
 const express = require("express");
 
 const productModel = require("../models/product.model");
+const categoryModel = require("../models/category.model");
+const descModel = require("../models/description.model")
 const upload = require("../middlewares/upload.mdw");
 const fs = require('fs-extra')
 const router = express.Router();
 const uuid = require('uuid/v1');
 const checkUser = require("../middlewares/user.mdw");
+const numeral = require('numeral');
 
 router.get("/new-product", checkUser.checkSeller, async (req, res, next) => {
     res.render("vwSeller/new-product", {
@@ -24,22 +27,34 @@ var filesConfig = [{
     name: 'filesThumb[]'
 }];
 router.post("/new-product/", upload.fields(filesConfig), checkUser.checkAuthenticatedPost, async (req, res, next) => {
+    const productCate = await categoryModel.getFromName(req.body.productCate);
     const entityProductSingle = {
         productID: req.body.id,
         productName: req.body.productName,
+        cateID: productCate.cateID,
+        subcateID: productCate.subcateID,
         seller: req.user.userID,
         brand: req.body.brand,
         pFrom: req.body.pFrom,
-        beginPrice: req.body.beginPrice,
-        currentPrice: req.body.beginPrice,
-        stepPrice: req.body.stepPrice,
-        immePrice: req.body.immePrice,
+        beginPrice: numeral(req.body.beginPrice).value(),
+        currentPrice: numeral(req.body.beginPrice).value(),
+        stepPrice: numeral(req.body.stepPrice).value(),
+        immePrice: numeral(req.body.immePrice).value(),
         beginDate: new Date(),
         endDate: new Date(new Date().setDate(new Date().getDate() + 7)),
         autoExtend: req.body.autoExtend === "on",
     }
 
     await productModel.addProductSingle(entityProductSingle);
+
+    if (req.body.description.trim() != '') {
+        const entityDesc = {
+            productID: req.body.id,
+            descContents: req.body.description,
+            descDate: new Date()
+        }
+        await descModel.addDesc(entityDesc)
+    }
 
     const mainImg = req.files.fileMain;
     let entityProductImg = {
@@ -77,5 +92,16 @@ router.post("/product/:productID/delete", async (req, res) => {
     }
     res.send(req.params.productID);
 });
+
+router.post("/product/:productID/addDesc", async (req, res) => {
+    const entityDesc = {
+        productID: req.params.productID,
+        descContents: req.body.desc,
+        descDate: new Date()
+    };
+    await descModel.addDesc(entityDesc)
+
+    res.redirect(`/product/${req.params.productID}`)
+})
 
 module.exports = router;

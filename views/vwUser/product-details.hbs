@@ -133,16 +133,19 @@
 										<h4 style="margin-bottom: 20px;">Mô tả của người bán<span class="pull-right"
 												style="font-size: 14px; margin-top:-5px">
 												{{#if isSeller}}
-												<button class="main-btn note-btn"><i class="far fa-edit"></i> Thêm mô
+												<button class="main-btn note-btn" productID="{{product.productID}}"><i
+														class="far fa-edit"></i> Thêm mô
 													tả</button></span>
 											{{/if}}
 										</h4>
-										{{#each note}}
-										<div class="note" id="note{{noteID}}">
+										{{#each desc}}
+										<div class="note" id="note{{descID}}">
 											<p><i class="fas fa-edit"></i>
-												<span>{{format_day noteDate}}</span>
+												<span>{{format_day_time descDate}}</span>
 											</p>
-											<p>{{noteContents}}</p>
+											<div class="ignore">
+												{{{descContents}}}
+											</div>
 										</div>
 										{{/each}}
 									</div>

@@ -8,6 +8,7 @@ const querystring = require('querystring');
 const checkUser = require("../middlewares/user.mdw");
 const moment = require('moment');
 const mailer = require("../middlewares/mail.mdw");
+const numeral = require("numeral")
 
 const router = express.Router();
 
@@ -213,10 +214,10 @@ router.post("/productList/:cateID/:subcateID", async (req, res) => {
 });
 
 router.get("/product/:productID", async (req, res) => {
-  const [productSingle, listImgSrc, note, productBid, countBid, seller] = await Promise.all([
+  const [productSingle, listImgSrc, desc, productBid, countBid, seller] = await Promise.all([
     productModel.single(req.params.productID),
     productModel.singleImgSrcByProduct(req.params.productID),
-    productModel.singleNoteByProduct(req.params.productID),
+    productModel.allDescByProduct(req.params.productID),
     productModel.singleBidByProduct(req.params.productID),
     productModel.countBidProduct(req.params.productID),
     productModel.getSellerByProduct(req.params.productID),
@@ -267,7 +268,7 @@ router.get("/product/:productID", async (req, res) => {
     productBid,
     bidPrice: product.stepPrice + product.currentPrice,
     listImgSrc,
-    note,
+    desc,
     emptyImg: listImgSrc.length === 0,
     title: "Chi tiết sản phẩm",
     message: req.query.message,
@@ -313,7 +314,7 @@ router.post("/product/:productID/bid", checkUser.checkAuthenticatedPost, async (
         });
 
         const oldHolder = await productModel.getWinnerOfBidByProduct(product.productID);
-        const price = req.body.bidPrice;
+        const price = numeral(req.body.bidPrice).value();
         const immePrice = product.immePrice || 0;
         let currentPrice = product.currentPrice;
         const priceHold = await productModel.getPriceOfHolderByProduct(product.productID);

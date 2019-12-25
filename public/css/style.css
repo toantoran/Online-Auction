@@ -1095,9 +1095,32 @@ textarea.input {
   z-index: 20;
 }
 
+.product.product-single .btn-rating {
+  position: absolute;
+  -webkit-transform: translate(-50%, 0);
+  -ms-transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
+  left: 50%;
+  bottom: 0;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 20;
+}
+
+.product.product-single .btn-rating-top {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 20;
+}
+
 .product.product-single:hover .quick-view,
 .product.product-single:hover .watch-list,
-.product.product-single:hover .check-out {
+.product.product-single:hover .check-out,
+.product.product-single:hover .btn-rating,
+.product.product-single:hover .btn-rating-top {
   opacity: 1;
   visibility: visible;
 }
@@ -1743,6 +1766,19 @@ textarea.input {
 .shiping-methods {
   margin-bottom: 30px;
 }
+
+.ignore ul {
+  margin: 0 0 10px 0;
+  padding: 0 0 0 40px;
+  list-style: disc;
+}
+
+.ignore ol {
+  margin: 0 0 10px 0;
+  padding: 0 0 0 40px;
+  list-style: decimal;
+}
+
 
 /*-- shopping cart table --*/
 
