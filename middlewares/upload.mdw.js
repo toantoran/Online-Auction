@@ -4,16 +4,19 @@ const fs = require("fs");
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         const id = req.body.id;
-        const dir =  `./public/img/product/${id}`;
-        fs.exists(dir, exist => {
-            if (!exist) {
-                return fs.mkdir(dir, error => cb(error, dir))
-            }
-            return cb(null, dir)
-        })
+        const dir = `./public/img/product/${id}`;
+        console.log(dir);
+        const exist = fs.existsSync(dir);
+        if (!exist) {
+            console.log("1");
+            fs.mkdirSync(dir);
+            return cb(null, dir);
+        }
+        console.log("2");
+        return cb(null, dir);
     },
     filename: function (req, file, cb) {
-        cb(null, Date.now()+'-'+file.originalname)
+        cb(null, Date.now() + '-' + file.originalname)
     }
 })
 const limits = {
