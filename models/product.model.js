@@ -160,9 +160,16 @@ module.exports = {
     productsSelling: (userID) => db.load(`
     select *
     from product_single
-    where seller = ${userID}
+    where seller = ${userID} and endDate > NOW()
     order by beginDate desc
     limit ${config.account.limitProductsSelling}`),
+
+    productsSoldEnd: (userID) => db.load(`
+    select *
+    from product_single
+    where seller = ${userID} and endDate <= NOW()
+    order by beginDate desc
+    limit ${config.account.limitProductsSoldEnd}`),
 
     productsWinList: (userID) => db.load(`
     select *

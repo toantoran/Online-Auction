@@ -17,9 +17,15 @@
                         <h3 class="aside-title">Tài khoản</h3>
                         <ul class="list-links">
                             <li><a href="#profile" class="active">Thông tin cá nhân</a></li>
+                            <hr>
                             <li><a href="#bid-history">Lịch sử đấu giá</a></li>
+                            <hr>
                             <li><a href="#wish-list">Danh sách yêu thích</a></li>
-                            <li><a href="#sold-product">Sản phẩm đã đăng</a></li>
+                            <hr>
+                            <li><a href="#sold-product">Sản phẩm của bạn đang bán</a></li>
+                            <hr>
+                            <li><a href="#sold-product-end">Sản phẩm đăng bán đã hết thời gian</a></li>
+                            <hr>
                             <li><a href="#seller-regis">Đăng ký làm người bán</a></li>
                             </di>
                     </div>
@@ -287,7 +293,7 @@
                         <!-- MAIN -->
                         <div class="col-md-12">
                             <div class="section-title">
-                                <h3 class="title">Sản phẩm đã đăng</h3>
+                                <h3 class="title">Sản phẩm của bạn đang bán</h3>
                             </div>
                             <!-- row -->
                             <div class="row">
@@ -314,12 +320,6 @@
                                                 </ul>
                                                 <button class="main-btn quick-view"><i class="fa fa-search-plus"></i>
                                                     Xem chi tiết</button>
-                                                <button class="main-btn btn-rating-top" winnerName="{{winner.name}}"
-                                                    winnerEmail="{{winner.email}}" winnerTel="{{winner.tel}}"
-                                                    winnerID="{{winner.userID}}" productID="{{productID}}"><a
-                                                        href="#ratingWinner" data-toggle="modal" id="link-rating-winner"
-                                                        class="trigger-btn"><i class="fas fa-thumbs-up"></i>&nbsp;Đánh
-                                                        giá</a></button>
                                                 <button productID="{{productID}}" userID="{{user.userID}}" type="button"
                                                     onsubmit="return false;" name="btnWish"
                                                     class="watch-list btn-wish {{#if isExistWishItem}}focus{{/if}}"><i
@@ -337,6 +337,73 @@
                                                 {{#if isBided}}
                                                 <p class="product-text">Đặt cao nhất: <span
                                                         class="product-price">{{winner.name}}</span></p>
+                                                {{/if}}
+                                                <div class="product-footer">
+                                                    <small><span>{{countBid}}</span> lượt ra giá</small>
+                                                    <small>Từ <span>{{format_day beginDate}}</span></small>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" id="endDate" value="{{format_day_value endDate}}">
+                                        </div>
+                                    </div>
+                                    {{/each}}
+                                </div>
+                                {{/if}}
+                            </div>
+                            <!-- /row -->
+                        </div>
+                        <!-- /MAIN -->
+                    </div>
+                    <!-- /row -->
+                </div>
+
+                <div id="sold-product-end">
+                    <!-- row -->
+                    <div class="row">
+                        <!-- MAIN -->
+                        <div class="col-md-12">
+                            <div class="section-title">
+                                <h3 class="title">Sản phẩm đăng bán đã hết thời gian</h3>
+                            </div>
+                            <!-- row -->
+                            <div class="row">
+                                <div class="col-md-12 product-container" id="sold-product">
+                                    {{#if emptyProductsSoldEnd}}
+                                    <p>Không có sản phẩm</p>
+                                    {{else}}
+                                    {{#each this.productsSoldEnd}}
+                                    <div class="col-md-3 col-sm-4 col-xs-6">
+                                        <div class="product product-single">
+                                            <div class="product-thumb">
+                                                <button class="main-btn quick-view"><i class="fa fa-search-plus"></i>
+                                                    Xem chi tiết</button>
+                                                {{#if isBided}}
+                                                <button class="main-btn btn-rating" winnerName="{{winner.name}}"
+                                                    winnerEmail="{{winner.email}}" winnerTel="{{winner.tel}}"
+                                                    winnerID="{{winner.userID}}" productID="{{productID}}"><a
+                                                        href="#ratingWinner" data-toggle="modal" id="link-rating-winner"
+                                                        class="trigger-btn"><i class="fas fa-thumbs-up"></i>&nbsp;Đánh
+                                                        giá</a></button>
+                                                {{/if}}
+                                                <button productID="{{productID}}" userID="{{user.userID}}" type="button"
+                                                    onsubmit="return false;" name="btnWish"
+                                                    class="watch-list btn-wish {{#if isExistWishItem}}focus{{/if}}"><i
+                                                        class="fa fa-heart"></i></button>
+                                                <img src="/img/product/{{productID}}/{{mainImgSrc}}" alt="">
+                                            </div>
+                                            <div class="product-body">
+                                                <h2 class="product-name"><a
+                                                        href="/product/{{productID}}">{{format_name productName}}</a>
+                                                </h2>
+                                                <p class="product-text">Giá hiện tại: <span
+                                                        class="product-price">{{format_money currentPrice}}</span></p>
+                                                <p class="product-text">Giá bán ngay: <span
+                                                        class="product-price">{{format_money immePrice}}</span></p>
+                                                {{#if isBided}}
+                                                <p class="product-text">Thắng cuộc: <span
+                                                        class="product-price" style="color: green">{{winner.name}}</span></p>
+                                                {{else}}
+                                                 <p class="product-text" style="color: red" >Không có lượt ra giá nào!!!</p>
                                                 {{/if}}
                                                 <div class="product-footer">
                                                     <small><span>{{countBid}}</span> lượt ra giá</small>

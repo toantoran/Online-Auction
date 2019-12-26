@@ -548,11 +548,12 @@ router.post("/productList/search/:category/:textSearch", async (req, res) => {
 
 router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
   const user = req.user;
-  const [productsHistoryBid, productsWishList, productsSelling, productsWinList, evaluation] = await Promise.all([
+  const [productsHistoryBid, productsWishList, productsSelling, productsWinList, productsSoldEnd, evaluation] = await Promise.all([
     productModel.productsHistoryBid(user.userID),
     productModel.productsWishList(user.userID),
     productModel.productsSelling(user.userID),
     productModel.productsWinList(user.userID),
+    productModel.productsSoldEnd(user.userID),
     userModel.getEvaluationById(user.userID)
   ]);
 
@@ -588,10 +589,26 @@ router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
     const minutes = moment().diff(temp, 'minutes');
     product.isNew = minutes <= config.product.minutesIsNew;
 
-
     if (product.countBid > 0) {
       product.isBided = true;
       product.winner = await productModel.getNameWinnerOfBidByProduct(product.productID);
+    } else {
+      product.isBided = false;
+    }
+  }
+
+  for (const product of productsSoldEnd) {
+    [product.mainImgSrc, product.countBid, product.isExistWishItem] = await Promise.all([
+      productModel.singleMainImgSrcByProduct(product.productID),
+      productModel.countBidProduct(product.productID),
+      req.user ? await productModel.isExistWishItem(product.productID, req.user.userID) : false,
+    ]);
+  }
+
+  for (const product of productsSoldEnd) {
+    if (product.countBid > 0) {
+      product.isBided = true;
+      product.winner = await productModel.getWinnerOfBidByProduct(product.productID);
     } else {
       product.isBided = false;
     }
@@ -617,7 +634,6 @@ router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
       product.isBided = false;
     }
   }
-  console.log(productsSelling);
 
   for (const product of productsWinList) {
     [product.mainImgSrc, product.countBid, product.isExistWishItem] = await Promise.all([
@@ -636,10 +652,12 @@ router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
     productsWishList,
     productsSelling,
     productsWinList,
+    productsSoldEnd,
     emptyProductsHistoryBid: productsHistoryBid.length === 0,
     emptyProductsWishList: productsWishList.length === 0,
     emptyProductsSelling: productsSelling.length === 0,
     emptyProductsWinList: productsWinList.length === 0,
+    emptyProductsSoldEnd: productsSoldEnd.length ===0,
     //evaluation
   });
 

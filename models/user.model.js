@@ -30,7 +30,6 @@ module.exports = {
     checkExitsEvaluation: async (sender, receiver, productID) => {
         const rows = await db.load(`select * from user_evaluation where sender = ${sender} 
         and receiver = ${receiver} and productID = "${productID}"`);
-        console.log(rows.length); //ờ mờ thử coi :)) cmm
         if (rows.length > 0) return true;
         return false;
     }

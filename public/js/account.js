@@ -1,5 +1,4 @@
 $('#link-rating-seller').click((event) => {
-    // console.log($(event.target));
     $('#seller-up').prop('checked', true)
     const pID = $(event.target).parent().attr('productID')
     const sellerID = $(event.target).parent().attr('sellerID')
@@ -22,8 +21,6 @@ $('.btn-rating-seller').click((event) => {
         content: $('.rating-seller-content').val()
     };
 
-    //để thửu coi
-    console.log(ratingItem);
     $.ajax({
         url: '/evaluation/seller/' + ratingItem.productID,
         type: 'post',
@@ -53,10 +50,7 @@ $('.btn-rating-seller').click((event) => {
 });
 
 
-$('.btn-rating-top').click((event) => {
-    // console.log($(event.target));
-    // console.log("flag"); 
-
+$('#link-rating-winner').click((event) => {
     $('.rating-winner-content').val('')
 
     $('#winner-up').prop('checked', true)
@@ -79,8 +73,6 @@ $('.btn-rating-winner').click((event) => {
         content: $('.rating-winner-content').val()
     };
 
-    //để thửu coi roi lam tiep di :v
-    console.log(ratingItem);
     $.ajax({
         url: '/evaluation/winner/' + ratingItem.productID,
         type: 'post',

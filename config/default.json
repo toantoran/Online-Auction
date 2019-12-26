@@ -21,6 +21,7 @@
     "limitProductsHistoryBid": 10,
     "limitProductsWishList": 10,
     "limitProductsSelling": 10,
+    "limitProductsSoldEnd":10,
     "limitProductsWinList": 10
   },
   "product": {
