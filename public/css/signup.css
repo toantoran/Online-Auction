@@ -3,20 +3,19 @@ body {
 }
 
 .modal-login {
+    min-width: 350px;
     width: 90vw;
-    min-width: 976px;
+    max-width: 800px;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
-    background-color: white;
-    border-bottom: none;
-    overflow: auto;
+    -webkit-transform: translate(-50%, -50%);
 }
 
 .modal-login .modal-content {
-    padding: 20px;
+    padding: 10px;
     border-radius: 5px;
     border: none;
 }
@@ -47,11 +46,11 @@ body {
     background: #fff;
     border: 1px solid #f3f3f3;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-    padding: 25px;
+    padding: 10px;
 }
 
 .modal-login .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .modal-login label {
@@ -134,8 +133,8 @@ body {
 
 .modal-body {
     border-bottom: none;
+    padding: 10px;
 }
-
 
 .modal-body i {
     color: #F8694A;
@@ -152,4 +151,10 @@ body {
 #body {
     border-left: 1px solid orange;
     left: 50%
+}
+
+@media (min-width: 1025px) {
+    .modal-login {
+        max-width: 400px;
+    }
 }
