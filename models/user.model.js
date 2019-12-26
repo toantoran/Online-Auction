@@ -17,16 +17,15 @@ module.exports = {
     },
 
     addUserEvaluation: entity => db.add('user_evaluation', entity),
-    getPointEvaluation: userID => {
-        const countGood = db.load(`{
-            select count(*) from user_valuation where receiver = ${userID} and isGood = 1
-        }`);
-        const countSum = db.load(`{
-            select count(*) from user_valuation where receiver = ${userID}
-        }`);
-        return countGood / countSum;
+    getPointEvaluation: async userID => {
+        let rows = await db.load(`select count(*) as good from user_evaluation where receiver = ${userID} and isGood = 1`);
+        const countGood = rows[0].good;
+        rows = await db.load(`select count(*) as sum from user_evaluation where receiver = ${userID}`);
+        const countSum = rows[0].sum;
+        if(countSum==0) return 0;
+        return countGood*100 / countSum;
     },
-    getEvaluationById: userID => (`select * from user_evaluation where receiver = ${userID}`),
+    getEvaluationById: userID => db.load(`select * from user_evaluation where receiver = ${userID} order by time desc`),
     checkExitsEvaluation: async (sender, receiver, productID) => {
         const rows = await db.load(`select * from user_evaluation where sender = ${sender} 
         and receiver = ${receiver} and productID = "${productID}"`);

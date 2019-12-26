@@ -72,6 +72,7 @@
 							<p>Người bán: <span>{{seller.name}}</span></p>
 							<p>Số điện thoại: <span>{{seller.tel}}</span></p>
 							<p>Địa chỉ: <span>{{seller.address}}</span></p>
+							<p>Điểm đánh giá: <span style="color: red">{{format_evaluation seller.point}}</span></p>
 							<hr>
 							{{/unless }}
 							{{#if isBided}}
@@ -79,6 +80,7 @@
 							<p>Người đặt giá cao nhất: <span>{{winner.name}}</span></p>
 							<p>Số điện thoại: <span>{{winner.tel}}</span></p>
 							<p>Địa chỉ: <span>{{winner.address}}</span></p>
+							<p>Điểm đánh giá: <span style="color: red">{{format_evaluation winner.point}}</span></p>
 							<hr>
 							{{/if}}
 							<p>Giá hiện tại: <span class="product-price"

@@ -26,8 +26,12 @@
                             <hr>
                             <li><a href="#sold-product-end">Sản phẩm đăng bán đã hết thời gian</a></li>
                             <hr>
+                            <li><a href="#ratting">Đánh giá về bạn</a></li>
+                            {{#unless user.isSeller}}
+                            <hr>
                             <li><a href="#seller-regis">Đăng ký làm người bán</a></li>
-                            </di>
+                            {{/unless}}
+                        </ul>
                     </div>
                     <!-- /aside widget -->
                 </div>
@@ -400,10 +404,11 @@
                                                 <p class="product-text">Giá bán ngay: <span
                                                         class="product-price">{{format_money immePrice}}</span></p>
                                                 {{#if isBided}}
-                                                <p class="product-text">Thắng cuộc: <span
-                                                        class="product-price" style="color: green">{{winner.name}}</span></p>
+                                                <p class="product-text">Thắng cuộc: <span class="product-price"
+                                                        style="color: green">{{winner.name}}</span></p>
                                                 {{else}}
-                                                 <p class="product-text" style="color: red" >Không có lượt ra giá nào!!!</p>
+                                                <p class="product-text" style="color: red">Không có lượt ra giá
+                                                    nào!!!</p>
                                                 {{/if}}
                                                 <div class="product-footer">
                                                     <small><span>{{countBid}}</span> lượt ra giá</small>
@@ -479,63 +484,95 @@
                     </div>
                     <!-- /row -->
                 </div>
-                {{#unless user.isSeller}}
-                <div id="seller-regis">
-                    <!-- row -->
+                <div id="ratting">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="section-title">
-                                <h3 class="title">Đăng ký làm người bán <small><i
-                                            class="fas fa-info-circle"></i></small></h3>
+                                <h3 class="title">Đánh giá về bạn</h3>
                             </div>
-
-                            <form id="checkout-form" class="clearfix">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <h4 class="form-label">Hình thức bán hàng </h4>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-9" style='line-height: 40px;'>
-                                        <div class="form-group">
-                                            <span style="font-size: large;">Cá nhân</span>
-                                            <input type="checkbox" class="js-switch-radio">
-                                            <span style="font-size: large;">Doanh nghiệp</span>
-                                        </div>
-                                    </div>
+                            {{#if emptyEvaluation}}
+                                 <p>Không có lượt đánh giá nào</p>
+                            {{else}}
+                            {{#each evaluation}}
+                            <div class="evaluation">
+                                {{#if isGood}}
+                                <p>
+                                    <span><i class="fa fa-thumbs-up"></i>&nbsp;{{format_day time}}</span>
+                                </p>
+                                {{else}}
+                                <p>
+                                    <span><i class="fas fa-thumbs-down"></i>&nbsp;{{format_day time}}</span>
+                                </p>
+                                {{/if}}
+                                <div class="content-ratting">
+                                    <p style="font-weight:bold;">{{senderName}}</p>
+                                    {{{content}}}
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <h4 class="form-label">Thoả thuận dịch vụ </h4>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-9" style='line-height: 40px;'>
-                                        <div class="form-group">
-                                            <input type="checkbox" class="js-switch">
-                                            <span style="font-size: large;">Tôi đồng ý với các <a
-                                                    href="javascript:void(0)" class="btn-term"
-                                                    style="color: #F8694A; text-decoration: underline;">điều khoản
-                                                    dịch vụ</a> của Bidhub</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12" style="text-align: center;">
-                                        <div class="form-group">
-                                            <button class="main-btn btn-seller-regis">Xác nhận đăng ký <i
-                                                    class="fas fa-check-double"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
+                            </div>
+                            <hr>
+                            {{/each}}
+                            {{/if}}
                         </div>
                     </div>
                 </div>
-                {{/unless}}
             </div>
+            {{#unless user.isSeller}}
+            <div id="seller-regis">
+                <!-- row -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="section-title">
+                            <h3 class="title">Đăng ký làm người bán <small><i class="fas fa-info-circle"></i></small>
+                            </h3>
+                        </div>
+
+                        <form id="checkout-form" class="clearfix">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 class="form-label">Hình thức bán hàng </h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-9" style='line-height: 40px;'>
+                                    <div class="form-group">
+                                        <span style="font-size: large;">Cá nhân</span>
+                                        <input type="checkbox" class="js-switch-radio">
+                                        <span style="font-size: large;">Doanh nghiệp</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <h4 class="form-label">Thoả thuận dịch vụ </h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-9" style='line-height: 40px;'>
+                                    <div class="form-group">
+                                        <input type="checkbox" class="js-switch">
+                                        <span style="font-size: large;">Tôi đồng ý với các <a href="javascript:void(0)"
+                                                class="btn-term"
+                                                style="color: #F8694A; text-decoration: underline;">điều khoản
+                                                dịch vụ</a> của Bidhub</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12" style="text-align: center;">
+                                    <div class="form-group">
+                                        <button class="main-btn btn-seller-regis">Xác nhận đăng ký <i
+                                                class="fas fa-check-double"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {{/unless}}
         </div>
     </div>
+</div>
 </div>
 
 

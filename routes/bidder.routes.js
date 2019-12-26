@@ -234,7 +234,9 @@ router.get("/product/:productID", async (req, res) => {
   let winner;
   if (productBid.length > 0) {
     winner = await productModel.getWinnerOfBidByProduct(product.productID);
+    winner.point = await userModel.getPointEvaluation(winner.userID);
   }
+  seller.point = await userModel.getPointEvaluation(seller.userID);
 
   const productListSame = await productModel.sameBySubCate(req.params.productID, product.cateID, product.subcateID);
   for (const product of productListSame) {
@@ -285,9 +287,8 @@ router.get("/product/:productID", async (req, res) => {
 router.post("/product/:productID/bid", checkUser.checkAuthenticatedPost, async (req, res) => {
   const productSingle = await productModel.single(req.params.productID);
   const product = productSingle[0];
-  // const point = await userModel.getPointEvaluation(req.user.userID);
-  // console.log(checkPoint);
-  // const checkPoint = point < 8;
+  const point = await userModel.getPointEvaluation(req.user.userID);
+  const checkPoint = point <= 80;
   const checkBan = await productModel.checkBanBid(req.params.productID, req.user.userID);
   let query;
   if (checkBan) {
@@ -296,80 +297,87 @@ router.post("/product/:productID/bid", checkUser.checkAuthenticatedPost, async (
       message: "Bạn đã bị cấm đấu giá sản phẩm này!!!"
     });
   } else {
-    if (req.body.isEndBid === "true") {
+    if (checkPoint) {
       query = querystring.stringify({
         status: false,
-        message: "Phiên đấu giá đã kết thúc!"
+        message: "Điểm của bạn không đủ để tham gia phiên đấu giá này!!!"
       });
     } else {
-      if (product.seller === req.user.userID) {
+      if (req.body.isEndBid === "true") {
         query = querystring.stringify({
           status: false,
-          message: "Bạn là người bán sản phẩm này, không thể ra giá!"
+          message: "Phiên đấu giá đã kết thúc!"
         });
       } else {
-        query = querystring.stringify({
-          status: true,
-          message: "Ra giá thành công!"
-        });
-
-        const oldHolder = await productModel.getWinnerOfBidByProduct(product.productID);
-        const price = numeral(req.body.bidPrice).value();
-        const immePrice = product.immePrice || 0;
-        let currentPrice = product.currentPrice;
-        const priceHold = await productModel.getPriceOfHolderByProduct(product.productID);
-        let isHolder;
-        if (+price === immePrice) {
-          currentPrice = immePrice;
-          isHolder = 1;
-          product.endDate = new Date();
+        if (product.seller === req.user.userID) {
+          query = querystring.stringify({
+            status: false,
+            message: "Bạn là người bán sản phẩm này, không thể ra giá!"
+          });
         } else {
-          if (price <= priceHold) {
-            currentPrice = price;
-            isHolder = 0;
-          } else {
-            if (priceHold !== 0) {
-              currentPrice = priceHold + product.stepPrice;
-            }
+          query = querystring.stringify({
+            status: true,
+            message: "Ra giá thành công!"
+          });
+
+          const oldHolder = await productModel.getWinnerOfBidByProduct(product.productID);
+          const price = numeral(req.body.bidPrice).value();
+          const immePrice = product.immePrice || 0;
+          let currentPrice = product.currentPrice;
+          const priceHold = await productModel.getPriceOfHolderByProduct(product.productID);
+          let isHolder;
+          if (+price === immePrice) {
+            currentPrice = immePrice;
             isHolder = 1;
-          }
-          if (product.autoExtend) {
-            const temp = moment(product.endDate, 'YYYY-MM-DD HH:mm:ss');
-            let minutes = moment().diff(temp, 'minutes');
-            if (minutes >= -5) {
-              product.endDate = moment(product.endDate).add(10, 'minutes');
-              product.endDate = moment(product.endDate).format('YYYY-MM-DD HH:mm:ss');
+            product.endDate = new Date();
+          } else {
+            if (price <= priceHold) {
+              currentPrice = price;
+              isHolder = 0;
+            } else {
+              if (priceHold !== 0) {
+                currentPrice = priceHold + product.stepPrice;
+              }
+              isHolder = 1;
+            }
+            if (product.autoExtend) {
+              const temp = moment(product.endDate, 'YYYY-MM-DD HH:mm:ss');
+              let minutes = moment().diff(temp, 'minutes');
+              if (minutes >= -5) {
+                product.endDate = moment(product.endDate).add(10, 'minutes');
+                product.endDate = moment(product.endDate).format('YYYY-MM-DD HH:mm:ss');
+              }
             }
           }
+
+          const entity = {
+            productID: req.params.productID,
+            bidderID: req.user.userID,
+            price,
+            priceHold: currentPrice,
+            bidTime: new Date(),
+            isHolder
+          }
+          if (isHolder === 1) {
+            await productModel.setFalseIsHolderProductBid(product.productID);
+          }
+          await productModel.addProductBid(entity);
+          await productModel.updateProductCurrentPrice({
+            productID: product.productID,
+            currentPrice,
+            endDate: product.endDate,
+          })
+
+          //Gui mail
+          const seller = await userModel.getUserById(product.seller);
+          const sellerEMail = seller[0].email;
+
+          const bidderEmail = req.user.email;
+
+          const oldHolderEmail = (oldHolder == false) ? false : oldHolder.email;
+
+          await mailer.sendMailConfirmBid(sellerEMail, bidderEmail, oldHolderEmail, product);
         }
-
-        const entity = {
-          productID: req.params.productID,
-          bidderID: req.user.userID,
-          price,
-          priceHold: currentPrice,
-          bidTime: new Date(),
-          isHolder
-        }
-        if (isHolder === 1) {
-          await productModel.setFalseIsHolderProductBid(product.productID);
-        }
-        await productModel.addProductBid(entity);
-        await productModel.updateProductCurrentPrice({
-          productID: product.productID,
-          currentPrice,
-          endDate: product.endDate,
-        })
-
-        //Gui mail
-        const seller = await userModel.getUserById(product.seller);
-        const sellerEMail = seller[0].email;
-
-        const bidderEmail = req.user.email;
-
-        const oldHolderEmail = (oldHolder == false) ? false : oldHolder.email;
-
-        await mailer.sendMailConfirmBid(sellerEMail, bidderEmail, oldHolderEmail, product);
       }
     }
   }
@@ -645,6 +653,10 @@ router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
     product.seller = await productModel.getSellerByProduct(product.productID);
   }
 
+  for(const e of evaluation)
+  {
+    e.senderName = await userModel.getNameById(e.sender);
+  }
   res.render("vwUser/account", {
     user,
     title: "Quản lí tài khoản",
@@ -653,12 +665,13 @@ router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
     productsSelling,
     productsWinList,
     productsSoldEnd,
+    evaluation,
     emptyProductsHistoryBid: productsHistoryBid.length === 0,
     emptyProductsWishList: productsWishList.length === 0,
     emptyProductsSelling: productsSelling.length === 0,
     emptyProductsWinList: productsWinList.length === 0,
-    emptyProductsSoldEnd: productsSoldEnd.length ===0,
-    //evaluation
+    emptyProductsSoldEnd: productsSoldEnd.length === 0,
+    emptyEvaluation: evaluation.length === 0,
   });
 
   req.session.lastUrl = req.originalUrl
@@ -714,7 +727,7 @@ router.post("/evaluation/seller/:productID", checkUser.checkAuthenticatedPost, a
 
 router.post("/evaluation/winner/:productID", checkUser.checkAuthenticatedPost, async (req, res) => {
   const check = await userModel.checkExitsEvaluation(req.user.userID, req.body.winnerID, req.params.productID);
-  if (!check) { // roi :v không đổi , chưa nhen :v đúng r mà thử
+  if (!check) {
     const receiver = req.body.winnerID;
     const entity = {
       sender: req.user.userID,
@@ -745,7 +758,6 @@ router.get("/login", checkUser.checkNotAuthenticated, (req, res) => {
     message: errMsg
   });
   req.session.lastUrl = req.session.lastUrl;
-  //  req.session.destroy();
 });
 
 router.get("/signup", checkUser.checkNotAuthenticated, (req, res) => {
@@ -757,12 +769,10 @@ router.get("/signup", checkUser.checkNotAuthenticated, (req, res) => {
 
 router.post('/login',
   passport.authenticate('local', {
-    // successRedirect: req.session.lastUrl,
     failureRedirect: "/login",
     failureFlash: "Email hoặc mật khẩu không đúng",
     successFlash: "Welcome!"
   }), (req, res) => {
-    // console.log(req.user);
     res.locals.lcUser = req.user;
     res.redirect(req.session.lastUrl)
   })

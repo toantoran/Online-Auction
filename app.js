@@ -49,6 +49,7 @@ app.engine(
                 }
                 return val;
             },
+            format_evaluation: val => val + ' %',
             compare: (val1, val2) => val1 === val2
         }
     })
