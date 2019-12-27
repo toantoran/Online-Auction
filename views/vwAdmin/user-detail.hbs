@@ -1,0 +1,234 @@
+{{#section 'js'}}
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="/js/admin-user-detail.js"></script>
+{{/section}}
+
+{{#section 'css'}}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="/css/admin.css">
+{{/section}}
+{{#each lcCategory}}
+{{this.cateName}}
+{{/each}}
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <input type="hidden" id="status" name="status" value="{{status}}">
+            <input type="hidden" id="message" name="message" value="{{message}}">
+            <div class="col-md-2 fixed-aside">
+                <!-- ASIDE -->
+                <div id="aside" class="">
+                    <!-- aside widget -->
+                    <div class="aside">
+                        <h3 class="aside-title">Quản trị viên</h3>
+                        <ul class="list-links">
+                            <li><a href="/admin/category">Quản lý danh mục</a></li>
+                            <hr>
+                            <li><a href="/admin/users" class="link-active">Quản lý người dùng</a></li>
+                            <hr>
+                            <li class="sub"><a href="#profile">Thông tin cá nhân</a></li>
+                            <hr>
+                            <li class="sub"><a href="#history">Lịch sử đấu giá</a></li>
+                            <hr>
+                            {{#if target.isSeller}}
+                            <li class="sub"><a href="#sold-product">Sản phẩm đã đăng</a></li>
+                            <hr>
+                            {{/if}}
+                            <li class="sub"><a href="#rating">Các lượt đánh giá</a></li>
+                            <hr>
+                        </ul>
+                    </div>
+                    <!-- /aside widget -->
+                </div>
+                <!-- /ASIDE -->
+            </div>
+
+            <div class="col-md-10">
+                <!-- row -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="section-title">
+                            <h3 class="title">Quản lý người dùng</h3>
+                        </div>
+                        <div class="row" id="profile">
+                            <div class="col-md-12">
+                                <h4>Thông tin cá nhân</h4>
+                                <p>ID: {{target.userID}}</p>
+                                <p>Họ tên: {{target.name}}</p>
+                                <p>Email: {{target.email}}</p>
+                                <p>Điện thoại: {{target.tel}}</p>
+                                <p>Địa chỉ: {{target.address}}</p>
+                                <p>Ngày sinh: {{format_day target.birthDay}}</p>
+                                <p>Điểm số: {{target.point}}</p>
+                            </div>
+                        </div>
+                        <div class="row" id="history">
+                            <div class="col-md-12 product-container">
+                                <h4>Lịch sử đấu giá</h4>
+                                {{#unless target.history.length}}
+                                <p>Lịch sử đấu giá trống</p>
+                                {{/unless}}
+                                {{#each target.history}}
+                                <div class="col-md-3 col-sm-4 col-xs-6">
+                                    <div class="product product-single">
+                                        <div class="product-thumb">
+                                            <div class="product-label">
+                                                {{#if isNew}}
+                                                <span>Mới</span>
+                                                {{/if}}
+                                                {{#if isHot}}
+                                                <span class="sale">Hot <i class="fab fa-hotjar"></i></span>
+                                                {{/if}}
+                                            </div>
+                                            <ul class="product-countdown">
+                                                <li><span class="cd-h">0 H</span></li>
+                                                <li><span class="cd-m">0 M</span></li>
+                                                <li><span class="cd-s">0 S</span></li>
+                                            </ul>
+                                            <button class="main-btn quick-view"><i class="fa fa-search-plus"></i>
+                                                Xem chi tiết</button>
+                                            <img src="/img/product/{{productID}}/{{mainImgSrc}}" alt="">
+                                        </div>
+                                        <div class="product-body">
+                                            <h2 class="product-name"><a
+                                                    href="/product/{{productID}}">{{format_name productName}}
+                                                </a>
+                                            </h2>
+                                            <p class="product-text">Giá hiện tại:
+                                                {{#if isWinner}}
+                                                <span class="product-price" style="color: green">
+                                                    {{else}}
+                                                    <span class="product-price" style="color: red">
+                                                        {{/if}}{{format_money currentPrice}}</span></p>
+                                            <p class="product-text">Giá bán ngay: <span
+                                                    class="product-price">{{format_money immePrice}}</span></p>
+                                            <p class="product-text">Giá của bạn: <span class="product-price"
+                                                    style="color: green">{{format_money price}}</span></p>
+                                            {{#if isCancel}}
+                                            <p class="product-text">Trạng thái: <span class="product-price"
+                                                    style="color: orange">Đã bị huỷ</span></p>
+                                            {{else}}
+                                            {{#if isEndBid}}
+                                            <p class="product-text">Trạng thái: <span class="product-price"
+                                                    style="color: red">Đã kết thúc</span></p>
+                                            {{#if isWinner}}
+                                            <p class="product-text">Kết quả: <span class="product-price"
+                                                    style="color: green">Thắng cuộc</span></p>
+                                            {{else}}
+                                            <p class="product-text">Kết quả: <span class="product-price"
+                                                    style="color: orange">Thất bại</span></p>
+                                            {{/if}}
+                                            {{else}}
+                                            <p class="product-text">Trạng thái: <span class="product-price"
+                                                    style="color: green">Đang đấu giá</span></p>
+                                            {{/if}}
+                                            {{/if}}
+                                            <div class="product-footer">
+                                                <small><span>{{countBid}}</span> lượt ra giá</small>
+                                                <small>Từ <span>{{format_day beginDate}}</span></small>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" id="endDate" value="{{format_day_value endDate}}">
+                                    </div>
+                                </div>
+                                {{/each}}
+                            </div>
+                        </div>
+
+                        {{#if target.isSeller}}
+                        <div class="row" id="sold-product">
+                            <div class="col-md-12">
+                                <h4>Sản phẩm đã đăng</h4>
+                                <div class="row">
+                                    <div class="col-md-12 product-container" id="sold-product">
+                                        {{#if emptyProductsSelling}}
+                                        <p>Không có sản phẩm</p>
+                                        {{else}}
+                                        {{#each this.productsSelling}}
+                                        <div class="col-md-3 col-sm-4 col-xs-6">
+                                            <div class="product product-single">
+                                                <div class="product-thumb">
+                                                    <div class="product-label">
+                                                        {{#if isNew}}
+                                                        <span>Mới</span>
+                                                        {{/if}}
+                                                        {{#if isHot}}
+                                                        <span class="sale">Hot <i class="fab fa-hotjar"></i></span>
+                                                        {{/if}}
+                                                    </div>
+                                                    <ul class="product-countdown">
+                                                        <li><span class="cd-h">0 H</span></li>
+                                                        <li><span class="cd-m">0 M</span></li>
+                                                        <li><span class="cd-s">0 S</span></li>
+                                                    </ul>
+                                                    <button class="main-btn quick-view"><i
+                                                            class="fa fa-search-plus"></i>
+                                                        Xem chi tiết</button>
+                                                    <button productID="{{productID}}" userID="{{user.userID}}"
+                                                        type="button" onsubmit="return false;" name="btnWish"
+                                                        class="watch-list btn-wish {{#if isExistWishItem}}focus{{/if}}"><i
+                                                            class="fa fa-heart"></i></button>
+                                                    <img src="/img/product/{{productID}}/{{mainImgSrc}}" alt="">
+                                                </div>
+                                                <div class="product-body">
+                                                    <h2 class="product-name"><a
+                                                            href="/product/{{productID}}">{{format_name productName}}</a>
+                                                    </h2>
+                                                    <p class="product-text">Giá hiện tại: <span
+                                                            class="product-price">{{format_money currentPrice}}</span>
+                                                    </p>
+                                                    <p class="product-text">Giá bán ngay: <span
+                                                            class="product-price">{{format_money immePrice}}</span></p>
+                                                    {{#if isBided}}
+                                                    <p class="product-text">Đặt cao nhất: <span
+                                                            class="product-price">{{winner.name}}</span></p>
+                                                    {{/if}}
+                                                    <div class="product-footer">
+                                                        <small><span>{{countBid}}</span> lượt ra giá</small>
+                                                        <small>Từ <span>{{format_day beginDate}}</span></small>
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" id="endDate" value="{{format_day_value endDate}}">
+                                            </div>
+                                        </div>
+                                        {{/each}}
+                                    </div>
+                                    {{/if}}
+                                </div>
+                            </div>
+                        </div>
+                        {{/if}}
+
+                        <div class="row" id="rating">
+                            <div class="col-md-12">
+                                <h4>Các lượt đánh giá</h4>
+                                {{#if emptyEvaluation}}
+                                <p>Không có lượt đánh giá nào</p>
+                                {{else}}
+                                {{#each evaluation}}
+                                <div class="evaluation">
+                                    {{#if isGood}}
+                                    <p>
+                                        <span><i class="fa fa-thumbs-up"></i>&nbsp;{{format_day time}}</span>
+                                    </p>
+                                    {{else}}
+                                    <p>
+                                        <span><i class="fas fa-thumbs-down"></i>&nbsp;{{format_day time}}</span>
+                                    </p>
+                                    {{/if}}
+                                    <div class="content-ratting">
+                                        <p style="font-weight:bold;">{{senderName}}</p>
+                                        {{{content}}}
+                                    </div>
+                                </div>
+                                <hr>
+                                {{/each}}
+                                {{/if}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -108,7 +108,7 @@ router.get("/users", (req, res, next) => {
 router.get("/users/getAllBidder", async (req, res) => {
     const data = await userModel.getAllBidder();
     for (let user of data) {
-        user.button = `<a href='/admin/user/detail/${user.userID}' class='main-btn edit-btn'><i class='fas fa-info-circle'></i></a><button type='submit' formmethod='post' style='display: none' formaction='/admin/users/detele/${user.userID}' class='main-btn delete-user-btn'></button><button type='button' class='main-btn' onclick='confirmDelete(${user.userID})'><i class='fas fa-trash-alt'></i></button>`;
+        user.button = `<a href='/admin/user-detail/${user.userID}' class='main-btn edit-btn'><i class='fas fa-info-circle'></i></a><button type='submit' formmethod='post' style='display: none' formaction='/admin/users/detele/${user.userID}' class='main-btn delete-user-btn'></button><button type='button' class='main-btn' onclick='confirmDelete(${user.userID})'><i class='fas fa-trash-alt'></i></button>`;
     }
     res.send({
         "draw": 1,
@@ -122,7 +122,7 @@ router.get("/users/getAllSeller", async (req, res) => {
     const data = await userModel.getAllSeller();
     for (let user of data) {
         user.button =
-            `<a href='/admin/user/detail/${user.userID}' class='main-btn edit-btn'><i class='fas fa-info-circle'></i></a>
+            `<a href='/admin/user-detail/${user.userID}' class='main-btn edit-btn'><i class='fas fa-info-circle'></i></a>
         <button type='submit' formmethod='post' style='display: none' formaction='/admin/users/downgrade/${user.userID}' class='main-btn downgrade-user-btn'></button>
         <button type='button' class='main-btn' onclick='confirmDowngrade(${user.userID})'><i class="fas fa-angle-double-down"></i></button>
         <button type='submit' formmethod='post' style='display: none' formaction='/admin/users/detele/${user.userID}' class='main-btn delete-user-btn'></button>
@@ -139,7 +139,7 @@ router.get("/users/getAllSeller", async (req, res) => {
 router.get("/users/getAllAdmin", async (req, res) => {
     const data = await userModel.getAllAdmin();
     for (let user of data) {
-        user.button = `<a href='/admin/user/detail/${user.userID}' class='main-btn edit-btn'><i class='fas fa-info-circle'></i></a>`;
+        user.button = `<a href='/admin/user-detail/${user.userID}' class='main-btn edit-btn'><i class='fas fa-info-circle'></i></a>`;
     }
     res.send({
         "draw": 1,
@@ -165,6 +165,43 @@ router.get("/category-detail/:cateID", async (req, res, next) => {
         message: req.query.message,
         status: req.query.status,
         cate
+    });
+
+    req.session.lastUrl = req.originalUrl;
+});
+
+router.get("/category-sub-detail/:cateID/:subcateID", async (req, res, next) => {
+    const subcate = res.locals.lcCateList[req.params.cateID - 1].subCate[req.params.subcateID - 1];
+    subcate.productsCount = await productModel.countBySubCat(subcate.cateID, subcate.subcateID)
+    const parent = res.locals.lcCateList[req.params.cateID - 1]
+    res.render("vwAdmin/category-sub-detail", {
+        title: "Chi tiết danh mục con",
+        user: req.user,
+        notShowBreadcumb: true,
+        message: req.query.message,
+        status: req.query.status,
+        subcate,
+        parent
+    });
+
+    req.session.lastUrl = req.originalUrl;
+});
+
+router.get("/user-detail/:userID", async (req, res, next) => {
+    const userID = req.params.userID
+    const rs = await userModel.getUserById(userID);
+    const target = rs[0];
+    target.point = await userModel.getPointEvaluation(userID);
+    target.evaluation = await userModel.getEvaluationById(userID);
+    target.history = await productModel.productsHistoryBid(target.userID);
+    console.log(target.history);
+    res.render("vwAdmin/user-detail", {
+        title: "Chi tiết User",
+        user: req.user,
+        notShowBreadcumb: true,
+        message: req.query.message,
+        status: req.query.status,
+        target
     });
 
     req.session.lastUrl = req.originalUrl;
