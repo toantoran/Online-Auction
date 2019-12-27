@@ -19,3 +19,7 @@ table {
 h2 {
     margin: 5px 0;
 }
+
+table .main-btn {
+    padding: 5px 10px !important;
+}

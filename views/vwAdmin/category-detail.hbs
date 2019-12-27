@@ -1,0 +1,103 @@
+{{#section 'js'}}
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="/js/admin-cate-detail.js"></script>
+{{/section}}
+
+{{#section 'css'}}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="/css/admin.css">
+{{/section}}
+{{#each lcCategory}}
+{{this.cateName}}
+{{/each}}
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <input type="hidden" id="status" name="status" value="{{status}}">
+            <input type="hidden" id="message" name="message" value="{{message}}">
+            <div class="col-md-3 fixed-aside">
+                <!-- ASIDE -->
+                <div id="aside" class="">
+                    <!-- aside widget -->
+                    <div class="aside">
+                        <h3 class="aside-title">Quản trị viên</h3>
+                        <ul class="list-links">
+                            <li><a href="/admin/category" class="link-active">
+                                    Quản lý danh mục
+                                </a></li>
+                            <hr>
+                            <li class="sub"><a href="#" class="link-active">Danh mục chính</a></li>
+                            <hr>
+                            {{#each lcCateList}}
+                            <li class="sub"><a href="/admin/category-detail/{{cateID}}">{{cateName}}</a></li>
+                            <hr>
+                            {{/each}}
+                            <li><a href="/admin/users">Quản lý người dùng</a></li>
+                            <hr>
+                        </ul>
+                    </div>
+                    <!-- /aside widget -->
+                </div>
+                <!-- /ASIDE -->
+            </div>
+
+            <div class="col-md-9">
+                <!-- row -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <form>
+                            <div class="section-title">
+                                <h3 class="title">Quản lý danh mục</h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h2>{{cate.cateName}}</h2>
+                                    <form action="" method="post">
+                                        <div class="form-group">
+                                            <label for="cateID">ID</label>
+                                            <p class="err-validate" id="err-name"></p>
+                                            <input class="input" type="text" name="cateID" value="{{cate.cateID}}"
+                                                id="cateID" disabled />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cateName">Tên danh mục</label>
+                                            <p class="err-validate" id="err-name"></p>
+                                            <input class="input" type="text" name="cateName" value="{{cate.cateName}}"
+                                                id="cateName" autofocus />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cateIcon">Icon danh mục: <span id="generate-icon"><i
+                                                        class="fas fa-{{cate.cateIcon}}"></i></span></label>
+                                            <p class="err-validate" id="err-name"></p>
+                                            <input class="input" type="text" name="cateIcon" value="{{cate.cateIcon}}"
+                                                id="cateIcon" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="productsCount">Tổng số sản phẩm</label>
+                                            <p class="err-validate" id="err-name"></p>
+                                            <input class="input" type="text" name="productsCount"
+                                                value="{{cate.productsCount}}" id="productsCount" disabled />
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-12" style="text-align: center;">
+                                                    <button class="main-btn btn-update"><i class="fas fa-save"></i> Lưu
+                                                        những thay đổi</button>
+                                                    <button class="main-btn btn-delete"><i class="fas fa-trash-alt"></i>
+                                                        Xóa danh mục</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                        </form>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
