@@ -1,0 +1,21 @@
+table thead tr th {
+    text-align: left;
+    padding: 8px 10px !important
+}
+
+table tbody tr td {
+    text-align: left;
+    padding: 0px 10px !important;
+}
+
+table tbody tr td:last-child {
+    text-align: right;
+}
+
+table {
+    margin: 10px 0 20px 0 !important;
+}
+
+h2 {
+    margin: 5px 0;
+}

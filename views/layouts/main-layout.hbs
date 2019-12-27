@@ -19,7 +19,6 @@
     <link rel="stylesheet" href="/css/slick.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/switchery.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     {{{_sections.css}}}
 </head>
 
@@ -62,6 +61,12 @@
                             <a href="/seller/new-product" class="main-btn upload-btn"><i class="fas fa-gavel"></i>
                                 Mở phiên
                                 đấu giá</a>
+                        </li>
+                        {{/if}}
+                        {{#if user.isAdmin}}
+                        <li class="header-cart dropdown default-dropdown">
+                            <a href="/admin/category" class="main-btn upload-btn"><i class="fas fa-user-cog"></i>
+                                Quản trị viên</a>
                         </li>
                         {{/if}}
                         <!-- Account -->
@@ -280,8 +285,6 @@
     <script src="/js/plugin/jquery.min.js"></script>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" charset="utf8"
-        src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
     <script src="https://use.fontawesome.com/releases/v5.11.2/js/all.js" data-auto-replace-svg="nest"></script>
     <script src='https://www.google.com/recaptcha/api.js'></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>

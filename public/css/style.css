@@ -267,6 +267,16 @@ textarea.input {
   font-size: 16px;
 }
 
+.list-links li.sub {
+  -webkit-transform: translateX(15px);
+  -ms-transform: translateX(15px);
+  transform: translateX(15px);
+}
+
+.list-links li.sub a {
+  font-size: 12px;
+}
+
 .list-links li>a {
   position: relative;
   display: inline-block;
@@ -304,6 +314,27 @@ textarea.input {
 .list-links li.active>a:before {
   opacity: 1;
   visibility: visible;
+}
+
+.link-active {
+  color: #F8694A;
+  -webkit-transform: translateX(10px);
+  -ms-transform: translateX(10px);
+  transform: translateX(10px);
+}
+
+.link-active:before {
+  content: "\f105";
+  position: absolute;
+  left: 0px;
+  font-family: FontAwesome;
+  -webkit-transform: translateX(-10px);
+  -ms-transform: translateX(-10px);
+  transform: translateX(-10px);
+  opacity: 1 !important;
+  visibility: visible !important;
+  -webkit-transition: 0.3s all;
+  transition: 0.3s all;
 }
 
 /*----------------------------*\

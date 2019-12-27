@@ -34,9 +34,9 @@ router.get("/", async (req, res) => {
     ] = await Promise.all([
       productModel.singleMainImgSrcByProduct(product.productID),
       productModel.countBidProduct(product.productID),
-      req.user
-        ? await productModel.isExistWishItem(product.productID, req.user.userID)
-        : false
+      req.user ?
+      await productModel.isExistWishItem(product.productID, req.user.userID) :
+      false
     ]);
   }
 
@@ -60,9 +60,9 @@ router.get("/", async (req, res) => {
     product.mainImgSrc = await productModel.singleMainImgSrcByProduct(
       product.productID
     );
-    product.isExistWishItem = req.user
-      ? await productModel.isExistWishItem(product.productID, req.user.userID)
-      : false;
+    product.isExistWishItem = req.user ?
+      await productModel.isExistWishItem(product.productID, req.user.userID) :
+      false;
   }
 
   for (const product of productsMostBid) {
@@ -89,9 +89,9 @@ router.get("/", async (req, res) => {
     ] = await Promise.all([
       productModel.singleMainImgSrcByProduct(product.productID),
       productModel.countBidProduct(product.productID),
-      req.user
-        ? await productModel.isExistWishItem(product.productID, req.user.userID)
-        : false
+      req.user ?
+      await productModel.isExistWishItem(product.productID, req.user.userID) :
+      false
     ]);
   }
 
@@ -119,9 +119,9 @@ router.get("/", async (req, res) => {
     ] = await Promise.all([
       productModel.singleMainImgSrcByProduct(product.productID),
       productModel.countBidProduct(product.productID),
-      req.user
-        ? await productModel.isExistWishItem(product.productID, req.user.userID)
-        : false
+      req.user ?
+      await productModel.isExistWishItem(product.productID, req.user.userID) :
+      false
     ]);
   }
 
@@ -156,7 +156,10 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/productList/:cateID/:subcateID", async (req, res) => {
-  const { cateID, subcateID } = req.params;
+  const {
+    cateID,
+    subcateID
+  } = req.params;
   const limit = config.paginate.limit;
   let page = req.query.page || 1;
   if (page < 1) page = 1;
@@ -212,9 +215,9 @@ router.get("/productList/:cateID/:subcateID", async (req, res) => {
     ] = await Promise.all([
       productModel.singleMainImgSrcByProduct(product.productID),
       productModel.countBidProduct(product.productID),
-      req.user
-        ? await productModel.isExistWishItem(product.productID, req.user.userID)
-        : false
+      req.user ?
+      await productModel.isExistWishItem(product.productID, req.user.userID) :
+      false
     ]);
   }
 
@@ -317,9 +320,9 @@ router.get("/product/:productID", async (req, res) => {
     ] = await Promise.all([
       productModel.singleMainImgSrcByProduct(product.productID),
       productModel.countBidProduct(product.productID),
-      req.user
-        ? await productModel.isExistWishItem(product.productID, req.user.userID)
-        : false
+      req.user ?
+      await productModel.isExistWishItem(product.productID, req.user.userID) :
+      false
     ]);
   }
 
@@ -354,9 +357,8 @@ router.get("/product/:productID", async (req, res) => {
     message: req.query.message,
     status: req.query.status,
     isSeller: req.user ? product.seller === req.user.userID : false,
-    isExistWishItem: req.user
-      ? await productModel.isExistWishItem(product.productID, req.user.userID)
-      : false,
+    isExistWishItem: req.user ?
+      await productModel.isExistWishItem(product.productID, req.user.userID) : false,
     isHot: countBid >= config.product.countBidIsHot,
     isNew: minutes <= config.product.minutesIsNew,
     productListSame
@@ -649,9 +651,9 @@ router.get("/productList/search/:category/:textSearch", async (req, res) => {
     ] = await Promise.all([
       productModel.singleMainImgSrcByProduct(product.productID),
       productModel.countBidProduct(product.productID),
-      req.user
-        ? await productModel.isExistWishItem(product.productID, req.user.userID)
-        : false
+      req.user ?
+      await productModel.isExistWishItem(product.productID, req.user.userID) :
+      false
     ]);
   }
 
@@ -736,14 +738,14 @@ router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
     ] = await Promise.all([
       productModel.singleMainImgSrcByProduct(product.productID),
       productModel.countBidProduct(product.productID),
-      req.user
-        ? await productModel.isExistWishItem(product.productID, req.user.userID)
-        : false,
+      req.user ?
+      await productModel.isExistWishItem(product.productID, req.user.userID) :
+      false,
       (product.isEndBid = moment(product.endDate).valueOf() < Date.now()),
-      req.user
-        ? (await productModel.getWinnerOfBidByProduct(product.productID))
-            .userID === req.user.userID
-        : false
+      req.user ?
+      (await productModel.getWinnerOfBidByProduct(product.productID))
+      .userID === req.user.userID :
+      false
     ]);
   }
 
@@ -763,9 +765,9 @@ router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
     ] = await Promise.all([
       productModel.singleMainImgSrcByProduct(product.productID),
       productModel.countBidProduct(product.productID),
-      req.user
-        ? await productModel.isExistWishItem(product.productID, req.user.userID)
-        : false
+      req.user ?
+      await productModel.isExistWishItem(product.productID, req.user.userID) :
+      false
     ]);
   }
 
@@ -793,9 +795,9 @@ router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
     ] = await Promise.all([
       productModel.singleMainImgSrcByProduct(product.productID),
       productModel.countBidProduct(product.productID),
-      req.user
-        ? await productModel.isExistWishItem(product.productID, req.user.userID)
-        : false
+      req.user ?
+      await productModel.isExistWishItem(product.productID, req.user.userID) :
+      false
     ]);
   }
 
@@ -818,9 +820,9 @@ router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
     ] = await Promise.all([
       productModel.singleMainImgSrcByProduct(product.productID),
       productModel.countBidProduct(product.productID),
-      req.user
-        ? await productModel.isExistWishItem(product.productID, req.user.userID)
-        : false
+      req.user ?
+      await productModel.isExistWishItem(product.productID, req.user.userID) :
+      false
     ]);
   }
 
@@ -847,9 +849,9 @@ router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
     ] = await Promise.all([
       productModel.singleMainImgSrcByProduct(product.productID),
       productModel.countBidProduct(product.productID),
-      req.user
-        ? await productModel.isExistWishItem(product.productID, req.user.userID)
-        : false
+      req.user ?
+      await productModel.isExistWishItem(product.productID, req.user.userID) :
+      false
     ]);
 
     product.seller = await productModel.getSellerByProduct(product.productID);
@@ -1071,4 +1073,13 @@ router.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
+
+
+router.get('/non-permission', (req, res) => {
+  res.render("vwUser/non-permission", {
+    user: req.user,
+    notShowBreadcumb: true,
+    link: req.session.lastUrl
+  });
+});
 module.exports = router;

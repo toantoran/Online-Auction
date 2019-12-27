@@ -30,5 +30,18 @@ module.exports = {
         }
 
         res.redirect("/login");
+    },
+
+    checkAdmin(req, res, next) {
+        req.session.lastUrl = req.originalUrl;
+        if (req.isAuthenticated()) {
+            if (req.user.isAdmin) {
+                return next();
+            } else {
+                res.redirect("/non-permission")
+            }
+        } else {
+            res.redirect("/login");
+        }
     }
 }
