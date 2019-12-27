@@ -6,6 +6,18 @@ module.exports = {
     all: () => db.load('select * from product_single order by cateID'),
     allByCate: (cateID) => db.load(`select * from product_single where cateID = ${cateID} order by subcateID`),
     allBySubCate: (cateID, subcateID) => db.load(`select * from product_single where cateID = ${cateID} and subcateID = ${subcateID} order by subcateID`),
+    deleteByCate: async (cateID) =>{
+        const rows = await db.load(`select * from product_single where cateID = ${cateID}`);
+        for(const product of rows){
+            await this.deleteProduct(product.productID);
+        }
+    },
+    deleteBySubCate: async (cateID, subcateID) => {
+        const rows = await db.load(`select * from product_single where cateID = ${cateID} and subcateID = ${subcateID}`);
+        for(const product of rows){
+            await this.deleteProduct(product.productID);
+        }
+    },
     sameBySubCate: (productID, cateID, subcateID) => db.load(`select * from product_single where cateID = ${cateID} and subcateID = ${subcateID} 
     and productID <> "${productID}" and endDate > NOW() limit 5`),
     countByText: async (textSearch) => {

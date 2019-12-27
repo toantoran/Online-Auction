@@ -1,3 +1,26 @@
+window.history.pushState(null,null,"/admin/category")
+
+let status = document.getElementById("status").value;
+let message = document.getElementById("message").value;
+
+if (message !== "") {
+    if (status === "true") {
+        new SnackBar({
+            message: message,
+            status: "success",
+            fixed: true,
+            timeout: 2000
+        });
+    } else {
+        new SnackBar({
+            message: message,
+            status: "warning",
+            fixed: true,
+            timeout: 2000
+        });
+    }
+}
+
 $('.list-links li.sub').click(() => {
     $(this).addClass('link-active')
 })

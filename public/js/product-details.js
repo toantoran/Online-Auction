@@ -1,3 +1,6 @@
+let productID = document.getElementById("productID").value;
+window.history.pushState(null,null,`/product/${productID}`);
+
 let status = document.getElementById("status").value;
 let message = document.getElementById("message").value;
 
