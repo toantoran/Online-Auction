@@ -3,9 +3,9 @@
     "connectionLimit": 50,
     "host": "sql12.freemysqlhosting.net",
     "port": 3306,
-    "user": "sql12316906",
-    "password": "KzBGK1ZmK4",
-    "database": "sql12316906",
+    "user": "sql12317049",
+    "password": "ENX4cjweNx",
+    "database": "sql12317049",
     "dateStrings": true
   },
   "paginate": {
@@ -21,7 +21,7 @@
     "limitProductsHistoryBid": 10,
     "limitProductsWishList": 10,
     "limitProductsSelling": 10,
-    "limitProductsSoldEnd":10,
+    "limitProductsSoldEnd": 10,
     "limitProductsWinList": 10
   },
   "product": {

@@ -19,11 +19,12 @@ router.get("/category", async (req, res, next) => {
     req.session.lastUrl = req.originalUrl;
 });
 
-router.get("/getSubcateTable/:cateID", (req, res, next) => {
+router.get("/getSubcateTable/:cateID", async (req, res, next) => {
     const data = res.locals.lcCateList[req.params.cateID - 1].subCate;
     for (let sub of data) {
-        sub.button = `<a href='/admin/category/sub/detail/${sub.cateID}/${sub.subcateID}' class='main-btn edit-btn'><i class='fas fa-edit'></i></a>&nbsp;<button type='submit' formmethod='post' 
-        formaction='/admin/category/sub/detele/${sub.cateID}/${sub.subcateID}' class='main-btn delete-subcate-btn'><i class='fas fa-trash-alt'></i></button>`;
+        sub.productsCount = await productModel.countBySubCat(sub.cateID, sub.subcateID)
+        sub.button = `<a href='/admin/category/sub/detail/${sub.cateID}/${sub.subcateID}' class='main-btn edit-btn'><i class='fas fa-edit'></i></a>&nbsp;<button type='submit' formmethod='post' style='display: none' 
+        formaction='/admin/category/sub/detele/${sub.cateID}/${sub.subcateID}' class='main-btn delete-subcate-btn'></button><button class='main-btn' type='button' onclick='confirmDelete(${sub.cateID},${sub.subcateID})'><i class='fas fa-trash-alt'></i></button>`;
     }
     res.send({
         "draw": 1,
@@ -36,8 +37,8 @@ router.get("/getSubcateTable/:cateID", (req, res, next) => {
 router.get("/getCateTable", (req, res, next) => {
     const data = res.locals.lcCateList;
     for (let sub of data) {
-        sub.button = `<a href='/admin/category/detail/${sub.cateID}' class='main-btn edit-btn'><i class='fas fa-edit'></i></a>&nbsp;<button type='submit' formmethod='post' 
-        formaction='/admin/category/detele/${sub.cateID}' class='main-btn delete-cate-btn'><i class='fas fa-trash-alt'></i></button>`;
+        sub.button = `<a href='/admin/category/detail/${sub.cateID}' class='main-btn edit-btn'><i class='fas fa-edit'></i></a>&nbsp;<button type='submit' formmethod='post' style='display: none'
+        formaction='/admin/category/detele/${sub.cateID}' class='main-btn delete-cate-btn'></button><button type='button' class='main-btn' onclick='confirmDelete(${sub.cateID})'><i class='fas fa-trash-alt'></i></button>`;
     }
     res.send({
         "draw": 1,
