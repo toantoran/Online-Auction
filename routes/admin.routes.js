@@ -112,6 +112,7 @@ router.get("/users/getAllBidder", async (req, res) => {
     const data = await userModel.getAllBidder();
     for (let user of data) {
         user.point = await userModel.getPointEvaluation(user.userID) + "%";
+        user.birthDay = moment(user.birthDay).format("MM/DD/YYYY");
         user.button = `<a href='/admin/user-detail/${user.userID}' class='main-btn edit-btn'><i class='fas fa-info-circle'></i></a><button type='submit' formmethod='post' style='display: none' formaction='/admin/users/detele/${user.userID}' class='main-btn delete-user-btn'></button><button type='button' class='main-btn' onclick='confirmDelete(${user.userID})'><i class='fas fa-trash-alt'></i></button>`;
     }
     res.send({
@@ -126,6 +127,7 @@ router.get("/users/getAllSeller", async (req, res) => {
     const data = await userModel.getAllSeller();
     for (let user of data) {
         user.point = await userModel.getPointEvaluation(user.userID) + "%";
+        user.birthDay = moment(user.birthDay).format("MM/DD/YYYY");
         user.button =
             `<a href='/admin/user-detail/${user.userID}' class='main-btn edit-btn'><i class='fas fa-info-circle'></i></a>
         <button type='submit' formmethod='post' style='display: none' formaction='/admin/users/downgrade/${user.userID}' class='main-btn downgrade-user-btn'></button>
@@ -145,6 +147,7 @@ router.get("/users/getAllAdmin", async (req, res) => {
     const data = await userModel.getAllAdmin();
     for (let user of data) {
         user.point = await userModel.getPointEvaluation(user.userID) + "%";
+        user.birthDay = user.birthDay? moment(user.birthDay).format("MM/DD/YYYY"): '';
         user.button = `<a href='/admin/user-detail/${user.userID}' class='main-btn edit-btn'><i class='fas fa-info-circle'></i></a>`;
     }
     res.send({
