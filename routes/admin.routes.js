@@ -2,6 +2,9 @@ const express = require("express");
 const productModel = require("../models/product.model");
 const userModel = require("../models/user.model");
 const cateModel = require("../models/category.model");
+const checkUser = require("../middlewares/user.mdw");
+const moment = require("moment");
+const config = require("../config/default.json");
 const querystring = require("querystring");
 const router = express.Router();
 
@@ -66,7 +69,7 @@ router.post("/category/detele/:cateID", async (req, res) => {
             status: true,
             message: "Xoá danh mục thành công!!!"
         });
-        //await productModel.deleteByCate(cateID);
+        await cateModel.deleteCateByID(cateID);
     }
     res.redirect(`/admin/category/?${query}`);
 })
@@ -87,7 +90,7 @@ router.post("/category/sub/detele/:cateID/:subcateID", async (req, res) => {
             status: true,
             message: "Xoá danh mục thành công!!!"
         });
-        //await productModel.deleteBySubCate(cateID, subcateID);
+        await cateModel.deleteSubCateByID(cateID, subcateID);
     }
     res.redirect(`/admin/category/?${query}`);
 });
@@ -108,6 +111,7 @@ router.get("/users", (req, res, next) => {
 router.get("/users/getAllBidder", async (req, res) => {
     const data = await userModel.getAllBidder();
     for (let user of data) {
+        user.point = await userModel.getPointEvaluation(user.userID) + "%";
         user.button = `<a href='/admin/user-detail/${user.userID}' class='main-btn edit-btn'><i class='fas fa-info-circle'></i></a><button type='submit' formmethod='post' style='display: none' formaction='/admin/users/detele/${user.userID}' class='main-btn delete-user-btn'></button><button type='button' class='main-btn' onclick='confirmDelete(${user.userID})'><i class='fas fa-trash-alt'></i></button>`;
     }
     res.send({
@@ -121,6 +125,7 @@ router.get("/users/getAllBidder", async (req, res) => {
 router.get("/users/getAllSeller", async (req, res) => {
     const data = await userModel.getAllSeller();
     for (let user of data) {
+        user.point = await userModel.getPointEvaluation(user.userID) + "%";
         user.button =
             `<a href='/admin/user-detail/${user.userID}' class='main-btn edit-btn'><i class='fas fa-info-circle'></i></a>
         <button type='submit' formmethod='post' style='display: none' formaction='/admin/users/downgrade/${user.userID}' class='main-btn downgrade-user-btn'></button>
@@ -139,6 +144,7 @@ router.get("/users/getAllSeller", async (req, res) => {
 router.get("/users/getAllAdmin", async (req, res) => {
     const data = await userModel.getAllAdmin();
     for (let user of data) {
+        user.point = await userModel.getPointEvaluation(user.userID) + "%";
         user.button = `<a href='/admin/user-detail/${user.userID}' class='main-btn edit-btn'><i class='fas fa-info-circle'></i></a>`;
     }
     res.send({
@@ -190,11 +196,68 @@ router.get("/category-sub-detail/:cateID/:subcateID", async (req, res, next) => 
 router.get("/user-detail/:userID", async (req, res, next) => {
     const userID = req.params.userID
     const rs = await userModel.getUserById(userID);
-    const target = rs[0];
-    target.point = await userModel.getPointEvaluation(userID);
-    target.evaluation = await userModel.getEvaluationById(userID);
-    target.history = await productModel.productsHistoryBid(target.userID);
-    console.log(target.history);
+    let target = rs[0];
+
+    [target.point, target.evaluation, target.history, target.productSell] = await Promise.all([
+        userModel.getPointEvaluation(target.userID),
+        userModel.getEvaluationById(target.userID),
+        productModel.productsHistoryBid(target.userID),
+        productModel.productsSell(target.userID)
+    ]);
+
+    for (const product of target.history) {
+        [
+            product.mainImgSrc,
+            product.countBid,
+            product.isEndBid,
+            product.isWinner
+        ] = await Promise.all([
+            productModel.singleMainImgSrcByProduct(product.productID),
+            productModel.countBidProduct(product.productID),
+            (product.isEndBid = moment(product.endDate).valueOf() < Date.now()),
+            (await productModel.getWinnerOfBidByProduct(product.productID)).userID === target.userID
+        ]);
+    }
+
+    for (const product of target.history) {
+        product.isHot = product.countBid >= config.product.countBidIsHot;
+        const temp = moment(product.beginDate, "YYYY-MM-DD HH:mm:ss");
+        const minutes = moment().diff(temp, "minutes");
+        product.isNew = minutes <= config.product.minutesIsNew;
+        product.resultBid = product.isEndBid && product.isWinner;
+    }
+
+    for (const product of target.productSell) {
+        [
+            product.mainImgSrc,
+            product.countBid,
+        ] = await Promise.all([
+            productModel.singleMainImgSrcByProduct(product.productID),
+            productModel.countBidProduct(product.productID),
+        ]);
+    }
+
+    for (const product of target.productSell) {
+        product.isHot = product.countBid >= config.product.countBidIsHot;
+        const temp = moment(product.beginDate, "YYYY-MM-DD HH:mm:ss");
+        const minutes = moment().diff(temp, "minutes");
+        product.isNew = minutes <= config.product.minutesIsNew;
+        if (product.countBid > 0) {
+            product.isBided = true;
+            product.winner = await productModel.getWinnerOfBidByProduct(
+                product.productID
+            );
+        } else {
+            product.isBided = false;
+        }
+        product.isEndBid = moment(product.endDate).valueOf() < Date.now();
+    }
+
+    for (const e of target.evaluation) {
+        e.senderName = await userModel.getNameById(e.sender);
+    }
+
+
     res.render("vwAdmin/user-detail", {
         title: "Chi tiết User",
         user: req.user,

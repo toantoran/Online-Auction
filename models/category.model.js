@@ -5,5 +5,11 @@ module.exports = {
     getSubCate: (cateID) => db.load(`select * from category_sub where cateID = ${cateID} order by subcateID`),
     getFromName: (subcateName) => db.load(`select * from category_sub where subcateName = "${subcateName}"`),
     getCateFromId: (cateID) => db.load(`select * from category where cateID = "${cateID}"`),
-    getSubCateFromId: (cateID, subcateID) => db.load(`select * from category where cateID = "${cateID}" and subcateID = "${subcateID}"`)
+    getSubCateFromId: (cateID, subcateID) => db.load(`select * from category where cateID = "${cateID}" and subcateID = "${subcateID}"`),
+    deleteCateByID: async (cateID) =>{
+
+    },
+    deleteSubCateByID: async (cateID, subcateID) => {
+
+    },
 };

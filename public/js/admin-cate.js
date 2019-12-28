@@ -1,4 +1,4 @@
-// window.history.pushState(null, null, "/admin/category")
+window.history.pushState(null, null, "/admin/category")
 
 let status = document.getElementById("status").value;
 let message = document.getElementById("message").value;

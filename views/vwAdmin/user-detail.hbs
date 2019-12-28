@@ -59,7 +59,7 @@
                                 <p>Điện thoại: {{target.tel}}</p>
                                 <p>Địa chỉ: {{target.address}}</p>
                                 <p>Ngày sinh: {{format_day target.birthDay}}</p>
-                                <p>Điểm số: {{target.point}}</p>
+                                <p>Điểm số: {{format_evaluation target.point}}</p>
                             </div>
                         </div>
                         <div class="row" id="history">
@@ -141,10 +141,10 @@
                                 <h4>Sản phẩm đã đăng</h4>
                                 <div class="row">
                                     <div class="col-md-12 product-container" id="sold-product">
-                                        {{#if emptyProductsSelling}}
+                                        {{#unless target.productSell.length}}
                                         <p>Không có sản phẩm</p>
-                                        {{else}}
-                                        {{#each this.productsSelling}}
+                                        {{/unless}}
+                                        {{#each target.productSell}}
                                         <div class="col-md-3 col-sm-4 col-xs-6">
                                             <div class="product product-single">
                                                 <div class="product-thumb">
@@ -156,7 +156,7 @@
                                                         <span class="sale">Hot <i class="fab fa-hotjar"></i></span>
                                                         {{/if}}
                                                     </div>
-                                                    <ul class="product-countdown">
+                                                     <ul class="product-countdown">
                                                         <li><span class="cd-h">0 H</span></li>
                                                         <li><span class="cd-m">0 M</span></li>
                                                         <li><span class="cd-s">0 S</span></li>
@@ -164,10 +164,6 @@
                                                     <button class="main-btn quick-view"><i
                                                             class="fa fa-search-plus"></i>
                                                         Xem chi tiết</button>
-                                                    <button productID="{{productID}}" userID="{{user.userID}}"
-                                                        type="button" onsubmit="return false;" name="btnWish"
-                                                        class="watch-list btn-wish {{#if isExistWishItem}}focus{{/if}}"><i
-                                                            class="fa fa-heart"></i></button>
                                                     <img src="/img/product/{{productID}}/{{mainImgSrc}}" alt="">
                                                 </div>
                                                 <div class="product-body">
@@ -183,6 +179,13 @@
                                                     <p class="product-text">Đặt cao nhất: <span
                                                             class="product-price">{{winner.name}}</span></p>
                                                     {{/if}}
+                                                    {{#if isEndBid}}
+                                                    <p class="product-text">Trạng thái: <span
+                                                            class="product-price" style="color: red;">Đã kết thúc</span></p>
+                                                    {{else}}
+                                                    <p class="product-text">Trạng thái: <span
+                                                            class="product-price" style="color: green;">Đang đấu giá</span></p>
+                                                    {{/if}}
                                                     <div class="product-footer">
                                                         <small><span>{{countBid}}</span> lượt ra giá</small>
                                                         <small>Từ <span>{{format_day beginDate}}</span></small>
@@ -193,7 +196,6 @@
                                         </div>
                                         {{/each}}
                                     </div>
-                                    {{/if}}
                                 </div>
                             </div>
                         </div>
@@ -202,10 +204,10 @@
                         <div class="row" id="rating">
                             <div class="col-md-12">
                                 <h4>Các lượt đánh giá</h4>
-                                {{#if emptyEvaluation}}
+                                {{#unless target.evaluation.length}}
                                 <p>Không có lượt đánh giá nào</p>
                                 {{else}}
-                                {{#each evaluation}}
+                                {{#each target.evaluation}}
                                 <div class="evaluation">
                                     {{#if isGood}}
                                     <p>
@@ -223,7 +225,7 @@
                                 </div>
                                 <hr>
                                 {{/each}}
-                                {{/if}}
+                                {{/unless}}
                             </div>
                         </div>
                     </div>
