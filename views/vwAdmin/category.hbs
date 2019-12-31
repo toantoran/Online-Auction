@@ -52,7 +52,12 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div id="all">
-                                        <h2>Danh mục chính</h2>
+                                        <div class="table-header">
+                                            <h2>Danh mục chính</h2>
+                                            <a href="/admin/add-category" class='main-btn add-btn' target="_blank"><i
+                                                    class="fas fa-plus"></i>
+                                                Thêm danh mục mới</i></a>
+                                        </div>
                                         <table class="cate-table" style="width: 100%">
                                             <thead>
                                                 <tr>
@@ -66,7 +71,13 @@
                                     </div>
                                     {{#each lcCateList}}
                                     <div id="sub-{{cateID}}">
-                                        <h2>{{cateName}}</h2>
+                                        <div class="table-header">
+                                            <h2>{{cateName}}</h2>
+                                            <a href="/admin/add-category-sub/{{cateID}}" target="_blank"
+                                                class='main-btn add-btn'><i class="fas fa-plus"></i>
+                                                Thêm danh mục con</i></a>
+                                        </div>
+
                                         <table class="subcate-table" style="width: 100%" cateID="{{cateID}}">
                                             <thead>
                                                 <tr>

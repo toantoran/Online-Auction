@@ -1082,4 +1082,27 @@ router.get('/non-permission', (req, res) => {
     link: req.session.lastUrl
   });
 });
+
+router.get('/user-eval-detail/:userID', async (req, res) => {
+  const target = await userModel.getUserById(req.params.userID)
+  if (target.length === 0) {
+    res.render('vwUser/not-found', {
+      title: 'Không tìm thấy trang',
+      notShowBreadcumb: true
+    })
+  } else {
+    const evaluation = await userModel.getEvaluationById(req.params.userID)
+    for (const e of evaluation) {
+      e.senderName = await userModel.getNameById(e.sender);
+    }
+    res.render("vwUser/user-eval-detail", {
+      title: 'Các lượt đánh giá',
+      user: req.user,
+      notShowBreadcumb: true,
+      target,
+      evaluation,
+      emptyEvaluation: evaluation.length === 0
+    })
+  }
+})
 module.exports = router;

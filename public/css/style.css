@@ -1996,6 +1996,48 @@ p.err-validate {
   display: none;
 }
 
+
+
+.eval-container {
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+  word-wrap: break-word;
+}
+
+.eval-single {
+  border-bottom: 1px solid;
+  margin: 10px 0;
+}
+
+.eval-single:hover {}
+
+.eval-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.eval-date {
+  font-weight: normal;
+  font-size: 15px;
+}
+
+.eval-icon {
+  font-size: 30px;
+}
+
+.orange {
+  color: #F8694A;
+}
+
+
+
+
+
 /*=========================================================
 	12 -> RESPONSIVE
 ===========================================================*/

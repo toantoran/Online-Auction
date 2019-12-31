@@ -13,13 +13,32 @@ table tbody tr td:last-child {
 }
 
 table {
-    margin: 10px 0 20px 0 !important;
+    margin: 10px 0 40px 0 !important;
+    padding: 10px 0 !important;
+    border-bottom: 5px double #F8694A !important;
 }
 
 h2 {
     margin: 5px 0;
+    color: #F8694A;
 }
 
 table .main-btn {
     padding: 5px 10px !important;
+}
+
+.add-btn {
+    margin-left: auto;
+}
+
+.table-header {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+
+    align-items: center;
 }

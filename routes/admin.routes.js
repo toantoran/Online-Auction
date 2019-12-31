@@ -147,7 +147,7 @@ router.get("/users/getAllAdmin", async (req, res) => {
     const data = await userModel.getAllAdmin();
     for (let user of data) {
         user.point = await userModel.getPointEvaluation(user.userID) + "%";
-        user.birthDay = user.birthDay? moment(user.birthDay).format("MM/DD/YYYY"): '';
+        user.birthDay = user.birthDay ? moment(user.birthDay).format("MM/DD/YYYY") : '';
         user.button = `<a href='/admin/user-detail/${user.userID}' class='main-btn edit-btn'><i class='fas fa-info-circle'></i></a>`;
     }
     res.send({
@@ -175,6 +175,37 @@ router.get("/category-detail/:cateID", async (req, res, next) => {
         status: req.query.status,
         cate
     });
+
+    req.session.lastUrl = req.originalUrl;
+});
+
+router.get("/add-category", async (req, res, next) => {
+    res.render("vwAdmin/add-category", {
+        title: "Thêm danh mục",
+        user: req.user,
+        notShowBreadcumb: true
+    });
+
+    req.session.lastUrl = req.originalUrl;
+});
+router.get("/add-category-sub/:cateID", async (req, res, next) => {
+    const rs = await cateModel.getCateFromId(req.params.cateID);
+    if (rs.length === 0) {
+        res.render('vwUser/not-found', {
+            user: req.user,
+            title: 'Không tìm thấy trang',
+            notShowBreadcumb: true
+        })
+    } else {
+        const parent = rs[0];
+        parent.subCate = await cateModel.getSubCate(parent.cateID);
+        res.render("vwAdmin/add-category-sub", {
+            title: "Thêm danh mục con",
+            user: req.user,
+            notShowBreadcumb: true,
+            parent
+        });
+    }
 
     req.session.lastUrl = req.originalUrl;
 });

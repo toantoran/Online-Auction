@@ -1,10 +1,13 @@
 {{#section 'js'}}
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
-<script src="/js/admin-cate-detail.js"></script>
+<script src="/js/plugin/jquery.filer.min.js"></script>
+<script src="/js/admin-add-subcate.js"></script>
 {{/section}}
 
 {{#section 'css'}}
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="/css/jquery.filer-dragdropbox-theme.css">
+<link rel="stylesheet" href="/css/jquery.filer.css">
 <link rel="stylesheet" href="/css/admin.css">
 {{/section}}
 {{#each lcCategory}}
@@ -26,9 +29,8 @@
                                     Quản lý danh mục
                                 </a></li>
                             <hr>
-                            <li class="sub"></li>
                             {{#each lcCateList}}
-                            <li class="sub"><a href="/admin/category-detail/{{cateID}}">{{cateName}}</a></li>
+                            <li class="sub"><a href="/admin/add-category-sub/{{cateID}}">{{cateName}}</a></li>
                             <hr>
                             {{/each}}
                             <li><a href="/admin/users">Quản lý người dùng</a></li>
@@ -46,49 +48,39 @@
                     <div class="col-md-12">
                         <form>
                             <div class="section-title">
-                                <h3 class="title">Quản lý danh mục</h3>
+                                <h3 class="title">Thêm danh mục con</h3>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="table-header">
-                                        <h2>{{cate.cateName}}</h2>
-                                        <a href="/admin/add-category-sub/{{cate.cateID}}" class='main-btn add-btn'
-                                            target="_blank"><i class="fas fa-plus"></i>
-                                            Thêm danh mục con</i></a>
-                                    </div>
-                                    <form action="" method="post">
+                                    <form action="/admin/add-category-sub/{{parent.cateID}}" method="post">
                                         <div class="form-group">
-                                            <label for="cateID">ID</label>
+                                            <label for="cateID">ID danh mục cha</label>
                                             <p class="err-validate" id="err-name"></p>
-                                            <input class="input" type="text" name="cateID" value="{{cate.cateID}}"
+                                            <input class="input" type="text" name="cateID" value="{{parent.cateID}}"
                                                 id="cateID" disabled />
                                         </div>
                                         <div class="form-group">
-                                            <label for="cateName">Tên danh mục</label>
+                                            <label for="cateName">Tên danh mục cha</label>
                                             <p class="err-validate" id="err-name"></p>
-                                            <input class="input" type="text" name="cateName" value="{{cate.cateName}}"
-                                                id="cateName" autofocus />
+                                            <input class="input" type="text" name="cateName" value="{{parent.cateName}}"
+                                                id="cateName" disabled />
                                         </div>
                                         <div class="form-group">
-                                            <label for="cateIcon">Icon danh mục: <span id="generate-icon"><i
-                                                        class="fas fa-{{cate.cateIcon}}"></i></span></label>
+                                            <label for="subcateName">Tên danh mục con</label>
                                             <p class="err-validate" id="err-name"></p>
-                                            <input class="input" type="text" name="cateIcon" value="{{cate.cateIcon}}"
-                                                id="cateIcon" />
+                                            <input class="input" type="text" name="subcateName" id="subcateName"
+                                                autofocus />
                                         </div>
                                         <div class="form-group">
-                                            <label for="productsCount">Tổng số sản phẩm</label>
+                                            <label for="productsCount">Hình ảnh minh họa</label>
                                             <p class="err-validate" id="err-name"></p>
-                                            <input class="input" type="text" name="productsCount"
-                                                value="{{cate.productsCount}}" id="productsCount" disabled />
+                                            <input type="file" name="img" id="subcate-img" />
                                         </div>
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-md-12" style="text-align: center;">
-                                                    <button class="main-btn btn-update"><i class="fas fa-save"></i> Lưu
-                                                        những thay đổi</button>
-                                                    <button class="main-btn btn-delete"><i class="fas fa-trash-alt"></i>
-                                                        Xóa danh mục</button>
+                                                    <button class="main-btn btn-add"><i class="fas fa-plus"></i>
+                                                        Thêm</button>
                                                 </div>
                                             </div>
                                         </div>
