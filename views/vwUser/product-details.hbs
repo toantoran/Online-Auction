@@ -78,7 +78,11 @@
 							<p>Người bán: <span>{{format_name_bid seller.name}}</span></p>
 							<p>Số điện thoại: <span>{{seller.tel}}</span></p>
 							<p>Địa chỉ: <span>{{seller.address}}</span></p>
-							<p>Điểm đánh giá: <span style="color: red">{{format_evaluation seller.point}}</span></p>
+							<p>
+								Điểm đánh giá: <span style="color: red">{{format_evaluation seller.point}}</span>
+								<a href="/user-eval-detail/{{seller.userID}}" target="_blank"
+									class="main-btn small-btn">Chi tiết</a>
+							</p>
 							<hr>
 							{{/unless }}
 							{{#if isBided}}
@@ -86,7 +90,13 @@
 							<p>Người đặt giá cao nhất: <span>{{format_name_bid winner.name}}</span></p>
 							<p>Số điện thoại: <span>{{winner.tel}}</span></p>
 							<p>Địa chỉ: <span>{{winner.address}}</span></p>
-							<p>Điểm đánh giá: <span style="color: red">{{format_evaluation winner.point}}</span></p>
+							<p>
+								Điểm đánh giá: <span style="color: red">{{format_evaluation winner.point}}</span>
+								{{#if isSeller}}
+								<a href="/user-eval-detail/{{winner.userID}}" target="_blank"
+									class="main-btn small-btn">Chi tiết</a>
+								{{/if}}
+							</p>
 							<hr>
 							{{/if}}
 							<p>Giá hiện tại: <span class="product-price"
@@ -162,6 +172,17 @@
 										<div class="row">
 											<div class="col-md-12">
 												<table class="bid-table">
+
+													<thead>
+														<tr>
+															<th>Thời gian</th>
+															<th>Người đấu giá</th>
+															<th>Giá</th>
+															{{#if isSeller}}
+															<th></th>
+															{{/if}}
+														</tr>
+													</thead>
 
 													<input type="hidden" name="isSellerBid" id="isSellerBid"
 														value={{isSeller}}>
@@ -251,7 +272,8 @@
 								<p class="product-text">Giá bán ngay: <span
 										class="product-price">{{format_money immePrice}}</span></p>
 								{{#if isBided}}
-								<p class="product-text">Đặt cao nhất: <span class="product-price">{{format_name_bid winner}}</span>
+								<p class="product-text">Đặt cao nhất: <span
+										class="product-price">{{format_name_bid winner}}</span>
 								</p>
 								{{/if}}
 								<div class="product-footer">

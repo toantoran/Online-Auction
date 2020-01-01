@@ -1,5 +1,5 @@
 let productID = document.getElementById("productID").value;
-window.history.pushState(null,null,`/product/${productID}`);
+window.history.pushState(null, null, `/product/${productID}`);
 
 let status = document.getElementById("status").value;
 let message = document.getElementById("message").value;
@@ -150,10 +150,11 @@ $('.note-btn').click(() => {
 });
 
 //Bid Table
-function Bid(time, name, price) {
+function Bid(time, name, price, bidderid) {
     this.time = time;
     this.name = name;
     this.price = price;
+    this.bidderid = bidderid;
     return this;
 };
 
@@ -166,11 +167,12 @@ function getdata(object) {
         let bidderName = object.find('#bid-bidderName')[i].value;
         let bidTime = object.find('#bid-bidTime')[i].value;
         let price = object.find('#bid-Price')[i].value;
-        let bid = new Bid(bidTime, bidderName, price);
-        tempData.push(bid);
-
         let productID = object.find('#bid-productID')[i].value;
         let bidderID = object.find('#bid-bidderID')[i].value;
+
+        let bid = new Bid(bidTime, bidderName, price, bidderID);
+        tempData.push(bid);
+
         wishData.push({
             productID,
             bidderID,
@@ -185,15 +187,12 @@ bibTable.DataTable({
     data: tempData,
     columns: [{
             data: 'time',
-            sTitle: 'Thời gian'
         },
         {
             data: 'name',
-            sTitle: 'Người đấu giá'
         },
         {
             data: 'price',
-            sTitle: 'Giá'
         }
     ],
     "language": {
@@ -213,8 +212,22 @@ bibTable.DataTable({
 let bodyBibTalbe = bibTable.find('tbody tr');
 let isSeller = document.getElementById('isSellerBid').value;
 if (isSeller === "true" && tempData.length > 0) {
-    bodyBibTalbe.append("<td><button class='main-btn refuse-btn'>Từ chối</button></td>");
+    for (let i = 0; i < bodyBibTalbe.length; i++) {
+        let node = document.createElement("td");
+        let button = document.createElement("button");
+        let link = document.createElement("a");
+        button.setAttribute('class', 'primary-btn refuse-btn small-btn');
+        button.appendChild(document.createTextNode('Từ chối'))
+        link.setAttribute('class', 'main-btn small-btn');
+        link.setAttribute('target', '_blank');
+        link.setAttribute('href', `/user-eval-detail/${tempData[i].bidderid}`);
+        link.appendChild(document.createTextNode('Chi tiết'))
+        node.appendChild(link);
+        node.appendChild(button);
+        bodyBibTalbe[i].appendChild(node);
+    }
 }
+$('tbody > tr > td:nth-child(4)').css('width', '170px')
 
 setEventRefuseBtn($('.refuse-btn'))
 
@@ -272,6 +285,8 @@ function setEventRefuseBtn(object) {
     }
 }
 //End bidtable
+
+$('#DataTables_Table_0').css('width', '100%')
 
 showCountDown($('.product-body'))
 
