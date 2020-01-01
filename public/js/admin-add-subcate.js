@@ -1,7 +1,7 @@
 $('#subcate-img').filer({
     limit: 1,
     clipBoardPaste: true,
-    extensions: ["jpg"],
+    extensions: ["jpg", "png", "gif", "jfif"],
     showThumbs: true,
     templates: {
         box: '<ul class="jFiler-items-list jFiler-items-default"></ul>',

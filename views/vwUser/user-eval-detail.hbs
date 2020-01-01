@@ -7,40 +7,34 @@
             <!-- MAIN -->
             <div class="col-md-2"></div>
             <div class="col-md-8">
+                <h1 style="color: #F8694A;">Các lượt đánh giá</h1>
                 <div class="row">
-                    <div class="col-md-12">
-                        <h1 style="color: #F8694A;">Các lượt đánh giá</h1>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        {{#if emptyEvaluation}}
-                        <p>Không có lượt đánh giá nào</p>
-                        {{else}}
-                        {{#each evaluation}}
-                        <div class="col-md-12 eval-container">
-                            <div class="col-md-12 eval-single">
-                                <div class="eval-top">
-                                    <div class="eval-sender">
-                                        <p>{{senderName}}</p>
-                                    </div>
-                                    <div class="eval-date">
-                                        <p>{{format_day_time time}}</p>
-                                    </div>
+                    <div class="col-md-12 eval-container">
+                        <div class="col-md-12 eval-single">
+                            {{#if emptyEvaluation}}
+                            <p>Không có lượt đánh giá nào</p>
+                            {{else}}
+                            {{#each evaluation}}
+                            <div class="eval-top">
+                                <div class="eval-sender">
+                                    <p>{{senderName}}</p>
                                 </div>
-                                <div class="eval-middle">
-                                    {{#if isGood}}
-                                    <div class="eval-icon">
-                                        <p class="orange"><i class="fa fa-thumbs-up"></i> +1</p s>
-                                    </div>
-                                    {{else}}
-                                    <div class="eval-icon">
-                                        <p><i class="fas fa-thumbs-down"></i> -1</p>
-                                    </div>
-                                    {{/if}}
-                                    <div class="eval-content">
-                                        <p>{{{content}}}</p>
-                                    </div>
+                                <div class="eval-date">
+                                    <p>{{format_day_time time}}</p>
+                                </div>
+                            </div>
+                            <div class="eval-middle">
+                                {{#if isGood}}
+                                <div class="eval-icon">
+                                    <p class="orange"><i class="fa fa-thumbs-up"></i> +1</p s>
+                                </div>
+                                {{else}}
+                                <div class="eval-icon">
+                                    <p><i class="fas fa-thumbs-down"></i> -1</p>
+                                </div>
+                                {{/if}}
+                                <div class="eval-content">
+                                    <p>{{{content}}}</p>
                                 </div>
                             </div>
                         </div>
@@ -49,10 +43,10 @@
                     </div>
                 </div>
             </div>
+            <!-- /MAIN -->
         </div>
-        <!-- /MAIN -->
+        <!-- /row -->
     </div>
-    <!-- /row -->
+    <!-- /container -->
 </div>
-<!-- /container -->
 <!-- /section -->

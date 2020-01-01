@@ -1,9 +1,11 @@
 {{#section 'js'}}
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
 <script src="/js/plugin/jquery.filer.min.js"></script>
 <script src="/js/admin-add-subcate.js"></script>
 {{/section}}
 
 {{#section 'css'}}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="/css/jquery.filer-dragdropbox-theme.css">
 <link rel="stylesheet" href="/css/jquery.filer.css">
 <link rel="stylesheet" href="/css/admin.css">
@@ -44,49 +46,55 @@
                 <!-- row -->
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="section-title">
-                            <h3 class="title">Thêm danh mục con</h3>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <form action="/admin/add-category-sub/{{parent.cateID}}" method="post">
-                                    <div class="form-group">
-                                        <label for="cateID">ID danh mục cha</label>
-                                        <p class="err-validate" id="err-name"></p>
-                                        <input class="input" type="text" name="cateID" value="{{parent.cateID}}"
-                                            id="cateID" disabled />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="cateName">Tên danh mục cha</label>
-                                        <p class="err-validate" id="err-name"></p>
-                                        <input class="input" type="text" name="cateName" value="{{parent.cateName}}"
-                                            id="cateName" disabled />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="subcateName">Tên danh mục con</label>
-                                        <p class="err-validate" id="err-name"></p>
-                                        <input class="input" type="text" name="subcateName" id="subcateName" autofocus
-                                            required />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="subcate-img">Hình ảnh minh họa</label>
-                                        <p class="err-validate" id="err-name"></p>
-                                        <input type="file" name="img" id="subcate-img" required />
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-md-12" style="text-align: center;">
-                                                <button class="main-btn btn-add"><i class="fas fa-plus"></i>
-                                                    Thêm</button>
+                        <form>
+                            <div class="section-title">
+                                <h3 class="title">Thêm danh mục con</h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form action="/admin/add-category-sub/{{parent.cateID}}" method="post">
+                                        <div class="form-group">
+                                            <label for="cateID">ID danh mục cha</label>
+                                            <p class="err-validate" id="err-name"></p>
+                                            <input class="input" type="text" name="cateID" value="{{parent.cateID}}"
+                                                id="cateID" disabled />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cateName">Tên danh mục cha</label>
+                                            <p class="err-validate" id="err-name"></p>
+                                            <input class="input" type="text" name="cateName" value="{{parent.cateName}}"
+                                                id="cateName" disabled />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="subcateName">Tên danh mục con</label>
+                                            <p class="err-validate" id="err-name"></p>
+                                            <input class="input" type="text" name="subcateName" id="subcateName"
+                                                autofocus />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="productsCount">Hình ảnh minh họa</label>
+                                            <p class="err-validate" id="err-name"></p>
+                                            <input type="file" name="img" id="subcate-img" />
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-12" style="text-align: center;">
+                                                    <button class="main-btn btn-add"><i class="fas fa-plus"></i>
+                                                        Thêm</button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+                                    </form>
+                                </div>
+                        </form>
                     </div>
                 </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
+</div>
+</div>
+</div>
 </div>

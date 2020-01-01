@@ -188,24 +188,6 @@ router.get("/add-category", async (req, res, next) => {
 
     req.session.lastUrl = req.originalUrl;
 });
-
-router.post("/add-category", async (req, res, next) => {
-    await cateModel.addCate(req.body);
-    res.redirect('/admin/category');
-});
-
-router.post("/add-category-sub/:cateID", async (req, res, next) => {
-    const rs = await cateModel.getSubCate(req.params.cateID);
-    const entity = {
-        cateID: req.params.cateID,
-        subcateName: req.body.subcateName,
-        subcateID: rs.length + 1
-    }
-    await cateModel.addSubcate(entity);
-    // console.log(entity);
-    res.redirect(`/admin/category#sub-${entity.cateID}`)
-});
-
 router.get("/add-category-sub/:cateID", async (req, res, next) => {
     const rs = await cateModel.getCateFromId(req.params.cateID);
     if (rs.length === 0) {

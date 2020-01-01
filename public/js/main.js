@@ -1,14 +1,30 @@
 (function ($) {
   "use strict";
 
+  //Super Important
+
+  //Swtich button (multiple)
+  var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+  elems.forEach(function (html) {
+    var switchery = new Switchery(html, {
+      color: '#F8694A',
+      secondaryColor: '#30323a',
+      jackColor: '#fff',
+      jackSecondaryColor: '#fff',
+      size: 'small'
+    });
+  });
+
+
   //Navbar link list
+  $('.cat-list>li>a').addClass('cat-link').attr('cat-order', index => index);
   $('.cat-link').hover((event) => {
     changeCatImage(event);
   });
 
   function changeCatImage(event) {
     let img = $(event.target).closest('.row').find('.cat-img');
-    img.attr('src', `/img/subcate/${$(event.target).attr('cateID')}-${$(event.target).attr('subcateID')}.jpg`)
+    img.attr('src', '/img/' + $(event.target).attr('cat-order') + '.jpg')
   }
 
   // NAVIGATION
