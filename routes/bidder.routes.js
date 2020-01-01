@@ -718,15 +718,19 @@ router.get("/account", checkUser.checkAuthenticated, async (req, res) => {
     productsSelling,
     productsWinList,
     productsSoldEnd,
-    evaluation
+    evaluation,
+    point,
   ] = await Promise.all([
     productModel.productsHistoryBid(user.userID),
     productModel.productsWishList(user.userID),
     productModel.productsSelling(user.userID),
     productModel.productsWinList(user.userID),
     productModel.productsSoldEnd(user.userID),
-    userModel.getEvaluationById(user.userID)
+    userModel.getEvaluationById(user.userID),
+    userModel.getPointEvaluation(user.userID),
   ]);
+
+  user.point = point;
 
   for (const product of productsHistoryBid) {
     [
@@ -945,10 +949,7 @@ router.post(
   }
 );
 
-router.post(
-  "/evaluation/winner/:productID",
-  checkUser.checkAuthenticatedPost,
-  async (req, res) => {
+router.post("/evaluation/winner/:productID",checkUser.checkAuthenticatedPost,async (req, res) => {
     const check = await userModel.checkExitsEvaluation(
       req.user.userID,
       req.body.winnerID,
@@ -964,6 +965,32 @@ router.post(
         isBad: 1 - req.body.isGood,
         content: req.body.content,
         time: new Date()
+      };
+      await userModel.addUserEvaluation(entity);
+      res.json("1");
+    } else {
+      res.json("0");
+    }
+  }
+);
+
+router.post("/refuse/winner/:productID", checkUser.checkAuthenticatedPost, async (req, res) => {
+    const check = await userModel.checkExitsEvaluation(
+      req.user.userID,
+      req.body.winnerID,
+      req.params.productID
+    );
+    if (!check) {
+      const receiver = req.body.winnerID;
+      const entity = {
+        sender: req.user.userID,
+        receiver,
+        productID: req.params.productID,
+        isGood: req.body.isGood,
+        isBad: 1 - req.body.isGood,
+        content: req.body.content,
+        time: new Date(),
+        isRefuse: 1,
       };
       await userModel.addUserEvaluation(entity);
       res.json("1");
