@@ -2,6 +2,7 @@ const express = require("express");
 
 const productModel = require("../models/product.model");
 const categoryModel = require("../models/category.model");
+const userModel = require("../models/user.model");
 const descModel = require("../models/description.model")
 const upload = require("../middlewares/upload.mdw");
 const fs = require('fs-extra')
@@ -9,6 +10,7 @@ const router = express.Router();
 const uuid = require('uuid/v1');
 const checkUser = require("../middlewares/user.mdw");
 const numeral = require('numeral');
+const moment = require("moment");
 
 router.get("/new-product", checkUser.checkSeller, async (req, res, next) => {
     res.render("vwSeller/new-product", {
@@ -104,6 +106,25 @@ router.post("/product/:productID/addDesc", async (req, res) => {
     await descModel.addDesc(entityDesc)
 
     res.redirect(`/product/${req.params.productID}`)
+})
+
+
+router.get("/product/getbidtable/:productID", async (req, res) => {
+    // console.log('seller');
+    const data = await productModel.singleBidByProduct(req.params.productID);
+    for (let p of data) {
+        p.bidderName = await userModel.getNameById(p.bidderID);
+        p.price = numeral(p.price).format(0, 0);
+        p.bidTime = moment(p.bidTime).format("DD/MM/YYYY") + "  [" + moment(p.bidTime).format("HH:mm:ss") + "]";
+        p.button = `<a href="/user-eval-detail/${p.bidderID}" target="_blank" class="main-btn small-btn">Chi tiết</a><button class="primary-btn refuse-btn small-btn">Từ chối</button>`;
+    }
+    // console.log(data);
+    res.send({
+        "draw": 1,
+        "recordsTotal": data.length,
+        "recordsFiltered": 10,
+        data: data
+    })
 })
 
 module.exports = router;

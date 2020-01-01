@@ -366,6 +366,23 @@ router.get("/product/:productID", async (req, res) => {
   req.session.lastUrl = req.originalUrl;
 });
 
+router.get("/product/getbidtable/:productID", async (req, res) => {
+  // console.log('bidder');
+  const data = await productModel.singleBidByProduct(req.params.productID);
+  for (let p of data) {
+    p.bidderName = await userModel.getNameById(p.bidderID);
+    p.price = numeral(p.price).format(0, 0);
+    p.bidTime = moment(p.bidTime).format("DD/MM/YYYY") + "  [" + moment(p.bidTime).format("HH:mm:ss") + "]";
+  }
+  // console.log(data);
+  res.send({
+    "draw": 1,
+    "recordsTotal": data.length,
+    "recordsFiltered": data.length,
+    data: data
+  })
+})
+
 router.post(
   "/product/:productID/bid",
   checkUser.checkAuthenticatedPost,
@@ -374,7 +391,7 @@ router.post(
     const product = productSingle[0];
     const point = await userModel.getPointEvaluation(req.user.userID);
     //const checkPoint = point <= 80;
-    const checkPoint = point <= product.minPoint; //t default trong db la 80 not null khoi lo, tinh lam cai lz gi quen me r :v, cho xi
+    const checkPoint = point < product.minPoint;
     const checkBan = await productModel.checkBanBid(
       req.params.productID,
       req.user.userID

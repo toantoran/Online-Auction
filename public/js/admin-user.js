@@ -33,8 +33,8 @@ createTable($('.admin-table'), '/admin/users/getAllAdmin')
 function createTable(table, url) {
     table.DataTable({
         paging: true,
-        ordering: false,
-        searching: false,
+        ordering: true,
+        searching: true,
         "language": {
             "emptyTable": "Không có User",
             "info": "",
@@ -52,7 +52,7 @@ function createTable(table, url) {
             }
         },
         processing: true,
-        serverSide: true,
+        // serverSide: true,
         ajax: url,
         columns: [{
                 data: "userID"

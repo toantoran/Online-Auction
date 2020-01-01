@@ -82,10 +82,12 @@ function noteSubmit() {
 
 function checkBid() {
     let a = $('input#bidPrice');
-    let step = numeral($('span#step').text()).value()
+    let step = numeral($('span#step').text()).value();
+    let current = numeral($('span#current').text()).value();
     let msg = $('p.err-validate#err-bidPrice');
-    if (numeral(a.val()).value() < numeral($('span#current').text()).value()) {
-        msg.html('<i class="fas fa-exclamation-triangle"></i>&nbsp;Bạn không được ra giá thấp hơn giá hiện tại').css('display', 'block')
+    let min = current + step;
+    if (numeral(a.val()).value() < min) {
+        msg.html(`<i class="fas fa-exclamation-triangle"></i>&nbsp;Giá tối thiểu là ${numeral(min).format(0,0) +' đ'}`).css('display', 'block')
         return false;
     } else if (numeral(a.val()).value() % step != 0) {
         msg.html('<i class="fas fa-exclamation-triangle"></i>&nbsp;Giá đưa ra phải là bội của bước giá: ' + $('span#step').text()).css('display', 'block')
@@ -112,15 +114,18 @@ $('input#bidPrice').focusout(() => {
     if (a.val().includes(',')) {
         a.val(a.val().replace(/,\d\d\d(?!,)/, ',000'));
     }
-    if (numeral($('input#bidPrice').val()).value() > numeral($('#immePrice').text()).value()) {
-        $('input#bidPrice').val(numeral($('#immePrice').text()).format('0,0'))
+    if ($('#immePrice').length > 0) {
+        if (numeral($('input#bidPrice').val()).value() > numeral($('#immePrice').text()).value()) {
+            $('input#bidPrice').val(numeral($('#immePrice').text()).format('0,0'))
+        }
     }
+
 })
 
 $('.note-btn').click(() => {
     $('.note-btn').prop('disabled', true);
     var d = new Date();
-    var strDate = `${d.getDate()}/${d.getMonth()}/${d.getFullYear()} [${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}]`;
+    var strDate = `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()} [${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}]`;
     let rtn = "return checkNote()";
     const productID = $('.note-btn').attr('productID');
     $('.note-btn').parent().parent().parent().append(
@@ -176,85 +181,87 @@ $('.note-btn').click(() => {
 
 });
 
-//Bid Table
-function Bid(time, name, price, bidderid) {
-    this.time = time;
-    this.name = name;
-    this.price = price;
-    this.bidderid = bidderid;
-    return this;
-};
-
-let tempData = [];
-let wishData = [];
-getdata($('.bid-table-data'))
-
-function getdata(object) {
-    for (let i = 0; i < object.length; i++) {
-        let bidderName = object.find('#bid-bidderName')[i].value;
-        let bidTime = object.find('#bid-bidTime')[i].value;
-        let price = object.find('#bid-Price')[i].value;
-        let productID = object.find('#bid-productID')[i].value;
-        let bidderID = object.find('#bid-bidderID')[i].value;
-
-        let bid = new Bid(bidTime, bidderName, price, bidderID);
-        tempData.push(bid);
-
-        wishData.push({
-            productID,
-            bidderID,
-        });
-    }
-}
-let bibTable = $('.bid-table');
-bibTable.DataTable({
-    searching: false,
-    sort: false,
-    paging: true,
-    data: tempData,
-    columns: [{
-            data: 'time',
+const isSeller = $('#isSeller').val();
+let action = `/product/getbidtable/${productID}`;
+if (isSeller === 'true') {
+    action = `/seller/product/getbidtable/${productID}`;
+    $('.bid-table').DataTable({
+        paging: true,
+        ordering: false,
+        searching: true,
+        "language": {
+            "emptyTable": "Chưa có lượt ra giá nào",
+            "info": "HIện _START_ đến _END_ trong tổng số _TOTAL_ lượt",
+            "infoEmpty": "",
+            "lengthMenu": "Hiện _MENU_ lượt",
+            "loadingRecords": "Đang tải...",
+            "processing": "Đang xử lý...",
+            "search": "Tìm kiếm:",
+            "zeroRecords": "Không tìm thấy kết quả",
+            "infoFiltered": "(Lọc từ _MAX_ lượt ra giá)",
+            "paginate": {
+                "first": "Đầu",
+                "last": "Cuối",
+                "next": "Sau",
+                "previous": "Trước"
+            }
         },
-        {
-            data: 'name',
+        processing: true,
+        // serverSide: true,
+        ajax: action,
+        columns: [{
+                data: "bidTime"
+            },
+            {
+                data: "bidderName"
+            },
+            {
+                data: "price"
+            },
+            {
+                data: "button"
+            }
+        ]
+    })
+} else {
+    $('.bid-table').DataTable({
+        paging: true,
+        ordering: false,
+        searching: true,
+        "language": {
+            "emptyTable": "Chưa có lượt ra giá nào",
+            "info": "HIện _START_ đến _END_ trong tổng số _TOTAL_ lượt",
+            "infoEmpty": "",
+            "lengthMenu": "Hiện _MENU_ lượt",
+            "loadingRecords": "Đang tải...",
+            "processing": "Đang xử lý...",
+            "search": "Tìm kiếm:",
+            "zeroRecords": "Không tìm thấy kết quả",
+            "infoFiltered": "(Lọc từ _MAX_ lượt ra giá)",
+            "paginate": {
+                "first": "Đầu",
+                "last": "Cuối",
+                "next": "Sau",
+                "previous": "Trước"
+            }
         },
-        {
-            data: 'price',
-        }
-    ],
-    "language": {
-        "emptyTable": "Chưa có lượt ra giá nào",
-        "info": "",
-        "infoEmpty": "",
-        "lengthMenu": "Hiện _MENU_ lượt ra giá",
-        "paginate": {
-            "first": "Đầu",
-            "last": "Cuối",
-            "next": "Sau",
-            "previous": "Trước"
-        }
-    }
-});
-
-let bodyBibTalbe = bibTable.find('tbody tr');
-let isSeller = document.getElementById('isSellerBid').value;
-if (isSeller === "true" && tempData.length > 0) {
-    for (let i = 0; i < bodyBibTalbe.length; i++) {
-        let node = document.createElement("td");
-        let button = document.createElement("button");
-        let link = document.createElement("a");
-        button.setAttribute('class', 'primary-btn refuse-btn small-btn');
-        button.appendChild(document.createTextNode('Từ chối'))
-        link.setAttribute('class', 'main-btn small-btn');
-        link.setAttribute('target', '_blank');
-        link.setAttribute('href', `/user-eval-detail/${tempData[i].bidderid}`);
-        link.appendChild(document.createTextNode('Chi tiết'))
-        node.appendChild(link);
-        node.appendChild(button);
-        bodyBibTalbe[i].appendChild(node);
-    }
+        processing: true,
+        // serverSide: true,
+        ajax: action,
+        columns: [{
+                data: "bidTime"
+            },
+            {
+                data: "bidderName"
+            },
+            {
+                data: "price"
+            }
+        ]
+    })
 }
-$('tbody > tr > td:nth-child(4)').css('width', '170px')
+
+// $('tbody > tr > td:nth-child(4)').css('width', '170px')
 
 setEventRefuseBtn($('.refuse-btn'))
 
@@ -311,9 +318,8 @@ function setEventRefuseBtn(object) {
         }
     }
 }
-//End bidtable
 
-$('#DataTables_Table_0').css('width', '100%')
+// $('#DataTables_Table_0').css('width', '100%')
 
 showCountDown($('.product-body'))
 

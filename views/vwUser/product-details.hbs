@@ -183,8 +183,8 @@
 										<h4 style="margin-bottom: 20px;">Lịch sử đấu giá</h4>
 										<div class="row">
 											<div class="col-md-12">
-												<table class="bid-table">
-
+												<input type="hidden" id="isSeller" value={{isSeller}}>
+												<table class="bid-table" style="width: 100%;">
 													<thead>
 														<tr>
 															<th>Thời gian</th>
@@ -195,24 +195,6 @@
 															{{/if}}
 														</tr>
 													</thead>
-
-													<input type="hidden" name="isSellerBid" id="isSellerBid"
-														value={{isSeller}}>
-
-													{{#each productBid}}
-													<div class="bid-table-data">
-														<input type="hidden" name="bid-bidderName" id="bid-bidderName"
-															value="{{format_name_bid bidderName}}">
-														<input type="hidden" name="bid-bidTime" id="bid-bidTime"
-															value="{{format_time_bid bidTime}}">
-														<input type="hidden" name="bid-Price" id="bid-Price"
-															value="{{format_money price}}">
-														<input type="hidden" name="bid-productID" id="bid-productID"
-															value="{{productID}}">
-														<input type="hidden" name="bid-bidderID" id="bid-bidderID"
-															value="{{bidderID}}">
-													</div>
-													{{/each}}
 												</table>
 											</div>
 										</div>

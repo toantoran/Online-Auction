@@ -95,7 +95,7 @@
                                     <div class="col-md-8">
                                         <div class="form-group">
                                             <input class="input" type="tel" id="tel" name="tel"
-                                                placeholder="Số điện thoại" value="{{user.tel}}" required>
+                                                placeholder="Số điện thoại" value="{{user.tel}}">
                                         </div>
                                     </div>
                                 </div>
@@ -121,7 +121,9 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="form-group">
-                                            <p class="">{{format_evaluation user.point}}</p>
+                                            <input class="input" id="point" name="point"
+                                                value="{{format_evaluation user.point}}" disabled>
+                                            <p class=""></p>
                                         </div>
                                     </div>
                                 </div>
@@ -137,14 +139,11 @@
                 </div>
 
                 <div id="bid-history">
-                    <!-- row -->
                     <div class="row">
-                        <!-- MAIN -->
                         <div class="col-md-12">
                             <div class="section-title">
                                 <h3 class="title">Lịch sử đấu giá</h3>
                             </div>
-                            <!-- row -->
                             <div class="row">
                                 <div class="col-md-12 product-container" id="history">
                                     {{#if emptyProductsHistoryBid}}
@@ -222,14 +221,11 @@
                                         </div>
                                     </div>
                                     {{/each}}
+                                    {{/if}}
                                 </div>
-                                {{/if}}
                             </div>
-                            <!-- /row -->
                         </div>
-                        <!-- /MAIN -->
                     </div>
-                    <!-- /row -->
                 </div>
 
                 <div id="wish-list">
@@ -293,8 +289,8 @@
                                         </div>
                                     </div>
                                     {{/each}}
+                                    {{/if}}
                                 </div>
-                                {{/if}}
                             </div>
                             <!-- /row -->
                         </div>
@@ -363,8 +359,8 @@
                                         </div>
                                     </div>
                                     {{/each}}
+                                    {{/if}}
                                 </div>
-                                {{/if}}
                             </div>
                             <!-- /row -->
                         </div>
@@ -431,8 +427,8 @@
                                         </div>
                                     </div>
                                     {{/each}}
+                                    {{/if}}
                                 </div>
-                                {{/if}}
                             </div>
                             <!-- /row -->
                         </div>
@@ -487,8 +483,8 @@
                                         </div>
                                     </div>
                                     {{/each}}
+                                    {{/if}}
                                 </div>
-                                {{/if}}
                             </div>
                             <!-- /row -->
                         </div>
@@ -533,8 +529,8 @@
                                             </div>
                                         </div>
                                         {{/each}}
+                                        {{/if}}
                                     </div>
-                                    {{/if}}
                                 </div>
                             </div>
                         </div>

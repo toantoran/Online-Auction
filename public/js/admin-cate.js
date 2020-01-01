@@ -28,8 +28,8 @@ $('.list-links li.sub').click(() => {
 
 $('.cate-table').DataTable({
     paging: false,
-    ordering: false,
-    searching: false,
+    ordering: true,
+    searching: true,
     "language": {
         "emptyTable": "Không có danh mục",
         "info": "",
@@ -47,7 +47,7 @@ $('.cate-table').DataTable({
         }
     },
     processing: true,
-    serverSide: true,
+    // serverSide: true,
     ajax: `/admin/getCateTable`,
     columns: [{
             data: "cateID"
@@ -68,8 +68,8 @@ $('.cate-table').DataTable({
 function createTable(table, cateID) {
     table.DataTable({
         paging: false,
-        ordering: false,
-        searching: false,
+        ordering: true,
+        searching: true,
         "language": {
             "emptyTable": "Không có danh mục con",
             "info": "",
@@ -87,7 +87,7 @@ function createTable(table, cateID) {
             }
         },
         processing: true,
-        serverSide: true,
+        // serverSide: true,
         ajax: `/admin/getSubcateTable/${cateID}`,
         columns: [{
                 data: "subcateID"
