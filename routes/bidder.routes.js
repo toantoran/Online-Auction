@@ -373,8 +373,7 @@ router.post(
     const productSingle = await productModel.single(req.params.productID);
     const product = productSingle[0];
     const point = await userModel.getPointEvaluation(req.user.userID);
-    //const checkPoint = point <= 80;
-    const checkPoint = point <= product.minPoint; //t default trong db la 80 not null khoi lo, tinh lam cai lz gi quen me r :v, cho xi
+    const checkPoint = point <= product.minPoint; 
     const checkBan = await productModel.checkBanBid(
       req.params.productID,
       req.user.userID
@@ -560,7 +559,7 @@ router.post(
 
 router.post("/productList/search/", async (req, res) => {
   const category = req.body.category;
-  const textSearch = req.body.textSearch;
+  const textSearch = req.body.textSearch || ' ';
   res.redirect(`/productList/search/${category}/${textSearch}`);
 });
 
@@ -686,6 +685,7 @@ router.get("/productList/search/:category/:textSearch", async (req, res) => {
       isCurrentPage: i === +page
     });
   }
+
   res.render("vwUser/product-list", {
     user: req.user,
     productList,
@@ -710,7 +710,7 @@ router.post("/productList/search/:category/:textSearch", async (req, res) => {
   });
 
   res.redirect(
-    `/productList/search/${req.params.category}/${req.textSearch}/?${query}`
+    `/productList/search/${req.params.category}/${req.params.textSearch}/?${query}`
   );
 });
 
