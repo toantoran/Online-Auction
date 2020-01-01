@@ -100,3 +100,40 @@ $('.btn-rating-winner').click((event) => {
 
     $('#btn-exit-rating-winner').click()
 });
+
+$('.btn-refuse-winner').click((event) => {
+    var ratingItem = {
+        productID: $('.rating-winner-pID').val(),
+        winnerID: $('.rating-winner-id').val(),
+        isGood: 0,
+        content: "Người thắng không thanh toán!!!"
+    };
+
+    $.ajax({
+        url: '/refuse/winner/' + ratingItem.productID,
+        type: 'post',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify(ratingItem),
+        success: function (data) {
+            if (data == "1") {
+                new SnackBar({
+                    message: "Từ chối thành công!!",
+                    status: "success",
+                    fixed: true,
+                    timeout: 2000
+                });
+            } else {
+                new SnackBar({
+                    message: "Từ chối không hợp lệ, bạn đã đánh giá trước đó!!",
+                    status: "warning",
+                    fixed: true,
+                    timeout: 2000
+                });
+            }
+        },
+    });
+
+    $('#btn-exit-rating-winner').click()
+});
+
