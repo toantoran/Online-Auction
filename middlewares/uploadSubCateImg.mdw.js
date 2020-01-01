@@ -3,8 +3,7 @@ const fs = require("fs");
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        const id = req.body.id;
-        const dir = `./public/img/product/${id}`;
+        const dir = `./public/img/subcate`;
         const exist = fs.existsSync(dir);
         if (!exist) {
             fs.mkdirSync(dir);
@@ -13,7 +12,9 @@ const storage = multer.diskStorage({
         return cb(null, dir);
     },
     filename: function (req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname)
+        const cateID = req.params.cateID;
+        const subcateID = req.body.subCateIDAdd;
+        cb(null, `${cateID}-${subcateID}` + '.jpg');
     }
 })
 const limits = {

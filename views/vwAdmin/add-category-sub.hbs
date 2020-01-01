@@ -49,7 +49,8 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <form action="/admin/add-category-sub/{{parent.cateID}}" method="post">
+                                <form action="/admin/add-category-sub/{{parent.cateID}}" enctype="multipart/form-data" method="post">
+                                    <input type="hidden" name="subCateIDAdd" value="{{subCateIDAdd}}">
                                     <div class="form-group">
                                         <label for="cateID">ID danh mục cha</label>
                                         <p class="err-validate" id="err-name"></p>
@@ -71,7 +72,7 @@
                                     <div class="form-group">
                                         <label for="subcate-img">Hình ảnh minh họa</label>
                                         <p class="err-validate" id="err-name"></p>
-                                        <input type="file" name="img" id="subcate-img" required />
+                                        <input type="file" name="subcate-img" id="subcate-img" required />
                                     </div>
                                     <div class="form-group">
                                         <div class="row">

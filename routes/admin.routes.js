@@ -6,6 +6,7 @@ const checkUser = require("../middlewares/user.mdw");
 const moment = require("moment");
 const config = require("../config/default.json");
 const querystring = require("querystring");
+const upload = require("../middlewares/uploadSubCateImg.mdw");
 const router = express.Router();
 
 //Require
@@ -194,7 +195,7 @@ router.post("/add-category", async (req, res, next) => {
     res.redirect('/admin/category');
 });
 
-router.post("/add-category-sub/:cateID", async (req, res, next) => {
+router.post("/add-category-sub/:cateID", upload.single('subcate-img'), async (req, res, next) => {
     const rs = await cateModel.getSubCate(req.params.cateID);
     const entity = {
         cateID: req.params.cateID,
@@ -202,7 +203,6 @@ router.post("/add-category-sub/:cateID", async (req, res, next) => {
         subcateID: rs.length + 1
     }
     await cateModel.addSubcate(entity);
-    // console.log(entity);
     res.redirect(`/admin/category#sub-${entity.cateID}`)
 });
 
@@ -221,6 +221,7 @@ router.get("/add-category-sub/:cateID", async (req, res, next) => {
             title: "Thêm danh mục con",
             user: req.user,
             notShowBreadcumb: true,
+            subCateIDAdd: parent.subCate.length +1,
             parent
         });
     }
