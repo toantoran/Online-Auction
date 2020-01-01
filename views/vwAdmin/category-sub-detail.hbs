@@ -1,10 +1,11 @@
 {{#section 'js'}}
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<script src="/js/plugin/jquery.filer.min.js"></script>
 <script src="/js/admin-cate-detail.js"></script>
 {{/section}}
 
 {{#section 'css'}}
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="/css/jquery.filer-dragdropbox-theme.css">
+<link rel="stylesheet" href="/css/jquery.filer.css">
 <link rel="stylesheet" href="/css/admin.css">
 {{/section}}
 {{#each lcCategory}}
@@ -26,8 +27,8 @@
                                     Quản lý danh mục
                                 </a></li>
                             <hr>
-                            <li class="sub"><a href="/admin/category-detail/{{parent.cateID}}"
-                                    class="link-active">{{parent.cateName}}</a></li>
+                            <li class="sub"><a href="/admin/category-detail/{{parent.cateID}}">{{parent.cateName}}</a>
+                            </li>
                             <hr>
                             {{#each parent.subCate}}
                             <li class="sub"><a
@@ -80,6 +81,16 @@
                                                 value="{{subcate.subcateName}}" id="subcateName" autofocus />
                                         </div>
                                         <div class="form-group">
+                                            <label for="productsCount">Hình ảnh minh họa</label>
+                                            <p class="err-validate" id="err-name"></p>
+                                            <br>
+                                            <img src="/img/subcate/{{subcate.cateID}}-{{subcate.subcateID}}.jpg"
+                                                alt="" />
+                                            <button class="main-btn change-btn" type="button">Thay đổi</button>
+                                            <input type="file" name="subcateImg" id="subcate-img"
+                                                style="display: none;" />
+                                        </div>
+                                        <div class="form-group">
                                             <label for="productsCount">Tổng số sản phẩm</label>
                                             <p class="err-validate" id="err-name"></p>
                                             <input class="input" type="text" name="productsCount"
@@ -88,9 +99,11 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-md-12" style="text-align: center;">
-                                                    <button class="main-btn btn-update"><i class="fas fa-save"></i> Lưu
+                                                    <button class="main-btn btn-update" style="color: green;"><i
+                                                            class="fas fa-save"></i> Lưu
                                                         những thay đổi</button>
-                                                    <button class="main-btn btn-delete"><i class="fas fa-trash-alt"></i>
+                                                    <button class="main-btn btn-delete" style="color: red;"><i
+                                                            class="fas fa-trash-alt"></i>
                                                         Xóa danh mục</button>
                                                 </div>
                                             </div>
