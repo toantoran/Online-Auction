@@ -109,10 +109,13 @@ module.exports = {
         db.del('product_bid', {
             productID: id
         });
-        db.del('product_note', {
+        db.del('product_description', {
             productID: id
         });
         db.del('product_ban_bid', {
+            productID: id
+        });
+        db.del('user_evaluation', {
             productID: id
         });
         db.del('product_single', {

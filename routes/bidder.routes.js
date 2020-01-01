@@ -373,7 +373,8 @@ router.post(
     const productSingle = await productModel.single(req.params.productID);
     const product = productSingle[0];
     const point = await userModel.getPointEvaluation(req.user.userID);
-    const checkPoint = point <= 80;
+    //const checkPoint = point <= 80;
+    const checkPoint = point <= product.minPoint; //t default trong db la 80 not null khoi lo, tinh lam cai lz gi quen me r :v, cho xi
     const checkBan = await productModel.checkBanBid(
       req.params.productID,
       req.user.userID
@@ -523,22 +524,25 @@ router.post("/product/:productID/refuseBid", async (req, res) => {
 
 router.post(
   "/product/:productID/addToWishList",
-  checkUser.checkAuthenticatedPost,
   async (req, res) => {
-    const productID = req.params.productID;
-    const userID = req.user.userID;
-
-    const check = await productModel.isExistWishItem(productID, userID);
-    if (check) {
-      res.json("0");
+    if (!req.isAuthenticated()) {
+      res.json("-1");
     } else {
-      const entity = {
-        productID,
-        userID
-      };
-      await productModel.addWishItem(entity);
-      res.json("1");
+      const productID = req.params.productID;
+      const userID = req.user.userID;
+      const check = await productModel.isExistWishItem(productID, userID);
+      if (check) {
+        res.json("0");
+      } else {
+        const entity = {
+          productID,
+          userID
+        };
+        await productModel.addWishItem(entity);
+        res.json("1");
+      }
     }
+
   }
 );
 
@@ -949,56 +953,54 @@ router.post(
   }
 );
 
-router.post("/evaluation/winner/:productID",checkUser.checkAuthenticatedPost,async (req, res) => {
-    const check = await userModel.checkExitsEvaluation(
-      req.user.userID,
-      req.body.winnerID,
-      req.params.productID
-    );
-    if (!check) {
-      const receiver = req.body.winnerID;
-      const entity = {
-        sender: req.user.userID,
-        receiver,
-        productID: req.params.productID,
-        isGood: req.body.isGood,
-        isBad: 1 - req.body.isGood,
-        content: req.body.content,
-        time: new Date()
-      };
-      await userModel.addUserEvaluation(entity);
-      res.json("1");
-    } else {
-      res.json("0");
-    }
+router.post("/evaluation/winner/:productID", checkUser.checkAuthenticatedPost, async (req, res) => {
+  const check = await userModel.checkExitsEvaluation(
+    req.user.userID,
+    req.body.winnerID,
+    req.params.productID
+  );
+  if (!check) {
+    const receiver = req.body.winnerID;
+    const entity = {
+      sender: req.user.userID,
+      receiver,
+      productID: req.params.productID,
+      isGood: req.body.isGood,
+      isBad: 1 - req.body.isGood,
+      content: req.body.content,
+      time: new Date()
+    };
+    await userModel.addUserEvaluation(entity);
+    res.json("1");
+  } else {
+    res.json("0");
   }
-);
+});
 
 router.post("/refuse/winner/:productID", checkUser.checkAuthenticatedPost, async (req, res) => {
-    const check = await userModel.checkExitsEvaluation(
-      req.user.userID,
-      req.body.winnerID,
-      req.params.productID
-    );
-    if (!check) {
-      const receiver = req.body.winnerID;
-      const entity = {
-        sender: req.user.userID,
-        receiver,
-        productID: req.params.productID,
-        isGood: req.body.isGood,
-        isBad: 1 - req.body.isGood,
-        content: req.body.content,
-        time: new Date(),
-        isRefuse: 1,
-      };
-      await userModel.addUserEvaluation(entity);
-      res.json("1");
-    } else {
-      res.json("0");
-    }
+  const check = await userModel.checkExitsEvaluation(
+    req.user.userID,
+    req.body.winnerID,
+    req.params.productID
+  );
+  if (!check) {
+    const receiver = req.body.winnerID;
+    const entity = {
+      sender: req.user.userID,
+      receiver,
+      productID: req.params.productID,
+      isGood: req.body.isGood,
+      isBad: 1 - req.body.isGood,
+      content: req.body.content,
+      time: new Date(),
+      isRefuse: 1,
+    };
+    await userModel.addUserEvaluation(entity);
+    res.json("1");
+  } else {
+    res.json("0");
   }
-);
+});
 
 router.get("/login", checkUser.checkNotAuthenticated, (req, res) => {
   let errMsg = null;

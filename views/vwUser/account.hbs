@@ -182,15 +182,14 @@
                                             </div>
                                             <div class="product-body">
                                                 <h2 class="product-name"><a {{#if resultBid}}
-                                                        href="/checkout/{{productID}}">{{format_name productName}} </a>
-                                                    {{else}}
-                                                    href="/product/{{productID}}">{{format_name productName}} </a>
+                                                        href="/checkout/{{productID}}" {{else}}
+                                                        href="/product/{{productID}}">{{format_name productName}} </a>
                                                     {{/if}}
                                                 </h2>
                                                 <p class="product-text">Giá hiện tại: <span class="product-price"
-                                                        {{#if isWinner}} style="color: green 
-                                                 {{else}} style=" color: red"
-                                                        {{/if}}">{{format_money currentPrice}}</span></p>
+                                                        {{#if isWinner}} style="color: green" {{else}}
+                                                        style=" color: red" {{/if}}>{{format_money currentPrice}}</span>
+                                                </p>
                                                 <p class="product-text">Giá bán ngay: <span
                                                         class="product-price">{{format_money immePrice}}</span></p>
                                                 <p class="product-text">Giá của bạn: <span class="product-price"
@@ -271,22 +270,23 @@
                                                     class="watch-list btn-wish {{#if isExistWishItem}}focus{{/if}}"><i
                                                         class="fa fa-heart"></i></button>
                                                 <img src="/img/product/{{productID}}/{{mainImgSrc}}" alt="">
-                                            </div>
-                                            <div class="product-body">
-                                                <h2 class="product-name"><a
-                                                        href="/product/{{productID}}">{{format_name productName}}</a>
-                                                </h2>
-                                                <p class="product-text">Giá hiện tại: <span
-                                                        class="product-price">{{format_money currentPrice}}</span></p>
-                                                <p class="product-text">Giá bán ngay: <span
-                                                        class="product-price">{{format_money immePrice}}</span></p>
-                                                {{#if isBided}}
-                                                <p class="product-text">Đặt cao nhất: <span
-                                                        class="product-price">{{format_name_bid winner}}</span></p>
-                                                {{/if}}
-                                                <div class="product-footer">
-                                                    <small><span>{{countBid}}</span> lượt ra giá</small>
-                                                    <small>Từ <span>{{format_day beginDate}}</span></small>
+                                                <div class="product-body">
+                                                    <h2 class="product-name"><a
+                                                            href="/product/{{productID}}">{{format_name productName}}</a>
+                                                    </h2>
+                                                    <p class="product-text">Giá hiện tại: <span
+                                                            class="product-price">{{format_money currentPrice}}</span>
+                                                    </p>
+                                                    <p class="product-text">Giá bán ngay: <span
+                                                            class="product-price">{{format_money immePrice}}</span></p>
+                                                    {{#if isBided}}
+                                                    <p class="product-text">Đặt cao nhất: <span
+                                                            class="product-price">{{format_name_bid winner}}</span></p>
+                                                    {{/if}}
+                                                    <div class="product-footer">
+                                                        <small><span>{{countBid}}</span> lượt ra giá</small>
+                                                        <small>Từ <span>{{format_day beginDate}}</span></small>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <input type="hidden" id="endDate" value="{{format_day_value endDate}}">
@@ -658,8 +658,9 @@
                     <button type="button" class="btn btn-primary btn-block btn-lg btn-rating-winner">Đánh
                         giá</button>
                 </div>
-                 <div class="form-group">
-                    <button type="button" class="btn btn-primary btn-block btn-lg btn-refuse-winner" style="color: red;">Từ chối</button>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary btn-block btn-lg btn-refuse-winner"
+                        style="color: red;">Từ chối</button>
                 </div>
 
             </div>

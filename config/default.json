@@ -1,11 +1,11 @@
 {
   "mysql": {
     "connectionLimit": 50,
-    "host": "sql12.freemysqlhosting.net",
+    "host": "localhost",
     "port": 3306,
-    "user": "sql12317049",
-    "password": "ENX4cjweNx",
-    "database": "sql12317049",
+    "user": "root",
+    "password": "1234",
+    "database": "onlineauction",
     "dateStrings": true
   },
   "paginate": {
@@ -25,7 +25,7 @@
     "limitProductsWinList": 10
   },
   "product": {
-    "countBidIsHot": 5,
+    "countBidIsHot": 10,
     "minutesIsNew": 30
   },
   "checkout": {

@@ -46,9 +46,33 @@ $('#btn-bid').click((event) => {
     })
 })
 
+$('.main-btn.icon-btn.btn-confirm-delete').click(() => {
+    Swal.fire({
+        title: 'Bạn chắc chắn muốn gỡ bỏ sản phẩm này?',
+        text: 'Bạn không thể hoàn tác',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#F8694A',
+        cancelButtonColor: '#000',
+        confirmButtonText: '<a onclick="deleteSubmit()">Chắc chắn <i class="fas fa-trash"></i></a>',
+        cancelButtonText: 'Hủy'
+    }).then((result) => {
+        if (result.value) {
+            Swal.fire({
+                title: 'Sản phẩm đã được gỡ bỏ',
+                icon: 'success',
+            })
+        }
+    })
+})
+
 function bidSubmit() {
     // alert('abc');
     $('#btn-submit').click();
+}
+
+function deleteSubmit() {
+    $('#btn-delete').click();
 }
 
 function noteSubmit() {
@@ -80,13 +104,16 @@ function checkNote() {
 
 $('input#bidPrice').val(numeral($('input#bidPrice').val()).format('0,0'))
 $('input#bidPrice').on('input', function () {
-    $('input#bidPrice').val(numeral($('input#bidPrice').val()).format('0,0'))
+    $('input#bidPrice').val(numeral($('input#bidPrice').val()).format('0,0'));
 });
 
 $('input#bidPrice').focusout(() => {
     let a = $('input#bidPrice');
     if (a.val().includes(',')) {
         a.val(a.val().replace(/,\d\d\d(?!,)/, ',000'));
+    }
+    if (numeral($('input#bidPrice').val()).value() > numeral($('#immePrice').text()).value()) {
+        $('input#bidPrice').val(numeral($('#immePrice').text()).format('0,0'))
     }
 })
 
@@ -183,7 +210,7 @@ let bibTable = $('.bid-table');
 bibTable.DataTable({
     searching: false,
     sort: false,
-    paging: false,
+    paging: true,
     data: tempData,
     columns: [{
             data: 'time',

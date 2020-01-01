@@ -27,7 +27,7 @@ var filesConfig = [{
     name: 'filesThumb[]'
 }];
 router.post("/new-product/", upload.fields(filesConfig), checkUser.checkAuthenticatedPost, async (req, res, next) => {
-    // console.log(req.body);
+    console.log(req.body);
     const productCate = await categoryModel.getFromName(req.body.productCate);
     // console.log(productCate);
     const entityProductSingle = {
@@ -41,10 +41,11 @@ router.post("/new-product/", upload.fields(filesConfig), checkUser.checkAuthenti
         beginPrice: numeral(req.body.beginPrice).value(),
         currentPrice: numeral(req.body.beginPrice).value(),
         stepPrice: numeral(req.body.stepPrice).value(),
-        immePrice: numeral(req.body.immePrice).value(),
+        immePrice: req.body.immePrice === '' ? false : numeral(req.body.immePrice).value(),
         beginDate: new Date(),
         endDate: new Date(new Date().setDate(new Date().getDate() + 7)),
         autoExtend: req.body.autoExtend === "on",
+        minpoint: req.body.minPoint
     }
 
     await productModel.addProductSingle(entityProductSingle);
@@ -79,9 +80,9 @@ router.post("/new-product/", upload.fields(filesConfig), checkUser.checkAuthenti
 router.post("/product/:productID/delete", async (req, res) => {
     const rows = await productModel.single(req.params.productID);
     const product = rows[0];
-    if (product.seller === req.user.userID) {
-        await productModel.deleteProduct(req.params.productID);
 
+    if (product.seller === req.user.userID || req.user.isAdmin === 1) {
+        await productModel.deleteProduct(req.params.productID);
         const dir = `./public/img/product/${req.params.productID}`;
         fs.exists(dir, exist => {
             if (exist) {
@@ -90,9 +91,8 @@ router.post("/product/:productID/delete", async (req, res) => {
                 })
             }
         })
-
     }
-    res.send(req.params.productID);
+    res.redirect('/');
 });
 
 router.post("/product/:productID/addDesc", async (req, res) => {

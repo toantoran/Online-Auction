@@ -23,7 +23,8 @@ h2 {
     color: #F8694A;
 }
 
-table .main-btn {
+table .main-btn,
+table .primary-btn {
     padding: 5px 10px !important;
 }
 

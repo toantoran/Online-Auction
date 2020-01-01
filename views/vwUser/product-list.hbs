@@ -89,7 +89,9 @@
 											<p class="product-text">Giá hiện tại: <span
 													class="product-price">{{format_money currentPrice}}</span></p>
 											<p class="product-text">Giá bán ngay: <span
-													class="product-price">{{format_money immePrice}}</span></p>
+													class="product-price">{{#if immePrice}}
+													{{format_money immePrice}}
+													{{else}} Không có {{/if}}</span></p>
 											{{#if isBided}}
 											<p class="product-text">Đặt cao nhất: <span
 													class="product-price">{{format_name_bid winner}}</span></p>

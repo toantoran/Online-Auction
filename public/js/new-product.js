@@ -18,9 +18,29 @@ $('input.price').focusout((event) => {
     }
 })
 
+$('input.point').focusout((event) => {
+    let a = $(event.target);
+    let val = parseInt(a.val());
+    if (val < 0) val = 0;
+    if (val > 100) val = 100
+    if (a.val() == '') val = 80;
+    a.val(val);
+
+})
+
+var elem = document.querySelector('.checkbox');
+var init = new Switchery(elem, {
+    color: '#F8694A',
+    secondaryColor: 'gray',
+    jackColor: 'white',
+    jackSecondaryColor: 'white',
+    size: 'small'
+});
+
+
 tinymce.init({
     selector: '#desc-editor',
-    height: 600,
+    height: 640,
     plugins: 'paste image link autolink lists table media',
     menubar: false,
     toolbar: [
@@ -109,7 +129,7 @@ function validateNewProduct(event) {
         beginPrice: numeral($('input#beginPrice').val()).value(),
         stepPrice: numeral($('input#stepPrice').val()).value(),
         immePrice: numeral($('input#immePrice').val()).value(),
-        autoExtend: document.querySelector('.js-switch').checked,
+        autoExtend: document.querySelector('.checkbox').checked,
         mainImg: $('input#file-input-main').val(),
         thumb: $('#frmNew > div:nth-child(3) > div:nth-child(2) > div > div > div.jFiler-input > div.jFiler-input-caption > span').text()
     }

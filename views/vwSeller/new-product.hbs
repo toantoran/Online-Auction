@@ -59,6 +59,11 @@
 						<input class="input price" type="text" name="immePrice" id="immePrice"
 							placeholder="Ví dụ: {{format_money 2000000}}" />
 					</div>
+					<div class="form-group">
+						<label for="minPoint">Điểm tối thiểu để tham gia đấu giá</label>
+						<p class="err-validate" id="err-minpoint"></p>
+						<input type="number" name="minPoint" id="minPoint" class="input point" value="80" />
+					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="section-title">
@@ -96,7 +101,7 @@
 				<div class="col-md-12" style="text-align: center;">
 					<div class="form-group">
 						<label for="autoExtend">Tự động gia hạn</label>
-						<input type="checkbox" name="autoExtend" id="autoExtend" class="input js-switch" />
+						<input type="checkbox" name="autoExtend" id="autoExtend" class="checkbox" />
 					</div>
 				</div>
 			</div>
@@ -118,6 +123,7 @@
 {{#section 'css'}}
 <link rel="stylesheet" href="/css/jquery.filer-dragdropbox-theme.css">
 <link rel="stylesheet" href="/css/jquery.filer.css">
+<link rel="stylesheet" href="/css/switchery.min.css">
 <link rel="stylesheet" href="/css/new-product.css">
 
 {{/section}}
@@ -127,6 +133,6 @@
 	src="https://cdn.tiny.cloud/1/sfxod6yk264sspcnxgqvv1tt368ja0csyad2gm36255qvya4/tinymce/5/tinymce.min.js"></script>
 <script src="/js/plugin/jquery.filer.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
-
+<script src="/js/plugin/switchery.min.js"></script>
 <script src="/js/new-product.js"></script>
 {{/section}}

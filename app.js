@@ -28,7 +28,10 @@ app.engine(
     defaultLayout: "main-layout.hbs",
     helpers: {
       section: hbs_sections(),
-      format_money: val => numeral(val).format("0,0") + " đ",
+      format_money: val => {
+        if (val == false) return "Không có";
+        return numeral(val).format("0,0") + " đ"
+      },
       format_day: val => moment(val).format("DD/MM/YYYY"),
       format_day_time: val =>
         moment(val).format("DD/MM/YYYY") +

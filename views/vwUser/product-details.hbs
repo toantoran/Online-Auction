@@ -101,7 +101,10 @@
 							{{/if}}
 							<p>Giá hiện tại: <span class="product-price"
 									id="current">{{format_money product.currentPrice}}</span></p>
-							<p>Giá mua ngay: <span class="product-price">{{format_money product.immePrice}}</span></p>
+							{{#if product.immePrice}}
+							<p>Giá mua ngay: <span class="product-price"
+									id="immePrice">{{format_money product.immePrice}}</span></p>
+							{{/if}}
 							<p>Bước giá: <span class="product-price" id="step">{{format_money product.stepPrice}}</span>
 							</p>
 						</div>
@@ -122,20 +125,29 @@
 										class="fas fa-gavel"></i></button>
 								{{/unless}}
 								{{/unless}}
-								<div class="pull-right">
-									{{#if isSeller}}
-									<button class="main-btn icon-btn btn-delete"
-										formaction="/seller/product/{{product.productID}}/delete"><i
-											class="fas fa-trash"></i></button>
-									{{/if}}
-									{{!-- <button class="main-btn icon-btn" id="myPopUp"><i
-											class="fa fa-share-alt"></i></button> --}}
-									<button productID="{{product.productID}}" userID="{{user.userID}}" type="button"
-										onsubmit="return false;" name="btnWish"
-										class="btn-wish {{#if isExistWishItem}}focus{{/if}}"><i
-											class="fa fa-heart"></i></button>
-								</div>
 							</form>
+							<div class="pull-right">
+								<form method="POST" style="display: none;">
+									<button class="main-btn icon-btn btn-delete" id="btn-delete"
+										formaction="/seller/product/{{product.productID}}/delete" type="submit"
+										style="display: ;"></button>
+								</form>
+								{{#if isSeller}}
+								<button class="main-btn icon-btn btn-confirm-delete" type="button"><i
+										class="fas fa-trash"></i></button>
+								{{/if}}
+								{{#if user.isAdmin}}
+								<button class="main-btn icon-btn btn-confirm-delete" type="button"><i
+										class="fas fa-trash"></i></button>
+								{{/if}}
+
+								{{!-- <button class="main-btn icon-btn" id="myPopUp"><i
+											class="fa fa-share-alt"></i></button> --}}
+								<button productID="{{product.productID}}" userID="{{user.userID}}" type="button"
+									onsubmit="return false;" name="btnWish"
+									class="btn-wish {{#if isExistWishItem}}focus{{/if}}"><i
+										class="fa fa-heart"></i></button>
+							</div>
 						</div>
 					</div>
 				</div>

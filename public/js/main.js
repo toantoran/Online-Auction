@@ -174,6 +174,10 @@
         contentType: 'application/json',
         data: JSON.stringify(wishItem),
         success: function (data) {
+          if (data == "-1") {
+            console.log('2121312');
+            window.location.href = ("/login");
+          }
           if (data == "1") {
             new SnackBar({
               message: "Đã thêm vào danh sách yêu thích",
@@ -381,31 +385,7 @@
     return false;
   });
 
-  $('.main-btn.icon-btn.btn-delete').click(() => {
-    Swal.fire({
-      title: 'Bạn chắc chắn muốn gỡ bỏ sản phẩm này?',
-      text: 'Bạn không thể hoàn tác',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#F8694A',
-      cancelButtonColor: '#000',
-      confirmButtonText: 'Chắc chắn <i class="fas fa-trash"></i>',
-      cancelButtonText: 'Hủy'
-    }).then((result) => {
-      if (result.value) {
-        Swal.fire({
-          title: 'Sản phẩm đã được gỡ bỏ',
-          icon: 'success',
-          footer: '<a href="product-page.html">Xem sản phẩm?</a>',
-          timer: 4000,
-          footer: 'Điều hướng về trang chủ'
-        })
-        setTimeout(() => {
-          window.location.href = 'index.html';
-        }, 4000)
-      }
-    })
-  })
+
 
   var myMenu =
     '<div>\
@@ -423,12 +403,5 @@
     zIndex: 100
   });
 
-  var radio = document.querySelector('.js-switch-radio');
-  var radioInit = new Switchery(radio, {
-    color: '#F8694A',
-    secondaryColor: '#F8694A',
-    jackColor: 'white',
-    jackSecondaryColor: 'white'
-  });
 
 })(jQuery);

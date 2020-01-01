@@ -32,7 +32,7 @@ createTable($('.admin-table'), '/admin/users/getAllAdmin')
 
 function createTable(table, url) {
     table.DataTable({
-        paging: false,
+        paging: true,
         ordering: false,
         searching: false,
         "language": {

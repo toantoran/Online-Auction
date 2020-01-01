@@ -29,7 +29,7 @@ router.get("/getSubcateTable/:cateID", async (req, res, next) => {
     for (let sub of data) {
         sub.productsCount = await productModel.countBySubCat(sub.cateID, sub.subcateID)
         sub.button = `<a href='/admin/category-sub-detail/${sub.cateID}/${sub.subcateID}' class='main-btn edit-btn'><i class='fas fa-edit'></i></a><button type='submit' formmethod='post' style='display: none' 
-        formaction='/admin/category/sub/detele/${sub.cateID}/${sub.subcateID}' class='main-btn delete-subcate-btn'></button><button class='main-btn' type='button' onclick='confirmDelete(${sub.cateID},${sub.subcateID})'><i class='fas fa-trash-alt'></i></button>`;
+        formaction='/admin/category/sub/detele/${sub.cateID}/${sub.subcateID}' class='main-btn delete-subcate-btn'></button><button class='primary-btn' type='button' onclick='confirmDelete(${sub.cateID},${sub.subcateID})'><i class='fas fa-trash-alt'></i></button>`;
     }
     res.send({
         "draw": 1,
@@ -44,7 +44,7 @@ router.get("/getCateTable", (req, res, next) => {
     for (let sub of data) {
         sub.cateIcon = `<i class='fas fa-${sub.cateIcon}'></i> : ${sub.cateIcon}`
         sub.button = `<a href='/admin/category-detail/${sub.cateID}' class='main-btn edit-btn'><i class='fas fa-edit'></i></a><button type='submit' formmethod='post' style='display: none'
-        formaction='/admin/category/detele/${sub.cateID}' class='main-btn delete-cate-btn'></button><button type='button' class='main-btn' onclick='confirmDelete(${sub.cateID})'><i class='fas fa-trash-alt'></i></button>`;
+        formaction='/admin/category/detele/${sub.cateID}' class='main-btn delete-cate-btn'></button><button type='button' class='primary-btn' onclick='confirmDelete(${sub.cateID})'><i class='fas fa-trash-alt'></i></button>`;
     }
     res.send({
         "draw": 1,
