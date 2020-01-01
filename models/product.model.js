@@ -8,23 +8,45 @@ module.exports = {
     allBySubCate: (cateID, subcateID) => db.load(`select * from product_single where cateID = ${cateID} and subcateID = ${subcateID} order by subcateID`),
     sameBySubCate: (productID, cateID, subcateID) => db.load(`select * from product_single where cateID = ${cateID} and subcateID = ${subcateID} 
     and productID <> "${productID}" and endDate > NOW() limit 5`),
+
     countByText: async (textSearch) => {
-        const rows = await db.load(`select count(*) as total from product_single`)
+        const rows = await db.load(`SELECT count(*) as total
+         FROM product_single
+        WHERE MATCH (productName) AGAINST ("${textSearch}") and endDate > NOW()`);
         return rows[0].total;
     },
-    pageByTextDefault: (textSearch, offset) => db.load(`select * from product_single 
-    order by (endDate - NOW()) limit ${config.paginate.limit} offset ${offset}`),
-    pageByText: (textSearch, offset, option, order) => db.load(`select * from product_single 
-    order by ${option} ${order} limit ${config.paginate.limit} offset ${offset}`),
+
+    pageByTextDefault: (textSearch, offset) => db.load(`SELECT product_single.*, MATCH (productName) AGAINST ("${textSearch}") AS name_relevance
+    FROM product_single
+    WHERE MATCH (productName) AGAINST ("${textSearch}") and endDate > NOW()
+    ORDER BY name_relevance DESC
+    limit ${config.paginate.limit} offset ${offset}`),
+
+
+    pageByText: (textSearch, offset, option, order) => db.load(`SELECT product_single.*, MATCH (productName) AGAINST ("${textSearch}") AS name_relevance
+    FROM product_single
+    WHERE MATCH (productName) AGAINST ("${textSearch}") and endDate > NOW()
+    ORDER BY name_relevance DESC, ${option} ${order}
+    limit ${config.paginate.limit} offset ${offset}`),
 
     countByCateAndText: async (textSearch, cateID) => {
-        const rows = await db.load(`select count(*) as total from product_single where cateID = ${cateID}`)
+        const rows = await db.load(`SELECT count(*) as total
+        FROM product_single
+        WHERE MATCH (productName) AGAINST ("${textSearch}") and endDate > NOW() and cateID = ${cateID} `);
         return rows[0].total;
     },
-    pageByCateAndTextDefault: (textSearch, cateID, offset) => db.load(`select * from product_single where cateID = ${cateID} 
-    order by (endDate - NOW()) limit ${config.paginate.limit} offset ${offset}`),
-    pageByCateAndText: (textSearch, cateID, offset, option, order) => db.load(`select * from product_single where cateID = ${cateID} 
-    order by ${option} ${order} limit ${config.paginate.limit} offset ${offset}`),
+
+    pageByCateAndTextDefault: (textSearch, cateID, offset) => db.load(`SELECT product_single.*, MATCH (productName) AGAINST ("${textSearch}") AS name_relevance
+    FROM product_single
+    WHERE MATCH (productName) AGAINST ("${textSearch}") and endDate > NOW() and cateID = ${cateID}
+    ORDER BY name_relevance DESC
+    limit ${config.paginate.limit} offset ${offset}`),
+
+    pageByCateAndText: (textSearch, cateID, offset, option, order) => db.load(`SELECT product_single.*, MATCH (productName) AGAINST ("${textSearch}") AS name_relevance
+    FROM product_single
+    WHERE MATCH (productName) AGAINST ("${textSearch}") and endDate > NOW() and cateID = ${cateID}
+    ORDER BY name_relevance DESC, ${option} ${order}
+    limit ${config.paginate.limit} offset ${offset}`),
 
     countBySubCat: async (cateID, subcateID) => {
         const rows = await db.load(`select count(*) as total from product_single where cateID = ${cateID} and subcateID = ${subcateID}`)

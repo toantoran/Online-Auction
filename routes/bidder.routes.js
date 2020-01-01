@@ -577,7 +577,7 @@ router.post(
 
 router.post("/productList/search/", async (req, res) => {
   const category = req.body.category;
-  const textSearch = req.body.textSearch;
+  const textSearch = req.body.textSearch || ' ';
   res.redirect(`/productList/search/${category}/${textSearch}`);
 });
 
@@ -703,6 +703,7 @@ router.get("/productList/search/:category/:textSearch", async (req, res) => {
       isCurrentPage: i === +page
     });
   }
+
   res.render("vwUser/product-list", {
     user: req.user,
     productList,
@@ -727,7 +728,7 @@ router.post("/productList/search/:category/:textSearch", async (req, res) => {
   });
 
   res.redirect(
-    `/productList/search/${req.params.category}/${req.textSearch}/?${query}`
+    `/productList/search/${req.params.category}/${req.params.textSearch}/?${query}`
   );
 });
 
