@@ -7,6 +7,7 @@ const moment = require("moment");
 const config = require("../config/default.json");
 const querystring = require("querystring");
 const upload = require("../middlewares/uploadSubCateImg.mdw");
+const fs = require('fs-extra')
 const router = express.Router();
 
 //Require
@@ -57,7 +58,7 @@ router.get("/getCateTable", (req, res, next) => {
     })
 });
 
-router.post("/category/detele/:cateID", async (req, res) => {
+router.post("/category/delete/:cateID", async (req, res) => {
     const cateID = req.params.cateID;
     const rows = await productModel.allByCate(cateID);
     const check = rows.length > 0;
@@ -77,7 +78,7 @@ router.post("/category/detele/:cateID", async (req, res) => {
     res.redirect(`/admin/category/?${query}`);
 })
 
-router.post("/category/sub/detele/:cateID/:subcateID", async (req, res) => {
+router.post("/category/sub/delete/:cateID/:subcateID", async (req, res) => {
     const cateID = req.params.cateID;
     const subcateID = req.params.subcateID;
     const rows = await productModel.allBySubCate(cateID, subcateID);
@@ -94,8 +95,31 @@ router.post("/category/sub/detele/:cateID/:subcateID", async (req, res) => {
             message: "Xoá danh mục thành công!!!"
         });
         await cateModel.deleteSubCateByID(cateID, subcateID);
+
+        const dir = `./public/img/subcate/${cateID}-${subcateID}.jpg`;
+        fs.exists(dir, exist => {
+            if (exist) {
+                fs.remove(dir, (error) => {
+                    if (error) console.log(error.message);
+                })
+            }
+        })
     }
-    res.redirect(`/admin/category/?${query}`);
+
+    res.redirect(`/admin/category/?${query}#sub-${cateID}`);
+});
+
+router.post("/category/sub/edit/:cateID/:subcateID", upload.single('subcate-img'), async (req, res) => {
+    const cateID = req.params.cateID;
+    const subcateID = req.params.subcateID;
+    const entity = {
+        cateID,
+        subcateID,
+        subcateName: req.body.subcateName
+    }
+    await cateModel.editSubCate(entity);
+
+    res.redirect(`/admin/category#sub-${cateID}`);
 });
 
 
@@ -183,7 +207,6 @@ router.get("/users/getAllAdmin", async (req, res) => {
     })
 })
 
-
 router.get("/category-detail/:cateID", async (req, res, next) => {
     const cate = res.locals.lcCateList[req.params.cateID - 1];
     let count = 0;
@@ -221,10 +244,15 @@ router.post("/add-category", async (req, res, next) => {
 
 router.post("/add-category-sub/:cateID", upload.single('subcate-img'), async (req, res, next) => {
     const rs = await cateModel.getSubCate(req.params.cateID);
+    let max = 0;
+    for (const i of rs) {
+        if (max < i.subcateID)
+            max = i.subcateID;
+    }
     const entity = {
         cateID: req.params.cateID,
         subcateName: req.body.subcateName,
-        subcateID: rs.length + 1
+        subcateID: max + 1
     }
     await cateModel.addSubcate(entity);
     res.redirect(`/admin/category#sub-${entity.cateID}`)
@@ -241,11 +269,16 @@ router.get("/add-category-sub/:cateID", async (req, res, next) => {
     } else {
         const parent = rs[0];
         parent.subCate = await cateModel.getSubCate(parent.cateID);
+        let max = 0;
+        for (const i of parent.subCate) {
+            if (max < i.subcateID)
+                max = i.subcateID;
+        }
         res.render("vwAdmin/add-category-sub", {
             title: "Thêm danh mục con",
             user: req.user,
             notShowBreadcumb: true,
-            subCateIDAdd: parent.subCate.length + 1,
+            subCateIDAdd: max + 1,
             parent
         });
     }
@@ -254,9 +287,14 @@ router.get("/add-category-sub/:cateID", async (req, res, next) => {
 });
 
 router.get("/category-sub-detail/:cateID/:subcateID", async (req, res, next) => {
-    const subcate = res.locals.lcCateList[req.params.cateID - 1].subCate[req.params.subcateID - 1];
-    subcate.productsCount = await productModel.countBySubCat(subcate.cateID, subcate.subcateID)
-    const parent = res.locals.lcCateList[req.params.cateID - 1]
+    // const subcate = res.locals.lcCateList[req.params.cateID - 1].subCate[req.params.subcateID - 1];
+    // subcate.productsCount = await productModel.countBySubCat(subcate.cateID, subcate.subcateID)
+    // const parent = res.locals.lcCateList[req.params.cateID - 1]
+    let rows = await cateModel.getSingleSubCate(req.params.cateID, req.params.subcateID);
+    const subcate = rows[0];
+    subcate.productsCount = await productModel.countBySubCat(subcate.cateID, subcate.subcateID);
+    rows = await cateModel.getCate(req.params.cateID);
+    const parent = rows[0];
     res.render("vwAdmin/category-sub-detail", {
         title: "Chi tiết danh mục con",
         user: req.user,

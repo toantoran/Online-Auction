@@ -11,19 +11,21 @@ module.exports = {
 
     countByText: async (textSearch) => {
         const rows = await db.load(`SELECT count(*) as total
-         FROM product_single
+        FROM product_single
         WHERE MATCH (productName) AGAINST ("${textSearch}") and endDate > NOW()`);
         return rows[0].total;
     },
 
-    pageByTextDefault: (textSearch, offset) => db.load(`SELECT product_single.*, MATCH (productName) AGAINST ("${textSearch}") AS name_relevance
+    pageByTextDefault: (textSearch, offset) => db.load(`SELECT product_single.*, 
+        MATCH (productName) AGAINST ("${textSearch}") AS name_relevance
     FROM product_single
     WHERE MATCH (productName) AGAINST ("${textSearch}") and endDate > NOW()
     ORDER BY name_relevance DESC
     limit ${config.paginate.limit} offset ${offset}`),
 
 
-    pageByText: (textSearch, offset, option, order) => db.load(`SELECT product_single.*, MATCH (productName) AGAINST ("${textSearch}") AS name_relevance
+    pageByText: (textSearch, offset, option, order) => db.load(`SELECT product_single.*, 
+        MATCH (productName) AGAINST ("${textSearch}") AS name_relevance
     FROM product_single
     WHERE MATCH (productName) AGAINST ("${textSearch}") and endDate > NOW()
     ORDER BY name_relevance DESC, ${option} ${order}
@@ -36,13 +38,15 @@ module.exports = {
         return rows[0].total;
     },
 
-    pageByCateAndTextDefault: (textSearch, cateID, offset) => db.load(`SELECT product_single.*, MATCH (productName) AGAINST ("${textSearch}") AS name_relevance
+    pageByCateAndTextDefault: (textSearch, cateID, offset) => db.load(`SELECT product_single.*, 
+        MATCH (productName) AGAINST ("${textSearch}") AS name_relevance
     FROM product_single
     WHERE MATCH (productName) AGAINST ("${textSearch}") and endDate > NOW() and cateID = ${cateID}
     ORDER BY name_relevance DESC
     limit ${config.paginate.limit} offset ${offset}`),
 
-    pageByCateAndText: (textSearch, cateID, offset, option, order) => db.load(`SELECT product_single.*, MATCH (productName) AGAINST ("${textSearch}") AS name_relevance
+    pageByCateAndText: (textSearch, cateID, offset, option, order) => db.load(`SELECT product_single.*, 
+        MATCH (productName) AGAINST ("${textSearch}") AS name_relevance
     FROM product_single
     WHERE MATCH (productName) AGAINST ("${textSearch}") and endDate > NOW() and cateID = ${cateID}
     ORDER BY name_relevance DESC, ${option} ${order}
@@ -121,26 +125,26 @@ module.exports = {
         return db.patch('product_single', entity, condition);
     },
 
-    deleteProduct: id => {
-        db.del('wish_list', {
+    deleteProduct: async id => {
+        await db.del('wish_list', {
             productID: id
         });
-        db.del('product_img', {
+        await db.del('product_img', {
             productID: id
         });
-        db.del('product_bid', {
+        await db.del('product_bid', {
             productID: id
         });
-        db.del('product_description', {
+        await db.del('product_description', {
             productID: id
         });
-        db.del('product_ban_bid', {
+        await db.del('product_ban_bid', {
             productID: id
         });
-        db.del('user_evaluation', {
+        await db.del('user_evaluation', {
             productID: id
         });
-        db.del('product_single', {
+        await db.del('product_single', {
             productID: id
         });
     },

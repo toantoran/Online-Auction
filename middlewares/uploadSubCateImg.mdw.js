@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
         const cateID = req.params.cateID;
-        const subcateID = req.body.subCateIDAdd;
+        const subcateID = req.body.subCateIDAdd? req.body.subCateIDAdd : req.params.subcateID;
         cb(null, `${cateID}-${subcateID}` + '.jpg');
     }
 })
