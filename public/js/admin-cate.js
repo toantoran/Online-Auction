@@ -1,8 +1,7 @@
-window.history.pushState(null, null, "/admin/category")
+//window.history.pushState(null, null, "/admin/category")
 
 let status = document.getElementById("status").value;
 let message = document.getElementById("message").value;
-
 
 if (message !== "") {
     if (status === "true") {
@@ -137,8 +136,13 @@ function confirmDelete() {
 
 function deleteCate() {
     if (arguments.length === 1) {
-        $(`button[type="submit"][formaction="/admin/category/detele/${arguments[0]}"]`).click();
+        $(`button[type="submit"][formaction="/admin/category/delete/${arguments[0]}"]`).click();
     } else {
-        $(`button[type="submit"][formaction='/admin/category/sub/detele/${arguments[0]}/${arguments[1]}']`).click()
+        $(`button[type="submit"][formaction='/admin/category/sub/delete/${arguments[0]}/${arguments[1]}']`).click()
     }
 }
+
+// if(status)
+// {
+//     window.history.pushState(null, null, "/admin/category")
+// }
