@@ -281,47 +281,6 @@
   })
 
 
-  $('.section-title .title small').click(() => {
-    Swal.fire({
-      title: 'Bán hàng trên Bidhub',
-      text: 'Xác nhận các thông tin bên dưới và bạn sẽ được xem xét để trở thành người bán trong vòng 7 ngày',
-      icon: 'info',
-      confirmButtonText: '<i class="fa fa-thumbs-up"></i> Tuyệt!',
-    })
-  });
-
-  $('.form-group .btn-term').click(() => {
-    Swal.fire({
-      title: 'Điều khoản dịch vụ',
-      icon: 'info',
-      text: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. At soluta et voluptate ipsam nisi minima sint accusantium doloribus explicabo, ad est assumenda iste libero beatae sunt. Magni tenetur ut aspernatur. Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque quia laborum fugit consectetur iste, reprehenderit veritatis voluptate veniam harum provident aperiam quidem esse? Magnam fugiat quidem omnis ratione vero nemo.',
-      confirmButtonColor: '#F8694A',
-      confirmButtonText: 'Đã hiểu',
-    })
-  });
-
-  $('.form-group .btn-seller-regis').click(() => {
-    Swal.fire({
-      title: 'Bạn chắc chắn muốn gửi yêu cầu đăng ký này?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#F8694A',
-      cancelButtonColor: '#000',
-      confirmButtonText: 'Đăng ký',
-      cancelButtonText: 'Hủy'
-    }).then((result) => {
-      if (result.value) {
-        Swal.fire({
-          title: 'Đã gửi yêu cầu đăng ký',
-          text: 'Ban quản trị sẽ kiểm duyệt tài khoản này trước khi xác nhận trở thành người bán',
-          icon: 'success'
-        })
-      }
-    })
-
-    return false;
-  });
-
   $('.form-group .btn-edit-info').click(() => {
     let target = $('.btn-edit-info');
 

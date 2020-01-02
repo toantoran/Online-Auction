@@ -100,12 +100,9 @@
 										class="product-price">{{format_money currentPrice}}</span></p>
 								<p class="product-text">Giá bán ngay: <span
 										class="product-price">{{format_money immePrice}}</span></p>
-
-								{{#if isBided}}
 								<p class="product-text">Đặt cao nhất: <span
-										class="product-price">{{format_name_bid winner}}</span>
+										class="product-price">{{#if isBided}}{{format_name_bid winner}}{{/if}}</span>
 								</p>
-								{{/if}}
 								<div class="product-footer">
 									<small><span>{{countBid}}</span> lượt ra giá</small>
 									<small>Từ <span>{{format_day beginDate}}</span></small>

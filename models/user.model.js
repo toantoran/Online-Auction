@@ -3,6 +3,7 @@ const db = require('../utils/db');
 module.exports = {
     getAllBidder: () => db.load(`select * from users where isSeller = 0 and isAdmin = 0`),
     getAllSeller: () => db.load(`select * from users where isSeller = 1`),
+    getAllRegis: () => db.load(`select * from users where sellRegis = 1`),
     getAllAdmin: () => db.load(`select * from users where isAdmin = 1`),
     getUserByEmail: (email) => db.load(`select * from users where email = '${email}'`),
     getUserById: (id) => db.load(`select * from users where userID = '${id}'`),
@@ -34,5 +35,11 @@ module.exports = {
         and receiver = ${receiver} and productID = "${productID}"`);
         if (rows.length > 0) return true;
         return false;
+    },
+    registerSeller: (id) => db.load(`update users set sellRegis = 1 where userID = '${id}'`),
+    upgradeUser: (id) => db.load(`update users set isSeller = 1, sellRegis = 0 where userID = '${id}'`),
+    downgradeUser: (id) => db.load(`update users set isSeller = 0 where userID = '${id}'`),
+    deleteUser: (id) => {
+
     }
 };

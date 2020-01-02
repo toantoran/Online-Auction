@@ -1,8 +1,11 @@
 {{#section 'js'}}
+<script src="/js/plugin/datepicker.min.js"></script>
+<script src="/js/plugin/datepicker.en.js"></script>
 <script src="/js/account.js"></script>
 {{/section}}
 
 {{#section 'css'}}
+<link rel="stylesheet" href="css/datepicker.min.css">
 <link rel="stylesheet" href="/css/rating.css">
 {{/section}}
 
@@ -27,10 +30,8 @@
                             <li><a href="#sold-product-end">Sản phẩm đăng bán đã hết thời gian</a></li>
                             <hr>
                             <li><a href="#ratting">Đánh giá về bạn</a></li>
-                            {{#unless user.isSeller}}
                             <hr>
                             <li><a href="#seller-regis">Đăng ký làm người bán</a></li>
-                            {{/unless}}
                         </ul>
                     </div>
                     <!-- /aside widget -->
@@ -108,7 +109,8 @@
                                     <div class="col-md-8">
                                         <div class="form-group">
                                             <input type='text' class='datepicker-here input' id="birthDay"
-                                                name="birthDay" value="{{format_birthday user.birthDay}}"
+                                                name="birthDay" data-date-format="dd/mm/yyyy"
+                                                raw="{{#if user.birthDay}}{{format_birthday user.birthDay}}{{/if}}"
                                                 data-language='en' />
                                         </div>
                                     </div>
@@ -130,7 +132,7 @@
                                 <div class="col-md-12" style="text-align: center;">
                                     <div class="form-group">
                                         <button userID="{{user.userID}}" type="button"
-                                            class="main-btn btn-edit-info">Cập nhật thông tin</button>
+                                            class="primary-btn btn-edit-info">Cập nhật thông tin</button>
                                     </div>
                                 </div>
                             </form>
@@ -240,7 +242,7 @@
                             <div class="row">
                                 <div class="col-md-12 product-container" id="wish-list">
                                     {{#if emptyProductsWishList}}
-                                    <p>Danh sách yêu thích trống</p>
+                                    <p>Không có sản phẩm</p>
                                     {{else}}
                                     {{#each this.productsWishList}}
                                     <div class="col-md-3 col-sm-4 col-xs-6">
@@ -537,7 +539,7 @@
                     </div>
                 </div>
 
-                {{#unless user.isSeller}}
+
                 <div id="seller-regis">
                     <!-- row -->
                     <div class="row">
@@ -547,7 +549,21 @@
                                             class="fas fa-info-circle"></i></small>
                                 </h3>
                             </div>
-                            <form id="checkout-form" class="clearfix">
+                            {{#if user.isSeller}}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>Bạn đã là người bán</p>
+                                </div>
+                            </div>
+                            {{else}}
+                            {{#if user.sellRegis}}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>Bạn đã đăng ký. Yêu cầu của bạn đang được duyệt</p>
+                                </div>
+                            </div>
+                            {{else}}
+                            <form class="clearfix">
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="form-group">
@@ -556,7 +572,7 @@
                                     </div>
                                     <div class="col-md-9" style='line-height: 40px;'>
                                         <div class="form-group">
-                                            <input type="checkbox" class="js-switch">
+                                            <input type="checkbox" id="cb-term">
                                             <span style="font-size: large;">Tôi đồng ý với các <a
                                                     href="javascript:void(0)" class="btn-term"
                                                     style="color: #F8694A; text-decoration: underline;">điều
@@ -568,16 +584,20 @@
                                 <div class="row">
                                     <div class="col-md-12" style="text-align: center;">
                                         <div class="form-group">
-                                            <button class="main-btn btn-seller-regis">Xác nhận đăng ký <i
-                                                    class="fas fa-check-double"></i></button>
+                                            <button userID="{{user.userID}}" class="primary-btn btn-seller-regis">Xác
+                                                nhận
+                                                đăng
+                                                ký <i class="fas fa-check-double"></i></button>
                                         </div>
                                     </div>
                                 </div>
                             </form>
+                            {{/if}}
+                            {{/if}}
                         </div>
                     </div>
                 </div>
-                {{/unless}}
+
             </div>
         </div>
     </div>

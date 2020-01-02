@@ -29,8 +29,9 @@ router.get("/getSubcateTable/:cateID", async (req, res, next) => {
     const data = res.locals.lcCateList[req.params.cateID - 1].subCate;
     for (let sub of data) {
         sub.productsCount = await productModel.countBySubCat(sub.cateID, sub.subcateID)
-        sub.button = `<a href='/admin/category-sub-detail/${sub.cateID}/${sub.subcateID}' class='main-btn edit-btn'><i class='fas fa-edit'></i></a><button type='submit' formmethod='post' style='display: none' 
-        formaction='/admin/category/sub/detele/${sub.cateID}/${sub.subcateID}' class='main-btn delete-subcate-btn'></button><button class='primary-btn' type='button' onclick='confirmDelete(${sub.cateID},${sub.subcateID})'><i class='fas fa-trash-alt'></i></button>`;
+        sub.button =
+            `<a href='/admin/category-sub-detail/${sub.cateID}/${sub.subcateID}' class='main-btn edit-btn'><i class='fas fa-edit'></i></a>
+        <button type='button' cateID='${sub.cateID}' subcateID='${sub.subcateID}' class='primary-btn delete-subcate-btn' onclick='deleteSubcate(event)'><i class='fas fa-trash-alt'></i></button>`;
     }
     res.send({
         "draw": 1,
@@ -44,8 +45,9 @@ router.get("/getCateTable", (req, res, next) => {
     const data = res.locals.lcCateList;
     for (let sub of data) {
         sub.cateIcon = `<i class='fas fa-${sub.cateIcon}'></i> : ${sub.cateIcon}`
-        sub.button = `<a href='/admin/category-detail/${sub.cateID}' class='main-btn edit-btn'><i class='fas fa-edit'></i></a><button type='submit' formmethod='post' style='display: none'
-        formaction='/admin/category/detele/${sub.cateID}' class='main-btn delete-cate-btn'></button><button type='button' class='primary-btn' onclick='confirmDelete(${sub.cateID})'><i class='fas fa-trash-alt'></i></button>`;
+        sub.button =
+            `<a href='/admin/category-detail/${sub.cateID}' class='main-btn edit-btn'><i class='fas fa-edit'></i></a>
+        <button type='button' cateID='${sub.cateID}' class='primary-btn delete-cate-btn' onclick='deleteCate(event)'><i class='fas fa-trash-alt'></i></button>`
     }
     res.send({
         "draw": 1,
@@ -113,8 +115,11 @@ router.get("/users/getAllBidder", async (req, res) => {
     const data = await userModel.getAllBidder();
     for (let user of data) {
         user.point = await userModel.getPointEvaluation(user.userID) + "%";
-        user.birthDay = moment(user.birthDay).format("MM/DD/YYYY");
-        user.button = `<a href='/admin/user-detail/${user.userID}' class='main-btn edit-btn'><i class='fas fa-info-circle'></i></a><button type='submit' formmethod='post' style='display: none' formaction='/admin/users/detele/${user.userID}' class='main-btn delete-user-btn'></button><button type='button' class='main-btn' onclick='confirmDelete(${user.userID})'><i class='fas fa-trash-alt'></i></button>`;
+        if (user.birthDay)
+            user.birthDay = moment(user.birthDay).format(("DD/MM/YYYY"));
+        user.button =
+            `<a href='/admin/user-detail/${user.userID}' target='_blank' class='main-btn edit-btn'><i class='fas fa-info-circle'></i></a>
+        <button type='button' userID="${user.userID}" class='primary-btn delete-user-btn' onclick="deleteUserClick(event)"><i class='fas fa-trash-alt'></i></button>`;
     }
     res.send({
         "draw": 1,
@@ -128,13 +133,31 @@ router.get("/users/getAllSeller", async (req, res) => {
     const data = await userModel.getAllSeller();
     for (let user of data) {
         user.point = await userModel.getPointEvaluation(user.userID) + "%";
-        user.birthDay = moment(user.birthDay).format("MM/DD/YYYY");
+        if (user.birthDay)
+            user.birthDay = moment(user.birthDay).format(("DD/MM/YYYY"));
         user.button =
-            `<a href='/admin/user-detail/${user.userID}' class='main-btn edit-btn'><i class='fas fa-info-circle'></i></a>
-        <button type='submit' formmethod='post' style='display: none' formaction='/admin/users/downgrade/${user.userID}' class='main-btn downgrade-user-btn'></button>
-        <button type='button' class='main-btn' onclick='confirmDowngrade(${user.userID})'><i class="fas fa-angle-double-down"></i></button>
-        <button type='submit' formmethod='post' style='display: none' formaction='/admin/users/detele/${user.userID}' class='main-btn delete-user-btn'></button>
-        <button type='button' class='main-btn' onclick='confirmDelete(${user.userID})'><i class='fas fa-trash-alt'></i></button>`;
+            `<a href='/admin/user-detail/${user.userID}' target='_blank' class='main-btn edit-btn'><i class='fas fa-info-circle'></i></a>
+            <button type='button' userID="${user.userID}" class='main-btn downgrade-user-btn' onclick="downgradeUserClick(event)"><i class="fas fa-angle-double-down"></i></button>
+            <button type='button' userID="${user.userID}" class='primary-btn delete-user-btn' onclick="deleteUserClick(event)"><i class='fas fa-trash-alt'></i></button>`;
+    }
+    res.send({
+        "draw": 1,
+        "recordsTotal": data.length,
+        "recordsFiltered": data.length,
+        data: data
+    })
+});
+
+router.get("/users/getAllRegis", async (req, res) => {
+    const data = await userModel.getAllRegis();
+    for (let user of data) {
+        user.point = await userModel.getPointEvaluation(user.userID) + "%";
+        if (user.birthDay)
+            user.birthDay = moment(user.birthDay).format(("DD/MM/YYYY"));
+        user.button =
+            `<a href='/admin/user-detail/${user.userID}' target='_blank' class='main-btn edit-btn'><i class='fas fa-info-circle'></i></a>
+        <button type='button' userID="${user.userID}" class='main-btn upgrade-user-btn' onclick="upgradeUserClick(event)"><i class="fas fa-angle-double-up"></i></button>
+        <button type='button' userID="${user.userID}" class='primary-btn delete-user-btn' onclick="deleteUserClick(event)"><i class='fas fa-trash-alt'></i></button>`;
     }
     res.send({
         "draw": 1,
@@ -148,8 +171,9 @@ router.get("/users/getAllAdmin", async (req, res) => {
     const data = await userModel.getAllAdmin();
     for (let user of data) {
         user.point = await userModel.getPointEvaluation(user.userID) + "%";
-        user.birthDay = user.birthDay ? moment(user.birthDay).format("MM/DD/YYYY") : '';
-        user.button = `<a href='/admin/user-detail/${user.userID}' class='main-btn edit-btn'><i class='fas fa-info-circle'></i></a>`;
+        if (user.birthDay)
+            user.birthDay = moment(user.birthDay).format(("DD/MM/YYYY"));
+        user.button = `<a href='/admin/user-detail/${user.userID}' target='_blank' class='main-btn edit-btn'><i class='fas fa-info-circle'></i></a>`;
     }
     res.send({
         "draw": 1,
@@ -221,7 +245,7 @@ router.get("/add-category-sub/:cateID", async (req, res, next) => {
             title: "Thêm danh mục con",
             user: req.user,
             notShowBreadcumb: true,
-            subCateIDAdd: parent.subCate.length +1,
+            subCateIDAdd: parent.subCate.length + 1,
             parent
         });
     }
@@ -323,4 +347,24 @@ router.get("/user-detail/:userID", async (req, res, next) => {
     req.session.lastUrl = req.originalUrl;
 });
 
+
+router.post('/user/delete/:userID', async (req, res) => {
+    res.json("1");
+})
+router.post('/user/upgrade/:userID', async (req, res) => {
+    try {
+        userModel.upgradeUser(req.params.userID);
+        res.json("1");
+    } catch {
+        res.json("0");
+    }
+})
+router.post('/user/downgrade/:userID', async (req, res) => {
+    try {
+        userModel.downgradeUser(req.params.userID);
+        res.json("1");
+    } catch {
+        res.json("0");
+    }
+})
 module.exports = router;

@@ -564,7 +564,7 @@ textarea.input {
   border-radius: 50%;
 }
 
-.header-cart .main-btn.upload-btn {
+.header-cart .primary-btn.upload-btn {
   border-radius: 25px;
 }
 
@@ -2038,7 +2038,10 @@ p.err-validate {
   padding: 5px;
 }
 
-
+.main-btn>*,
+.primary-btn>* {
+  pointer-events: none;
+}
 
 
 /*=========================================================
@@ -2109,5 +2112,10 @@ p.err-validate {
   .header-search {
     width: 500px;
     max-width: 500px;
+  }
+
+  .col-md-12 {
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 }

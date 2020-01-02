@@ -910,9 +910,11 @@ router.post(
   "/account/:userID/updateInfor",
   checkUser.checkAuthenticatedPost,
   async (req, res) => {
-    req.body.birthDay = moment(req.body.birthDay, "MM-DD-YYYY").format(
+    req.body.birthDay = moment(req.body.birthDay, "DD-MM-YYYY").format(
       "YYYY-MM-DD"
     );
+    if (req.body.birthDay === 'Invalid date') req.body.birthDay = req.user.birthDay;
+    console.log(req.body);
     await userModel.editUser(req.body);
     res.json("1");
   }
@@ -1150,6 +1152,17 @@ router.get('/user-eval-detail/:userID', async (req, res) => {
       evaluation,
       emptyEvaluation: evaluation.length === 0
     })
+  }
+})
+
+
+router.post('/account/seller-regis', checkUser.checkAuthenticatedPost, async (req, res) => {
+  console.log(req.body);
+  try {
+    await userModel.registerSeller(req.body.userID);
+    res.json("1");
+  } catch {
+    res.json("0");
   }
 })
 module.exports = router;

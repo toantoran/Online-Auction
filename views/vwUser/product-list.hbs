@@ -50,10 +50,12 @@
 					<!-- row -->
 					<div class="row">
 						{{#if this.empty}}
-						<div class="card-body">
-							<p class="card-text">
-								Không có dữ liệu.
-							</p>
+						<div class="col-md-12">
+							<div class="card-body">
+								<p class="card-text">
+									Không có dữ liệu.
+								</p>
+							</div>
 						</div>
 						{{else}}
 						<div class="card-body">
@@ -92,10 +94,9 @@
 													class="product-price">{{#if immePrice}}
 													{{format_money immePrice}}
 													{{else}} Không có {{/if}}</span></p>
-											{{#if isBided}}
 											<p class="product-text">Đặt cao nhất: <span
-													class="product-price">{{format_name_bid winner}}</span></p>
-											{{/if}}
+													class="product-price">{{#if isBided}}{{format_name_bid winner}}{{/if}}</span>
+											</p>
 											<div class="product-footer">
 												<small><span>{{countBid}}</span> lượt ra giá</small>
 												<small>Từ <span>{{format_day beginDate}}</span></small>

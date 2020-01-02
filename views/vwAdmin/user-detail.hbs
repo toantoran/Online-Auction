@@ -45,26 +45,132 @@
 
             <div class="col-md-10">
                 <!-- row -->
-                <div class="row">
+                <div class="row" id="profile">
                     <div class="col-md-12">
                         <div class="section-title">
-                            <h3 class="title">Quản lý người dùng</h3>
+                            <h3 class="title">Thông tin cá nhân</h3>
                         </div>
-                        <div class="row" id="profile">
-                            <div class="col-md-12">
-                                <h4>Thông tin cá nhân</h4>
-                                <p>ID: {{target.userID}}</p>
-                                <p>Họ tên: {{target.name}}</p>
-                                <p>Email: {{target.email}}</p>
-                                <p>Điện thoại: {{target.tel}}</p>
-                                <p>Địa chỉ: {{target.address}}</p>
-                                <p>Ngày sinh: {{format_day target.birthDay}}</p>
-                                <p>Điểm số: {{format_evaluation target.point}}</p>
+                        <div class="row">
+                            <div class="col-md-12 profile-container">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <h4 class="form-label">ID</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <input class="input" type="text" name="id" value="{{target.userID}}"
+                                                disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <h4 class="form-label">Họ và tên</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <input class="input" type="text" name="name" value="{{target.name}}"
+                                                disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <h4 class="form-label">Email</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <input class="input" type="email" name="email" value="{{target.email}}"
+                                                disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <h4 class="form-label">Địa chỉ</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <input class="input" type="text" name="address" value="{{target.address}}"
+                                                disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <h4 class="form-label">Số điện thoại</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <input class="input" type="tel" name="tel" value="{{target.tel}}" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <h4 class="form-label">Ngày sinh</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <input class='input' type='text' name="birthDay"
+                                                value="{{#if target.birthDay}}{{format_birthday target.birthDay}}{{/if}}"
+                                                disabled />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <h4 class="form-label"><a href="#rating">Điểm đánh giá</a></h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <input class="input" id="point" name="point"
+                                                value="{{format_evaluation target.point}}" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" style="text-align: center;">
+                                    <div class="form-group">
+                                        {{#if target.sellRegis}}
+                                        <button userID="{{target.userID}}" type="button"
+                                            class="main-btn btn-upgrade-user">Cấp quyền người bán <i
+                                                class="fas fa-angle-double-up"></i></button>
+                                        {{/if}}
+                                        {{#if target.isSeller}}
+                                        <button userID="{{target.userID}}" type="button"
+                                            class="main-btn btn-downgrade-user">Hủy quyền người bán <i
+                                                class="fas fa-angle-double-down"></i></button>
+                                        {{/if}}
+                                        <button userID="{{target.userID}}" type="button"
+                                            class="primary-btn btn-delete-user">Xóa người dùng <i
+                                                class='fas fa-trash-alt'></i></button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="row" id="history">
-                            <div class="col-md-12 product-container">
-                                <h4>Lịch sử đấu giá</h4>
+                    </div>
+                </div>
+                <div class="row" id="history">
+                    <div class="col-md-12 product-container">
+                        <div class="section-title">
+                            <h3 class="title">Lịch sử đấu giá</h3>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
                                 {{#unless target.history.length}}
                                 <p>Lịch sử đấu giá trống</p>
                                 {{/unless}}
@@ -134,98 +240,113 @@
                                 {{/each}}
                             </div>
                         </div>
+                    </div>
+                </div>
 
-                        {{#if target.isSeller}}
-                        <div class="row" id="sold-product">
-                            <div class="col-md-12">
-                                <h4>Sản phẩm đã đăng</h4>
-                                <div class="row">
-                                    <div class="col-md-12 product-container" id="sold-product">
-                                        {{#unless target.productSell.length}}
-                                        <p>Không có sản phẩm</p>
-                                        {{/unless}}
-                                        {{#each target.productSell}}
-                                        <div class="col-md-3 col-sm-4 col-xs-6">
-                                            <div class="product product-single">
-                                                <div class="product-thumb">
-                                                    <div class="product-label">
-                                                        {{#if isNew}}
-                                                        <span>Mới</span>
-                                                        {{/if}}
-                                                        {{#if isHot}}
-                                                        <span class="sale">Hot <i class="fab fa-hotjar"></i></span>
-                                                        {{/if}}
-                                                    </div>
-                                                     <ul class="product-countdown">
-                                                        <li><span class="cd-h">0 H</span></li>
-                                                        <li><span class="cd-m">0 M</span></li>
-                                                        <li><span class="cd-s">0 S</span></li>
-                                                    </ul>
-                                                    <button class="main-btn quick-view"><i
-                                                            class="fa fa-search-plus"></i>
-                                                        Xem chi tiết</button>
-                                                    <img src="/img/product/{{productID}}/{{mainImgSrc}}" alt="">
-                                                </div>
-                                                <div class="product-body">
-                                                    <h2 class="product-name"><a
-                                                            href="/product/{{productID}}">{{format_name productName}}</a>
-                                                    </h2>
-                                                    <p class="product-text">Giá hiện tại: <span
-                                                            class="product-price">{{format_money currentPrice}}</span>
-                                                    </p>
-                                                    <p class="product-text">Giá bán ngay: <span
-                                                            class="product-price">{{format_money immePrice}}</span></p>
-                                                    {{#if isBided}}
-                                                    <p class="product-text">Đặt cao nhất: <span
-                                                            class="product-price">{{format_name_bid winner.name}}</span></p>
-                                                    {{/if}}
-                                                    {{#if isEndBid}}
-                                                    <p class="product-text">Trạng thái: <span
-                                                            class="product-price" style="color: red;">Đã kết thúc</span></p>
-                                                    {{else}}
-                                                    <p class="product-text">Trạng thái: <span
-                                                            class="product-price" style="color: green;">Đang đấu giá</span></p>
-                                                    {{/if}}
-                                                    <div class="product-footer">
-                                                        <small><span>{{countBid}}</span> lượt ra giá</small>
-                                                        <small>Từ <span>{{format_day beginDate}}</span></small>
-                                                    </div>
-                                                </div>
-                                                <input type="hidden" id="endDate" value="{{format_day_value endDate}}">
+                {{#if target.isSeller}}
+                <div class="row" id="sold-product">
+                    <div class="col-md-12">
+                        <div class="section-title">
+                            <h3 class="title">Sản phẩm đã đăng</h3>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 product-container" id="sold-product">
+                                {{#unless target.productSell.length}}
+                                <p>Không có sản phẩm</p>
+                                {{/unless}}
+                                {{#each target.productSell}}
+                                <div class="col-md-3 col-sm-4 col-xs-6">
+                                    <div class="product product-single">
+                                        <div class="product-thumb">
+                                            <div class="product-label">
+                                                {{#if isNew}}
+                                                <span>Mới</span>
+                                                {{/if}}
+                                                {{#if isHot}}
+                                                <span class="sale">Hot <i class="fab fa-hotjar"></i></span>
+                                                {{/if}}
+                                            </div>
+                                            <ul class="product-countdown">
+                                                <li><span class="cd-h">0 H</span></li>
+                                                <li><span class="cd-m">0 M</span></li>
+                                                <li><span class="cd-s">0 S</span></li>
+                                            </ul>
+                                            <button class="main-btn quick-view"><i class="fa fa-search-plus"></i>
+                                                Xem chi tiết</button>
+                                            <img src="/img/product/{{productID}}/{{mainImgSrc}}" alt="">
+                                        </div>
+                                        <div class="product-body">
+                                            <h2 class="product-name"><a
+                                                    href="/product/{{productID}}">{{format_name productName}}</a>
+                                            </h2>
+                                            <p class="product-text">Giá hiện tại: <span
+                                                    class="product-price">{{format_money currentPrice}}</span>
+                                            </p>
+                                            <p class="product-text">Giá bán ngay: <span
+                                                    class="product-price">{{format_money immePrice}}</span></p>
+                                            {{#if isBided}}
+                                            <p class="product-text">Đặt cao nhất: <span
+                                                    class="product-price">{{format_name_bid winner.name}}</span></p>
+                                            {{/if}}
+                                            {{#if isEndBid}}
+                                            <p class="product-text">Trạng thái: <span class="product-price"
+                                                    style="color: red;">Đã kết thúc</span></p>
+                                            {{else}}
+                                            <p class="product-text">Trạng thái: <span class="product-price"
+                                                    style="color: green;">Đang đấu giá</span></p>
+                                            {{/if}}
+                                            <div class="product-footer">
+                                                <small><span>{{countBid}}</span> lượt ra giá</small>
+                                                <small>Từ <span>{{format_day beginDate}}</span></small>
                                             </div>
                                         </div>
-                                        {{/each}}
+                                        <input type="hidden" id="endDate" value="{{format_day_value endDate}}">
                                     </div>
                                 </div>
+                                {{/each}}
                             </div>
                         </div>
-                        {{/if}}
+                    </div>
+                </div>
+                {{/if}}
 
-                        <div class="row" id="rating">
-                            <div class="col-md-12">
-                                <h4>Các lượt đánh giá</h4>
-                                {{#unless target.evaluation.length}}
-                                <p>Không có lượt đánh giá nào</p>
-                                {{else}}
-                                {{#each target.evaluation}}
-                                <div class="evaluation">
-                                    {{#if isGood}}
-                                    <p>
-                                        <span><i class="fa fa-thumbs-up"></i>&nbsp;{{format_day time}}</span>
-                                    </p>
+                <div class="row" id="rating">
+                    <div class="col-md-12">
+                        <div class="section-title">
+                            <h3 class="title">Các lượt đánh giá</h3>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 eval-container">
+                                <div class="col-md-12 eval-single">
+                                    {{#unless target.evaluation.length}}
+                                    <p>Không có lượt đánh giá nào</p>
                                     {{else}}
-                                    <p>
-                                        <span><i class="fas fa-thumbs-down"></i>&nbsp;{{format_day time}}</span>
-                                    </p>
-                                    {{/if}}
-                                    <div class="content-ratting">
-                                        <p style="font-weight:bold;">{{senderName}}</p>
-                                        {{{content}}}
+                                    {{#each evaluation}}
+                                    <div class="eval-top">
+                                        <div class="eval-sender">
+                                            <p>{{senderName}}</p>
+                                        </div>
+                                        <div class="eval-date">
+                                            <p>{{format_day_time time}}</p>
+                                        </div>
                                     </div>
+                                    <div class="eval-middle">
+                                        {{#if isGood}}
+                                        <div class="eval-icon">
+                                            <p class="orange"><i class="fa fa-thumbs-up"></i> +1</p s>
+                                        </div>
+                                        {{else}}
+                                        <div class="eval-icon">
+                                            <p><i class="fas fa-thumbs-down"></i> -1</p>
+                                        </div>
+                                        {{/if}}
+                                        <div class="eval-content">
+                                            <p>{{{content}}}</p>
+                                        </div>
+                                    </div>
+                                    {{/each}}
+                                    {{/unless}}
                                 </div>
-                                <hr>
-                                {{/each}}
-                                {{/unless}}
                             </div>
                         </div>
                     </div>

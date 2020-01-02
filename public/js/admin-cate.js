@@ -26,7 +26,7 @@ $('.list-links li.sub').click(() => {
     $(this).addClass('link-active')
 })
 
-$('.cate-table').DataTable({
+const cateTable = $('.cate-table').DataTable({
     paging: false,
     ordering: true,
     searching: true,
@@ -66,7 +66,7 @@ $('.cate-table').DataTable({
 
 
 function createTable(table, cateID) {
-    table.DataTable({
+    return table.DataTable({
         paging: false,
         ordering: true,
         searching: true,
@@ -106,39 +106,58 @@ function createTable(table, cateID) {
 }
 
 const length = $('.subcate-table').length
+const subcateTable = [];
 for (let i = 1; i <= length; i++) {
-    createTable($(`.subcate-table[cateID=${i}]`), i);
+    subcateTable[i] = createTable($(`.subcate-table[cateID=${i}]`), i);
 }
 
-function confirmDelete() {
-    console.log(arguments);
-    if (arguments.length === 1) {
-        Swal.fire({
-            title: 'Bạn có chắn chắn muốn xóa\ndanh mục này?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#F8694A',
-            cancelButtonColor: '#000',
-            confirmButtonText: `<a onclick="deleteCate(${arguments[0]})">Xóa <i class="fas fa-trash-alt"></i></a>`,
-            cancelButtonText: 'Hủy bỏ'
-        });
-    } else {
-        Swal.fire({
-            title: 'Bạn có chắn chắn muốn xóa\ndanh mục con này?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#F8694A',
-            cancelButtonColor: '#000',
-            confirmButtonText: `<a onclick="deleteCate(${arguments[0]}, ${arguments[1]})">Xóa <i class="fas fa-trash-alt"></i></a>`,
-            cancelButtonText: 'Hủy bỏ'
-        });
-    }
+
+function deleteSubcate(event) {
+    event.preventDefault();
+    console.log($(event.target));
+    //     Swal.fire({
+    //         title: 'Bạn có chắn chắn muốn xóa\ndanh mục này?',
+    //         icon: 'warning',
+    //         showCancelButton: true,
+    //         confirmButtonColor: '#F8694A',
+    //         cancelButtonColor: '#000',
+    //         confirmButtonText: `<a onclick="deleteCate(${arguments[0]})">Xóa <i class="fas fa-trash-alt"></i></a>`,
+    //         cancelButtonText: 'Hủy bỏ'
+    //     });
+    // } else {
+    //     Swal.fire({
+    //         title: 'Bạn có chắn chắn muốn xóa\ndanh mục con này?',
+    //         icon: 'warning',
+    //         showCancelButton: true,
+    //         confirmButtonColor: '#F8694A',
+    //         cancelButtonColor: '#000',
+    //         confirmButtonText: `<a onclick="deleteCate(${arguments[0]}, ${arguments[1]})">Xóa <i class="fas fa-trash-alt"></i></a>`,
+    //         cancelButtonText: 'Hủy bỏ'
+    //     });
+    // }
 }
 
-function deleteCate() {
-    if (arguments.length === 1) {
-        $(`button[type="submit"][formaction="/admin/category/detele/${arguments[0]}"]`).click();
-    } else {
-        $(`button[type="submit"][formaction='/admin/category/sub/detele/${arguments[0]}/${arguments[1]}']`).click()
-    }
+function deleteCate(event) {
+    event.preventDefault();
+    console.log($(event.target));
+    //     Swal.fire({
+    //         title: 'Bạn có chắn chắn muốn xóa\ndanh mục này?',
+    //         icon: 'warning',
+    //         showCancelButton: true,
+    //         confirmButtonColor: '#F8694A',
+    //         cancelButtonColor: '#000',
+    //         confirmButtonText: `<a onclick="deleteCate(${arguments[0]})">Xóa <i class="fas fa-trash-alt"></i></a>`,
+    //         cancelButtonText: 'Hủy bỏ'
+    //     });
+    // } else {
+    //     Swal.fire({
+    //         title: 'Bạn có chắn chắn muốn xóa\ndanh mục con này?',
+    //         icon: 'warning',
+    //         showCancelButton: true,
+    //         confirmButtonColor: '#F8694A',
+    //         cancelButtonColor: '#000',
+    //         confirmButtonText: `<a onclick="deleteCate(${arguments[0]}, ${arguments[1]})">Xóa <i class="fas fa-trash-alt"></i></a>`,
+    //         cancelButtonText: 'Hủy bỏ'
+    //     });
+    // }
 }
