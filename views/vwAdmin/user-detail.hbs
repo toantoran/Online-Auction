@@ -143,23 +143,29 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-12" style="text-align: center;">
-                                    <div class="form-group">
-                                        {{#if target.sellRegis}}
-                                        <button userID="{{target.userID}}" type="button"
-                                            class="main-btn btn-upgrade-user">Cấp quyền người bán <i
-                                                class="fas fa-angle-double-up"></i></button>
-                                        {{/if}}
-                                        {{#if target.isSeller}}
-                                        <button userID="{{target.userID}}" type="button"
-                                            class="main-btn btn-downgrade-user">Hủy quyền người bán <i
-                                                class="fas fa-angle-double-down"></i></button>
-                                        {{/if}}
-                                        <button userID="{{target.userID}}" type="button"
-                                            class="primary-btn btn-delete-user">Xóa người dùng <i
-                                                class='fas fa-trash-alt'></i></button>
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-8">
+                                        <div class="row">
+                                            <div class="col-md-12" style="text-align: center;">
+                                                <div class="form-group">
+                                                    <button {{#unless target.sellRegis}}style="display: none"
+                                                        {{/unless}} userID="{{target.userID}}" type="button"
+                                                        class="main-btn btn-upgrade-user">Cấp quyền người bán <i
+                                                            class="fas fa-angle-double-up"></i></button>
+                                                    <button {{#unless target.isSeller}}style="display: none" {{/unless}}
+                                                        userID="{{target.userID}}" type="button"
+                                                        class="main-btn btn-downgrade-user">Hủy quyền người bán <i
+                                                            class="fas fa-angle-double-down"></i></button>
+                                                    <button userID="{{target.userID}}" type="button"
+                                                        class="primary-btn btn-delete-user">Xóa người dùng <i
+                                                            class='fas fa-trash-alt'></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>

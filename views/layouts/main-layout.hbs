@@ -138,8 +138,10 @@
                         {{#each lcCateList}}
                         <li class="dropdown side-dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
-                                    class="fas fa-{{cateIcon}}"></i></i>&nbsp;{{cateName}} <i
-                                    class="fa fa-angle-right icon-right"></i></a>
+                                    class="fas fa-{{cateIcon}}"></i></i>&nbsp;{{cateName}} {{#if subCate.length}}
+                                <i class="fa fa-angle-right icon-right"></i>
+                                {{/if}}</a>
+                            {{#if subCate.length}}
                             <div class="custom-menu">
                                 <div class="row">
                                     <div class="col-md-6">
@@ -156,6 +158,7 @@
                                     </div>
                                 </div>
                             </div>
+                            {{/if}}
                         </li>
                         {{/each}}
                     </ul>

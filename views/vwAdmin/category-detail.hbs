@@ -44,65 +44,57 @@
                 <!-- row -->
                 <div class="row">
                     <div class="col-md-12">
-                        <form>
-                            <div class="section-title">
-                                <h3 class="title">Quản lý danh mục</h3>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="table-header">
-                                        <h2>{{cate.cateName}}</h2>
-                                        <a href="/admin/add-category-sub/{{cate.cateID}}" class='main-btn add-btn'
-                                            target="_blank"><i class="fas fa-plus"></i>
-                                            Thêm danh mục con</i></a>
+                        <div class="section-title">
+                            <h3 class="title">Quản lý danh mục</h3>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-header">
+                                    <h2>{{cate.cateName}}</h2>
+                                    <a href="/admin/add-category-sub/{{cate.cateID}}" class='primary-btn add-btn'
+                                        target="_blank"><i class="fas fa-plus"></i>
+                                        Thêm danh mục con</i></a>
+                                </div>
+                                <form action="/admin/category/edit/{{cate.cateID}}" method="post">
+                                    <div class="form-group">
+                                        <label for="cateID">ID</label>
+                                        <input class="input" type="text" name="cateID" value="{{cate.cateID}}"
+                                            id="cateID" disabled />
                                     </div>
-                                    <form action="" method="post">
-                                        <div class="form-group">
-                                            <label for="cateID">ID</label>
-                                            <p class="err-validate" id="err-name"></p>
-                                            <input class="input" type="text" name="cateID" value="{{cate.cateID}}"
-                                                id="cateID" disabled />
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="cateName">Tên danh mục</label>
-                                            <p class="err-validate" id="err-name"></p>
-                                            <input class="input" type="text" name="cateName" value="{{cate.cateName}}"
-                                                id="cateName" autofocus />
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="cateIcon">Icon danh mục: <span id="generate-icon"><i
-                                                        class="fas fa-{{cate.cateIcon}}"></i></span></label>
-                                            <p class="err-validate" id="err-name"></p>
-                                            <input class="input" type="text" name="cateIcon" value="{{cate.cateIcon}}"
-                                                id="cateIcon" />
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="productsCount">Tổng số sản phẩm</label>
-                                            <p class="err-validate" id="err-name"></p>
-                                            <input class="input" type="text" name="productsCount"
-                                                value="{{cate.productsCount}}" id="productsCount" disabled />
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-md-12" style="text-align: center;">
-                                                    <button class="main-btn btn-update"><i class="fas fa-save"></i> Lưu
-                                                        những thay đổi</button>
-                                                    <button class="main-btn btn-delete"><i class="fas fa-trash-alt"></i>
-                                                        Xóa danh mục</button>
-                                                </div>
+                                    <div class="form-group">
+                                        <label for="cateName">Tên danh mục</label>
+                                        <input class="input" type="text" name="cateName" value="{{cate.cateName}}"
+                                            id="cateName" autofocus />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cateIcon">Icon danh mục: <span id="generate-icon"><i
+                                                    class="fas fa-{{cate.cateIcon}}"></i></span></label>
+                                        <input class="input" type="text" name="cateIcon" value="{{cate.cateIcon}}"
+                                            id="cateIcon" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="productsCount">Tổng số sản phẩm</label>
+                                        <input class="input" type="text" name="productsCount"
+                                            value="{{cate.productsCount}}" id="productsCount" disabled />
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-12" style="text-align: center;">
+                                                <button type="submit" class="main-btn btn-update-cate"><i
+                                                        class="fas fa-save"></i>
+                                                    Lưu
+                                                    những thay đổi</button>
+                                                <button cateID="{{cate.cateID}}" type="button"
+                                                    class="primary-btn btn-delete-cate"><i class="fas fa-trash-alt"></i>
+                                                    Xóa danh mục</button>
                                             </div>
                                         </div>
-                                    </form>
-                                </div>
-                        </form>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                </form>
             </div>
         </div>
     </div>
-</div>
-</div>
-</div>
-</div>
-</div>
