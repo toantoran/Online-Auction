@@ -96,14 +96,12 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-md-12" style="text-align: center;">
-                                                <button type="submit" formmethod="post"
-                                                    formaction="/admin/category/sub/edit/{{subcate.cateID}}/{{subcate.subcateID}}"
-                                                    class="main-btn btn-update" style="color: green;"><i
+                                                <button type="button" cateID="{{subcate.cateID}}" subcateID="{{subcate.subcateID}}"
+                                                    class="main-btn btn-update-cate" style="color: green;"><i
                                                         class="fas fa-save"></i> Lưu
                                                     những thay đổi</button>
-                                                <button type="submit" formmethod="post"
-                                                    formaction="/admin/category/sub/delete/{{subcate.cateID}}/{{subcate.subcateID}}"
-                                                    class="main-btn btn-delete" style="color: red;"><i
+                                                <button type="button" cateID="{{subcate.cateID}}" subcateID="{{subcate.subcateID}}"
+                                                    class="main-btn btn-delete-cate" style="color: red;"><i
                                                         class="fas fa-trash-alt"></i>
                                                     Xóa danh mục</button>
                                             </div>

@@ -1,4 +1,3 @@
-$(document).ready(() => {
     // window.history.pushState(null, null, "/admin/users")
     let status = document.getElementById("status").value;
     let message = document.getElementById("message").value;
@@ -114,6 +113,9 @@ $(document).ready(() => {
                                 fixed: true,
                                 timeout: 2000
                             });
+                            setTimeout(() => {
+                                window.location.href = '/admin/users'
+                            }, 2000);
                         } else {
                             Swal.fire({
                                 title: 'Có lỗi xảy ra',
@@ -224,4 +226,3 @@ $(document).ready(() => {
         regisTable.ajax.reload();
         adminTable.ajax.reload();
     }
-})

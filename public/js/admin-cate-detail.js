@@ -47,7 +47,7 @@ $(".btn-delete-cate").click(event => {
 								icon: "success"
 							});
 							setTimeout(() => {
-								window.location.href = "/admin/category";
+								window.location.href = "/admin/category#all";
 							}, 2000);
 						} else if (data === "-1") {
 							Swal.fire({

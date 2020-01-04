@@ -432,8 +432,15 @@ router.get("/user-detail/:userID", async (req, res, next) => {
 });
 
 router.post("/user/delete/:userID", async (req, res) => {
-	await userModel.deleteUser(req.params.userID);
-	res.json("1");
+	try {
+		// await userModel.deleteUser(req.params.userID);
+		// res.redirect("/users")
+		res.json("1")
+	}
+	catch (e) {
+		console.log(e);
+		res.json("0");
+	}
 });
 router.post("/user/upgrade/:userID", async (req, res) => {
 	try {
