@@ -30,13 +30,6 @@ module.exports = {
 	addCate: entity => db.add("category", entity),
 	addSubcate: entity => db.add("category_sub", entity),
 
-	editCate: (id, name, icon) =>
-		db.load(
-			`update category set cateName='${name}', cateIcon='${icon}' where cateID='${id}'`
-		),
-	editSubCate: entity => {
-		return db.load(
-			`update category_sub set subcateName = "${entity.subcateName}" where cateID= ${entity.cateID} and subCateID = ${entity.subcateID}`
-		);
-	}
+	editCate: (id, name, icon) =>db.load(`update category set cateName='${name}', cateIcon='${icon}' where cateID='${id}'`),
+	editSubCate: entity => db.load(`update category_sub set subcateName = "${entity.subcateName}" where cateID= ${entity.cateID} and subCateID = ${entity.subcateID}`),
 };

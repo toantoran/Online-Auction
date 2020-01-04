@@ -126,24 +126,26 @@ module.exports = {
     },
 
     deleteProduct: async id => {
-        await db.del('wish_list', {
-            productID: id
-        });
-        await db.del('product_img', {
-            productID: id
-        });
-        await db.del('product_bid', {
-            productID: id
-        });
-        await db.del('product_description', {
-            productID: id
-        });
-        await db.del('product_ban_bid', {
-            productID: id
-        });
-        await db.del('user_evaluation', {
-            productID: id
-        });
+        await Promise.all([
+            db.del('wish_list', {
+                productID: id
+            }),
+            db.del('product_img', {
+                productID: id
+            }),
+            db.del('product_bid', {
+                productID: id
+            }),
+            db.del('product_description', {
+                productID: id
+            }),
+            db.del('product_ban_bid', {
+                productID: id
+            }),
+            db.del('user_evaluation', {
+                productID: id
+            }),
+        ])
         await db.del('product_single', {
             productID: id
         });
@@ -173,10 +175,15 @@ module.exports = {
     },
 
     productsHistoryBid: (userID) => db.load(`
-    select *
+    select * from product_bid p inner join
+    (
+    select ps.*, max(pb.bidTime) as max
     from product_single ps join product_bid pb
-    on ps.productID = pb.productID and pb.bidderID = ${userID}
-    order by pb.bidTime desc
+    where ps.productID = pb.productID and pb.bidderID = ${userID}
+    group by ps.productID
+    ) groupbid
+    on p.productID = groupbid.productID and p.bidTime = groupbid.max
+    order by p.bidTime desc
     limit ${config.account.limitProductsHistoryBid}`),
 
     productsWishList: (userID) => db.load(`
@@ -259,4 +266,23 @@ module.exports = {
 
     productsEndBid: () => db.load('select * from product_single where endDate < NOW()'),
 
+    // deleteProductsBySeller: async (seller) => {
+    //     const rows = await db.load(`select * from product_single where seller = '${seller}'`);
+    //     console.log(rows.length);
+    //     for (const product of rows) {
+    //         await this.deleteProduct(product.productID);
+    //     }
+    // },
+
+    // deleteBanBidByUser: id => db.del('product_ban_bid', {
+    //     bidderID: id
+    // }),
+
+    // deleteBidByUser: id => db.del('product_bid', {
+    //     bidderID: id
+    // }),
+
+    // deleteWishListByUser: id => db.del('wish_list', {
+    //     userID: id
+    // }),
 };

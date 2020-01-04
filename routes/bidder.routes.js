@@ -371,6 +371,8 @@ router.get("/product/getbidtable/:productID", async (req, res) => {
   const data = await productModel.singleBidByProduct(req.params.productID);
   for (let p of data) {
     p.bidderName = await userModel.getNameById(p.bidderID);
+    var temp = p.bidderName.split(" ");
+    p.bidderName = "****" + temp[temp.length - 1];
     p.price = numeral(p.price).format(0, 0);
     p.bidTime = moment(p.bidTime).format("DD/MM/YYYY") + "  [" + moment(p.bidTime).format("HH:mm:ss") + "]";
   }
