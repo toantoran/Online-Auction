@@ -1,5 +1,6 @@
 const express = require("express");
 const passport = require("passport");
+const passportfb = require("passport-facebook");
 const bcrypt = require("bcryptjs");
 const userModel = require("../models/user.model");
 const productModel = require("../models/product.model");
@@ -1114,6 +1115,14 @@ router.post("/signup", (req, res) => {
       res.redirect("/signup");
     });
 });
+
+router.get("/login/fb", passport.authenticate('facebook',{scope: ['email']}));
+
+router.get("/login/fb/cb", passport.authenticate('facebook',{
+    failureRedirect: '/login',
+    successRedirect: '/',
+  }
+));
 
 router.get("/logout", (req, res) => {
   req.logout();

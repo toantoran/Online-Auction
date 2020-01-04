@@ -76,6 +76,7 @@ app.use(
   })
 );
 require("./config/passport-local")(passport);
+require("./config/passport-facebook")(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
