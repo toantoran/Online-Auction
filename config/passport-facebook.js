@@ -15,9 +15,11 @@ module.exports = (passport) => {
         const name  = profile.displayName;
         let matchUser = await userModel.getUserByEmail(email);
         if (matchUser.length === 0) {
+          const password = Date.now();
           userModel.newUser({
             email,
-            name
+            name,
+            password
           })
           return done(null, false, {
             message: 'Email chưa được đăng ký'
