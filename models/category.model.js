@@ -6,6 +6,8 @@ module.exports = {
 		db.load(
 			`select * from category_sub where cateID = ${cateID} order by subcateID`
 		),
+	getSingleCate: cateID =>
+		db.load(`select * from category where cateID = ${cateID} order by cateID`),
 	getSingleSubCate: (cateID, subcateID) =>
 		db.load(
 			`select * from category_sub where cateID = ${cateID} and subcateID = ${subcateID} order by subcateID`
@@ -30,6 +32,12 @@ module.exports = {
 	addCate: entity => db.add("category", entity),
 	addSubcate: entity => db.add("category_sub", entity),
 
-	editCate: (id, name, icon) =>db.load(`update category set cateName='${name}', cateIcon='${icon}' where cateID='${id}'`),
-	editSubCate: entity => db.load(`update category_sub set subcateName = "${entity.subcateName}" where cateID= ${entity.cateID} and subCateID = ${entity.subcateID}`),
+	editCate: (id, name, icon) =>
+		db.load(
+			`update category set cateName='${name}', cateIcon='${icon}' where cateID=${id}`
+		),
+	editSubCate: entity =>
+		db.load(
+			`update category_sub set subcateName = "${entity.subcateName}" where cateID= ${entity.cateID} and subCateID = ${entity.subcateID}`
+		)
 };

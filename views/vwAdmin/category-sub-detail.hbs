@@ -83,7 +83,8 @@
                                         <label for="productsCount">Hình ảnh minh họa</label>
                                         <p class="err-validate" id="err-name"></p>
                                         <br>
-                                        <img src="/img/subcate/{{subcate.cateID}}-{{subcate.subcateID}}.jpg" alt="" />
+                                        <img src="/img/subcate/{{subcate.cateID}}-{{subcate.subcateID}}.jpg" alt=""
+                                            width="500px" />
                                         <button class="main-btn change-btn" type="button">Thay đổi</button>
                                         <input type="file" name="subcate-img" id="subcate-img" style="display: none;" />
                                     </div>
@@ -96,12 +97,14 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-md-12" style="text-align: center;">
-                                                <button type="button" cateID="{{subcate.cateID}}" subcateID="{{subcate.subcateID}}"
-                                                    class="main-btn btn-update-cate" style="color: green;"><i
+                                                <button type="button" cateID="{{subcate.cateID}}"
+                                                    subcateID="{{subcate.subcateID}}"
+                                                    class="main-btn btn-update-subcate" style="color: green;"><i
                                                         class="fas fa-save"></i> Lưu
                                                     những thay đổi</button>
-                                                <button type="button" cateID="{{subcate.cateID}}" subcateID="{{subcate.subcateID}}"
-                                                    class="main-btn btn-delete-cate" style="color: red;"><i
+                                                <button type="button" cateID="{{subcate.cateID}}"
+                                                    subcateID="{{subcate.subcateID}}"
+                                                    class="main-btn btn-delete-subcate" style="color: red;"><i
                                                         class="fas fa-trash-alt"></i>
                                                     Xóa danh mục</button>
                                             </div>

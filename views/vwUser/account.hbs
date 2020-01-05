@@ -21,6 +21,8 @@
                         <ul class="list-links">
                             <li><a href="#profile" class="active">Thông tin cá nhân</a></li>
                             <hr>
+                            <li><a href="#password">Đổi mật khẩu</a></li>
+                            <hr>
                             <li><a href="#bid-history">Lịch sử đấu giá</a></li>
                             <hr>
                             <li><a href="#wish-list">Danh sách yêu thích</a></li>
@@ -133,6 +135,49 @@
                                     <div class="form-group">
                                         <button userID="{{user.userID}}" type="button"
                                             class="primary-btn btn-edit-info">Cập nhật thông tin</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="password">
+                    <!-- row -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="section-title">
+                                <h3 class="title">Đổi mật khẩu</h3>
+                            </div>
+                            <form id="changPass-form" class="clearfix">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <h4 class="form-label">Mật khẩu cũ</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <input class="input" type="password" id="oldPass" name="oldPass" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class=" row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <h4 class="form-label">Mật khẩu mới</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <input class="input" type="password" id="newPass" name="newPass" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class=" col-md-12" style="text-align: center;">
+                                    <div class="form-group">
+                                        <button userID="{{user.userID}}" type="button"
+                                            class="primary-btn btn-change-pass">Đổi mật khẩu</button>
                                     </div>
                                 </div>
                             </form>

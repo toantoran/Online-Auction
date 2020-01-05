@@ -70,6 +70,7 @@ $(".btn-delete-cate").click(event => {
 });
 $(".btn-update-cate").click(event => {
 	event.preventDefault();
+	const cateID = $(event.target).attr("cateID");
 	Swal.fire({
 		title: "Lưu thay đổi?",
 		icon: "warning",
@@ -98,7 +99,7 @@ $(".btn-update-cate").click(event => {
 							icon: "success"
 						});
 						setTimeout(() => {
-							location.reload(true);
+							window.location.href = "/admin/category";
 						}, 2000);
 					} else {
 						Swal.fire({
@@ -144,4 +145,110 @@ $(".change-btn").click(() => {
 	});
 
 	$(".change-btn").prop("disabled", true);
+});
+
+$(".btn-delete-subcate").click(event => {
+	event.preventDefault();
+	const cateID = $(event.target).attr("cateID");
+	const subcateID = $(event.target).attr("subcateID");
+	if ($("#productsCount").val() > 0) {
+		Swal.fire({
+			title: "Không thể xóa danh mục này",
+			text: "Danh mục đang chứa sản phẩm",
+			icon: "error"
+		});
+	} else {
+		Swal.fire({
+			title: "Xác nhận xóa",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#F8694A",
+			cancelButtonColor: "#000",
+			confirmButtonText: `Xóa <i class="fas fa-trash-alt"></i>`,
+			cancelButtonText: "Hủy bỏ"
+		}).then(result => {
+			if (result.value) {
+				const form = {
+					cateID: cateID,
+					subcateID: subcateID
+				};
+				$.ajax({
+					url: `/admin/category/sub/delete/${cateID}/${subcateID}`,
+					type: "post",
+					dataType: "json",
+					contentType: "application/json",
+					data: JSON.stringify(form),
+					success: function(data) {
+						if (data === "1") {
+							Swal.fire({
+								title: "Đã xóa thành công danh mục",
+								icon: "success"
+							});
+							setTimeout(() => {
+								window.location.href = `/admin/category#sub-${cateID}`;
+							}, 2000);
+						} else if (data === "-1") {
+							Swal.fire({
+								title: "Có lỗi xảy ra",
+								text: "Xóa không thành công. Vui lòng thử lại",
+								icon: "error"
+							});
+						} else {
+							Swal.fire({
+								title: "Không thể xóa danh mục này",
+								text: "Danh mục đang chứa sản phẩm",
+								icon: "error"
+							});
+						}
+					}
+				});
+			}
+		});
+	}
+});
+$(".btn-update-subcate").click(event => {
+	event.preventDefault();
+	const cateID = $(event.target).attr("cateID");
+	const subcateID = $(event.target).attr("subcateID");
+	Swal.fire({
+		title: "Lưu thay đổi?",
+		icon: "warning",
+		showCancelButton: true,
+		confirmButtonColor: "#F8694A",
+		cancelButtonColor: "#000",
+		confirmButtonText: `Lưu <i class="fas fa-save"></i>`,
+		cancelButtonText: "Hủy bỏ"
+	}).then(result => {
+		if (result.value) {
+			const form = {
+				cateID: $("input[name=cateID]").val(),
+				subcateID: $("input[name=subcateID]").val(),
+				subcateName: $("input[name=subcateName]").val()
+			};
+			$.ajax({
+				url: `/admin/category/sub/edit/${cateID}/${subcateID}`,
+				type: "post",
+				dataType: "json",
+				contentType: "application/json",
+				data: JSON.stringify(form),
+				success: function(data) {
+					if (data === "1") {
+						Swal.fire({
+							title: "Các thay đổi đã được lưu lại",
+							icon: "success"
+						});
+						setTimeout(() => {
+							window.location.href = `/admin/category#sub-${cateID}`;
+						}, 2000);
+					} else {
+						Swal.fire({
+							title: "Có lỗi xảy ra",
+							text: "Thay đổi chưa được lưu. Vui lòng thử lại",
+							icon: "error"
+						});
+					}
+				}
+			});
+		}
+	});
 });

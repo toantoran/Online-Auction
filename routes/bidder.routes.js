@@ -1167,12 +1167,34 @@ router.get('/user-eval-detail/:userID', async (req, res) => {
 
 
 router.post('/account/seller-regis', checkUser.checkAuthenticatedPost, async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   try {
     await userModel.registerSeller(req.body.userID);
     res.json("1");
   } catch {
     res.json("0");
+  }
+})
+
+router.post('/account/change-pass/:userID', checkUser.checkAuthenticatedPost, async (req, res) => {
+  const userID = req.params.userID;
+  const newPass = bcrypt.hashSync(req.body.newPass, 10);
+  // console.log(req.body);
+  try {
+    const rs = await userModel.getUserById(userID);
+    const matchUser = rs[0];
+    if (await bcrypt.compareSync(req.body.oldPass, matchUser.password)) {
+      await userModel.changePassword(userID, newPass)
+      req.logout();
+  res.locals.lcUser = {};
+      res.json("1");
+    }
+    else {
+      res.json("0");
+    }
+  } catch (e){
+    console.log(e);
+    res.json("-1");
   }
 })
 module.exports = router;

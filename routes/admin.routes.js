@@ -122,12 +122,16 @@ router.post("/category/edit/:cateID", async (req, res) => {
 	const cateName = req.body.cateName;
 	const cateIcon = req.body.cateIcon;
 	try {
+		// console.log(cateModel.editCate);
+		console.log(cateID);
+		console.log(cateName);
+		console.log(cateIcon);
 		await cateModel.editCate(cateID, cateName, cateIcon);
-		const cateList = await cateModel.getCate();
-		for (cate of cateList) {
-			cate.subCate = await cateModel.getSubCate(cate.cateID);
-		}
-		res.locals.lcCateList = cateList;
+		// const cateList = await cateModel.getCate();
+		// for (cate of cateList) {
+		// 	cate.subCate = await cateModel.getSubCate(cate.cateID);
+		// }
+		// res.locals.lcCateList = cateList;
 		res.json("1");
 	} catch (e) {
 		res.json("0");
@@ -141,18 +145,17 @@ router.post(
 		const cateID = req.params.cateID;
 		const subcateID = req.params.subcateID;
 		const entity = {
-			cateID,
-			subcateID,
+			cateID: cateID,
+			subcateID: subcateID,
 			subcateName: req.body.subcateName
 		};
-		await cateModel.editSubCate(entity);
-		const cateList = await cateModel.getCate();
-		for (cate of cateList) {
-			cate.subCate = await cateModel.getSubCate(cate.cateID);
+		try {
+			await cateModel.editSubCate(entity);
+			res.json("1");
+		} catch (e) {
+			console.log(e);
+			res.json("0");
 		}
-		res.locals.lcCateList = cateList;
-
-		res.redirect(`/admin/category#sub-${cateID}`);
 	}
 );
 
@@ -336,8 +339,9 @@ router.get(
 			subcate.cateID,
 			subcate.subcateID
 		);
-		rows = await cateModel.getCate(req.params.cateID);
+		rows = await cateModel.getSingleCate(req.params.cateID);
 		const parent = rows[0];
+		// console.log(object);
 		res.render("vwAdmin/category-sub-detail", {
 			title: "Chi tiết danh mục con",
 			user: req.user,
@@ -433,11 +437,10 @@ router.get("/user-detail/:userID", async (req, res, next) => {
 
 router.post("/user/delete/:userID", async (req, res) => {
 	try {
-		// await userModel.deleteUser(req.params.userID);
+		await userModel.deleteUser(req.params.userID);
 		// res.redirect("/users")
-		res.json("1")
-	}
-	catch (e) {
+		res.json("1");
+	} catch (e) {
 		console.log(e);
 		res.json("0");
 	}
