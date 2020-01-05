@@ -1,4 +1,3 @@
-    // window.history.pushState(null, null, "/admin/users")
     let status = document.getElementById("status").value;
     let message = document.getElementById("message").value;
 

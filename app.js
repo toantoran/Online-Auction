@@ -83,6 +83,19 @@ app.use(passport.session());
 require("./middlewares/locals.mdw")(app);
 require("./middlewares/routes.mdw")(app);
 
+app.use((req, res, next) => {
+  res.render('vwUser/not-found',{
+    user: req.user
+  });
+})
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).render('vwUser/error',{
+    user: req.user
+  });
+})
+
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);

@@ -8,15 +8,6 @@ module.exports = {
         res.redirect("/login");
     },
 
-    checkAjaxAuthenticated(req, res, next) {
-        req.session.lastUrl = req.originalUrl
-        if (req.isAuthenticated()) {
-            return next();
-        }
-        console.log("3123123123");
-        return res.redirect('/login')
-    },
-
     checkAuthenticatedPost(req, res, next) {
         if (req.isAuthenticated()) {
             return next();

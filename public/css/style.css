@@ -1020,6 +1020,10 @@ textarea.input {
   background-color: #F8694A;
 }
 
+.product .product-label>span.holder {
+  background-color: green;
+}
+
 .product .product-countdown {
   z-index: 22;
 }
