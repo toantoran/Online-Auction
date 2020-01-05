@@ -120,9 +120,9 @@ router.post("/category/edit/:cateID", async (req, res) => {
 	const cateIcon = req.body.cateIcon;
 	try {
 		// console.log(cateModel.editCate);
-		console.log(cateID);
-		console.log(cateName);
-		console.log(cateIcon);
+		// console.log(cateID);
+		// console.log(cateName);
+		// console.log(cateIcon);
 		await cateModel.editCate(cateID, cateName, cateIcon);
 		// const cateList = await cateModel.getCate();
 		// for (cate of cateList) {
@@ -146,12 +146,22 @@ router.post(
 			subcateID: subcateID,
 			subcateName: req.body.subcateName
 		};
+		let message = "";
+		let status;
 		try {
 			await cateModel.editSubCate(entity);
-			res.json("1");
+			message = "Đã lưu các thay đổi";
+			status = 1;
+			res.redirect(
+				`/admin/category-sub-detail/${cateID}/${subcateID}/?message=${message}&status=${status}`
+			);
 		} catch (e) {
 			console.log(e);
-			res.json("0");
+			message = "Có lỗi xảy ra";
+			status = 0;
+			res.redirect(
+				`/admin/category-sub-detail/${cateID}/${subcateID}/?message=${message}&status=${status}`
+			);
 		}
 	}
 );
@@ -336,6 +346,7 @@ router.get(
 		);
 		rows = await cateModel.getSingleCate(req.params.cateID);
 		const parent = rows[0];
+		parent.subCate = await cateModel.getSubCate(req.params.cateID);
 		// console.log(object);
 		res.render("vwAdmin/category-sub-detail", {
 			title: "Chi tiết danh mục con",

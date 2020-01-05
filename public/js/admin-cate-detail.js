@@ -10,6 +10,22 @@ $("#cateIcon").on("input", function() {
 	$("#generate-icon").html(`<i class="fas fa-${$("#cateIcon").val()}"></i>`);
 });
 
+if ($("input#status").val() === "0") {
+	new SnackBar({
+		message: $("input#message").val(),
+		status: "warning",
+		fixed: true,
+		timeout: 2000
+	});
+} else if ($("input#status").val() === "1") {
+	new SnackBar({
+		message: $("input#message").val(),
+		status: "success",
+		fixed: true,
+		timeout: 2000
+	});
+}
+
 $(".btn-delete-cate").click(event => {
 	event.preventDefault();
 	const cateID = $(event.target).attr("cateID");
@@ -206,7 +222,7 @@ $(".btn-delete-subcate").click(event => {
 		});
 	}
 });
-$(".btn-update-subcate").click(event => {
+$(".btn-confirm-update-subcate").click(event => {
 	event.preventDefault();
 	const cateID = $(event.target).attr("cateID");
 	const subcateID = $(event.target).attr("subcateID");
@@ -220,35 +236,36 @@ $(".btn-update-subcate").click(event => {
 		cancelButtonText: "Hủy bỏ"
 	}).then(result => {
 		if (result.value) {
-			const form = {
-				cateID: $("input[name=cateID]").val(),
-				subcateID: $("input[name=subcateID]").val(),
-				subcateName: $("input[name=subcateName]").val()
-			};
-			$.ajax({
-				url: `/admin/category/sub/edit/${cateID}/${subcateID}`,
-				type: "post",
-				dataType: "json",
-				contentType: "application/json",
-				data: JSON.stringify(form),
-				success: function(data) {
-					if (data === "1") {
-						Swal.fire({
-							title: "Các thay đổi đã được lưu lại",
-							icon: "success"
-						});
-						setTimeout(() => {
-							window.location.href = `/admin/category#sub-${cateID}`;
-						}, 2000);
-					} else {
-						Swal.fire({
-							title: "Có lỗi xảy ra",
-							text: "Thay đổi chưa được lưu. Vui lòng thử lại",
-							icon: "error"
-						});
-					}
-				}
-			});
+			$("#form").submit();
+			// const form = {
+			// 	cateID: $("input[name=cateID]").val(),
+			// 	subcateID: $("input[name=subcateID]").val(),
+			// 	subcateName: $("input[name=subcateName]").val()
+			// };
+			// $.ajax({
+			// 	url: `/admin/category/sub/edit/${cateID}/${subcateID}`,
+			// 	type: "post",
+			// 	dataType: "json",
+			// 	contentType: "application/json",
+			// 	data: JSON.stringify(form),
+			// 	success: function(data) {
+			// 		if (data === "1") {
+			// 			Swal.fire({
+			// 				title: "Các thay đổi đã được lưu lại",
+			// 				icon: "success"
+			// 			});
+			// 			setTimeout(() => {
+			// 				window.location.href = `/admin/category#sub-${cateID}`;
+			// 			}, 2000);
+			// 		} else {
+			// 			Swal.fire({
+			// 				title: "Có lỗi xảy ra",
+			// 				text: "Thay đổi chưa được lưu. Vui lòng thử lại",
+			// 				icon: "error"
+			// 			});
+			// 		}
+			// 	}
+			// });
 		}
 	});
 });

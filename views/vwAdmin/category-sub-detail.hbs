@@ -27,7 +27,8 @@
                                     Quản lý danh mục
                                 </a></li>
                             <hr>
-                            <li class="sub"><a href="/admin/category-detail/{{parent.cateID}}">{{parent.cateName}}</a>
+                            <li class="sub"><a class="link-active"
+                                    href="/admin/category-detail/{{parent.cateID}}">{{parent.cateName}}</a>
                             </li>
                             <hr>
                             {{#each parent.subCate}}
@@ -54,7 +55,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <h2>{{subcate.subcateName}}</h2>
-                                <form method="post" enctype="multipart/form-data">
+                                <form method="post" enctype="multipart/form-data" id="form"
+                                    action="/admin/category/sub/edit/{{subcate.cateID}}/{{subcate.subcateID}}">
                                     <div class="form-group">
                                         <label for="cateID">ID danh mục cha</label>
                                         <p class="err-validate" id="err-name"></p>
@@ -84,7 +86,7 @@
                                         <p class="err-validate" id="err-name"></p>
                                         <br>
                                         <img src="/img/subcate/{{subcate.cateID}}-{{subcate.subcateID}}.jpg" alt=""
-                                            width="500px" />
+                                            style="max-width: 500px" />
                                         <button class="main-btn change-btn" type="button">Thay đổi</button>
                                         <input type="file" name="subcate-img" id="subcate-img" style="display: none;" />
                                     </div>
@@ -97,10 +99,11 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-md-12" style="text-align: center;">
-                                                <button type="button" cateID="{{subcate.cateID}}"
-                                                    subcateID="{{subcate.subcateID}}"
-                                                    class="main-btn btn-update-subcate" style="color: green;"><i
-                                                        class="fas fa-save"></i> Lưu
+                                                <button type="submit" formmethod="post"
+                                                    formaction="/admin/category/sub/edit/{{subcate.cateID}}/{{subcate.subcateID}}"
+                                                    class="btn-update-subcate" style="display: none"></button>
+                                                <button type="button" class="main-btn btn-confirm-update-subcate"
+                                                    style="color: green;"><i class="fas fa-save"></i> Lưu
                                                     những thay đổi</button>
                                                 <button type="button" cateID="{{subcate.cateID}}"
                                                     subcateID="{{subcate.subcateID}}"
@@ -118,7 +121,4 @@
             </div>
         </div>
     </div>
-</div>
-</div>
-</div>
 </div>
