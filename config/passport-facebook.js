@@ -21,9 +21,6 @@ module.exports = (passport) => {
             name,
             password
           })
-          return done(null, false, {
-            message: 'Email chưa được đăng ký'
-          })
         }
         matchUser = await userModel.getUserByEmail(email);
         const user = matchUser[0];
@@ -31,21 +28,15 @@ module.exports = (passport) => {
     }
   ))
 
-  //Chạy lúc login (1 lần)
   passport.serializeUser(function (user, done) {
     done(null, user.userID);
   });
 
-
-  // Chạy lại mỗi lần gửi request
   passport.deserializeUser(async function (id, done) {
-    //Thêm cái này, nó sẽ get lại user
-    //thử này
     let matchUser = await userModel.getUserById(id);
     let user = {}
     if (matchUser.length != 0)
       user = matchUser[0];
-    // // console.log(user);
     done(null, user);
   });
 }

@@ -10,6 +10,7 @@ const checkUser = require("../middlewares/user.mdw");
 const moment = require("moment");
 const mailer = require("../middlewares/mail.mdw");
 const numeral = require("numeral");
+const otpGenerator = require('otp-generator')
 const rp = require("request-promise");
 
 const router = express.Router();
@@ -368,7 +369,6 @@ router.get("/product/:productID", async (req, res) => {
 });
 
 router.get("/product/getbidtable/:productID", async (req, res) => {
-  // console.log('bidder');
   const data = await productModel.singleBidByProduct(req.params.productID);
   for (let p of data) {
     p.bidderName = await userModel.getNameById(p.bidderID);
@@ -377,7 +377,6 @@ router.get("/product/getbidtable/:productID", async (req, res) => {
     p.price = numeral(p.price).format(0, 0);
     p.bidTime = moment(p.bidTime).format("DD/MM/YYYY") + "  [" + moment(p.bidTime).format("HH:mm:ss") + "]";
   }
-  // console.log(data);
   res.send({
     "draw": 1,
     "recordsTotal": data.length,
@@ -386,125 +385,121 @@ router.get("/product/getbidtable/:productID", async (req, res) => {
   })
 })
 
-router.post(
-  "/product/:productID/bid",
-  checkUser.checkAuthenticatedPost,
-  async (req, res) => {
-    const productSingle = await productModel.single(req.params.productID);
-    const product = productSingle[0];
-    const point = await userModel.getPointEvaluation(req.user.userID);
-    //const checkPoint = point <= 80;
-    const checkPoint = point < product.minPoint;
-    const checkBan = await productModel.checkBanBid(
-      req.params.productID,
-      req.user.userID
-    );
-    let query;
-    if (checkBan) {
+router.post("/product/:productID/bid", checkUser.checkAuthenticatedPost, async (req, res) => {
+  const productSingle = await productModel.single(req.params.productID);
+  const product = productSingle[0];
+  const point = await userModel.getPointEvaluation(req.user.userID);
+  //const checkPoint = point <= 80;
+  const checkPoint = point < product.minPoint;
+  const checkBan = await productModel.checkBanBid(
+    req.params.productID,
+    req.user.userID
+  );
+  let query;
+  if (checkBan) {
+    query = querystring.stringify({
+      status: false,
+      message: "Bạn đã bị cấm đấu giá sản phẩm này!!!"
+    });
+  } else {
+    if (checkPoint) {
       query = querystring.stringify({
         status: false,
-        message: "Bạn đã bị cấm đấu giá sản phẩm này!!!"
+        message: "Điểm của bạn không đủ để tham gia phiên đấu giá này!!!"
       });
     } else {
-      if (checkPoint) {
+      if (req.body.isEndBid === "true") {
         query = querystring.stringify({
           status: false,
-          message: "Điểm của bạn không đủ để tham gia phiên đấu giá này!!!"
+          message: "Phiên đấu giá đã kết thúc!"
         });
       } else {
-        if (req.body.isEndBid === "true") {
+        if (product.seller === req.user.userID) {
           query = querystring.stringify({
             status: false,
-            message: "Phiên đấu giá đã kết thúc!"
+            message: "Bạn là người bán sản phẩm này, không thể ra giá!"
           });
         } else {
-          if (product.seller === req.user.userID) {
-            query = querystring.stringify({
-              status: false,
-              message: "Bạn là người bán sản phẩm này, không thể ra giá!"
-            });
+          query = querystring.stringify({
+            status: true,
+            message: "Ra giá thành công!"
+          });
+
+          const oldHolder = await productModel.getWinnerOfBidByProduct(
+            product.productID
+          );
+          const price = numeral(req.body.bidPrice).value();
+          const immePrice = product.immePrice || 0;
+          let currentPrice = product.currentPrice;
+          const priceHold = await productModel.getPriceOfHolderByProduct(
+            product.productID
+          );
+          let isHolder;
+          if (+price === immePrice) {
+            currentPrice = immePrice;
+            isHolder = 1;
+            product.endDate = new Date();
           } else {
-            query = querystring.stringify({
-              status: true,
-              message: "Ra giá thành công!"
-            });
-
-            const oldHolder = await productModel.getWinnerOfBidByProduct(
-              product.productID
-            );
-            const price = numeral(req.body.bidPrice).value();
-            const immePrice = product.immePrice || 0;
-            let currentPrice = product.currentPrice;
-            const priceHold = await productModel.getPriceOfHolderByProduct(
-              product.productID
-            );
-            let isHolder;
-            if (+price === immePrice) {
-              currentPrice = immePrice;
-              isHolder = 1;
-              product.endDate = new Date();
+            if (price <= priceHold) {
+              currentPrice = price;
+              isHolder = 0;
             } else {
-              if (price <= priceHold) {
-                currentPrice = price;
-                isHolder = 0;
-              } else {
-                if (priceHold !== 0) {
-                  currentPrice = priceHold + product.stepPrice;
-                }
-                isHolder = 1;
+              if (priceHold !== 0) {
+                currentPrice = priceHold + product.stepPrice;
               }
-              if (product.autoExtend) {
-                const temp = moment(product.endDate, "YYYY-MM-DD HH:mm:ss");
-                let minutes = moment().diff(temp, "minutes");
-                if (minutes >= -5) {
-                  product.endDate = moment(product.endDate).add(10, "minutes");
-                  product.endDate = moment(product.endDate).format(
-                    "YYYY-MM-DD HH:mm:ss"
-                  );
-                }
+              isHolder = 1;
+            }
+            if (product.autoExtend) {
+              const temp = moment(product.endDate, "YYYY-MM-DD HH:mm:ss");
+              let minutes = moment().diff(temp, "minutes");
+              if (minutes >= -5) {
+                product.endDate = moment(product.endDate).add(10, "minutes");
+                product.endDate = moment(product.endDate).format(
+                  "YYYY-MM-DD HH:mm:ss"
+                );
               }
             }
-
-            const entity = {
-              productID: req.params.productID,
-              bidderID: req.user.userID,
-              price,
-              priceHold: currentPrice,
-              bidTime: new Date(),
-              isHolder
-            };
-            if (isHolder === 1) {
-              await productModel.setFalseIsHolderProductBid(product.productID);
-            }
-            await productModel.addProductBid(entity);
-            await productModel.updateProductCurrentPrice({
-              productID: product.productID,
-              currentPrice,
-              endDate: product.endDate
-            });
-
-            //Gui mail
-            const seller = await userModel.getUserById(product.seller);
-            const sellerEMail = seller[0].email;
-
-            const bidderEmail = req.user.email;
-
-            const oldHolderEmail = oldHolder == false ? false : oldHolder.email;
-
-            await mailer.sendMailConfirmBid(
-              sellerEMail,
-              bidderEmail,
-              oldHolderEmail,
-              product
-            );
           }
+
+          const entity = {
+            productID: req.params.productID,
+            bidderID: req.user.userID,
+            price,
+            priceHold: currentPrice,
+            bidTime: new Date(),
+            isHolder
+          };
+          if (isHolder === 1) {
+            await productModel.setFalseIsHolderProductBid(product.productID);
+          }
+          await productModel.addProductBid(entity);
+          await productModel.updateProductCurrentPrice({
+            productID: product.productID,
+            currentPrice,
+            endDate: product.endDate
+          });
+
+          //Gui mail
+          const seller = await userModel.getUserById(product.seller);
+          const sellerEMail = seller[0].email;
+
+          const bidderEmail = req.user.email;
+
+          const oldHolderEmail = oldHolder == false ? false : oldHolder.email;
+
+          await mailer.sendMailConfirmBid(
+            sellerEMail,
+            bidderEmail,
+            oldHolderEmail,
+            product
+          );
         }
       }
     }
-
-    res.redirect(`/product/${req.params.productID}/?${query}`);
   }
-);
+
+  res.redirect(`/product/${req.params.productID}/?${query}`);
+});
 
 router.post("/product/:productID/refuseBid", async (req, res) => {
   const rows = await productModel.single(req.body.productID);
@@ -916,7 +911,6 @@ router.post(
       "YYYY-MM-DD"
     );
     if (req.body.birthDay === 'Invalid date') req.body.birthDay = req.user.birthDay;
-    console.log(req.body);
     await userModel.editUser(req.body);
     res.json("1");
   }
@@ -1026,7 +1020,6 @@ router.post("/refuse/winner/:productID", checkUser.checkAuthenticatedPost, async
 
 router.get("/login", checkUser.checkNotAuthenticated, (req, res) => {
   let errMsg = null;
-  console.log(req.session.flash);
   if (req.session.flash != null)
     if (req.session.flash.error != null)
       if (req.session.flash.error.length) errMsg = req.session.flash.error[0];
@@ -1055,18 +1048,25 @@ router.post(
   }),
   (req, res) => {
     res.locals.lcUser = req.user;
-    res.redirect(req.session.lastUrl);
+    if (req.session.lastUrl)
+      res.redirect(req.session.lastUrl);
+    else
+      res.redirect('/');
   }
 );
 
 router.post("/signup", (req, res) => {
-  // console.log(req.body);
   if (
     req.body["g-recaptcha-response"] === undefined ||
     req.body["g-recaptcha-response"] === "" ||
     req.body["g-recaptcha-response"] === null
   ) {
     req.session.message = "Vui lòng xác thực reCaptcha";
+    req.session.oldInfo = {
+      name: req.body.name,
+      password: req.body.password,
+      address: req.body.address
+    };
     res.redirect("/signup");
   }
   const secretKey = "6LciPMQUAAAAAERVOU-okuG7mbVdzS-9fuYTbd4O";
@@ -1082,10 +1082,8 @@ router.post("/signup", (req, res) => {
 
   rp(options)
     .then(async response => {
-      // console.log(response);
       const existedUser = await userModel.getUserByEmail(req.body.email);
       if (existedUser.length) {
-        console.log(existedUser);
         req.session.message = "Email đã được sử dụng";
         req.session.oldInfo = {
           name: req.body.name,
@@ -1102,9 +1100,8 @@ router.post("/signup", (req, res) => {
             password: hashedPass,
             address: req.body.address
           };
-          userModel.newUser(newUser);
-          req.session.email = newUser.email;
-          res.redirect("/login");
+          const query = querystring.stringify(newUser);
+          res.redirect(`/signup/checkotp/?${query}`);
         } catch (e) {
           console.log(e);
         }
@@ -1116,13 +1113,54 @@ router.post("/signup", (req, res) => {
     });
 });
 
-router.get("/login/fb", passport.authenticate('facebook',{scope: ['email']}));
+router.get("/signup/checkotp", async (req, res) => {
+  req.session.otp = otpGenerator.generate(6, {
+    upperCase: false,
+    specialChars: false
+  });
+  await mailer.sendMailCheckOTP(req.query.email, req.session.otp);
+  res.render("vwUser/checkotp", {
+    layout: false,
+    message: `chúng tôi đã gửi mã otp đến email ${req.query.email}, hãy nhập mã OTP để xác nhận`,
+    name: req.query.name,
+    email: req.query.email,
+    password: req.query.password,
+    address: req.query.address
+  });
+});
 
-router.get("/login/fb/cb", passport.authenticate('facebook',{
-    failureRedirect: '/login',
-    successRedirect: '/',
+router.post("/signup/checkotp", async (req, res) => {
+  const checkOTP = (req.body.otp == req.session.otp);
+  if (checkOTP) {
+    const newUser = {
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+      address: req.body.address
+    };
+    await userModel.newUser(newUser);
+    req.session.email = newUser.email;
+    res.redirect('/login')
+  } else {
+    res.render("vwUser/checkotp", {
+      layout: false,
+      message: `Mã OTP bạn nhập không đúng mời nhập lại`,
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+      address: req.body.address
+    });
   }
-));
+});
+
+router.get("/login/fb", passport.authenticate('facebook', {
+  scope: ['email']
+}));
+
+router.get("/login/fb/cb", passport.authenticate('facebook', {
+  failureRedirect: '/login',
+  successRedirect: '/',
+}));
 
 router.get("/logout", (req, res) => {
   req.logout();
@@ -1131,8 +1169,6 @@ router.get("/logout", (req, res) => {
   // res.redirect(req.headers.referer);
   res.redirect("/");
 });
-
-
 
 router.get('/non-permission', (req, res) => {
   res.render("vwUser/non-permission", {
@@ -1167,7 +1203,6 @@ router.get('/user-eval-detail/:userID', async (req, res) => {
 
 
 router.post('/account/seller-regis', checkUser.checkAuthenticatedPost, async (req, res) => {
-  // console.log(req.body);
   try {
     await userModel.registerSeller(req.body.userID);
     res.json("1");

@@ -4,7 +4,7 @@ const productModel = require("../models/product.model");
 const categoryModel = require("../models/category.model");
 const userModel = require("../models/user.model");
 const descModel = require("../models/description.model")
-const upload = require("../middlewares/upload.mdw");
+const upload = require("../middlewares/uploadProductImgs.mdw");
 const fs = require('fs-extra')
 const router = express.Router();
 const uuid = require('uuid/v1');
@@ -29,9 +29,7 @@ var filesConfig = [{
     name: 'filesThumb[]'
 }];
 router.post("/new-product/", upload.fields(filesConfig), checkUser.checkAuthenticatedPost, async (req, res, next) => {
-    console.log(req.body);
     const productCate = await categoryModel.getFromName(req.body.productCate);
-    // console.log(productCate);
     const entityProductSingle = {
         productID: req.body.id,
         productName: req.body.productName,
@@ -110,7 +108,6 @@ router.post("/product/:productID/addDesc", async (req, res) => {
 
 
 router.get("/product/getbidtable/:productID", async (req, res) => {
-    // console.log('seller');
     const data = await productModel.singleBidByProduct(req.params.productID);
     for (let p of data) {
         p.bidderName = await userModel.getNameById(p.bidderID);
@@ -120,7 +117,6 @@ router.get("/product/getbidtable/:productID", async (req, res) => {
         p.bidTime = moment(p.bidTime).format("DD/MM/YYYY") + "  [" + moment(p.bidTime).format("HH:mm:ss") + "]";
         p.button = `<a href="/user-eval-detail/${p.bidderID}" target="_blank" class="main-btn small-btn">Chi tiết</a><button class="primary-btn refuse-btn small-btn">Từ chối</button>`;
     }
-    // console.log(data);
     res.send({
         "draw": 1,
         "recordsTotal": data.length,
