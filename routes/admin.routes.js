@@ -28,7 +28,6 @@ router.get("/getSubcateTable/:cateID", async (req, res) => {
 	const rs = Array.from(res.locals.lcCateList).find(
 		a => a.cateID === parseInt(req.params.cateID)
 	);
-	// console.log(rs);
 	const data = rs.subCate;
 	const cateName = rs.cateName;
 	for (let sub of data) {
@@ -107,7 +106,6 @@ router.post("/category/sub/delete/:cateID/:subcateID", async (req, res) => {
 				cate.subCate = await cateModel.getSubCate(cate.cateID);
 			}
 			res.locals.lcCateList = cateList;
-			// console.log(res.locals.lcCateList);
 			res.json("1");
 		} catch (e) {
 			console.log(e);
@@ -117,7 +115,6 @@ router.post("/category/sub/delete/:cateID/:subcateID", async (req, res) => {
 });
 
 router.post("/category/edit/:cateID", async (req, res) => {
-	// console.log(req.body);
 	const cateID = req.params.cateID;
 	const cateName = req.body.cateName;
 	const cateIcon = req.body.cateIcon;
@@ -241,9 +238,7 @@ router.get("/category-detail/:cateID", async (req, res, next) => {
 	const arr = Array.from(res.locals.lcCateList);
 	const cate = arr.find(a => a.cateID === parseInt(req.params.cateID));
 	let count = 0;
-	// console.log(cate);
 	for (let sub of cate.subCate) {
-		// console.log(sub);
 		count += await productModel.countBySubCat(sub.cateID, sub.subcateID);
 	}
 
@@ -433,8 +428,7 @@ router.get("/user-detail/:userID", async (req, res, next) => {
 
 router.post("/user/delete/:userID", async (req, res) => {
 	try {
-		// await userModel.deleteUser(req.params.userID);
-		// res.redirect("/users")
+		await userModel.deleteUser(req.params.userID);
 		res.json("1")
 	}
 	catch (e) {

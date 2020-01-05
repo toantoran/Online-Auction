@@ -264,7 +264,7 @@ module.exports = {
         return rows[0].price;
     },
 
-    productsEndBid: () => db.load('select * from product_single where endDate < NOW()'),
+    productsEndBidToSendMail: () => db.load('select * from product_single where endDate < NOW() and isSendMailEndBid = 0'),
 
     // deleteProductsBySeller: async (seller) => {
     //     const rows = await db.load(`select * from product_single where seller = '${seller}'`);

@@ -34,10 +34,10 @@ function sendMail(from, to, subject, html) {
 
 module.exports = {
     sendMail: () => {
-        console.log("send mail");
     },
 
     sendMailEndBidToBidder: (userMail, product) => {
+        console.log("Gui mail thong bao ket thuc phien dau gia toi nguoi thang!!!")
         const from = 'web1712795@gmail.com';
         const to = userMail;
         const subject = 'Thông báo từ BidHub: bạn đã chiến thắng trong phiên đấu giá';
@@ -49,6 +49,7 @@ module.exports = {
     },
 
     sendMailEndBidToSeller: (userMail, product, isBided) => {
+        console.log("Gui mail thong bao ket thuc phien dau gia toi nguoi ban!!!")
         const from = 'web1712795@gmail.com';
         const to = userMail;
         const subject = 'Thông báo từ BidHub: sản phẩm của bạn đã hết thời gian đấu giá '
@@ -66,6 +67,7 @@ module.exports = {
     },
 
     sendMailRefuseBidToSBidder: (userMail, product) => {
+        console.log("Gui mail thong bao tu choi dau gia cho nguoi dau gia!!!")
         const from = 'web1712795@gmail.com';
         const to = userMail;
         const subject = 'Thông báo từ BidHub: bạn đã bị từ chối đấu giá'
@@ -77,6 +79,7 @@ module.exports = {
     },
 
     sendMailConfirmBid: (sellerEMail, bidderEmail, oldHolderEmail, product) => {
+        console.log("Gui mail thong bao co luot dau gia moi!!!")
         const from = 'web1712795@gmail.com';
         let to = `${sellerEMail}, ${bidderEmail}, ${oldHolderEmail}`;
         if (oldHolderEmail == false)
@@ -85,6 +88,15 @@ module.exports = {
         const html = `<h3>Tên sản phẩm: ${product.productName}</h3>
         <h3>Giá hiện tại: ${product.currentPrice}</h3>
         <a href = "http://localhost:3000/product/${product.productID}">Xem chi tiết tại đây</a>`;
+        return sendMail(from, to, subject, html);
+    },
+
+    sendMailCheckOTP: (userMail, OTP) => {
+        console.log("Gui mail CHECK OTP!!!")
+        const from = 'web1712795@gmail.com';
+        let to = `${userMail}`;
+        const subject = 'Thông báo từ BidHub: gữi mã xác nhận đăng kí tài khoản'
+        const html = `<h3> Mã OTP: ${OTP}</h3>`;
         return sendMail(from, to, subject, html);
     },
 }
