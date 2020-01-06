@@ -63,7 +63,8 @@ Table OF Contents
 @import url("https://fonts.googleapis.com/css?family=Alata&display=swap");
 
 body {
-	font-family: "Alata", sans-serif;
+	/* font-family: "Alata", sans-serif; */
+	font-family: "Alata", sans-serif !important;
 	color: #4a4e5a;
 	overflow-x: hidden;
 }
@@ -1066,7 +1067,8 @@ textarea.input {
 .product.product-single .product-thumb {
 	position: relative;
 	margin-bottom: 5px;
-	min-height: 200px;
+	height: 250px;
+	overflow: hidden;
 }
 
 .product.product-single .product-thumb > img {
@@ -1136,6 +1138,8 @@ textarea.input {
 	opacity: 0;
 	visibility: hidden;
 	z-index: 20;
+	width: 115px;
+	cursor: pointer;
 }
 
 .product.product-single .btn-rating-top {
@@ -2129,6 +2133,6 @@ p.err-validate {
 		margin-bottom: 10px;
 	}
 	.col-md-3 {
-		width: 24%;
+		width: 24.9%;
 	}
 }

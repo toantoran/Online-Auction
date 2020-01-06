@@ -7,18 +7,10 @@ $(".datepicker-here").datepicker({
 
 $("#link-rating-seller").click(event => {
 	$("#seller-up").prop("checked", true);
-	const pID = $(event.target)
-		.parent()
-		.attr("productID");
-	const sellerID = $(event.target)
-		.parent()
-		.attr("sellerID");
-	const sellerName = $(event.target)
-		.parent()
-		.attr("sellerName");
-	const sellerEmail = $(event.target)
-		.parent()
-		.attr("sellerEmail");
+	const pID = $(event.target).attr("productID");
+	const sellerID = $(event.target).attr("sellerID");
+	const sellerName = $(event.target).attr("sellerName");
+	const sellerEmail = $(event.target).attr("sellerEmail");
 
 	$(".rating-seller-pID").val(pID);
 	$(".rating-seller-id").val(sellerID);
@@ -68,18 +60,10 @@ $("#link-rating-winner").click(event => {
 	$(".rating-winner-content").val("");
 
 	$("#winner-up").prop("checked", true);
-	const pID = $(event.target)
-		.parent()
-		.attr("productID");
-	const winnerID = $(event.target)
-		.parent()
-		.attr("winnerID");
-	const winnerName = $(event.target)
-		.parent()
-		.attr("winnerName");
-	const winnerEmail = $(event.target)
-		.parent()
-		.attr("winnerEmail");
+	const pID = $(event.target).attr("productID");
+	const winnerID = $(event.target).attr("winnerID");
+	const winnerName = $(event.target).attr("winnerName");
+	const winnerEmail = $(event.target).attr("winnerEmail");
 
 	$(".rating-winner-pID").val(pID);
 	$(".rating-winner-id").val(winnerID);

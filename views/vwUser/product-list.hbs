@@ -45,74 +45,66 @@
 				</div>
 				<!-- /store top filter -->
 
-				<!-- STORE -->
-				<div id="store">
-					<!-- row -->
-					<div class="row">
-						{{#if this.empty}}
-						<div class="col-md-12">
-							<div class="card-body">
-								<p class="card-text">
-									Không có dữ liệu.
-								</p>
-							</div>
-						</div>
-						{{else}}
-						<div class="card-body">
-							<div class="row product-container">
-								{{#each this.productList}}
-								<div class="col-md-3 col-sm-4 col-xs-6">
-									<div class="product product-single">
-										<div class="product-thumb">
-											<div class="product-label">
-												{{#if isNew}}
-												<span>Mới</span>
-												{{/if}}
-												{{#if isHot}}
-												<span class="sale">Hot <i class="fab fa-hotjar"></i></span>
-												{{/if}}
-											</div>
-											<ul class="product-countdown">
-												<li><span class="cd-h">0 H</span></li>
-												<li><span class="cd-m">0 M</span></li>
-												<li><span class="cd-s">0 S</span></li>
-											</ul>
-											<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Xem
-												chi tiết</button>
-											<button productID="{{productID}}" userID="{{user.userID}}" type="button"
-												onsubmit="return false;" name="btnWish"
-												class="watch-list btn-wish {{#if isExistWishItem}}focus{{/if}}"><i
-													class="fa fa-heart"></i></button>
-											<img src="/img/product/{{productID}}/{{mainImgSrc}}" alt="">
-										</div>
-										<div class="product-body">
-											<h2 class="product-name"><a
-													href="/product/{{productID}}">{{format_name productName}}</a></h2>
-											<p class="product-text">Giá hiện tại: <span
-													class="product-price">{{format_money currentPrice}}</span></p>
-											<p class="product-text">Giá bán ngay: <span
-													class="product-price">{{#if immePrice}}
-													{{format_money immePrice}}
-													{{else}} Không có {{/if}}</span></p>
-											<p class="product-text">Đặt cao nhất: <span
-													class="product-price">{{#if isBided}}{{format_name_bid winner}}{{/if}}</span>
-											</p>
-											<div class="product-footer">
-												<small><span>{{countBid}}</span> lượt ra giá</small>
-												<small>Từ <span>{{format_day beginDate}}</span></small>
-											</div>
-										</div>
-										<input type="hidden" id="endDate" value="{{format_day_value endDate}}">
-									</div>
-								</div>
-								{{/each}}
-							</div>
-						</div>
-						{{/if}}
+				<!-- row -->
+				<div class="row" id="store">
+					{{#if this.empty}}
+					<div class="col-md-12">
+						<p class="card-text">
+							Không có dữ liệu.
+						</p>
 					</div>
-					<!-- /row -->
+					{{else}}
+					{{#each this.productList}}
+					<div class="col-md-3 col-sm-4 col-xs-6">
+						<div class="product product-single">
+							<div class="product-thumb">
+								<div class="product-label">
+									{{#if isNew}}
+									<span>Mới</span>
+									{{/if}}
+									{{#if isHot}}
+									<span class="sale">Hot <i class="fab fa-hotjar"></i></span>
+									{{/if}}
+								</div>
+								<ul class="product-countdown">
+									<li><span class="cd-h">0 H</span></li>
+									<li><span class="cd-m">0 M</span></li>
+									<li><span class="cd-s">0 S</span></li>
+								</ul>
+								<button class="main-btn quick-view"><i class="fa fa-search-plus"></i>
+									Xem
+									chi tiết</button>
+								<button productID="{{productID}}" userID="{{user.userID}}" type="button"
+									onsubmit="return false;" name="btnWish"
+									class="watch-list btn-wish {{#if isExistWishItem}}focus{{/if}}"><i
+										class="fa fa-heart"></i></button>
+								<img src="/img/product/{{productID}}/{{mainImgSrc}}" alt="">
+							</div>
+							<div class="product-body">
+								<h2 class="product-name"><a
+										href="/product/{{productID}}">{{format_name productName}}</a>
+								</h2>
+								<p class="product-text">Giá hiện tại: <span
+										class="product-price">{{format_money currentPrice}}</span>
+								</p>
+								<p class="product-text">Giá bán ngay: <span class="product-price">{{#if immePrice}}
+										{{format_money immePrice}}
+										{{else}} Không có {{/if}}</span></p>
+								<p class="product-text">Đặt cao nhất: <span
+										class="product-price">{{#if isBided}}{{format_name_bid winner}}{{/if}}</span>
+								</p>
+								<div class="product-footer">
+									<small><span>{{countBid}}</span> lượt ra giá</small>
+									<small>Từ <span>{{format_day beginDate}}</span></small>
+								</div>
+							</div>
+							<input type="hidden" id="endDate" value="{{format_day_value endDate}}">
+						</div>
+					</div>
+					{{/each}}
+					{{/if}}
 				</div>
-				<!-- /STORE -->
+				<!-- /row -->
 
 				<!-- store bottom filter -->
 				<div class="store-filter clearfix">

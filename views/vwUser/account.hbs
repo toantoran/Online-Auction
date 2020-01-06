@@ -217,7 +217,7 @@
                                                     <li><span class="cd-s">0 S</span></li>
                                                 </ul>
                                                 {{#if resultBid}}
-                                                <button class="main-btn check-out"><i
+                                                <button class="main-btn check-out" productID="{{productID}}"><i
                                                         class="fas fa-money-check-alt"></i> Thanh toán</button>
                                                 {{else}}
                                                 <button class="main-btn quick-view"><i class="fa fa-search-plus"></i>
@@ -230,10 +230,8 @@
                                                 <img src="/img/product/{{productID}}/{{mainImgSrc}}" alt="">
                                             </div>
                                             <div class="product-body">
-                                                <h2 class="product-name"><a {{#if resultBid}}
-                                                        href="/checkout/{{productID}}" {{else}}
-                                                        href="/product/{{productID}}">{{format_name productName}} </a>
-                                                    {{/if}}
+                                                <h2 class="product-name">
+                                                    <a href="/product/{{productID}}">{{format_name productName}} </a>
                                                 </h2>
                                                 <p class="product-text">Giá hiện tại: <span class="product-price"
                                                         {{#if isWinner}} style="color: green" {{else}}
@@ -440,12 +438,12 @@
                                                 <button class="main-btn quick-view"><i class="fa fa-search-plus"></i>
                                                     Xem chi tiết</button>
                                                 {{#if isBided}}
-                                                <button class="main-btn btn-rating" winnerName="{{winner.name}}"
-                                                    winnerEmail="{{winner.email}}" winnerTel="{{winner.tel}}"
-                                                    winnerID="{{winner.userID}}" productID="{{productID}}"><a
-                                                        href="#ratingWinner" data-toggle="modal" id="link-rating-winner"
-                                                        class="trigger-btn"><i class="fas fa-thumbs-up"></i>&nbsp;Đánh
-                                                        giá</a></button>
+                                                <a id="link-rating-winner" class="main-btn btn-rating"
+                                                    winnerName="{{winner.name}}" winnerEmail="{{winner.email}}"
+                                                    winnerTel="{{winner.tel}}" winnerID="{{winner.userID}}"
+                                                    productID="{{productID}}" data-toggle="modal"
+                                                    data-target="#ratingWinner"><i
+                                                        class="fas fa-thumbs-up"></i>&nbsp;Đánh giá</a>
                                                 {{/if}}
                                                 <button productID="{{productID}}" userID="{{user.userID}}" type="button"
                                                     onsubmit="return false;" name="btnWish"
@@ -505,23 +503,23 @@
                                     <div class="col-md-3 col-sm-4 col-xs-6">
                                         <div class="product product-single">
                                             <div class="product-thumb">
-                                                <button class="main-btn check-out"><i
+                                                <button class="main-btn check-out" productID="{{productID}}"><i
                                                         class="fas fa-money-check-alt"></i> Thanh toán</button>
                                                 <button productID="{{productID}}" userID="{{user.userID}}" type="button"
                                                     onsubmit="return false;" name="btnWish"
                                                     class="watch-list btn-wish {{#if isExistWishItem}}focus{{/if}}"><i
                                                         class="fa fa-heart"></i></button>
                                                 <img src="/img/product/{{productID}}/{{mainImgSrc}}" alt="">
-                                                <button class="main-btn btn-rating" sellerName="{{seller.name}}"
-                                                    sellerEmail="{{seller.email}}" sellerTel="{{seller.tel}}"
-                                                    sellerID="{{seller.userID}}" productID="{{productID}}"><a
-                                                        href="#ratingSeller" data-toggle="modal" id="link-rating-seller"
-                                                        class="trigger-btn"><i class="fas fa-thumbs-up"></i>&nbsp;Đánh
-                                                        giá</a></button>
+                                                <a id="link-rating-seller" class="main-btn btn-rating"
+                                                    sellerName="{{seller.name}}" sellerEmail="{{seller.email}}"
+                                                    sellerTel="{{seller.tel}}" sellerID="{{seller.userID}}"
+                                                    productID="{{productID}}" data-toggle="modal"
+                                                    data-target="#ratingSeller"><i
+                                                        class="fas fa-thumbs-up"></i>&nbsp;Đánh giá</a>
                                             </div>
                                             <div class="product-body">
                                                 <h2 class="product-name"><a
-                                                        href="/checkout/{{productID}}">{{format_name productName}}</a>
+                                                        href="/product/{{productID}}">{{format_name productName}}</a>
                                                 </h2>
                                                 <p class="product-text">Giá sản phẩm: <span
                                                         class="product-price">{{format_money currentPrice}}</span></p>
@@ -689,7 +687,7 @@
         </div>
     </div>
 </div>
-<div id="ratingWinner" class="modal fade">
+<div id="ratingWinner" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-login">
         <div class="modal-content">
             <div class="modal-header">
@@ -723,10 +721,8 @@
                         giá</button>
                 </div>
                 <div class="form-group">
-                    <button type="button" class="btn btn-primary btn-block btn-lg btn-refuse-winner"
-                        style="color: red;">Từ chối</button>
+                    <button type="button" class="btn btn-primary btn-block btn-lg btn-refuse-winner">Từ chối</button>
                 </div>
-
             </div>
         </div>
     </div>

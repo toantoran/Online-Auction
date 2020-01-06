@@ -185,11 +185,8 @@
 			.attr("href");
 	});
 	$(".check-out").click(event => {
-		window.location.href = $(event.target)
-			.parent()
-			.parent()
-			.find(".product-body .product-name a")
-			.attr("href");
+		window.location.href = "/checkout/" + $(event.target).attr("productID");
+		// console.log($(event.target));
 	});
 
 	$(".btn-wish").click(event => {
