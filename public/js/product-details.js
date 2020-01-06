@@ -35,8 +35,11 @@ tinymce.init({
 
 $("#btn-bid").click(event => {
 	event.preventDefault();
+	const bidPrice = $("input#bidPrice").val();
+	const pName = $("#pName").text();
 	Swal.fire({
-		title: "Bạn có chắc chắn với mức giá này?",
+		text: "Bạn có chắc chắn với mức giá này?",
+		title: `${bidPrice}đ cho sản phẩm\n"${pName}"`,
 		icon: "warning",
 		showCancelButton: true,
 		confirmButtonColor: "#F8694A",

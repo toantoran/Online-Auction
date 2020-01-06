@@ -181,6 +181,7 @@ router.get("/users", (req, res, next) => {
 router.get("/users/getAllBidder", async (req, res) => {
 	const data = await userModel.getAllBidder();
 	for (let user of data) {
+		user.email.replace(/@/, "<br>@");
 		user.point = (await userModel.getPointEvaluation(user.userID)) + "%";
 		if (user.birthDay)
 			user.birthDay = moment(user.birthDay).format("DD/MM/YYYY");
@@ -198,6 +199,8 @@ router.get("/users/getAllBidder", async (req, res) => {
 router.get("/users/getAllSeller", async (req, res) => {
 	const data = await userModel.getAllSeller();
 	for (let user of data) {
+		user.email.replace(/@/, "<br>@");
+		console.log(user.email);
 		user.point = (await userModel.getPointEvaluation(user.userID)) + "%";
 		if (user.birthDay)
 			user.birthDay = moment(user.birthDay).format("DD/MM/YYYY");
@@ -216,6 +219,7 @@ router.get("/users/getAllSeller", async (req, res) => {
 router.get("/users/getAllRegis", async (req, res) => {
 	const data = await userModel.getAllRegis();
 	for (let user of data) {
+		user.email.replace(/@/, "<br>@");
 		user.point = (await userModel.getPointEvaluation(user.userID)) + "%";
 		if (user.birthDay)
 			user.birthDay = moment(user.birthDay).format("DD/MM/YYYY");
@@ -234,6 +238,7 @@ router.get("/users/getAllRegis", async (req, res) => {
 router.get("/users/getAllAdmin", async (req, res) => {
 	const data = await userModel.getAllAdmin();
 	for (let user of data) {
+		user.email.replace(/@/, "<br>@");
 		user.point = (await userModel.getPointEvaluation(user.userID)) + "%";
 		if (user.birthDay)
 			user.birthDay = moment(user.birthDay).format("DD/MM/YYYY");

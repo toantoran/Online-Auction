@@ -1203,6 +1203,7 @@ textarea.input {
 .product.product-single .product-name {
 	font-size: 14px;
 	min-height: 30px;
+	white-space: pre-wrap;
 }
 
 .product.product-single .product-btns {
@@ -1824,10 +1825,6 @@ textarea.input {
 	list-style: decimal;
 }
 
-table tbody tr td:last-child {
-	width: 110px !important;
-}
-
 /*-- shopping cart table --*/
 
 .shopping-cart-table > tbody > tr > td,
@@ -2133,6 +2130,7 @@ p.err-validate {
 		margin-bottom: 10px;
 	}
 	.col-md-3 {
-		width: 24.9%;
+		width: 25%;
+		white-space: nowrap;
 	}
 }

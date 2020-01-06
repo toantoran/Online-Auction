@@ -1,45 +1,53 @@
 table thead tr th {
-    text-align: left;
-    padding: 8px 10px !important
+	text-align: left;
+	padding: 8px 10px !important;
 }
 
 table tbody tr td {
-    text-align: left;
-    padding: 0px 10px !important;
+	text-align: left;
+	padding: 0px 3px !important;
 }
 
 table tbody tr td:last-child {
-    text-align: right;
+	text-align: right;
 }
 
 table {
-    margin: 10px 0 40px 0 !important;
-    padding: 10px 0 !important;
-    border-bottom: 5px double #F8694A !important;
+	margin: 10px 0 40px 0 !important;
+	padding: 10px 0 !important;
+	border-bottom: 5px double #f8694a !important;
 }
 
 h2 {
-    margin: 15px 0;
-    color: #F8694A;
+	margin: 15px 0;
+	color: #f8694a;
 }
 
 table .main-btn,
 table .primary-btn {
-    padding: 5px 10px !important;
+	padding: 5px 10px !important;
 }
 
 .add-btn {
-    margin-left: auto;
+	margin-left: auto;
 }
 
 .table-header {
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
 
-    -ms-flex-align: center;
-    -webkit-align-items: center;
-    -webkit-box-align: center;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	-webkit-box-align: center;
 
-    align-items: center;
+	align-items: center;
+}
+
+table tbody tr td:last-child {
+	width: 115px !important;
+}
+table {
+	/* table-layout: fixed; */
+	word-wrap: break-word;
 }

@@ -46,9 +46,9 @@ app.engine(
 				return "****" + temp[temp.length - 1];
 			},
 			format_name: val => {
-				if (val.length > 25) {
+				if (val.length > 45) {
 					var temp = "";
-					for (var i = 0; i < 25; i++) {
+					for (var i = 0; i < 45; i++) {
 						temp += val[i];
 					}
 					temp += "...";
