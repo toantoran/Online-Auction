@@ -1236,7 +1236,7 @@ router.get("/signup/checkotp", async (req, res) => {
   await mailer.sendMailCheckOTP(req.query.email, req.session.otp);
   res.render("vwUser/checkotp", {
     layout: false,
-    message: `chúng tôi đã gửi mã otp đến email ${req.query.email}, hãy nhập mã OTP để xác nhận`,
+    message: `Chúng tôi đã gửi mã otp đến email ${req.query.email}, hãy nhập mã OTP để xác nhận`,
     name: req.query.name,
     email: req.query.email,
     password: req.query.password,

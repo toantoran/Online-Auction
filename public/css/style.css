@@ -1016,8 +1016,8 @@ textarea.input {
 	background-color: #f8694a;
 }
 
-.product .product-label>span.holder {
-  background-color: green;
+.product .product-label > span.holder {
+	background-color: green;
 }
 
 .product .product-countdown {
@@ -1065,8 +1065,8 @@ textarea.input {
 
 .product.product-single .product-thumb {
 	position: relative;
-	margin-bottom: 15px;
-	height: 200px;
+	margin-bottom: 5px;
+	min-height: 200px;
 }
 
 .product.product-single .product-thumb > img {
@@ -1198,6 +1198,7 @@ textarea.input {
 
 .product.product-single .product-name {
 	font-size: 14px;
+	min-height: 30px;
 }
 
 .product.product-single .product-btns {
@@ -1817,6 +1818,10 @@ textarea.input {
 	margin: 0 0 10px 0;
 	padding: 0 0 0 40px;
 	list-style: decimal;
+}
+
+table tbody tr td:last-child {
+	width: 110px !important;
 }
 
 /*-- shopping cart table --*/
