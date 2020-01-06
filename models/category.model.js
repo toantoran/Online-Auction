@@ -6,6 +6,16 @@ module.exports = {
 		db.load(
 			`select * from category_sub where cateID = ${cateID} order by subcateID`
 		),
+	getCateName: async (cateID) => {
+		if(cateID == 0) return "Tất cả";
+		const rows = await db.load(`select * from category where cateID = ${cateID}`);
+		return rows[0].cateName;
+	},
+
+	getSubCateName: async (cateID, subcateID) => {
+		const rows = await db.load(`select * from category_sub where cateID = ${cateID} and subcateID = ${subcateID}`);
+		return rows[0].subcateName;
+	},
 	getSingleCate: cateID =>
 		db.load(`select * from category where cateID = ${cateID} order by cateID`),
 	getSingleSubCate: (cateID, subcateID) =>

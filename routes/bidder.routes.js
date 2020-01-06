@@ -4,6 +4,7 @@ const passportfb = require("passport-facebook");
 const bcrypt = require("bcryptjs");
 const userModel = require("../models/user.model");
 const productModel = require("../models/product.model");
+const cateModel = require("../models/category.model");
 const config = require("../config/default.json");
 const querystring = require("querystring");
 const checkUser = require("../middlewares/user.mdw");
@@ -249,11 +250,15 @@ router.get("/productList/:cateID/:subcateID", async (req, res) => {
     });
   }
 
+  const cateName = await cateModel.getCateName(cateID);
+  const subCateName = await cateModel.getSubCateName(cateID,subcateID);
+  console.log(subCateName);
+
   res.render("vwUser/product-list", {
     user: req.user,
     productList,
     empty: productList.length === 0,
-    title: "Danh sách sản phẩm",
+    title: `${cateName} - ${subCateName}`,
     page_numbers,
     prev_value: +page - 1,
     next_value: +page + 1,
@@ -362,11 +367,13 @@ router.get("/productList/:cateID", async (req, res) => {
     });
   }
 
+  const cateName = await cateModel.getCateName(cateID);
+
   res.render("vwUser/product-list", {
     user: req.user,
     productList,
     empty: productList.length === 0,
-    title: "Danh sách sản phẩm",
+    title: cateName,
     page_numbers,
     prev_value: +page - 1,
     next_value: +page + 1,
@@ -501,7 +508,6 @@ router.post("/product/:productID/bid", checkUser.checkAuthenticatedPost, async (
   const productSingle = await productModel.single(req.params.productID);
   const product = productSingle[0];
   const point = await userModel.getPointEvaluation(req.user.userID);
-  //const checkPoint = point <= 80;
   const checkPoint = point < product.minPoint;
   const checkBan = await productModel.checkBanBid(
     req.params.productID,
@@ -557,7 +563,8 @@ router.post("/product/:productID/bid", checkUser.checkAuthenticatedPost, async (
               isHolder = 0;
             } else {
               if (priceHold !== 0) {
-                currentPrice = priceHold + product.stepPrice;
+                // currentPrice = priceHold + product.stepPrice;
+                currentPrice = priceHold;
               }
               isHolder = 1;
             }
@@ -572,6 +579,8 @@ router.post("/product/:productID/bid", checkUser.checkAuthenticatedPost, async (
               }
             }
           }
+          
+          product.currentPrice = currentPrice;
 
           const entity = {
             productID: req.params.productID,

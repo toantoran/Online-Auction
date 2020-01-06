@@ -236,7 +236,7 @@
 			<div class="col-md-12">
 				<div class="product-container">
 					{{#each this.productListSame}}
-					<div class="col-md-3 col-sm-4 col-xs-6">
+					<div class="col-md-5ths col-sm-4 col-xs-6">
 						<div class="product product-single">
 							<div class="product-thumb">
 								<div class="product-label">
@@ -252,8 +252,8 @@
 									<li><span class="cd-m">0 M</span></li>
 									<li><span class="cd-s">0 S</span></li>
 								</ul>
-								<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Xem
-									chi tiết</button>
+								<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Xem chi
+									tiết</button>
 								<button productID="{{productID}}" userID="{{user.userID}}" type="button"
 									onsubmit="return false;" name="btnWish"
 									class="watch-list btn-wish {{#if isExistWishItem}}focus{{/if}}"><i
@@ -267,11 +267,9 @@
 										class="product-price">{{format_money currentPrice}}</span></p>
 								<p class="product-text">Giá bán ngay: <span
 										class="product-price">{{format_money immePrice}}</span></p>
-								{{#if isBided}}
 								<p class="product-text">Đặt cao nhất: <span
-										class="product-price">{{format_name_bid winner}}</span>
+										class="product-price">{{#if isBided}}{{format_name_bid winner}}{{/if}}</span>
 								</p>
-								{{/if}}
 								<div class="product-footer">
 									<small><span>{{countBid}}</span> lượt ra giá</small>
 									<small>Từ <span>{{format_day beginDate}}</span></small>
