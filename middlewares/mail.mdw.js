@@ -84,7 +84,7 @@ module.exports = {
         let to = `${sellerEMail}, ${bidderEmail}, ${oldHolderEmail}`;
         if (oldHolderEmail == false)
             to = `${sellerEMail}, ${bidderEmail}`;
-        const subject = 'Thông báo từ BidHub: giá sản phẩm đã được cập nhập'
+        const subject = 'Thông báo từ BidHub: thông báo có lượt đấu giá mới'
         const html = `<h3>Tên sản phẩm: ${product.productName}</h3>
         <h3>Giá hiện tại: ${product.currentPrice}</h3>
         <a href = "http://localhost:3000/product/${product.productID}">Xem chi tiết tại đây</a>`;

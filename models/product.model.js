@@ -4,8 +4,11 @@ const userModel = require("../models/user.model");
 
 module.exports = {
     all: () => db.load('select * from product_single order by cateID'),
+
     allByCate: (cateID) => db.load(`select * from product_single where cateID = ${cateID} order by subcateID`),
+
     allBySubCate: (cateID, subcateID) => db.load(`select * from product_single where cateID = ${cateID} and subcateID = ${subcateID} order by subcateID`),
+
     sameBySubCate: (productID, cateID, subcateID) => db.load(`select * from product_single where cateID = ${cateID} and subcateID = ${subcateID} 
     and productID <> "${productID}" and endDate > NOW() limit 5`),
 
