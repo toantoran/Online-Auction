@@ -172,7 +172,7 @@ router.get("/users", (req, res, next) => {
 router.get("/users/getAllBidder", async (req, res) => {
 	const data = await userModel.getAllBidder();
 	for (let user of data) {
-		user.email.replace(/@/, "<br>@");
+		// user.email.replace(/@/, "<br>@");
 		user.point = (await userModel.getPointEvaluation(user.userID)) + "%";
 		if (user.birthDay)
 			user.birthDay = moment(user.birthDay).format("DD/MM/YYYY");
@@ -190,7 +190,7 @@ router.get("/users/getAllBidder", async (req, res) => {
 router.get("/users/getAllSeller", async (req, res) => {
 	const data = await userModel.getAllSeller();
 	for (let user of data) {
-		user.email.replace(/@/, "<br>@");
+		// user.email.replace(/@/, "<br>@");
 		console.log(user.email);
 		user.point = (await userModel.getPointEvaluation(user.userID)) + "%";
 		if (user.birthDay)
@@ -210,13 +210,13 @@ router.get("/users/getAllSeller", async (req, res) => {
 router.get("/users/getAllRegis", async (req, res) => {
 	const data = await userModel.getAllRegis();
 	for (let user of data) {
-		user.email.replace(/@/, "<br>@");
+		// user.email.replace(/@/, "<br>@");
 		user.point = (await userModel.getPointEvaluation(user.userID)) + "%";
 		if (user.birthDay)
 			user.birthDay = moment(user.birthDay).format("DD/MM/YYYY");
 		user.button = `<a href='/admin/user-detail/${user.userID}' target='_blank' class='main-btn edit-btn'><i class='fas fa-info-circle'></i></a>
-        <button type='button' userID="${user.userID}" class='main-btn upgrade-user-btn' onclick="upgradeUserClick(event)"><i class="fas fa-angle-double-up"></i></button>
-        <button type='button' userID="${user.userID}" class='primary-btn delete-user-btn' onclick="deleteUserClick(event)"><i class='fas fa-trash-alt'></i></button>`;
+		<button type='button' userID="${user.userID}" class='main-btn refuse-user-btn' onclick="refuseUserClick(event)"><i class='fas fa-angle-double-down'></i></button>
+		<button type='button' userID="${user.userID}" class='primary-btn upgrade-user-btn' onclick="upgradeUserClick(event)"><i class="fas fa-angle-double-up"></i></button>`;
 	}
 	res.send({
 		draw: 1,
@@ -229,7 +229,7 @@ router.get("/users/getAllRegis", async (req, res) => {
 router.get("/users/getAllAdmin", async (req, res) => {
 	const data = await userModel.getAllAdmin();
 	for (let user of data) {
-		user.email.replace(/@/, "<br>@");
+		// user.email.replace(/@/, "<br>@");
 		user.point = (await userModel.getPointEvaluation(user.userID)) + "%";
 		if (user.birthDay)
 			user.birthDay = moment(user.birthDay).format("DD/MM/YYYY");
@@ -453,6 +453,14 @@ router.post("/user/upgrade/:userID", async (req, res) => {
 router.post("/user/downgrade/:userID", async (req, res) => {
 	try {
 		userModel.downgradeUser(req.params.userID);
+		res.json("1");
+	} catch {
+		res.json("0");
+	}
+});
+router.post("/user/refuse/:userID", async (req, res) => {
+	try {
+		userModel.refuseUser(req.params.userID);
 		res.json("1");
 	} catch {
 		res.json("0");

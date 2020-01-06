@@ -44,7 +44,8 @@ $("#btn-bid").click(event => {
 		showCancelButton: true,
 		confirmButtonColor: "#F8694A",
 		cancelButtonColor: "#000",
-		confirmButtonText: '<a onclick="bidSubmit()">Ra giá <i class="fas fa-gavel"></i></a>',
+		confirmButtonText:
+			'<a onclick="bidSubmit()">Ra giá <i class="fas fa-gavel"></i></a>',
 		cancelButtonText: "Hủy bỏ"
 	});
 });
@@ -57,7 +58,8 @@ $(".main-btn.icon-btn.btn-confirm-delete").click(() => {
 		showCancelButton: true,
 		confirmButtonColor: "#F8694A",
 		cancelButtonColor: "#000",
-		confirmButtonText: '<a onclick="deleteSubmit()">Chắc chắn <i class="fas fa-trash"></i></a>',
+		confirmButtonText:
+			'<a onclick="deleteSubmit()">Chắc chắn <i class="fas fa-trash"></i></a>',
 		cancelButtonText: "Hủy"
 	}).then(result => {
 		if (result.value) {
@@ -121,7 +123,7 @@ function checkNote() {
 }
 
 $("input#bidPrice").val(numeral($("input#bidPrice").val()).format("0,0"));
-$("input#bidPrice").on("input", function () {
+$("input#bidPrice").on("input", function() {
 	$("input#bidPrice").val(numeral($("input#bidPrice").val()).format("0,0"));
 });
 
@@ -158,8 +160,8 @@ $(".note-btn").click(() => {
                 <textarea id="desc-editor" name="desc"></textarea>\
             </div>\
             <div class="pull-right">\
-                <button class="main-btn" id="submit-note-btn" type="submit" style="display: none">Xong</button>\
-                <button class="main-btn" id="done-note-btn">Xong</button>\
+                <button class="primary-btn" id="submit-note-btn" type="submit" style="display: none">Xong</button>\
+                <button class="primary-btn" id="done-note-btn">Xong</button>\
                 <button class="main-btn" id="cancel-note-btn">Hủy bỏ</button>\
             </div>\
         </form>`
@@ -180,8 +182,8 @@ $(".note-btn").click(() => {
 		tinyMCE.triggerSave();
 		if (
 			$("#desc-editor")
-			.val()
-			.trim().length == 0
+				.val()
+				.trim().length == 0
 		) {
 			Swal.fire({
 				icon: "error",
@@ -236,7 +238,8 @@ if (isSeller === "true") {
 		processing: true,
 		// serverSide: true,
 		ajax: action,
-		columns: [{
+		columns: [
+			{
 				data: "bidTime"
 			},
 			{
@@ -246,7 +249,8 @@ if (isSeller === "true") {
 				data: "price"
 			},
 			{
-				data: "button"
+				data: "button",
+				width: "125px"
 			}
 		]
 	});
@@ -275,7 +279,8 @@ if (isSeller === "true") {
 		processing: true,
 		// serverSide: true,
 		ajax: action,
-		columns: [{
+		columns: [
+			{
 				data: "bidTime"
 			},
 			{
@@ -289,15 +294,15 @@ if (isSeller === "true") {
 }
 
 let wishData = [];
-getdata($('.bid-table-data'))
+getdata($(".bid-table-data"));
 
 function getdata(object) {
 	for (let i = 0; i < object.length; i++) {
-		let productID = object.find('#bid-productID')[i].value;
-		let bidderID = object.find('#bid-bidderID')[i].value;
+		let productID = object.find("#bid-productID")[i].value;
+		let bidderID = object.find("#bid-bidderID")[i].value;
 		wishData.push({
 			productID,
-			bidderID,
+			bidderID
 		});
 	}
 }
@@ -323,7 +328,7 @@ function setEventRefuseBtn(object) {
 						dataType: "json",
 						contentType: "application/json",
 						data: JSON.stringify(wishItem),
-						success: function (data) {
+						success: function(data) {
 							if (data === "1") {
 								new SnackBar({
 									message: "Từ chối đấu giá thành công",
@@ -358,9 +363,8 @@ function setEventRefuseBtn(object) {
 
 // $('#DataTables_Table_0').css('width', '100%')
 
-
-window.onload = function (e) {
-	setEventRefuseBtn($('.refuse-btn'));
+window.onload = function(e) {
+	setEventRefuseBtn($(".refuse-btn"));
 
 	showCountDown($(".product-body"));
 	function showCountDown(object) {
@@ -369,7 +373,7 @@ window.onload = function (e) {
 			let h = object.find(".product-countdown li:nth-child(1) span")[i];
 			let m = object.find(".product-countdown li:nth-child(2) span")[i];
 			let s = object.find(".product-countdown li:nth-child(3) span")[i];
-			let x = setInterval(function () {
+			let x = setInterval(function() {
 				let now = new Date().getTime();
 				let distance = demoExpDate - now;
 				let days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -391,4 +395,4 @@ window.onload = function (e) {
 			}, 1000);
 		}
 	}
-}
+};

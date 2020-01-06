@@ -68,15 +68,15 @@ function createTable(table, url) {
 			{
 				data: "email"
 			},
-			{
-				data: "tel"
-			},
-			{
-				data: "address"
-			},
-			{
-				data: "birthDay"
-			},
+			// {
+			// 	data: "tel"
+			// },
+			// {
+			// 	data: "address"
+			// },
+			// {
+			// 	data: "birthDay"
+			// },
 			{
 				data: "point"
 			},
@@ -162,6 +162,51 @@ function upgradeUserClick(event) {
 					if (data == "1") {
 						new SnackBar({
 							message: "Cấp quyền người bán thành công",
+							status: "success",
+							fixed: true,
+							timeout: 2000
+						});
+					} else {
+						Swal.fire({
+							title: "Có lỗi xảy ra",
+							text: "Vui lòng thử lại",
+							icon: "error"
+						});
+					}
+				}
+			});
+			resetTable();
+		}
+	});
+}
+
+function refuseUserClick(event) {
+	event.preventDefault();
+	const userID = $(event.target).attr("userID");
+	// console.log(userID);
+	Swal.fire({
+		title: "Bạn muốn từ chối User này trở thành người bán",
+		icon: "info",
+		showCancelButton: true,
+		confirmButtonColor: "#F8694A",
+		cancelButtonColor: "#000",
+		confirmButtonText: `Xác nhận <i class="fas fa-angle-double-up"></i>`,
+		cancelButtonText: "Hủy bỏ"
+	}).then(result => {
+		if (result.value) {
+			const form = {
+				userID: userID
+			};
+			$.ajax({
+				url: "/admin/user/refuse/" + userID,
+				type: "post",
+				dataType: "json",
+				contentType: "application/json",
+				data: JSON.stringify(form),
+				success: function(data) {
+					if (data == "1") {
+						new SnackBar({
+							message: "Đã xóa User khỏi danh sách đăng ký",
 							status: "success",
 							fixed: true,
 							timeout: 2000

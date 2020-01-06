@@ -496,7 +496,7 @@ router.get("/product/getbidtable/:productID", async (req, res) => {
     p.bidderName = await userModel.getNameById(p.bidderID);
     var temp = p.bidderName.split(" ");
     p.bidderName = "****" + temp[temp.length - 1];
-    p.price = numeral(p.price).format(0, 0);
+    p.price = numeral(p.priceHold).format(0, 0);
     p.bidTime = moment(p.bidTime).format("DD/MM/YYYY") + "  [" + moment(p.bidTime).format("HH:mm:ss") + "]";
   }
   res.send({
@@ -1337,7 +1337,7 @@ router.get('/user-eval-detail/:userID', async (req, res) => {
       title: 'Các lượt đánh giá',
       user: req.user,
       notShowBreadcumb: true,
-      target,
+      target: target[0],
       evaluation,
       emptyEvaluation: evaluation.length === 0
     })

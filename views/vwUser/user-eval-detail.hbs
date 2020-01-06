@@ -5,11 +5,31 @@
         <!-- row -->
         <div class="row">
             <!-- MAIN -->
-            <div class="col-md-2"></div>
-            <div class="col-md-8">
+            <div class="col-md-3">
                 <div class="row">
                     <div class="col-md-12">
-                        <h1 style="color: #F8694A;">Các lượt đánh giá</h1>
+                        <h2 style="color: #F8694A;">Người dùng</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>Họ tên</h4>
+                        <p>{{target.name}}</p>
+                    </div>
+                    <div class="col-md-12">
+                        <h4>Email</h4>
+                        <p>{{format_name target.email}}</p>
+                    </div>
+                    <div class="col-md-12">
+                        <h4>Điểm số</h4>
+                        <p>{{format_evaluation target.point}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8" style="border-left: 5px double #f8694a;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 style="color: #F8694A;">Các lượt đánh giá</h2>
                     </div>
                 </div>
                 <div class="row">

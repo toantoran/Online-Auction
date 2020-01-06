@@ -59,6 +59,10 @@ module.exports = {
 		db.load(`update users set password = "${newPass}" where userID = '${id}'`),
 	downgradeUser: id =>
 		db.load(`update users set isSeller = 0 where userID = '${id}'`),
+	refuseUser: id =>
+		db.load(
+			`update users set isSeller = 0, sellRegis = 0 where userID = '${id}'`
+		),
 	deleteUser: async id => {
 		console.log("vao day" + id);
 		await Promise.all([

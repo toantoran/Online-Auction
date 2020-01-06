@@ -30,10 +30,8 @@
                             <hr>
                             <li class="sub"><a href="#history">Lịch sử đấu giá</a></li>
                             <hr>
-                            {{#if target.isSeller}}
                             <li class="sub"><a href="#sold-product">Sản phẩm đã đăng</a></li>
                             <hr>
-                            {{/if}}
                             <li class="sub"><a href="#rating">Các lượt đánh giá</a></li>
                             <hr>
                         </ul>
@@ -153,13 +151,19 @@
                                                         {{/unless}} userID="{{target.userID}}" type="button"
                                                         class="main-btn btn-upgrade-user">Cấp quyền người bán <i
                                                             class="fas fa-angle-double-up"></i></button>
+                                                    <button {{#unless target.sellRegis}}style="display: none"
+                                                        {{/unless}} userID="{{target.userID}}" type="button"
+                                                        class="main-btn btn-refuse-user">Từ chối <i
+                                                            class="fas fa-angle-double-down"></i></button>
                                                     <button {{#unless target.isSeller}}style="display: none" {{/unless}}
                                                         userID="{{target.userID}}" type="button"
                                                         class="main-btn btn-downgrade-user">Hủy quyền người bán <i
                                                             class="fas fa-angle-double-down"></i></button>
+                                                    {{#unless target.isAdmin}}
                                                     <button userID="{{target.userID}}" type="button"
                                                         class="primary-btn btn-delete-user">Xóa người dùng <i
                                                             class='fas fa-trash-alt'></i></button>
+                                                    {{/unless}}
                                                 </div>
                                             </div>
                                         </div>
@@ -219,6 +223,8 @@
                                             {{#if isCancel}}
                                             <p class="product-text">Trạng thái: <span class="product-price"
                                                     style="color: orange">Đã bị huỷ</span></p>
+                                            <p class="product-text">Kết quả: <span class="product-price"
+                                                    style="color: red">Đã bị huỷ</span></p>
                                             {{else}}
                                             {{#if isEndBid}}
                                             <p class="product-text">Trạng thái: <span class="product-price"
@@ -251,7 +257,6 @@
                     </div>
                 </div>
 
-                {{#if target.isSeller}}
                 <div class="row" id="sold-product">
                     <div class="col-md-12">
                         <div class="section-title">
@@ -315,7 +320,6 @@
                         </div>
                     </div>
                 </div>
-                {{/if}}
 
                 <div class="row" id="rating">
                     <div class="col-md-12">

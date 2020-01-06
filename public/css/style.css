@@ -2080,6 +2080,11 @@ p.err-validate {
 	pointer-events: none;
 }
 
+/* #bid-table td,
+#bid-table th {
+	width: 200px !important;
+} */
+
 /*=========================================================
 	12 -> RESPONSIVE
 ===========================================================*/

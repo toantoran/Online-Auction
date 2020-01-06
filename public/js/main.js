@@ -111,7 +111,7 @@
 	let latestSlick = {
 		slidesToShow: 5,
 		slidesToScroll: 5,
-		autoplay: true,
+		autoplay: false,
 		infinite: false,
 		speed: 500,
 		dots: true,

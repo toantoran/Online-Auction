@@ -84,6 +84,7 @@ require("./middlewares/locals.mdw")(app);
 require("./middlewares/routes.mdw")(app);
 
 app.use((req, res, next) => {
+	// console.log(req);
 	res.render("vwUser/not-found", {
 		user: req.user
 	});
