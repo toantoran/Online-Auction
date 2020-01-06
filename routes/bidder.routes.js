@@ -266,7 +266,7 @@ router.get("/productList/:cateID/:subcateID", async (req, res) => {
   req.session.lastUrl = req.originalUrl;
 });
 
-router.post("/productList/:cateID/:subcateID", async (req, res) => {
+router.post("/productList/:cateID/:subcateID", (req, res) => {
   const query = querystring.stringify({
     option: req.body.option,
     order: req.body.order
@@ -274,6 +274,118 @@ router.post("/productList/:cateID/:subcateID", async (req, res) => {
 
   res.redirect(
     `/productList/${req.params.cateID}/${req.params.subcateID}/?${query}`
+  );
+});
+
+router.get("/productList/:cateID", async (req, res) => {
+  const cateID = req.params.cateID;
+  const limit = config.paginate.limit;
+  let page = req.query.page || 1;
+  if (page < 1) page = 1;
+  const offset = (page - 1) * limit;
+
+  const option = req.query.option || 0;
+  const order = req.query.order || 0;
+
+  const total = await productModel.countByCat(cateID);
+  let productList;
+
+  if (option == 0) {
+    if (order == 0) {
+      productList = await productModel.pageByCatDefault(
+        cateID,
+        offset
+      );
+    } else {
+      productList = await productModel.pageByCat(
+        cateID,
+        offset,
+        "(endDate - NOW())",
+        "desc"
+      );
+    }
+  } else {
+    if (order == 0) {
+      productList = await productModel.pageByCat(
+        cateID,
+        offset,
+        "currentPrice",
+        "asc"
+      );
+    } else {
+      productList = await productModel.pageByCat(
+        cateID,
+        offset,
+        "currentPrice",
+        "desc"
+      );
+    }
+  }
+
+  for (const product of productList) {
+    [
+      product.mainImgSrc,
+      product.countBid,
+      product.isExistWishItem
+    ] = await Promise.all([
+      productModel.singleMainImgSrcByProduct(product.productID),
+      productModel.countBidProduct(product.productID),
+      req.user ?
+      await productModel.isExistWishItem(product.productID, req.user.userID) :
+      false
+    ]);
+  }
+
+  for (const product of productList) {
+    product.isHot = product.countBid >= config.product.countBidIsHot;
+    const temp = moment(product.beginDate, "YYYY-MM-DD HH:mm:ss");
+    const minutes = moment().diff(temp, "minutes");
+    product.isNew = minutes <= config.product.minutesIsNew;
+
+    if (product.countBid > 0) {
+      product.isBided = true;
+      product.winner = await productModel.getNameWinnerOfBidByProduct(
+        product.productID
+      );
+    } else {
+      product.isBided = false;
+    }
+  }
+
+  let nPages = Math.floor(total / limit);
+  if (total % limit > 0) nPages++;
+  const page_numbers = [];
+  for (i = 1; i <= nPages; i++) {
+    page_numbers.push({
+      value: i,
+      isCurrentPage: i === +page
+    });
+  }
+
+  res.render("vwUser/product-list", {
+    user: req.user,
+    productList,
+    empty: productList.length === 0,
+    title: "Danh sách sản phẩm",
+    page_numbers,
+    prev_value: +page - 1,
+    next_value: +page + 1,
+    isNotFirst: +page !== 1,
+    isNotLast: +page !== nPages,
+    option,
+    order
+  });
+
+  req.session.lastUrl = req.originalUrl;
+});
+
+router.post("/productList/:cateID", (req, res, next) => {
+  const query = querystring.stringify({
+    option: req.body.option,
+    order: req.body.order
+  });
+  res.redirect(
+    `/productList/${req.params.cateID}/?${query}`
   );
 });
 
@@ -572,10 +684,13 @@ router.post(
   }
 );
 
-router.post("/productList/search/", async (req, res) => {
+router.post("/search/", (req, res) => {
   const category = req.body.category;
-  const textSearch = req.body.textSearch || ' ';
-  res.redirect(`/productList/search/${category}/${textSearch}`);
+  const textSearch = req.body.textSearch;
+  if (textSearch)
+    res.redirect(`/productList/search/${category}/${textSearch}`);
+  else
+    res.redirect(`/productList/${category}`);
 });
 
 router.get("/productList/search/:category/:textSearch", async (req, res) => {
@@ -1221,13 +1336,12 @@ router.post('/account/change-pass/:userID', checkUser.checkAuthenticatedPost, as
     if (await bcrypt.compareSync(req.body.oldPass, matchUser.password)) {
       await userModel.changePassword(userID, newPass)
       req.logout();
-  res.locals.lcUser = {};
+      res.locals.lcUser = {};
       res.json("1");
-    }
-    else {
+    } else {
       res.json("0");
     }
-  } catch (e){
+  } catch (e) {
     console.log(e);
     res.json("-1");
   }

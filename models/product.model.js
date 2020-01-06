@@ -61,6 +61,29 @@ module.exports = {
     pageBySubCat: (cateID, subcateID, offset, option, order) => db.load(`select * from product_single where cateID = ${cateID} and subcateID = ${subcateID} 
     order by ${option} ${order} limit ${config.paginate.limit} offset ${offset}`),
 
+    countByCat: async (cateID) => {
+        let rows;
+        if (cateID == 0)
+            rows = await db.load(`select count(*) as total from product_single`)
+        else
+            rows = await db.load(`select count(*) as total from product_single where cateID = ${cateID}`)
+        return rows[0].total;
+    },
+
+    pageByCatDefault: async (cateID, offset) => {
+        if (cateID == 0)
+            return await db.load(`select * from product_single order by (endDate - NOW()) limit ${config.paginate.limit} offset ${offset}`);
+        else
+            return await db.load(`select * from product_single where cateID = ${cateID} order by (endDate - NOW()) limit ${config.paginate.limit} offset ${offset}`);
+    },
+
+    pageByCat: async (cateID, offset, option, order) => {
+        if (cateID == 0)
+            return await db.load(`select * from product_single order by ${option} ${order} limit ${config.paginate.limit} offset ${offset}`);
+        else
+            return await db.load(`select * from product_single where cateID = ${cateID} order by ${option} ${order} limit ${config.paginate.limit} offset ${offset}`);
+    },
+
     countBidProduct: async (productID) => {
         const rows = await db.load(`select count(*) as total from product_bid where productID = "${productID}" and isCancel = "0"`)
         return rows[0].total;
