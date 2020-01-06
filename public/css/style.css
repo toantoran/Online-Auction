@@ -1003,6 +1003,28 @@ textarea.input {
 	color: #dadada;
 }
 
+.product .product-body > span {
+	position: relative;
+	display: inline-block;
+	padding: 5px 15px;
+	font-weight: 700;
+	color: #fff;
+	background-color: #30323a;
+	z-index: 22;
+}
+
+.product .product-label > span.seller {
+	background-color: blue;
+	margin-top: 5px;
+	border-radius: 5px;
+}
+
+.product .product-label > span.end {
+	background-color: red;
+	margin-top: 5px;
+	border-radius: 5px;
+}
+
 .product .product-label > span {
 	position: relative;
 	display: inline-block;

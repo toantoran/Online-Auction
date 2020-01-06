@@ -725,7 +725,6 @@ router.get("/productList/search/:category/:textSearch", async (req, res) => {
       }
     if (option == 0) {
       if (order == 0) {
-        console.log("vao day");
         productList = await productModel.pageByText(
           textSearch,
           offset,

@@ -46,7 +46,9 @@
 				<div class="col-md-7">
 					<div class="product-body">
 						{{#if product.isEndBid}}
-						<h2 class="product-name" style="color: red;">Phiên đấu giá đã kết thúc</h2>
+						<div class="product-label">
+						<span class="end">Phiên đấu giá đã kết thúc <i class="fas fa-hourglass-end"></i></span>
+						</div>
 						{{else}}
 						<ul class="product-countdown">
 							<li><span class="cd-h">0 H</span></li>
@@ -55,10 +57,10 @@
 						</ul>
 						<input type="hidden" id="endDate" value="{{format_day_value product.endDate}}">
 						{{/if}}
-						{{#if isSeller}}
-						<h3 class="product-name" style="color: blue;">*Sản phẩm được đăng bởi bạn*</h3>
-						{{/if}}
 						<div class="product-label">
+							{{#if isSeller}}
+							<span class="seller"> Bạn là người đăng <i class="fas fa-dollar-sign"></i></span>
+							{{/if}}
 							{{#if isNew}}
 							<span class="product-name">Mới</span>
 							{{/if}}
