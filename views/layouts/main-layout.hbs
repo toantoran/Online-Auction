@@ -46,7 +46,7 @@
                                 <option value="{{this.cateID}}">{{this.cateName}}</option>
                                 {{/each}}
                             </select>
-                            <button type="submit" formaction="/productList/search" class="search-btn"><i
+                            <button type="submit" formaction="/search" class="search-btn"><i
                                     class="fa fa-search"></i></button>
                         </form>
                     </div>
@@ -137,8 +137,8 @@
                     <ul class="category-list">
                         {{#each lcCateList}}
                         <li class="dropdown side-dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
-                                    class="fas fa-{{cateIcon}}"></i></i>&nbsp;{{cateName}} {{#if subCate.length}}
+                            <a href="/productList/{{cateID}}" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
+                                    class="fas fa-{{cateIcon}}"></i></i>&nbsp;{{cateName}} {{#if subCate.length}} 
                                 <i class="fa fa-angle-right icon-right"></i>
                                 {{/if}}</a>
                             {{#if subCate.length}}
