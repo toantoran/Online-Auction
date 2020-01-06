@@ -137,8 +137,13 @@
                     <ul class="category-list">
                         {{#each lcCateList}}
                         <li class="dropdown side-dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i
-                                    class="fas fa-{{cateIcon}}"></i></i>&nbsp;{{cateName}} {{#if subCate.length}}
+                            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"
+                                href="/productList/{{cateID}}">
+                                <span class="click-link">
+                                    <i class="fas fa-{{cateIcon}}"></i>
+                                    &nbsp;{{cateName}}
+                                </span>
+                                {{#if subCate.length}}
                                 <i class="fa fa-angle-right icon-right"></i>
                                 {{/if}}</a>
                             {{#if subCate.length}}
