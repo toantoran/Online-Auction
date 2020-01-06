@@ -2128,4 +2128,7 @@ p.err-validate {
 		margin-top: 10px;
 		margin-bottom: 10px;
 	}
+	.col-md-3 {
+		width: 24%;
+	}
 }
