@@ -112,7 +112,7 @@
 						<ul class="store-pages">
 							{{#if isNotFirst}}
 							<li class="page-item">
-								<a class="page-link" href="?page={{prev_value}}">
+								<a class="page-link" href="?page={{prev_value}}{{#if option}}&option={{option}}&order={{order}}{{/if}}">
 									<i class="fa fa-backward" aria-hidden="true"></i>
 								</a>
 							</li>
@@ -122,16 +122,17 @@
 							<li class="active">{{value}}</li>
 							{{else}}
 							<li class="page-item">
-								<a class="page-link" href="?page={{value}}">{{value}}</a>
+								<a class="page-link" href="?page={{value}}{{#if option}}&option={{option}}&order={{order}}{{/if}}">{{value}}</a>
 							</li>
 							{{/if}}
 							{{/each}}
 							{{#if isNotLast}}
 							<li class="page-item">
-								<a class="page-link" href="?page={{next_value}}">
+								<a class="page-link" href="?page={{next_value}}{{#if option}}&option={{option}}&order={{order}}{{/if}}">
 									<i class="fa fa-forward" aria-hidden="true"></i>
 								</a>
 							</li>
+							{{#if option}}<p>option={{option}}order={{order}}</p>{{/if}}
 							{{/if}}
 						</ul>
 					</div>

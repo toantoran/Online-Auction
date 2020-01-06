@@ -246,7 +246,9 @@ router.get("/productList/:cateID/:subcateID", async (req, res) => {
   for (i = 1; i <= nPages; i++) {
     page_numbers.push({
       value: i,
-      isCurrentPage: i === +page
+      isCurrentPage: i === +page,
+      option: option,
+      order: order
     });
   }
 
@@ -363,7 +365,9 @@ router.get("/productList/:cateID", async (req, res) => {
   for (i = 1; i <= nPages; i++) {
     page_numbers.push({
       value: i,
-      isCurrentPage: i === +page
+      isCurrentPage: i === +page,
+      option: option,
+      order: order
     });
   }
 
@@ -835,7 +839,9 @@ router.get("/productList/search/:category/:textSearch", async (req, res) => {
   for (i = 1; i <= nPages; i++) {
     page_numbers.push({
       value: i,
-      isCurrentPage: i === +page
+      isCurrentPage: i === +page,
+      option: option,
+      order: order
     });
   }
 

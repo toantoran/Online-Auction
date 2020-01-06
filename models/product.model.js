@@ -56,35 +56,35 @@ module.exports = {
     limit ${config.paginate.limit} offset ${offset}`),
 
     countBySubCat: async (cateID, subcateID) => {
-        const rows = await db.load(`select count(*) as total from product_single where cateID = ${cateID} and subcateID = ${subcateID}`)
+        const rows = await db.load(`select count(*) as total from product_single where cateID = ${cateID} and subcateID = ${subcateID} and endDate > NOW()`)
         return rows[0].total;
     },
-    pageBySubCatDefault: (cateID, subcateID, offset) => db.load(`select * from product_single where cateID = ${cateID} and subcateID = ${subcateID} 
+    pageBySubCatDefault: (cateID, subcateID, offset) => db.load(`select * from product_single where cateID = ${cateID} and subcateID = ${subcateID} and endDate > NOW()
     order by (endDate - NOW()) limit ${config.paginate.limit} offset ${offset}`),
-    pageBySubCat: (cateID, subcateID, offset, option, order) => db.load(`select * from product_single where cateID = ${cateID} and subcateID = ${subcateID} 
+    pageBySubCat: (cateID, subcateID, offset, option, order) => db.load(`select * from product_single where cateID = ${cateID} and subcateID = ${subcateID} and endDate > NOW()
     order by ${option} ${order} limit ${config.paginate.limit} offset ${offset}`),
 
     countByCat: async (cateID) => {
         let rows;
         if (cateID == 0)
-            rows = await db.load(`select count(*) as total from product_single`)
+            rows = await db.load(`select count(*) as total from product_single where endDate > NOW()`)
         else
-            rows = await db.load(`select count(*) as total from product_single where cateID = ${cateID}`)
+            rows = await db.load(`select count(*) as total from product_single where cateID = ${cateID} and endDate > NOW()`)
         return rows[0].total;
     },
 
     pageByCatDefault: async (cateID, offset) => {
         if (cateID == 0)
-            return await db.load(`select * from product_single order by (endDate - NOW()) limit ${config.paginate.limit} offset ${offset}`);
+            return await db.load(`select * from product_single where endDate > NOW() order by (endDate - NOW()) limit ${config.paginate.limit} offset ${offset}`);
         else
-            return await db.load(`select * from product_single where cateID = ${cateID} order by (endDate - NOW()) limit ${config.paginate.limit} offset ${offset}`);
+            return await db.load(`select * from product_single where cateID = ${cateID} and endDate > NOW() order by (endDate - NOW()) limit ${config.paginate.limit} offset ${offset}`);
     },
 
     pageByCat: async (cateID, offset, option, order) => {
         if (cateID == 0)
-            return await db.load(`select * from product_single order by ${option} ${order} limit ${config.paginate.limit} offset ${offset}`);
+            return await db.load(`select * from product_single where endDate > NOW() order by ${option} ${order} limit ${config.paginate.limit} offset ${offset}`);
         else
-            return await db.load(`select * from product_single where cateID = ${cateID} order by ${option} ${order} limit ${config.paginate.limit} offset ${offset}`);
+            return await db.load(`select * from product_single where cateID = ${cateID} and endDate > NOW() order by ${option} ${order} limit ${config.paginate.limit} offset ${offset}`);
     },
 
     countBidProduct: async (productID) => {
@@ -291,24 +291,4 @@ module.exports = {
     },
 
     productsEndBidToSendMail: () => db.load('select * from product_single where endDate < NOW() and isSendMailEndBid = 0'),
-
-    // deleteProductsBySeller: async (seller) => {
-    //     const rows = await db.load(`select * from product_single where seller = '${seller}'`);
-    //     console.log(rows.length);
-    //     for (const product of rows) {
-    //         await this.deleteProduct(product.productID);
-    //     }
-    // },
-
-    // deleteBanBidByUser: id => db.del('product_ban_bid', {
-    //     bidderID: id
-    // }),
-
-    // deleteBidByUser: id => db.del('product_bid', {
-    //     bidderID: id
-    // }),
-
-    // deleteWishListByUser: id => db.del('wish_list', {
-    //     userID: id
-    // }),
 };
