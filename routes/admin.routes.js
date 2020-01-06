@@ -119,16 +119,7 @@ router.post("/category/edit/:cateID", async (req, res) => {
 	const cateName = req.body.cateName;
 	const cateIcon = req.body.cateIcon;
 	try {
-		// console.log(cateModel.editCate);
-		// console.log(cateID);
-		// console.log(cateName);
-		// console.log(cateIcon);
 		await cateModel.editCate(cateID, cateName, cateIcon);
-		// const cateList = await cateModel.getCate();
-		// for (cate of cateList) {
-		// 	cate.subCate = await cateModel.getSubCate(cate.cateID);
-		// }
-		// res.locals.lcCateList = cateList;
 		res.json("1");
 	} catch (e) {
 		res.json("0");
@@ -337,9 +328,6 @@ router.get("/add-category-sub/:cateID", async (req, res, next) => {
 router.get(
 	"/category-sub-detail/:cateID/:subcateID",
 	async (req, res, next) => {
-		// const subcate = res.locals.lcCateList[req.params.cateID - 1].subCate[req.params.subcateID - 1];
-		// subcate.productsCount = await productModel.countBySubCat(subcate.cateID, subcate.subcateID)
-		// const parent = res.locals.lcCateList[req.params.cateID - 1]
 		let rows = await cateModel.getSingleSubCate(
 			req.params.cateID,
 			req.params.subcateID
@@ -352,7 +340,6 @@ router.get(
 		rows = await cateModel.getSingleCate(req.params.cateID);
 		const parent = rows[0];
 		parent.subCate = await cateModel.getSubCate(req.params.cateID);
-		// console.log(object);
 		res.render("vwAdmin/category-sub-detail", {
 			title: "Chi tiết danh mục con",
 			user: req.user,

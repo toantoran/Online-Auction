@@ -254,7 +254,6 @@ router.get("/productList/:cateID/:subcateID", async (req, res) => {
 
   const cateName = await cateModel.getCateName(cateID);
   const subCateName = await cateModel.getSubCateName(cateID,subcateID);
-  console.log(subCateName);
 
   res.render("vwUser/product-list", {
     user: req.user,
@@ -626,7 +625,7 @@ router.post("/product/:productID/bid", checkUser.checkAuthenticatedPost, async (
   res.redirect(`/product/${req.params.productID}/?${query}`);
 });
 
-router.post("/product/:productID/refuseBid", async (req, res) => {
+router.post("/product/:productID/:bidderID/refuseBid", async (req, res) => {
   const rows = await productModel.single(req.body.productID);
   const product = rows[0];
   const isSeller = req.user ? product.seller === req.user.userID : false;
@@ -1358,7 +1357,6 @@ router.post('/account/seller-regis', checkUser.checkAuthenticatedPost, async (re
 router.post('/account/change-pass/:userID', checkUser.checkAuthenticatedPost, async (req, res) => {
   const userID = req.params.userID;
   const newPass = bcrypt.hashSync(req.body.newPass, 10);
-  // console.log(req.body);
   try {
     const rs = await userModel.getUserById(userID);
     const matchUser = rs[0];

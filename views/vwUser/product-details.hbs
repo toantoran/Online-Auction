@@ -47,7 +47,7 @@
 					<div class="product-body">
 						{{#if product.isEndBid}}
 						<div class="product-label">
-						<span class="end">Phiên đấu giá đã kết thúc <i class="fas fa-hourglass-end"></i></span>
+							<span class="end">Phiên đấu giá đã kết thúc <i class="fas fa-hourglass-end"></i></span>
 						</div>
 						{{else}}
 						<ul class="product-countdown">
@@ -203,6 +203,13 @@
 											</div>
 										</div>
 									</div>
+									{{#each productBid}}
+									<div class="bid-table-data">
+										<input type="hidden" name="bid-productID" id="bid-productID"
+											value="{{productID}}">
+										<input type="hidden" name="bid-bidderID" id="bid-bidderID" value="{{bidderID}}">
+									</div>
+									{{/each}}
 								</div>
 							</div>
 						</div>

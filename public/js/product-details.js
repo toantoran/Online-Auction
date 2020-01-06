@@ -44,8 +44,7 @@ $("#btn-bid").click(event => {
 		showCancelButton: true,
 		confirmButtonColor: "#F8694A",
 		cancelButtonColor: "#000",
-		confirmButtonText:
-			'<a onclick="bidSubmit()">Ra giá <i class="fas fa-gavel"></i></a>',
+		confirmButtonText: '<a onclick="bidSubmit()">Ra giá <i class="fas fa-gavel"></i></a>',
 		cancelButtonText: "Hủy bỏ"
 	});
 });
@@ -58,8 +57,7 @@ $(".main-btn.icon-btn.btn-confirm-delete").click(() => {
 		showCancelButton: true,
 		confirmButtonColor: "#F8694A",
 		cancelButtonColor: "#000",
-		confirmButtonText:
-			'<a onclick="deleteSubmit()">Chắc chắn <i class="fas fa-trash"></i></a>',
+		confirmButtonText: '<a onclick="deleteSubmit()">Chắc chắn <i class="fas fa-trash"></i></a>',
 		cancelButtonText: "Hủy"
 	}).then(result => {
 		if (result.value) {
@@ -123,7 +121,7 @@ function checkNote() {
 }
 
 $("input#bidPrice").val(numeral($("input#bidPrice").val()).format("0,0"));
-$("input#bidPrice").on("input", function() {
+$("input#bidPrice").on("input", function () {
 	$("input#bidPrice").val(numeral($("input#bidPrice").val()).format("0,0"));
 });
 
@@ -182,8 +180,8 @@ $(".note-btn").click(() => {
 		tinyMCE.triggerSave();
 		if (
 			$("#desc-editor")
-				.val()
-				.trim().length == 0
+			.val()
+			.trim().length == 0
 		) {
 			Swal.fire({
 				icon: "error",
@@ -238,8 +236,7 @@ if (isSeller === "true") {
 		processing: true,
 		// serverSide: true,
 		ajax: action,
-		columns: [
-			{
+		columns: [{
 				data: "bidTime"
 			},
 			{
@@ -278,8 +275,7 @@ if (isSeller === "true") {
 		processing: true,
 		// serverSide: true,
 		ajax: action,
-		columns: [
-			{
+		columns: [{
 				data: "bidTime"
 			},
 			{
@@ -292,9 +288,19 @@ if (isSeller === "true") {
 	});
 }
 
-// $('tbody > tr > td:nth-child(4)').css('width', '170px')
+let wishData = [];
+getdata($('.bid-table-data'))
 
-setEventRefuseBtn($(".refuse-btn"));
+function getdata(object) {
+	for (let i = 0; i < object.length; i++) {
+		let productID = object.find('#bid-productID')[i].value;
+		let bidderID = object.find('#bid-bidderID')[i].value;
+		wishData.push({
+			productID,
+			bidderID,
+		});
+	}
+}
 
 function setEventRefuseBtn(object) {
 	for (let i = 0; i < object.length; i++) {
@@ -312,12 +318,12 @@ function setEventRefuseBtn(object) {
 				if (result.value) {
 					var wishItem = wishData[i];
 					$.ajax({
-						url: "/product/" + wishItem.productID + "/refuseBid",
+						url: `/product/${wishItem.productID}/${wishItem.bidderID}/refuseBid`,
 						type: "post",
 						dataType: "json",
 						contentType: "application/json",
 						data: JSON.stringify(wishItem),
-						success: function(data) {
+						success: function (data) {
 							if (data === "1") {
 								new SnackBar({
 									message: "Từ chối đấu giá thành công",
@@ -352,34 +358,37 @@ function setEventRefuseBtn(object) {
 
 // $('#DataTables_Table_0').css('width', '100%')
 
-showCountDown($(".product-body"));
 
-function showCountDown(object) {
-	console.log(object.length);
-	for (let i = 0; i < object.length; i++) {
-		let demoExpDate = object.find("#endDate")[i].value;
-		let h = object.find(".product-countdown li:nth-child(1) span")[i];
-		let m = object.find(".product-countdown li:nth-child(2) span")[i];
-		let s = object.find(".product-countdown li:nth-child(3) span")[i];
-		let x = setInterval(function() {
-			let now = new Date().getTime();
-			let distance = demoExpDate - now;
-			let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-			let hours = Math.floor(
-				(distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-			);
-			hours += days * 24;
-			let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-			let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-			h.innerHTML = hours + " H";
-			m.innerHTML = minutes + " M";
-			s.innerHTML = seconds + " S";
-			if (distance < 0) {
-				clearInterval(x);
-				h.innerHTML = 0 + " H";
-				m.innerHTML = 0 + " M";
-				s.innerHTML = 0 + " S";
-			}
-		}, 1000);
+window.onload = function (e) {
+	setEventRefuseBtn($('.refuse-btn'));
+
+	showCountDown($(".product-body"));
+	function showCountDown(object) {
+		for (let i = 0; i < object.length; i++) {
+			let demoExpDate = object.find("#endDate")[i].value;
+			let h = object.find(".product-countdown li:nth-child(1) span")[i];
+			let m = object.find(".product-countdown li:nth-child(2) span")[i];
+			let s = object.find(".product-countdown li:nth-child(3) span")[i];
+			let x = setInterval(function () {
+				let now = new Date().getTime();
+				let distance = demoExpDate - now;
+				let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+				let hours = Math.floor(
+					(distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+				);
+				hours += days * 24;
+				let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+				let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+				h.innerHTML = hours + " H";
+				m.innerHTML = minutes + " M";
+				s.innerHTML = seconds + " S";
+				if (distance < 0) {
+					clearInterval(x);
+					h.innerHTML = 0 + " H";
+					m.innerHTML = 0 + " M";
+					s.innerHTML = 0 + " S";
+				}
+			}, 1000);
+		}
 	}
 }
