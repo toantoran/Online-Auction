@@ -65,7 +65,7 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <h4 class="form-label">Ghi chú của người nhận</h4>
+                                    <h4 class="form-label">Ghi chú<br> của người nhận</h4>
                                 </div>
                             </div>
                             <div class="col-md-9">
@@ -156,12 +156,15 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="thumb"><img src="/img/product/{{product.productID}}/{{product.mainImgSrc}}" alt=""></td>
+                                        <td class="thumb"><img
+                                                src="/img/product/{{product.productID}}/{{product.mainImgSrc}}" alt="">
+                                        </td>
                                         <td class="details">
                                             <a href="/product/{{product.productID}}">{{product.productName}}</a>
                                         </td>
                                         <td class="qty text-center">{{product.sellerName}}</td>
-                                        <td class="price text-center"><strong>{{format_money product.currentPrice}}</strong></td>
+                                        <td class="price text-center">
+                                            <strong>{{format_money product.currentPrice}}</strong></td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
