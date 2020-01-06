@@ -27,9 +27,13 @@
                             <hr>
                             <li><a href="#wish-list">Danh sách yêu thích</a></li>
                             <hr>
+                            {{#if user.isSeller}}
                             <li><a href="#sold-product">Sản phẩm của bạn đang bán</a></li>
                             <hr>
                             <li><a href="#sold-product-end">Sản phẩm đăng bán đã hết thời gian</a></li>
+                            <hr>
+                            {{/if}}
+                            <li><a href="#win-list">Danh sách sản phẩm đã thắng</a></li>
                             <hr>
                             <li><a href="#ratting">Đánh giá về bạn</a></li>
                             <hr>
@@ -346,7 +350,7 @@
                     </div>
                     <!-- /row -->
                 </div>
-
+                {{#if user.isSeller}}
                 <div id="sold-product">
                     <!-- row -->
                     <div class="row">
@@ -427,7 +431,7 @@
                             </div>
                             <!-- row -->
                             <div class="row">
-                                <div class="col-md-12 product-container" id="sold-product">
+                                <div class="col-md-12 product-container" id="sold-product-end">
                                     {{#if emptyProductsSoldEnd}}
                                     <p>Không có sản phẩm</p>
                                     {{else}}
@@ -484,6 +488,7 @@
                     </div>
                     <!-- /row -->
                 </div>
+                {{/if}}
 
                 <div id="win-list">
                     <!-- row -->
@@ -495,7 +500,7 @@
                             </div>
                             <!-- row -->
                             <div class="row">
-                                <div class="col-md-12 product-container" id="sold-product">
+                                <div class="col-md-12 product-container" id="win-list">
                                     {{#if emptyProductsWinList}}
                                     <p>Không có sản phẩm</p>
                                     {{else}}

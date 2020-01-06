@@ -713,14 +713,25 @@ router.get("/productList/search/:category/:textSearch", async (req, res) => {
   if (page < 1) page = 1;
   const offset = (page - 1) * limit;
 
-  const option = req.query.option || 0;
-  const order = req.query.order || 0;
+  const option = req.query.option;
+  const order = req.query.order;
+
 
   if (category == 0) {
     total = await productModel.countByText(textSearch);
+    if(typeof option === "undefined" && typeof option === "undefined")
+      {
+        productList = await productModel.pageByTextDefault(textSearch, offset);
+      }
     if (option == 0) {
       if (order == 0) {
-        productList = await productModel.pageByTextDefault(textSearch, offset);
+        console.log("vao day");
+        productList = await productModel.pageByText(
+          textSearch,
+          offset,
+          "(endDate - NOW())",
+          "asc"
+        );
       } else {
         productList = await productModel.pageByText(
           textSearch,
@@ -748,6 +759,10 @@ router.get("/productList/search/:category/:textSearch", async (req, res) => {
     }
   } else {
     total = await productModel.countByCateAndText(textSearch, category);
+    if(typeof option === "undefined" && typeof option === "undefined")
+    {
+      productList = await productModel.pageByTextDefault(textSearch, offset);
+    }
     if (option == 0) {
       if (order == 0) {
         productList = await productModel.pageByCateAndTextDefault(
