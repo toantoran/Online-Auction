@@ -234,12 +234,13 @@
                                                 <img src="/img/product/{{productID}}/{{mainImgSrc}}" alt="">
                                             </div>
                                             <div class="product-body">
-                                                <h2 class="product-name">
-                                                    <a href="/product/{{productID}}">{{format_name productName}} </a>
+                                                <h2 class="product-name"><a
+                                                        href="/product/{{productID}}">{{format_name productName}}</a>
                                                 </h2>
-                                                <p class="product-text">Giá hiện tại: <span class="product-price"
-                                                        {{#if isWinner}} style="color: green" {{else}}
-                                                        style=" color: red" {{/if}}>{{format_money currentPrice}}</span>
+                                                <p class="product-text">Giá hiện tại:
+                                                    <span class="product-price" {{#if isWinner}} style="color: green"
+                                                        {{else}} style=" color: red"
+                                                        {{/if}}>{{format_money currentPrice}}</span>
                                                 </p>
                                                 <p class="product-text">Giá bán ngay: <span
                                                         class="product-price">{{format_money immePrice}}</span></p>
