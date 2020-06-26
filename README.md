@@ -16,5 +16,11 @@ Run app on [localhost:3000](http://localhost:3000)
 
 ```npm start```
 
+
+### Admin user
+
+```bidhub.qtv@gmail.com - convitnho```
+
+
 ## Author
 Trần Quốc Toản - Phan Tán Thịnh
